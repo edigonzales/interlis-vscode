@@ -27,7 +27,7 @@ async function go(line,col){
 async function select(line,col,length){await go(line,col);await driver.actions().keyDown(Key.SHIFT).sendKeys(...Array(length).fill(Key.RIGHT)).keyUp(Key.SHIFT).perform();}
 async function replaceText(text){
  const clipboard=(await import('clipboardy')).default;const previous=clipboard.readSync();
- try{clipboard.writeSync(text);await focusEditor();await driver.actions().keyDown(Key.COMMAND).sendKeys('a').keyUp(Key.COMMAND).keyDown(Key.COMMAND).sendKeys('v').keyUp(Key.COMMAND).perform();await waitFor(async()=>await readText()===text,'Pasted buffer differs from prepared text');}
+ try{clipboard.writeSync(text);await focusEditor();await driver.actions().keyDown(Key.COMMAND).sendKeys('a').keyUp(Key.COMMAND).keyDown(Key.COMMAND).sendKeys('v').keyUp(Key.COMMAND).perform();await waitFor(async()=>await readText()===text.replace(/\r\n/g,'\n'),'Pasted buffer differs from prepared text');}
  finally{clipboard.writeSync(previous);}
 }
 async function status(text){return !!await wb.getStatusBar().getItem(`INTERLIS: ${text}`);}

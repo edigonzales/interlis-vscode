@@ -9,7 +9,7 @@ async function enter(){await back();webview=new WebView();await webview.switchTo
 async function fresh(){await ui.waitFor(async()=>['FRESH','PARTIAL'].includes(await (await ui.driver.findElement(By.id('canvas'))).getAttribute('data-status')),'Diagram did not reach a current real view');}
 async function click(id){await (await ui.driver.findElement(By.id(id))).click();}
 async function rect(element){return element.getRect();}
-async function drag(x,y,dx,dy){await ui.driver.actions().move({x:Math.round(x),y:Math.round(y),origin:'viewport'}).press().move({x:Math.round(x+dx),y:Math.round(y+dy),origin:'viewport',duration:500}).release().perform();}
+async function dragElement(element,dx,dy){await ui.driver.actions().move({origin:element}).press().move({x:dx,y:dy,origin:'pointer',duration:500}).release().perform();}
 async function node(label){return ui.driver.findElement(By.css('[data-label='+JSON.stringify(label)+']'));}
 async function unchanged(){await back();await ui.openFile('Interactive.ili');assert.equal(await ui.copyText(),original);assert.equal(await ui.editor.isDirty(),dirty);assert.equal(digest(path.join(evidence,'Unicode Modelle/Interactive.ili')),sourceHash);}
 function record(id,actions,assertions){ui.record(id,actions,assertions);}
@@ -30,9 +30,9 @@ describe('Installed live Java diagram and native Sprotty editor',function(){
  });
  it('GUI-13 moves a node and a complete topic with native pointer drag and preserves source',async()=>{
   await enter();await fresh();await click('fit');let a=await node('A'),r=await rect(a);const before=await a.getAttribute('transform');const edgeBefore=await ui.driver.executeScript('return [...document.querySelectorAll(".sprotty-edge path")].map(e=>e.getAttribute("d"))');
-  await ui.capture('GUI-13-before');await drag(r.x+25,r.y+12,55,25);await ui.waitFor(async()=>await a.getAttribute('transform')!==before,'Node did not move');nodeTransform=await a.getAttribute('transform');
+  await ui.capture('GUI-13-before');await dragElement(await a.findElement(By.css('.interlis-title')),55,25);await ui.waitFor(async()=>await a.getAttribute('transform')!==before,'Node did not move');nodeTransform=await a.getAttribute('transform');
   const edgesAfter=await ui.driver.executeScript('return [...document.querySelectorAll(".sprotty-edge path")].map(e=>e.getAttribute("d"))');assert.notDeepEqual(edgesAfter,edgeBefore);await ui.capture('GUI-13-node-moved');
-  const topic=await ui.driver.findElement(By.css('[data-kind="TOPIC"]')),t=await rect(topic),childBefore=await rect(a),topicBefore=await topic.getAttribute('transform');await drag(t.x+24,t.y+12,40,20);await ui.waitFor(async()=>await topic.getAttribute('transform')!==topicBefore,'Topic did not move');const childAfter=await rect(a);assert.ok(childAfter.x-childBefore.x>25);assert.ok(childAfter.y-childBefore.y>10);
+  const topic=await ui.driver.findElement(By.css('[data-kind="TOPIC"]')),t=await rect(topic),childBefore=await rect(a),topicBefore=await topic.getAttribute('transform');await dragElement(await topic.findElement(By.css('.interlis-title')),40,20);await ui.waitFor(async()=>await topic.getAttribute('transform')!==topicBefore,'Topic did not move');const childAfter=await rect(a);assert.ok(childAfter.x-childBefore.x>25);assert.ok(childAfter.y-childBefore.y>10);
   await ui.capture('GUI-13-container-moved');fs.writeFileSync(path.join(evidence,'GUI-13-geometry.json'),JSON.stringify({before,nodeTransform,topicBefore,topicAfter:await topic.getAttribute('transform'),childBefore,childAfter},null,2));await unchanged();
   record('GUI-13',['native mouse drag class A','native mouse drag Topic header','copy buffer through native clipboard'],['node and incident paths moved','children move with container','disk hash text and dirty state unchanged']);
  });
@@ -41,10 +41,10 @@ describe('Installed live Java diagram and native Sprotty editor',function(){
   edgeIdentity=[await edge.getAttribute('data-source'),await edge.getAttribute('data-target')];
   const before=await line.getAttribute('d'),other=await ui.driver.executeScript('return Object.fromEntries([...document.querySelectorAll(".sprotty-edge")].map(e=>[e.dataset.edgeId,e.querySelector("path")?.getAttribute("d")]))');
   const hit=await ui.driver.executeScript('const p=arguments[0],edge=p.closest(".sprotty-edge");for(const fraction of [.25,.5,.75,.15,.85]){const point=p.getPointAtLength(p.getTotalLength()*fraction),s=new DOMPoint(point.x,point.y).matrixTransform(p.getScreenCTM());if(document.elementFromPoint(s.x,s.y)?.closest(".sprotty-edge")===edge)return {x:s.x,y:s.y};}return null;',line);assert.ok(hit,'No visible selectable edge segment');
-  await ui.driver.actions().move({x:Math.round(hit.x),y:Math.round(hit.y),origin:'viewport'}).click().perform();
+  const canvas=await ui.driver.findElement(By.id('canvas')),canvasBox=await ui.driver.executeScript('const r=arguments[0].getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};',canvas);await ui.driver.actions().move({origin:canvas,x:Math.round(hit.x-canvasBox.x-canvasBox.width/2),y:Math.round(hit.y-canvasBox.y-canvasBox.height/2)}).click().perform();
   await ui.waitFor(async()=>(await ui.driver.findElements(By.css('[data-edge-id='+JSON.stringify(id)+'] [data-handle-kind]'))).length>0,'Interior handles missing');
   assert.equal((await ui.driver.findElements(By.css('[data-handle-kind="source"],[data-handle-kind="target"]'))).length,0);
-  const handle=await ui.driver.findElement(By.css('[data-edge-id='+JSON.stringify(id)+'] [data-handle-kind]')),r=await rect(handle);await ui.capture('GUI-14-handle-before');await drag(r.x+r.width/2,r.y+r.height/2,28,28);
+  const handle=await ui.driver.findElement(By.css('[data-edge-id='+JSON.stringify(id)+'] [data-handle-kind]')),r=await rect(handle);await ui.capture('GUI-14-handle-before');await dragElement(handle,28,28);
   await ui.waitFor(async()=>await line.getAttribute('d')!==before,'Route did not change');assert.deepEqual([await edge.getAttribute('data-source'),await edge.getAttribute('data-target')],edgeIdentity);
   const after=await ui.driver.executeScript('return Object.fromEntries([...document.querySelectorAll(".sprotty-edge")].map(e=>[e.dataset.edgeId,e.querySelector("path")?.getAttribute("d")]))');for(const [otherId,d]of Object.entries(other))if(otherId!==id)assert.equal(after[otherId],d,'Unrelated edge route changed');
   await ui.capture('GUI-14-route-after');fs.writeFileSync(path.join(evidence,'GUI-14-route.json'),JSON.stringify({id,edgeIdentity,before,after:await line.getAttribute('d')},null,2));await unchanged();
@@ -80,11 +80,11 @@ describe('Installed live Java diagram and native Sprotty editor',function(){
   // Controlled transport fault: hold one genuine ELK result after computation. No success or model is fabricated.
   await ui.driver.executeScript(`const NativeWorker=window.Worker;window.__heldLayouts=[];window.__holdNextLayout=true;window.Worker=class extends NativeWorker {set onmessage(callback){super.onmessage=event=>{if(window.__holdNextLayout&&event.data?.data?.children){window.__holdNextLayout=false;window.__heldLayouts.push(()=>callback.call(this,event));}else callback.call(this,event);};}};`);
   await click('refresh');await ui.waitFor(async()=>await ui.driver.executeScript('return window.__heldLayouts.length===1'),'Actual layout response was not held');await ui.capture('GUI-17-held');
-  await back();await ui.openFile('Interactive.ili');const changed=original.replace('CLASS C=END C;','CLASS C=newAttribute:TEXT*12;END C;');await ui.replaceText(changed);
+  await back();await ui.openFile('Interactive.ili');const changed=original.replace('CLASS C=END C;','CLASS C=newAttribute:TEXT*12;END C;');await ui.replaceText(changed);assert.equal(await ui.copyText(),changed);
   await enter();await ui.waitFor(async()=>await ui.driver.executeScript('return document.querySelector("[data-label=\\"C\\"]")?.textContent.includes("newAttribute")&&["FRESH","PARTIAL"].includes(document.getElementById("canvas").dataset.status)'),'Current source did not replace the held generation');
   const current=await (await node('A')).getAttribute('transform');assert.equal(current,before,'Stable moved node lost its position');
   await ui.driver.executeScript('for(const release of window.__heldLayouts.splice(0))release();');await ui.waitFor(async()=>(await (await node('C')).getText()).includes('newAttribute'),'Late result replaced current view');assert.equal(await (await node('A')).getAttribute('transform'),before);await ui.capture('GUI-17-current');
-  await back();await ui.openFile('Interactive.ili');await ui.replaceText(original);await enter();await fresh();
+  await back();await ui.openFile('Interactive.ili');await ui.replaceText(original);assert.equal(await ui.copyText(),original);await enter();await fresh();
   record('GUI-17',['hold one real ELK Worker response','add source attribute with native paste','wait for newer live analysis','release the old actual response'],['current attribute shown','obsolete worker cannot publish','stable moved node retains geometry','source changes only through explicit text editing']);
  });
  it('GUI-18 keeps explicit panels isolated and follows another ILI file only after explicit activation',async()=>{
