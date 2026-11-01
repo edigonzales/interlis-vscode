@@ -1,0 +1,5 @@
+INTERLIS 2.4;
+MODEL Broken AT "https://example.org" VERSION "1" =
+  DOMAIN
+    Bounds = 0..10;
+END Broken.

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "coreCommit": "76df3815973597280845a9bb575fa399e9773ccc",
+  "coreCommit": "21e9ea3dd2a948578a64654cc2b187f82572958b",
   "protocolVersion": "lsp-3.17-baseline",
   "mainClass": "guru.interlis.lsp.Main",
   "serverVersion": "0.2.0-SNAPSHOT",
@@ -19,15 +19,15 @@
     },
     {
       "path": "lib/interlis-compiler-0.2.0-SNAPSHOT.jar",
-      "sha256": "5c3513718247b6714956b573e7b43ccce7ead977fbe2da52488476136740db12"
+      "sha256": "86460db600ab375a07bccd2c1996d7dbe21942e6ac0ddbffd57707ab1dec2c4c"
     },
     {
       "path": "lib/interlis-lsp-0.2.0-SNAPSHOT.jar",
-      "sha256": "d244a2a3d5358249367b049aaeb757d39d30605da2497c063bc03854df414090"
+      "sha256": "4c456c8171a7a6a047a5de4b22dc285d9fd6312808251e1d143dbf9fa6224a80"
     },
     {
       "path": "lib/interlis-model-0.2.0-SNAPSHOT.jar",
-      "sha256": "e75cadcb6745b4d31b1155f0690a151c24f0bc6e9d040e2228dad46b20f7941d"
+      "sha256": "c28c22fc522b2411032a35fee5e6c2b59ff435332fc52d7634aaa6f44b8d3848"
     },
     {
       "path": "lib/interlis-projection-0.2.0-SNAPSHOT.jar",
@@ -35,11 +35,11 @@
     },
     {
       "path": "lib/interlis-repository-0.2.0-SNAPSHOT.jar",
-      "sha256": "fb290c6ff3c82a8683f6cd852b4e7d51228b8b89768e68576087e8bc368db299"
+      "sha256": "7f8b20e0dc60e4f0291f55c26c22dd3e951486f6109b52dd83d2fe3d8536130d"
     },
     {
       "path": "lib/interlis-workspace-0.2.0-SNAPSHOT.jar",
-      "sha256": "a6763504894431fad80473d5789171513b8555bc050411532051ae0010820867"
+      "sha256": "e9efee37214c38e1292fd26d3f802c2ada1e25bf0abdb7a77b015ef8724085ad"
     },
     {
       "path": "lib/org.eclipse.lsp4j-0.23.1.jar",

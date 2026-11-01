@@ -2,9 +2,10 @@
 
 Desktop VS Code extension `edigonzales.interlis-vscode` using the Java INTERLIS
 language server. The initial development package supports the installed editor
-path on macOS arm64. Java25 must be configured explicitly. UML, external
-repositories, the improved diagnostics and bundled runtimes belong to later
-phases and are not implemented yet.
+path on macOS arm64. Java25 must be configured explicitly. The V1 development
+candidate adds Java repository resolution/cache, readable diagnostics and root
+compilation. Its independent acceptance is tracked in STATUS. UML and bundled
+runtimes remain later work.
 
 Install the local VSIX through **Extensions → Install from VSIX**. Set
 `interlisGuru.server.javaPath` in user settings to the absolute Java25 executable
@@ -14,11 +15,27 @@ Server Output**, **Stop Language Server**, **Restart Language Server** and
 **New Model from Template** are available in the palette. Templates create an
 unsaved document. Standard F12, formatting and diagnostics come from Java.
 
-The current baseline diagnostics still show technical message keys. Readable
-DE/EN diagnostics are V1 work. Other INTERLIS extensions can supply competing
+Diagnostics use the shared DE/EN formatter, including related locations.
+`interlisGuru.diagnostics.language` selects auto/de/en (auto follows the UI with
+English fallback). Other INTERLIS extensions can supply competing
 providers; this extension reports a conflict and leaves their management to you.
 Untrusted workspaces receive passive syntax resources; Java starts after trust.
 Nothing is published automatically.
+
+**Compile Current Model** compiles the current unsaved version through the Java
+gate, asking for a model when a file declares several. **Compile Workspace** is
+a separate explicit command. The Problems view retains the complete workspace
+analysis independently of a root compilation.
+
+`interlisGuru.repositories` is an ordered list (default models.interlis.ch). Local
+workspace sources and dirty buffers take precedence. The host uses the same
+repository traversal/version-chain rules as the Java compiler CLI. Its verified
+cache is in extension global storage on the workspace host; `interlisGuru.offline`
+uses those bytes without HTTP. Empty or corrupt required cache entries fail
+explicitly. `modelPins`, `sourcePins` and `resolutionLock` constrain exact remote
+identities. F12 opens external sources in readonly `interlis-source:` documents;
+opening one grants no edit authority. Handles expire on restart/reconfiguration;
+navigate again from the root to obtain a current source.
 
 ## Development and verification
 
@@ -35,6 +52,7 @@ npm run test:unit
 npm run verify:no-legacy-dependencies
 INTERLIS_JAVA=/absolute/jdk25/bin/java npm run package:vsix -- --target darwin-arm64
 INTERLIS_JAVA=/absolute/jdk25/bin/java npm run test:gui -- --suite smoke
+INTERLIS_JAVA=/absolute/jdk25/bin/java npm run test:gui -- --suite editor
 ```
 
 `stage:core` calls the existing Gradle `:interlis-lsp:installDist` task on the
@@ -50,8 +68,11 @@ user-data, extensions, workspace and evidence. `--vsix /absolute/file.vsix`
 chooses an explicit archive. `--canary missing-status` deliberately expects an
 impossible visible state and **must exit nonzero**. Unknown suites/arguments fail.
 No `--passWithNoTests` or hidden product commands are used. Workbench keyboard and
-mouse actions implement GUI-01–03; screenshots, case results and a manifest live
-under `build/reports/gui/smoke/<run>/`. This differs from API integration tests.
+mouse actions implement GUI-01–03 in smoke and GUI-01–11 in editor; screenshots,
+case results and a manifest live under `build/reports/gui/<suite>/<run>/`. The
+editor suite serves a controlled local HTTP repository, pins its fixture bytes
+and records request counts for offline assertions. A declared suite with missing
+cases fails. This differs from API integration tests.
 
 ```sh
 INTERLIS_JAVA=/absolute/jdk25/bin/java \

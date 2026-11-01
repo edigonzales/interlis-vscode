@@ -1,12 +1,12 @@
 # INTERLIS VS Code – aktueller Ausführungsstand
 
-**V0 PASS**, unabhängig und operativ validiert. **V1 als nächster Schritt freigegeben.**
+**V0 PASS**, unabhängig und operativ validiert. **V1 implementiert, eigene Qualifikation und unabhängiger Review werden abgeschlossen.**
 V2–V5 bleiben durch ihre jeweiligen unabhängigen Gates gesperrt. Kein Push/Release.
 
 | Phase | Stand | Geprüftes Produktpaar / Beleg |
 |---|---|---|
 | V0 | PASS, alle 7 ACs | Core `76df3815973597280845a9bb575fa399e9773ccc` / Extension `d8f8adeb89e26f8a979744b81299d51da45cf0fe`; [unveränderter Review](reviews/V0/attempt-02/review.md), [Verdict](reviews/V0/attempt-02/verdict.json), [äussere Prüfung](reviews/V0/attempt-02/outer-audit.json) |
-| V1 | Freigegeben, Umsetzung beginnt nach diesem reinen Dokucommit | Java-LSP-/Repository-/Editorparität, GUI-01–11 |
+| V1 | Eigene GUI-01–11 bestanden; unabhängiges PASS noch offen | Java-LSP-/Repository-/Editorparität, GUI-01–11 |
 | V2 | PLANNED | Ein neutraler gemeinsamer interaktiver Sprotty-/ELK-Renderer |
 | V3 | PLANNED | Vollständige UMLbedienung und aktuelle SVG-/PNG-Exporte |
 | V4 | PLANNED | Editorhilfen, Dokumentations-/Textformate |
@@ -20,9 +20,8 @@ AssignmentBase: Core `20b0029d824b3602d9a304320bf0feae4c35c1f9`, Extension
 
 EXT: `/Users/stefan/sources/interlis-vscode`, Branch `codex/vscode-extension`.
 CORE für diesen Auftrag: `/Users/stefan/sources/interlis-vscode-evidence/product-core`,
-Branch `codex/vscode-extension-core`, derzeit auf dem V0-Core-Kandidaten.
-Der ursprüngliche Core-Checkout `/Users/stefan/sources/interlis-java` enthält
-parallele fremde Arbeit und bleibt unangetastet. Der Wechsel von `20b0029…` auf
+Branch `codex/vscode-extension-lsp`, auf V1-Core `21e9ea3dd2a948578a64654cc2b187f82572958b` (enthält gepushtes `cf585ec1…`); siehe [V1-Bericht](implementation/V1.md).
+Der ursprüngliche Core-Checkout `/Users/stefan/sources/interlis-java` bleibt unangetastet; die inzwischen gepushte Repositoryarbeit wurde als Commit in den isolierten Zweig übernommen. Der Wechsel von `20b0029…` auf
 `76df381…` war eine externe Squash-Fortschreibung mit identischem vollständigem
 Tree; Originalstatus und Gründe stehen im [V0-Bericht](implementation/V0.md).
 Die anfängliche fremde `.DS_Store` im Extensionrepo bleibt ungetrackt erhalten.

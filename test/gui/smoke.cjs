@@ -1,42 +1,15 @@
 const assert=require('node:assert/strict');const fs=require('node:fs');const path=require('node:path');
 const {VSBrowser,Workbench,TextEditor,ProblemsView,MarkerType,By,Key}=require('vscode-extension-tester');
-const evidence=process.env.INTERLIS_GUI_EVIDENCE;if(!evidence)throw new Error('Missing GUI evidence directory');
-const completed=[];let driver,wb,editor;
-async function capture(name){fs.writeFileSync(path.join(evidence,name+'.png'),await driver.takeScreenshot(),'base64');}
-async function waitFor(fn,message){await driver.wait(async()=>{try{return await fn();}catch{return false;}},20000,message);}
-async function readText(){return await driver.executeScript('return [...document.querySelectorAll(".monaco-editor .view-lines .view-line")].map(e=>e.textContent.replace(/\\u00a0/g," ").replace(/\\u200b/g,"")).join("\\n")');}
-async function focusEditor(){await driver.actions().clear();await driver.wait(async()=>{try{for(const span of await driver.findElements(By.css('.monaco-editor .view-lines .view-line span span')))if((await span.getText()).trim()&&await span.isDisplayed()){await span.click();return true;}return false;}catch(error){if(error.name==='StaleElementReferenceError')return false;throw error;}},5000,'No stable visible editor text to focus');}
-async function palette(command, raw=false){
- await driver.actions().clear();await driver.actions().sendKeys(Key.F1).perform();
- const input=await driver.wait(async()=>{const fields=await driver.findElements(By.css('.quick-input-widget input'));for(const field of fields)if(await field.isDisplayed())return field;return false;},5000,'Palette input not visible');
- await input.sendKeys(Key.chord(Key.COMMAND,'a'),raw?command:'>'+command);
- await waitFor(async()=>await input.getAttribute('value')===(raw?command:'>'+command),'Palette text mismatch');
- if(!raw){await waitFor(async()=>{const rows=await driver.findElements(By.css('.quick-input-list .monaco-list-row'));for(const row of rows)if((await row.getText()).split('\n')[0]===command){await row.click();return true;}return false;},'Command not offered: '+command);}
- else await driver.actions().sendKeys(Key.ENTER).perform();
- await waitFor(async()=>{const widgets=await driver.findElements(By.css('.quick-input-widget'));return (await Promise.all(widgets.map(x=>x.isDisplayed()))).every(x=>!x);},'Palette did not close');await driver.actions().clear();
-}
-async function go(line,col){
- await focusEditor();await driver.actions().keyDown(Key.CONTROL).sendKeys('g').keyUp(Key.CONTROL).perform();
- const input=await driver.wait(async()=>{for(const field of await driver.findElements(By.css('.quick-input-widget input')))if(await field.isDisplayed())return field;return false;},5000,'Go to line input not visible');
- await input.sendKeys(Key.chord(Key.COMMAND,'a'),':'+line+','+col);await input.sendKeys(Key.ENTER);
- await waitFor(async()=>{const p=await editor.getCoordinates();return p[0]===line&&p[1]===col;},'Cursor did not reach target');
-}
-async function select(line,col,length){await go(line,col);await driver.actions().keyDown(Key.SHIFT).sendKeys(...Array(length).fill(Key.RIGHT)).keyUp(Key.SHIFT).perform();}
-async function replaceText(text){
- const clipboard=(await import('clipboardy')).default;const previous=clipboard.readSync();
- try{clipboard.writeSync(text);await focusEditor();await driver.actions().keyDown(Key.COMMAND).sendKeys('a').keyUp(Key.COMMAND).keyDown(Key.COMMAND).sendKeys('v').keyUp(Key.COMMAND).perform();await waitFor(async()=>await readText()===text,'Pasted buffer differs from prepared text');}
- finally{clipboard.writeSync(previous);}
-}
-async function status(text){return !!await wb.getStatusBar().getItem(`INTERLIS: ${text}`);}
-function record(id,actions,assertions){completed.push({id,actions,assertions,at:new Date().toISOString()});fs.writeFileSync(path.join(evidence,'cases.json'),JSON.stringify(completed,null,2));}
+const ui=require('./workbench.cjs');const {capture,waitFor,readText,focusEditor,palette,go,select,replaceText,status,record}=ui;
+const evidence=process.env.INTERLIS_GUI_EVIDENCE;let driver,wb,editor;
 describe('Installed INTERLIS editor smoke',function(){
  this.timeout(120000);
- before(async()=>{driver=VSBrowser.instance.driver;wb=new Workbench();await VSBrowser.instance.waitForWorkbench();});
+ before(async()=>{await ui.initialize();driver=ui.driver;wb=ui.wb;});
  afterEach(async function(){if(this.currentTest.state==='failed'){await capture('failure-'+this.currentTest.title.slice(0,6));fs.writeFileSync(path.join(evidence,'failure-dom.html'),await driver.getPageSource());}});
  it('GUI-01 installs and activates its own real language server from Explorer',async()=>{
   await palette('View: Show Explorer');
   const file=await driver.wait(async()=>{const files=await driver.findElements(By.css('[role="tree"][aria-label="Files Explorer"] [role="treeitem"][aria-label="Example.ili"]'));return files[0];},15000,'Fixture missing in Explorer');
-  await driver.actions().doubleClick(file).perform();editor=new TextEditor();
+  await driver.actions().doubleClick(file).perform();editor=new TextEditor();ui.editor=editor;
   await waitFor(()=>status(process.env.INTERLIS_GUI_CANARY?'Impossible readiness canary':'Ready'),process.env.INTERLIS_GUI_CANARY?'Negative canary: impossible visible status was not present':'Packaged server did not become ready');
   assert.equal(await wb.getStatusBar().getCurrentLanguage(),'INTERLIS');
   assert.match(await readText(),/MODEL Example/);

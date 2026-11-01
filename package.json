@@ -72,6 +72,14 @@
       {
         "command": "interlisGuru.newFromTemplate",
         "title": "INTERLIS: New Model from Template"
+      },
+      {
+        "command": "interlisGuru.compileCurrent",
+        "title": "INTERLIS: Compile Current Model"
+      },
+      {
+        "command": "interlisGuru.compileWorkspace",
+        "title": "INTERLIS: Compile Workspace"
       }
     ],
     "configuration": {
@@ -99,6 +107,94 @@
           "default": "off",
           "scope": "machine",
           "description": "Language Server Protocol trace. Verbose includes source contents; enable deliberately for diagnostics."
+        },
+        "interlisGuru.diagnostics.language": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "de",
+            "en"
+          ],
+          "default": "auto",
+          "scope": "window",
+          "description": "Diagnostic language; auto follows the VS Code UI with English fallback."
+        },
+        "interlisGuru.repositories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "https://models.interlis.ch/"
+          ],
+          "scope": "window",
+          "description": "Ordered model repositories. Local workspace models take precedence. Downloads require a trusted workspace."
+        },
+        "interlisGuru.offline": {
+          "type": "boolean",
+          "default": false,
+          "scope": "window",
+          "description": "Resolve external models only from the verified repository cache. No HTTP requests."
+        },
+        "interlisGuru.modelPins": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "modelName",
+              "modelVersion",
+              "sourceId",
+              "sha256"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "modelName": {
+                "type": "string"
+              },
+              "modelVersion": {
+                "type": "string"
+              },
+              "sourceId": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            }
+          },
+          "default": [],
+          "scope": "window",
+          "description": "Exact external model identities and original byte digests."
+        },
+        "interlisGuru.sourcePins": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "sourceId",
+              "sha256"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "sourceId": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            }
+          },
+          "default": [],
+          "scope": "window",
+          "description": "Exact external source/index byte digests."
+        },
+        "interlisGuru.resolutionLock": {
+          "type": "string",
+          "default": "",
+          "scope": "window",
+          "description": "Optional versioned resolution-lock XML from the Java compiler; an empty string disables replay."
         }
       }
     }
