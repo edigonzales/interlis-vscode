@@ -57,12 +57,11 @@ Outline, Repositories/Readonly und Rootcompile sind V1-Arbeit. UML, vollständig
 Editorhilfen und Exporte bleiben vollständig beauftragt, aber noch unimplementiert.
 Keine zweite Sprachengine und keine Altprojektabhängigkeit.
 
-## Für V1 mitnehmen
+## V1 zur unabhängigen Abnahme
 
-Lesbare DE/EN-Diagnostik/RelatedInformation, hierarchische Outline, Repositoryhost
-und readonly Quellen, rootbezogenes Compile und robuste Konfiguration. GUI-Fixierung
-von Analysebereitschaft vor F12, breitere Editorfixtures (Kommentare/Metaattribute/
-Warnung), verständlichere fehlende-Bundle-Meldungen und strengere Auswertung der
-GUI-/Serverlogs. Python3 wurde in einem Reviewerhilfsversuch blockiert und nie
-ausgeführt; kommende Reviewprofile sperren solche Befehle zusätzlich explizit.
-Neue PhaseBase vor V1-Codearbeit als echtes aktuelles Core-/Extensionpaar erfassen.
+Corekandidat `21e9ea3dd2a948578a64654cc2b187f82572958b` enthält die ausdrücklich
+berücksichtigte gepushte Repositorysuche und Cachearbeit bis `cf585ec1…`.
+Der [V1-Bericht](implementation/V1.md) beschreibt Umsetzung, Risikogates,
+Fehlversuche und die getrennten Rohbelege. Eigene GUI-01–11 sind nach visueller
+Korrektur des Theme-Orakels bestanden. Finale Qualifikation und unabhängiges
+Produktpaar-PASS sind noch offen; V2 bleibt gesperrt.
