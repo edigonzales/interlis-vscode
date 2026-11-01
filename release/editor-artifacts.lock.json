@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "coreCommit": "76df3815973597280845a9bb575fa399e9773ccc",
+  "protocolVersion": "lsp-3.17-baseline",
+  "mainClass": "guru.interlis.lsp.Main",
+  "serverVersion": "0.2.0-SNAPSHOT",
+  "files": [
+    {
+      "path": "lib/antlr4-runtime-4.13.2.jar",
+      "sha256": "dd3e8a13a2d669bf84fb8d834de35ce4875f27157698d206241ec8488aadcaf7"
+    },
+    {
+      "path": "lib/error_prone_annotations-2.48.0.jar",
+      "sha256": "b49c5c958316ed67a09c699dda9aa749caf434d51d863dea599ef36a49b9c855"
+    },
+    {
+      "path": "lib/gson-2.14.0.jar",
+      "sha256": "2cbd119bf1961c28788310963dc80ba65f58cdeec1dd139c8bdb1240faa2c36f"
+    },
+    {
+      "path": "lib/interlis-compiler-0.2.0-SNAPSHOT.jar",
+      "sha256": "5c3513718247b6714956b573e7b43ccce7ead977fbe2da52488476136740db12"
+    },
+    {
+      "path": "lib/interlis-lsp-0.2.0-SNAPSHOT.jar",
+      "sha256": "d244a2a3d5358249367b049aaeb757d39d30605da2497c063bc03854df414090"
+    },
+    {
+      "path": "lib/interlis-model-0.2.0-SNAPSHOT.jar",
+      "sha256": "e75cadcb6745b4d31b1155f0690a151c24f0bc6e9d040e2228dad46b20f7941d"
+    },
+    {
+      "path": "lib/interlis-projection-0.2.0-SNAPSHOT.jar",
+      "sha256": "46fc3a6ad1e35c19e1999c5df09251915fd6631e9c09f19bda9e2ac65b0ade41"
+    },
+    {
+      "path": "lib/interlis-repository-0.2.0-SNAPSHOT.jar",
+      "sha256": "fb290c6ff3c82a8683f6cd852b4e7d51228b8b89768e68576087e8bc368db299"
+    },
+    {
+      "path": "lib/interlis-workspace-0.2.0-SNAPSHOT.jar",
+      "sha256": "a6763504894431fad80473d5789171513b8555bc050411532051ae0010820867"
+    },
+    {
+      "path": "lib/org.eclipse.lsp4j-0.23.1.jar",
+      "sha256": "b16bbc6232a3946e03d537bb9be74e18489dbc6a8b8c5ab6cb7980854df8440f"
+    },
+    {
+      "path": "lib/org.eclipse.lsp4j.jsonrpc-0.23.1.jar",
+      "sha256": "4e1aa77474de1791d96dc55932fb46efdf53233548f38f62ba7376f8b0bc6650"
+    }
+  ]
+}

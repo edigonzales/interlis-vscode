@@ -1,0 +1,125 @@
+{
+  "name": "interlis-vscode",
+  "displayName": "INTERLIS",
+  "description": "INTERLIS 2.3/2.4 editing with the Java INTERLIS language server",
+  "version": "0.0.1",
+  "publisher": "edigonzales",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edigonzales/interlis-vscode.git"
+  },
+  "engines": {
+    "vscode": "^1.100.0",
+    "node": ">=22"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "extensionKind": [
+    "workspace"
+  ],
+  "main": "./out/extension.cjs",
+  "activationEvents": [
+    "onLanguage:interlis"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": "limited",
+      "description": "Syntax resources work; the Java language server requires workspace trust."
+    }
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "interlis",
+        "aliases": [
+          "INTERLIS"
+        ],
+        "extensions": [
+          ".ili",
+          ".ILI"
+        ],
+        "configuration": "./resources/language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "interlis",
+        "scopeName": "source.interlis",
+        "path": "./resources/syntaxes/interlis.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "interlis",
+        "path": "./resources/snippets/interlis.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "interlisGuru.restartServer",
+        "title": "INTERLIS: Restart Language Server"
+      },
+      {
+        "command": "interlisGuru.stopServer",
+        "title": "INTERLIS: Stop Language Server"
+      },
+      {
+        "command": "interlisGuru.showOutput",
+        "title": "INTERLIS: Show Language Server Output"
+      },
+      {
+        "command": "interlisGuru.newFromTemplate",
+        "title": "INTERLIS: New Model from Template"
+      }
+    ],
+    "configuration": {
+      "title": "INTERLIS",
+      "properties": {
+        "interlisGuru.server.javaPath": {
+          "type": "string",
+          "default": "",
+          "scope": "machine",
+          "description": "Explicit Java 25 executable. Required by the initial development distribution."
+        },
+        "interlisGuru.server.bundlePath": {
+          "type": "string",
+          "default": "",
+          "scope": "machine",
+          "description": "Explicit development server distribution. Empty uses the packaged server; every file must match the artifact lock."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node scripts/build.cjs",
+    "stage:core": "node scripts/stage-core.cjs",
+    "test:unit": "node --test test/unit/*.test.cjs",
+    "test:protocol": "node --test test/protocol.test.cjs",
+    "test:gui": "node scripts/gui.cjs",
+    "package:vsix": "node scripts/package.cjs",
+    "verify:no-legacy-dependencies": "node scripts/verify-dependencies.cjs",
+    "test:extension-host": "node scripts/extension-host.cjs",
+    "test:installed": "node scripts/gui.cjs --suite smoke",
+    "review": "node scripts/review.cjs"
+  },
+  "dependencies": {
+    "vscode-languageclient": "9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "22.19.0",
+    "@types/vscode": "1.100.0",
+    "@vscode/test-electron": "2.5.2",
+    "@vscode/vsce": "4.1.0",
+    "esbuild": "0.25.12",
+    "typescript": "5.9.3",
+    "vscode-extension-tester": "8.28.1",
+    "clipboardy": "5.3.2"
+  },
+  "overrides": {
+    "vscode-languageclient": {
+      "minimatch": "11.0.1"
+    }
+  }
+}

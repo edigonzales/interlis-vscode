@@ -1,0 +1,9 @@
+**
+!package.json
+!README.md
+!LICENSE
+!out/**
+!resources/**
+!release/editor-artifacts.lock.json
+!licenses/**
+!artifacts/server/**

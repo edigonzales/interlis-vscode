@@ -1,0 +1,5 @@
+{
+  "Model": {"prefix":"model", "body":["INTERLIS 2.4;", "", "MODEL ${1:Example} AT \"${2:https://example.org}\" VERSION \"${3:1.0}\" =", "  $0", "END ${1:Example}."], "description":"INTERLIS 2.4 model"},
+  "Topic": {"prefix":"topic", "body":["TOPIC ${1:Data} =", "  $0", "END ${1:Data};"]},
+  "Class": {"prefix":"class", "body":["CLASS ${1:Building} =", "  $0", "END ${1:Building};"]}
+}

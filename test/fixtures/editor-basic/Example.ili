@@ -1,0 +1,11 @@
+INTERLIS 2.4;
+
+MODEL Example AT "https://example.org" VERSION "1.0" =
+  DOMAIN
+    Height = 0..999;
+  TOPIC Data =
+    CLASS Building =
+      height : Height;
+    END Building;
+  END Data;
+END Example.
