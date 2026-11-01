@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "phase": "V1",
+  "candidate": {
+    "coreSha": "3b60e6c1309a4897ad6d0e99f6d8dfd137520ca9",
+    "extensionSha": "d237d92fbe22f6fb41d7d6f3f0965c0d080e30e9"
+  },
+  "validatedAt": "2026-11-01T18:32:08.341Z",
+  "validIndependentPass": true,
+  "reviewerSession": "ses_e67b64df8ffeHhPoi417w5C1r4",
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "apiHost": "api.deepseek.com",
+  "processExit": 0,
+  "guardStatus": "passed",
+  "guardExit": 0,
+  "criteria": [
+    {
+      "id": "V1-01",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V1-02",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V1-03",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V1-04",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V1-05",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V1-06",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V1-07",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V1-08",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V1-09",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V1-10",
+      "status": "fulfilled"
+    }
+  ],
+  "trees": {
+    "core": {
+      "head": "3b60e6c1309a4897ad6d0e99f6d8dfd137520ca9",
+      "branch": "HEAD",
+      "dirty": "",
+      "untracked": []
+    },
+    "extension": {
+      "head": "d237d92fbe22f6fb41d7d6f3f0965c0d080e30e9",
+      "branch": "HEAD",
+      "dirty": "",
+      "untracked": [
+        "opencode.json"
+      ]
+    }
+  },
+  "testCounts": {
+    "interlis-lsp": {
+      "tests": 65,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "interlis-repository": {
+      "tests": 64,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "interlis-workspace": {
+      "tests": 23,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "interlis-model": {
+      "tests": 23,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "interlis-compiler": {
+      "tests": 766,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "imageAttributions": [
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V1-r2/extension/build/reports/gui/editor/2026-11-01T18-13-25-681Z/GUI-03-restarted.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V1-r2/extension/build/reports/gui/editor/2026-11-01T18-13-25-681Z/GUI-04-german.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V1-r2/extension/build/reports/gui/editor/2026-11-01T18-13-25-681Z/GUI-07-undone.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V1-r2/extension/build/reports/gui/editor/2026-11-01T18-13-25-681Z/GUI-08-valid-root.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V1-r2/extension/build/reports/gui/editor/2026-11-01T18-13-25-681Z/GUI-09-offline-miss.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V1-r2/extension/build/reports/gui/editor/2026-11-01T18-13-25-681Z/GUI-09-ambiguity.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V1-r2/extension/build/reports/gui/editor/2026-11-01T18-13-25-681Z/GUI-11-light.png",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/editor/2026-11-01T18-02-44-562Z/GUI-01-ready.png",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/editor/2026-11-01T18-02-44-562Z/GUI-02-error.png",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/editor/2026-11-01T18-02-44-562Z/GUI-04-german.png",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/editor/2026-11-01T18-02-44-562Z/GUI-04-related.png",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/editor/2026-11-01T18-02-44-562Z/GUI-05-hover.png",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/editor/2026-11-01T18-02-44-562Z/GUI-06-references.png",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/editor/2026-11-01T18-02-44-562Z/GUI-07-reference.png",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/editor/2026-11-01T18-02-44-562Z/GUI-08-valid-root.png",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/editor/2026-11-01T18-02-44-562Z/GUI-09-offline.png",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/editor/2026-11-01T18-02-44-562Z/GUI-09-online-middle.png",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/editor/2026-11-01T18-02-44-562Z/GUI-09-online-leaf.png",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/editor/2026-11-01T18-02-44-562Z/GUI-10-blocked-input.png",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/editor/2026-11-01T18-02-44-562Z/GUI-10-hover.png",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/editor/2026-11-01T18-02-44-562Z/GUI-11-outline.png",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/editor/2026-11-01T18-02-44-562Z/GUI-11-light.png",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/editor/2026-11-01T18-02-44-562Z/GUI-11-completion.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V1-r2/evidence/counterprobe/gui/2026-11-01T18-22-09-861Z/CP-01-dirty-import-navigation.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V1-r2/evidence/counterprobe/gui/2026-11-01T18-22-09-861Z/CP-01-current-root-succeeds.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V1-r2/evidence/counterprobe/gui/2026-11-01T18-22-09-861Z/CP-01-broken-root-rejected.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V1-r2/evidence/counterprobe/gui/2026-11-01T18-22-09-861Z/CP-02-readonly-typing.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V1-r2/evidence/counterprobe/gui/2026-11-01T18-22-09-861Z/CP-02-readonly-no-rename.png"
+  ],
+  "reportImageAttribution": "Relative basenames in report section6 resolve to explicit per-run visuallyInspectedImages in verdict: seven independent editor images, sixteen implementer current-pair images, five independent counterprobe images. Inventory images alone are not treated as view claims.",
+  "limits": [
+    "CP-02 report prose additionally mentions hover; no CP-02 hover assertion is relied on. Hover is covered by actual independent GUI-10 and LSP tests.",
+    "Coalescing tests prove cancellation/sharing/offline; IO queue bounds are explicit in coordinator code, not a separate coalescing test assertion.",
+    "Portable dirty-source raw results retained as historical unchanged-input sentinels; clean cumulative portable execution remains V5 duty."
+  ],
+  "reportSha256": "2277a0aebbe348fa85e22d5aa6e53ae66e56f18d6d55cd6707e5c71f92422ed2",
+  "verdictSha256": "e9cc18a520fe921a6460041ffa8ba2c7f59597bd22a2039a60729aa384353811",
+  "transportSha256": "2c85f9f98bc0665890bb94924e340b063bbc67f5d9a95a27ab445b91b1c3c5da",
+  "guardSha256": "e48e13c350955573a62675e81e06fcfff011effaf2e8f50e438f805314fd1e20",
+  "sessionSha256": "a2a75e6ea767607bc5b96036e355ecdd68a980c9475e0c9dcd03c69a37c0357b",
+  "vsixSha256": "07071ebe6ebee9c803ce53bc367dd7b0fc51d095a028c01f7cef3fc8a30e7049"
+}

@@ -1,0 +1,298 @@
+{
+  "schemaVersion": 1,
+  "phase": "V1",
+  "assignmentBase": {
+    "coreSha": "20b0029d824b3602d9a304320bf0feae4c35c1f9",
+    "extensionSha": "73badd9807f407aea048d397af5549fe907a1501"
+  },
+  "phaseBase": {
+    "coreSha": "76df3815973597280845a9bb575fa399e9773ccc",
+    "extensionSha": "31806bfbe98489d4d11f9bf87794cf6937f5d9de"
+  },
+  "candidate": {
+    "coreSha": "3b60e6c1309a4897ad6d0e99f6d8dfd137520ca9",
+    "extensionSha": "d237d92fbe22f6fb41d7d6f3f0965c0d080e30e9"
+  },
+  "worktrees": {
+    "core": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V1-r2/core",
+    "extension": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V1-r2/extension"
+  },
+  "evidenceDirectory": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V1-r2/evidence",
+  "plan": "docs/implementation/vscode-extension/EXECUTION_PLAN.md",
+  "implementationReport": "docs/implementation/vscode-extension/implementation/V1.md",
+  "criteria": [
+    "V1-01",
+    "V1-02",
+    "V1-03",
+    "V1-04",
+    "V1-05",
+    "V1-06",
+    "V1-07",
+    "V1-08",
+    "V1-09",
+    "V1-10"
+  ],
+  "requiredGuiCases": [
+    "GUI-01",
+    "GUI-02",
+    "GUI-03",
+    "GUI-04",
+    "GUI-05",
+    "GUI-06",
+    "GUI-07",
+    "GUI-08",
+    "GUI-09",
+    "GUI-10",
+    "GUI-11"
+  ],
+  "implementationEvidence": "/Users/stefan/sources/interlis-vscode/build",
+  "supplementalEvidence": [
+    "/Users/stefan/sources/interlis-vscode-evidence/preflight",
+    "/Users/stefan/sources/interlis-vscode-evidence/qualification",
+    "/Users/stefan/sources/interlis-vscode-evidence/phases/V1",
+    "/Users/stefan/sources/interlis-vscode/artifacts",
+    "/Users/stefan/.sdkman/candidates/java/25.0.3-tem"
+  ],
+  "guiTools": {
+    "cache": "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage",
+    "vscodeExecutable": "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage/Visual Studio Code.app/Contents/MacOS/Code",
+    "javaHome": "/Users/stefan/.sdkman/candidates/java/25.0.3-tem",
+    "vscode": "1.140.0",
+    "extester": "8.28.1",
+    "chromedriver": "150.0.7871.250"
+  },
+  "requiredChecks": [
+    {
+      "id": "prepare-dependencies",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "ci",
+        "--ignore-scripts"
+      ],
+      "reason": "Exact lock in fresh detached checkout; no interpreter helpers"
+    },
+    {
+      "id": "prepare-core-distribution",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "stage:core",
+        "--",
+        "--core-dir",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V1-r2/core"
+      ],
+      "reason": "Exact committed Core, verify staged hashes and unchanged lock"
+    },
+    {
+      "id": "build",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "reason": "TypeScript, actual client bundle and license graph"
+    },
+    {
+      "id": "unit",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "test:unit"
+      ],
+      "reason": "Manifest/host launch/security resources"
+    },
+    {
+      "id": "protocol",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "test:protocol"
+      ],
+      "reason": "Real stdio server: handshake, typed root compile, readonly content and rejected arbitrary URI"
+    },
+    {
+      "id": "java-lsp",
+      "cwd": "core",
+      "argv": [
+        "./gradlew",
+        ":interlis-lsp:test",
+        "--no-daemon"
+      ],
+      "reason": "All LSP65; scheduling/sync/configuration/closed rename, repository/readOnly/root diagnostics and concurrent IO"
+    },
+    {
+      "id": "dependency-graph",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "verify:no-legacy-dependencies"
+      ],
+      "reason": "Installed dependency graph, lock and actual bundle"
+    },
+    {
+      "id": "extension-host",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "test:extension-host"
+      ],
+      "reason": "Actual isolated VS Code API paths, distinct from real UI"
+    },
+    {
+      "id": "installed-gui",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "test:gui",
+        "--",
+        "--suite",
+        "editor",
+        "--vsix",
+        "/Users/stefan/sources/interlis-vscode/build/packages/interlis-vscode-darwin-arm64.vsix",
+        "--cache",
+        "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage"
+      ],
+      "reason": "GUI01–11 actual installed editor, German related diagnostics, root compile, pinned transitive source, offline restart, readonly, Outline/folding/completion/theme"
+    },
+    {
+      "id": "negative-canary",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "test:gui",
+        "--",
+        "--suite",
+        "smoke",
+        "--vsix",
+        "/Users/stefan/sources/interlis-vscode/build/packages/interlis-vscode-darwin-arm64.vsix",
+        "--cache",
+        "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage",
+        "--canary",
+        "missing-status"
+      ],
+      "expectedExit": 1,
+      "reason": "Impossible visible expectation must fail specifically; current-pair raw evidence may be independently verified"
+    }
+  ],
+  "notRequiredChecks": [
+    {
+      "id": "full-compiler-conformance-corpus",
+      "reason": "No parser/norm change; verify affected model7/compiler64 shared import/request-diagnostic/formatter/lifecycle/query sentinels and JS/WasmGC repositoryDiagnosticCheck from V1-shared-sentinels, original logs and unchanged source inputs. No blanket releaseCheckP3."
+    },
+    {
+      "id": "all-browser-safari-diagram",
+      "reason": "No browser/projection/renderer change in V1; V2 begins only after current pair acceptance."
+    },
+    {
+      "id": "cross-platform-runtime-and-remote",
+      "reason": "Mandatory V5 work, not claimed for V1 external Java25/macOS arm64 development artifact."
+    }
+  ],
+  "artifacts": [
+    {
+      "kind": "vsix",
+      "path": "/Users/stefan/sources/interlis-vscode/build/packages/interlis-vscode-darwin-arm64.vsix",
+      "sha256": "07071ebe6ebee9c803ce53bc367dd7b0fc51d095a028c01f7cef3fc8a30e7049"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/antlr4-runtime-4.13.2.jar",
+      "sha256": "dd3e8a13a2d669bf84fb8d834de35ce4875f27157698d206241ec8488aadcaf7"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/error_prone_annotations-2.48.0.jar",
+      "sha256": "b49c5c958316ed67a09c699dda9aa749caf434d51d863dea599ef36a49b9c855"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/gson-2.14.0.jar",
+      "sha256": "2cbd119bf1961c28788310963dc80ba65f58cdeec1dd139c8bdb1240faa2c36f"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/interlis-compiler-0.2.0-SNAPSHOT.jar",
+      "sha256": "86460db600ab375a07bccd2c1996d7dbe21942e6ac0ddbffd57707ab1dec2c4c"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/interlis-lsp-0.2.0-SNAPSHOT.jar",
+      "sha256": "56a93ee062b846c1867f82472a144d4c9bd4912c079c8ff08606c6d1105381be"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/interlis-model-0.2.0-SNAPSHOT.jar",
+      "sha256": "c28c22fc522b2411032a35fee5e6c2b59ff435332fc52d7634aaa6f44b8d3848"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/interlis-projection-0.2.0-SNAPSHOT.jar",
+      "sha256": "46fc3a6ad1e35c19e1999c5df09251915fd6631e9c09f19bda9e2ac65b0ade41"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/interlis-repository-0.2.0-SNAPSHOT.jar",
+      "sha256": "7f8b20e0dc60e4f0291f55c26c22dd3e951486f6109b52dd83d2fe3d8536130d"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/interlis-workspace-0.2.0-SNAPSHOT.jar",
+      "sha256": "e9efee37214c38e1292fd26d3f802c2ada1e25bf0abdb7a77b015ef8724085ad"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/org.eclipse.lsp4j-0.23.1.jar",
+      "sha256": "b16bbc6232a3946e03d537bb9be74e18489dbc6a8b8c5ab6cb7980854df8440f"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/org.eclipse.lsp4j.jsonrpc-0.23.1.jar",
+      "sha256": "4e1aa77474de1791d96dc55932fb46efdf53233548f38f62ba7376f8b0bc6650"
+    },
+    {
+      "kind": "runtime",
+      "path": "/Users/stefan/.sdkman/candidates/java/25.0.3-tem/bin/java",
+      "sha256": "0a1eea36b7899323b32caab6f1d0e416ad7208792b076391278062efab4b15d8",
+      "note": "External explicit Java25; runtime bundling remains V5"
+    }
+  ],
+  "implementationRuns": {
+    "qualification": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V1-final-r4/qualification.json",
+    "guard": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V1-final-r4/guard.json",
+    "guiManifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/editor/2026-11-01T18-02-44-562Z/manifest.json",
+    "canaryManifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/smoke/2026-11-01T18-04-19-707Z/manifest.json",
+    "javaEvidence": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V1-coalescing",
+    "repositoryWorkspaceCliEvidence": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V1-editor-contracts-r4",
+    "sharedSentinels": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V1-shared-sentinels",
+    "modelIdentity": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V1-r2/evidence/model-identity.json"
+  },
+  "allowedReuse": {
+    "rule": "Verify exact current-pair raw own qualification for extension/API/GUI and actual artifact hashes. Independently run riskiest affected tests and a new real installed GUI variant. For unchanged Repository64/Workspace23/CLI30 and model7/compiler64/JS/WasmGC evidence, verify relevant committed input identities against recorded originals. Do not duplicate broad corpora. Clearly distinguish your own runs from verified raw evidence.",
+    "latestLsp": {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V1-coalescing",
+      "tests": 65,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "scope": "Same final Core LSP source contents, run immediately before Core commit."
+    }
+  },
+  "counterprobeRequirement": "Independently devise and execute a new Workspace/Dirty/Repository counterprobe using your own fixture, including real installed GUI actions distinct from implementer fixtures. Check an unsaved import overriding a closed disk source, readonly external navigation after open, or unrelated invalid model excluded from current root; inspect closed rename revision conflict guarantees. Candidate tracked files remain unchanged. Read actual image paths and claim only successful reads in this session.",
+  "scopeNotes": [
+    "No preset verdict. Inspect all V1 criteria independently, not just the supplied passing commands.",
+    "User explicitly requested latest pushed repository work cf585ec; included in candidate. Original Core checkout contains unrelated uncommitted user docs; never modify it.",
+    "Unused V1-r1 detached trees were prepared before final self-fixes but no independent reviewer was launched there. This is the first independent V1 attempt.",
+    "Preserve exploratory failures. V1-final-r1 failed Outline cursor timing; a previous development green theme screenshot was rejected by outer visual audit; current qualification is fresh after actual UI assertions.",
+    "Core phaseBase unchanged despite adopted upstream; inspect entire phase diff and cumulative shared effects.",
+    "Some docs describe development GUI runs before final qualification; current exact-pair raw qualification linked above is authoritative evidence to inspect, not a self-issued independent PASS."
+  ]
+}

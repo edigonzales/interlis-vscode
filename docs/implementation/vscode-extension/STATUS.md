@@ -1,67 +1,67 @@
 # INTERLIS VS Code – aktueller Ausführungsstand
 
-**V0 PASS**, unabhängig und operativ validiert. **V1 implementiert, eigene Qualifikation und unabhängiger Review werden abgeschlossen.**
-V2–V5 bleiben durch ihre jeweiligen unabhängigen Gates gesperrt. Kein Push/Release.
+**V0 und V1 PASS**, unabhängig und operativ validiert. **V2 beginnt jetzt.**
+V3–V5 bleiben bis zu ihren jeweiligen unabhängigen Gates gesperrt. Kein Push/Release.
 
 | Phase | Stand | Geprüftes Produktpaar / Beleg |
 |---|---|---|
-| V0 | PASS, alle 7 ACs | Core `76df3815973597280845a9bb575fa399e9773ccc` / Extension `d8f8adeb89e26f8a979744b81299d51da45cf0fe`; [unveränderter Review](reviews/V0/attempt-02/review.md), [Verdict](reviews/V0/attempt-02/verdict.json), [äussere Prüfung](reviews/V0/attempt-02/outer-audit.json) |
-| V1 | Eigene GUI-01–11 bestanden; unabhängiges PASS noch offen | Java-LSP-/Repository-/Editorparität, GUI-01–11 |
-| V2 | PLANNED | Ein neutraler gemeinsamer interaktiver Sprotty-/ELK-Renderer |
+| V0 | PASS, alle7 ACs | Core `76df3815973597280845a9bb575fa399e9773ccc` / Extension `d8f8adeb89e26f8a979744b81299d51da45cf0fe`; [Originalreview](reviews/V0/attempt-02/review.md), [äussere Prüfung](reviews/V0/attempt-02/outer-audit.json) |
+| V1 | PASS, alle10 ACs | Core `3b60e6c1309a4897ad6d0e99f6d8dfd137520ca9` / Extension `d237d92fbe22f6fb41d7d6f3f0965c0d080e30e9`; [Originalreview](reviews/V1/attempt-01/review.md), [Verdict](reviews/V1/attempt-01/verdict.json), [äussere Prüfung](reviews/V1/attempt-01/outer-audit.json) |
+| V2 | IN_PROGRESS | Ein neutraler gemeinsamer interaktiver Sprotty-/ELK-Renderer |
 | V3 | PLANNED | Vollständige UMLbedienung und aktuelle SVG-/PNG-Exporte |
-| V4 | PLANNED | Editorhilfen, Dokumentations-/Textformate |
-| V5 | PLANNED | Gebündelte Runtimes, reale Plattformen/Remote, kumulative 56-AC-Abnahme |
+| V4 | PLANNED | Editorhilfen und Dokumentations-/Textformate |
+| V5 | PLANNED | Gebündelte Runtimes, reale Plattformen/Remote, kumulative56-AC-Abnahme |
 
 ## Unveränderliche Gesamtbasis und Arbeitsbäume
 
 AssignmentBase: Core `20b0029d824b3602d9a304320bf0feae4c35c1f9`, Extension
-`73badd9807f407aea048d397af5549fe907a1501`. V0-phaseBase war identisch und blieb
-über alle Reparaturen unverändert. Keine Null-SHAs.
+`73badd9807f407aea048d397af5549fe907a1501`. Die jeweilige phaseBase bleibt über
+Nacharbeit unverändert; die nächste Basis wird nach diesem reinen Archiv-Dokucommit
+extern festgehalten. Keine Null-SHAs oder Selbstreferenz.
 
 EXT: `/Users/stefan/sources/interlis-vscode`, Branch `codex/vscode-extension`.
-CORE für diesen Auftrag: `/Users/stefan/sources/interlis-vscode-evidence/product-core`,
-Branch `codex/vscode-extension-lsp`, auf V1-Core `3b60e6c1309a4897ad6d0e99f6d8dfd137520ca9` (enthält gepushtes `cf585ec1…`); siehe [V1-Bericht](implementation/V1.md).
-Der ursprüngliche Core-Checkout `/Users/stefan/sources/interlis-java` bleibt unangetastet; die inzwischen gepushte Repositoryarbeit wurde als Commit in den isolierten Zweig übernommen. Der Wechsel von `20b0029…` auf
-`76df381…` war eine externe Squash-Fortschreibung mit identischem vollständigem
-Tree; Originalstatus und Gründe stehen im [V0-Bericht](implementation/V0.md).
-Die anfängliche fremde `.DS_Store` im Extensionrepo bleibt ungetrackt erhalten.
+CORE: `/Users/stefan/sources/interlis-vscode-evidence/product-core`, Branch
+`codex/vscode-extension-lsp`. Der Originalcheckout `/Users/stefan/sources/interlis-java`
+bleibt unangetastet. Auf Nutzerhinweis wurden seine gepushten Repository-/Cache-
+Arbeiten bis `cf585ec1ea2270bafed4083a8ebfa2e68de05133` übernommen; spätere fremde
+uncommittete Dokumente bleiben ausgeschlossen. Fremde `.DS_Store` bleibt ungetrackt.
+Die frühere externe Squash-Fortschreibung `20b0029…` → `76df381…` besass identischen
+vollständigen Tree; Originalstatus im [V0-Bericht](implementation/V0.md).
 
-## V0-Belege und tatsächliche Grenzen
+## Tatsächliche unabhängige Abnahmen
 
-OpenCode2.0.28 mit `deepseek/deepseek-flash`, direkter Host `api.deepseek.com`;
-Anbieterzuordnung und tatsächliche Sessionmetadaten als DeepSeek-V4.1-Flash-1017
-geprüft. Akzeptierte Session `ses_e6829e6d3ffePmDs0M8Plx1SAp`: ProzessExit0,
-Guard passed/Exit0, beide detached Reviewtrees unverändert. Bericht und Verdict
-stimmen überein; alle Bild-Lesebehauptungen mit tatsächlichen Aufrufen abgeglichen.
-[Unveränderte Versuche und Prozessnotizen](reviews/V0/PROCESS_NOTES.md).
+OpenCode2.0.28, Provider `deepseek`, API-Modell `deepseek-flash`, direkt
+`api.deepseek.com`, offizielle aktuelle Zuordnung DeepSeek-V4.1-Flash-1017.
+V0-Session `ses_e6829e6d3ffePmDs0M8Plx1SAp`; V1-Session
+`ses_e67b64df8ffeHhPoi417w5C1r4`. Je ProzessExit0/Guard passed0 und unveränderte
+detached Trees. Alle konkreten Sichtungsbehauptungen gegen tatsächliche Reads
+geprüft. V0-Prozessgeschichte unter [PROCESS_NOTES](reviews/V0/PROCESS_NOTES.md).
 
-Eigene Qualifikation: `…/interlis-vscode-evidence/qualification/V0-r4/`.
-Akzeptierter unabhängiger Lauf: `…/interlis-vscode-evidence/reviews/V0-r3/evidence/`.
-Frisch geprüft: 5 TS-/Hosttests, 1 entpackter stdio-Prozesstest, 6 gezielte Java-LSPtests,
-3 Extension-Host-Prüfgruppen und GUI-01–03 (3/3). Negativcanary korrekt Exit1;
-eigene neue installierte Tamper-GUIprobe des Reviewers (1/1). Keine Rest-Java-PIDs.
-Kein globaler Compiler-/Conformance-/Browserkorpuslauf, weil Java/Parser/IR/Browser
-in V0 unverändert blieben; Auswahl unabhängig bestätigt.
+V1: eigene finale Qualifikation `…/qualification/V1-final-r4`; unabhängige Rohbelege
+`…/reviews/V1-r2/evidence` jeweils unter `interlis-vscode-evidence`. Eigene und
+unabhängige installierte GUI jeweils11/11; richtige Negativcanary, eigene neue
+Reviewer-Gegenproben2/2. Frisch unabhängig LSP65, Repository64, Workspace23,
+Model23/Compiler766, Unit5, echter stdio-Transport1 und Extension-Host. Keine
+Rest-Java-PIDs. Einzelheiten und Fehlversuche im [V1-Bericht](implementation/V1.md).
 
-VSIX: `build/packages/interlis-vscode-darwin-arm64.vsix`, SHA-256
-`1f2142f761594705d44390cdf382d610cfeebb90ff3ce824b054bedf3cbfa38d`.
-11 serverseitige JARs sind im [Artefaktlock](../../../release/editor-artifacts.lock.json)
-gepinnt. Alle Nutzdateien reproduzierbar identisch; ZIP-Zeitstempel verändern den
-Containerhash bei erneutem Packen. Primär geprüft: macOS arm64, VSCode1.140.0,
-ExTester8.28.1, ChromeDriver150.0.7871.250, externes Temurin25.0.3.
-Keine Linux-/Windows-/Remote- oder Runtimebündelungsbehauptung vor V5.
+Aktuelles V1-VSIX: `build/packages/interlis-vscode-darwin-arm64.vsix`, SHA-256
+`07071ebe6ebee9c803ce53bc367dd7b0fc51d095a028c01f7cef3fc8a30e7049`.
+Elf JARs im [Artefaktlock](../../../release/editor-artifacts.lock.json).
+Primärplattform macOS arm64, VSCode1.140.0, ExTester8.28.1,
+ChromeDriver150.0.7871.250, externes Temurin25.0.3. ZIP-Zeitstempel können beim
+erneuten Packen den Containerhash ändern; Nutzdateien werden separat geprüft.
 
-V0 liefert eine installierte dünne Editorintegration, einfache Snippets/Vorlage,
-Syntax, Status/Output und Stop/Restart. Die Diagnoseprosa ist noch technisch;
-Outline, Repositories/Readonly und Rootcompile sind V1-Arbeit. UML, vollständige
-Editorhilfen und Exporte bleiben vollständig beauftragt, aber noch unimplementiert.
-Keine zweite Sprachengine und keine Altprojektabhängigkeit.
+## Grenzen und nächster Umfang
 
-## V1 zur unabhängigen Abnahme
+V1 liefert zentrale Diagnoseprosa/RelatedInformation, hierarchische Outline,
+Repositoryhost mit transitivem Cache/Offline, readonly Quellhandles und explizites
+Current-/Workspacecompile. Standardqueries und versionierte Edits bleiben in Java.
+Einige DE-Regelphrasen sind noch englisch; Restart kann gleichnamige readonly Tabs
+hinterlassen. Die äussere Prüfung hält kleine Prosa-/Beleggrenzen transparent fest.
 
-Corekandidat `3b60e6c1309a4897ad6d0e99f6d8dfd137520ca9` enthält die ausdrücklich
-berücksichtigte gepushte Repositorysuche und Cachearbeit bis `cf585ec1…`.
-Der [V1-Bericht](implementation/V1.md) beschreibt Umsetzung, Risikogates,
-Fehlversuche und die getrennten Rohbelege. Eigene GUI-01–11 sind nach visueller
-Korrektur des Theme-Orakels bestanden. Finale Qualifikation und unabhängiges
-Produktpaar-PASS sind noch offen; V2 bleibt gesperrt.
+UML, vollständige Editorhilfen und Exporte bleiben vollständig beauftragt und
+unimplementiert. V2 liefert zuerst echte Node-/Container-/Routeinteraktion aus
+einer gemeinsamen neutralen Sprotty-/ELK-Quelle. Keine zweite Sprachengine oder
+Altprojektabhängigkeit. Linux/Windows/Remote und Runtimebündelung sind V5-Pflicht;
+ein sauberer kumulativer Portablelauf ebenfalls. Kein pauschaler sachfremder
+Korpus-/Benchmark-/Safari-/releaseCheckP3-Lauf.

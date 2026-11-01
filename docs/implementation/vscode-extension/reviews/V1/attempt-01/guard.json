@@ -1,0 +1,81 @@
+{
+  "guardPid": 77314,
+  "gitHead": "3b60e6c1309a4897ad6d0e99f6d8dfd137520ca9",
+  "dirty": "",
+  "status": "passed",
+  "startedAt": "2026-11-01T18:05:28.513Z",
+  "command": [
+    "/bin/sh",
+    "-c",
+    "cd \"$1\" || exit 1; shift; exec \"$@\"",
+    "interlis-review",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V1-r2/extension",
+    "/Users/stefan/.opencode/bin/opencode",
+    "run",
+    "--standalone",
+    "--model",
+    "deepseek/deepseek-flash",
+    "--format",
+    "json",
+    "--file",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V1-r2/extension/docs/implementation/vscode-extension/EXECUTION_PLAN.md",
+    "--file",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V1-r2/extension/docs/implementation/vscode-extension/FEATURE_AUDIT.md",
+    "--file",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V1-r2/extension/docs/implementation/vscode-extension/GUI_TEST_MATRIX.md",
+    "--file",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V1-r2/extension/docs/implementation/vscode-extension/OPENCODE_REVIEW_PROMPT.md",
+    "--file",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V1-r2/evidence/request.json",
+    "Pruefe die bezeichnete Phase eigenstaendig an beiden Kandidaten-SHAs. Lies alle verbindlichen Dokumente und den Diff, pruefe jede Muss-AC, fuehre faellige Tests und eigene echte installierte GUI-Gegenproben aus. Lies und betrachte die relevanten Bilder. Keine Produktdateien aendern, kein Python, keine Publikation, keine Credentials lesen oder ausgeben. Schreibe review.md und verdict.json ausschliesslich in den Evidenceordner. Kein vorgegebenenes Urteil; nur deine unabhaengige Bewertung. Ein inhaltliches PASS ersetzt nicht den aeusseren Prozessabschluss, den Codex danach prueft."
+  ],
+  "path": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/interlis-without-python-kT3fTd/bin",
+  "firefoxContentSandbox": "disabled only in this confined test environment to avoid sandbox_init EPERM; outer OS execution filter remains inherited",
+  "profile": "(version 1)(allow default)(deny process-exec (regex #\".*/([Pp]ython[^/]*|[Pp]y[Pp]y[^/]*|[Pp][Ii][Pp][0-9.]*|[Uu][Vv][Xx]?)$\"))",
+  "profileSha256": "655915d1ace994db0d9aa59e8b51c33ec0b6039789ec82ddbdba80e616bac38e",
+  "probes": [
+    {
+      "command": "python",
+      "status": null,
+      "error": "ENOENT"
+    },
+    {
+      "command": "python3",
+      "status": null,
+      "error": "ENOENT"
+    },
+    {
+      "command": "pip",
+      "status": null,
+      "error": "ENOENT"
+    },
+    {
+      "command": "pip3",
+      "status": null,
+      "error": "ENOENT"
+    },
+    {
+      "command": "pypy",
+      "status": null,
+      "error": "ENOENT"
+    },
+    {
+      "command": "uv",
+      "status": null,
+      "error": "ENOENT"
+    },
+    {
+      "command": "/usr/bin/python3",
+      "status": null,
+      "error": "EPERM"
+    },
+    {
+      "command": "/usr/bin/pip3",
+      "status": null,
+      "error": "EPERM"
+    }
+  ],
+  "scope": "No reachable interpreter: private PATH plus inherited OS process-exec denial, including absolute paths. Host installations are untouched.",
+  "exitCode": 0,
+  "finishedAt": "2026-11-01T18:30:09.800Z"
+}
