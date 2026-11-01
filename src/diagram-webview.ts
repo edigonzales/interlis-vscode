@@ -22,7 +22,7 @@ window.addEventListener('message',event=>{
  if(value.type==='status'){canvas.invalidate(String(value.message));element.dataset.status=value.status;status.textContent=String(value.message).slice(0,1000);}
  else if(value.type==='follow')updateFollow(value.follow===true);
  else if(value.type==='diagram'){
-  const response=value.response as DiagramResponse;document.getElementById('root')!.textContent=value.root;updateFollow(value.follow===true);
+  const response=value.response as DiagramResponse;const root=document.getElementById('root')!;root.textContent=decodeURIComponent(new URL(value.root).pathname.split('/').pop()||value.root);root.title=value.root;updateFollow(value.follow===true);
   void canvas.accept(response.document,value.sessionKey).catch((error:unknown)=>{status.textContent=String(error).slice(0,1000);element.dataset.status='ERROR';});
  }
 });
