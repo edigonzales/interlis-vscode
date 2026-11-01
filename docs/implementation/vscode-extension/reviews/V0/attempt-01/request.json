@@ -1,0 +1,277 @@
+{
+  "schemaVersion": 1,
+  "phase": "V0",
+  "assignmentBase": {
+    "coreSha": "20b0029d824b3602d9a304320bf0feae4c35c1f9",
+    "extensionSha": "73badd9807f407aea048d397af5549fe907a1501"
+  },
+  "phaseBase": {
+    "coreSha": "20b0029d824b3602d9a304320bf0feae4c35c1f9",
+    "extensionSha": "73badd9807f407aea048d397af5549fe907a1501"
+  },
+  "candidate": {
+    "coreSha": "76df3815973597280845a9bb575fa399e9773ccc",
+    "extensionSha": "d8f8adeb89e26f8a979744b81299d51da45cf0fe"
+  },
+  "worktrees": {
+    "core": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/core",
+    "extension": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/extension"
+  },
+  "evidenceDirectory": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence",
+  "plan": "docs/implementation/vscode-extension/EXECUTION_PLAN.md",
+  "implementationReport": "docs/implementation/vscode-extension/implementation/V0.md",
+  "criteria": [
+    "V0-01",
+    "V0-02",
+    "V0-03",
+    "V0-04",
+    "V0-05",
+    "V0-06",
+    "V0-07"
+  ],
+  "requiredGuiCases": [
+    "GUI-01",
+    "GUI-02",
+    "GUI-03"
+  ],
+  "implementationEvidence": "/Users/stefan/sources/interlis-vscode/build",
+  "supplementalEvidence": [
+    "/Users/stefan/sources/interlis-vscode-evidence/preflight",
+    "/Users/stefan/sources/interlis-vscode-evidence/qualification",
+    "/Users/stefan/sources/interlis-vscode/artifacts",
+    "/Users/stefan/.sdkman/candidates/java/25.0.3-tem"
+  ],
+  "guiTools": {
+    "cache": "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage",
+    "vscodeExecutable": "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage/Visual Studio Code.app/Contents/MacOS/Code",
+    "javaHome": "/Users/stefan/.sdkman/candidates/java/25.0.3-tem",
+    "vscode": "1.140.0",
+    "extester": "8.28.1",
+    "chromedriver": "150.0.7871.250"
+  },
+  "requiredChecks": [
+    {
+      "id": "prepare-dependencies",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "ci",
+        "--ignore-scripts"
+      ],
+      "reason": "Fresh review checkout, exact dependency lock; no Python build helpers"
+    },
+    {
+      "id": "prepare-core-distribution",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "stage:core",
+        "--",
+        "--core-dir",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/core"
+      ],
+      "reason": "Build exact committed Core distribution; lock must stay unchanged"
+    },
+    {
+      "id": "build",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "reason": "TypeScript checks, actual bundled client, licenses from used graph"
+    },
+    {
+      "id": "unit",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "test:unit"
+      ],
+      "reason": "Host paths, corruption rejection, wrong Java, manifest and resources"
+    },
+    {
+      "id": "protocol",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "test:protocol"
+      ],
+      "reason": "Real unpacked Java stdio process, actual compiler fixture, definition and shutdown"
+    },
+    {
+      "id": "java-lsp",
+      "cwd": "core",
+      "argv": [
+        "./gradlew",
+        ":interlis-lsp:test",
+        "--tests",
+        "guru.interlis.lsp.LspServerTest",
+        "--tests",
+        "guru.interlis.lsp.LspProcessTest",
+        "--no-daemon"
+      ],
+      "reason": "Targeted initialize/process/shutdown obligations; six existing tests, no full compiler matrix"
+    },
+    {
+      "id": "dependency-graph",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "verify:no-legacy-dependencies"
+      ],
+      "reason": "Complete installed graph/lock/client bundle, no old project links"
+    },
+    {
+      "id": "extension-host",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "test:extension-host"
+      ],
+      "reason": "Real VSCode APIs in an isolated additional host; not a GUI substitute"
+    },
+    {
+      "id": "installed-gui",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "test:gui",
+        "--",
+        "--suite",
+        "smoke",
+        "--vsix",
+        "/Users/stefan/sources/interlis-vscode/build/packages/interlis-vscode-darwin-arm64.vsix",
+        "--cache",
+        "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage"
+      ],
+      "reason": "Reviewer must independently operate installed VSIX, real Java, typing, Problems, F12, format/undo/restart and new diagnostics"
+    },
+    {
+      "id": "negative-canary",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "test:gui",
+        "--",
+        "--suite",
+        "smoke",
+        "--vsix",
+        "/Users/stefan/sources/interlis-vscode/build/packages/interlis-vscode-darwin-arm64.vsix",
+        "--cache",
+        "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage",
+        "--canary",
+        "missing-status"
+      ],
+      "expectedExit": 1,
+      "reason": "Deliberate impossible visible expectation must fail; implementer same-pair raw evidence also available"
+    }
+  ],
+  "notRequiredChecks": [
+    {
+      "id": "full-compiler-conformance-portable",
+      "reason": "No Java parser/semantic/query changes in candidate diff; existing Core content unchanged, only new thin extension host and packaging"
+    },
+    {
+      "id": "full-browser-safari-wasm-corpora",
+      "reason": "No diagram/browser/projection changes; shared renderer starts only in V2"
+    },
+    {
+      "id": "runtime-cross-platform-remote",
+      "reason": "Bundled Java25 runtime, Linux/Windows and Remote are mandatory in V5; V0 explicitly qualifies external Java25 on macOS arm64"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/packages/interlis-vscode-darwin-arm64.vsix",
+      "sha256": "1f2142f761594705d44390cdf382d610cfeebb90ff3ce824b054bedf3cbfa38d",
+      "kind": "vsix"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/antlr4-runtime-4.13.2.jar",
+      "sha256": "dd3e8a13a2d669bf84fb8d834de35ce4875f27157698d206241ec8488aadcaf7"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/error_prone_annotations-2.48.0.jar",
+      "sha256": "b49c5c958316ed67a09c699dda9aa749caf434d51d863dea599ef36a49b9c855"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/gson-2.14.0.jar",
+      "sha256": "2cbd119bf1961c28788310963dc80ba65f58cdeec1dd139c8bdb1240faa2c36f"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/interlis-compiler-0.2.0-SNAPSHOT.jar",
+      "sha256": "5c3513718247b6714956b573e7b43ccce7ead977fbe2da52488476136740db12"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/interlis-lsp-0.2.0-SNAPSHOT.jar",
+      "sha256": "d244a2a3d5358249367b049aaeb757d39d30605da2497c063bc03854df414090"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/interlis-model-0.2.0-SNAPSHOT.jar",
+      "sha256": "e75cadcb6745b4d31b1155f0690a151c24f0bc6e9d040e2228dad46b20f7941d"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/interlis-projection-0.2.0-SNAPSHOT.jar",
+      "sha256": "46fc3a6ad1e35c19e1999c5df09251915fd6631e9c09f19bda9e2ac65b0ade41"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/interlis-repository-0.2.0-SNAPSHOT.jar",
+      "sha256": "fb290c6ff3c82a8683f6cd852b4e7d51228b8b89768e68576087e8bc368db299"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/interlis-workspace-0.2.0-SNAPSHOT.jar",
+      "sha256": "a6763504894431fad80473d5789171513b8555bc050411532051ae0010820867"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/org.eclipse.lsp4j-0.23.1.jar",
+      "sha256": "b16bbc6232a3946e03d537bb9be74e18489dbc6a8b8c5ab6cb7980854df8440f"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/org.eclipse.lsp4j.jsonrpc-0.23.1.jar",
+      "sha256": "4e1aa77474de1791d96dc55932fb46efdf53233548f38f62ba7376f8b0bc6650"
+    },
+    {
+      "kind": "runtime",
+      "path": "/Users/stefan/.sdkman/candidates/java/25.0.3-tem/bin/java",
+      "sha256": "0a1eea36b7899323b32caab6f1d0e416ad7208792b076391278062efab4b15d8",
+      "note": "Explicit external V0 Java25 executable, not a bundled-runtime claim"
+    }
+  ],
+  "implementationRuns": {
+    "qualification": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V0-r4/qualification.json",
+    "guard": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V0-r4/guard.json",
+    "exit": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V0-r4/exit.txt",
+    "guiManifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/smoke/2026-11-01T15-24-14-738Z/manifest.json",
+    "canaryManifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/smoke/2026-11-01T15-24-59-380Z/manifest.json",
+    "javaEvidence": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V0-r2/java-lsp.log",
+    "modelIdentity": "/Users/stefan/sources/interlis-vscode-evidence/preflight/model-identity.json",
+    "guiReadiness": "/Users/stefan/sources/interlis-vscode-evidence/preflight/gui-readiness.md"
+  },
+  "counterprobeRequirement": "Develop at least one new relevant start/editor GUI variant independently. The existing fixture/canary alone does not satisfy the new-counterprobe requirement.",
+  "scopeNotes": [
+    "All reports and raw evidence are claims to inspect independently, not a preset verdict.",
+    "Original Core working tree has unrelated concurrent user changes; do not modify it. Review only the detached exact worktrees above.",
+    "Verbose trace is enabled only in isolated GUI profiles and records actual document/diagnostic versions; production default is off.",
+    "Build/GUI runner outputs go to ignored build folders or evidence. Tracked sources, locks and criteria must remain unchanged."
+  ]
+}

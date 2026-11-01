@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "phase": "V0",
+  "candidate": {
+    "coreSha": "76df3815973597280845a9bb575fa399e9773ccc",
+    "extensionSha": "d8f8adeb89e26f8a979744b81299d51da45cf0fe"
+  },
+  "validatedAt": "2026-11-01T16:23:01.998Z",
+  "validIndependentPass": true,
+  "reviewerSession": "ses_e6829e6d3ffePmDs0M8Plx1SAp",
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "apiHost": "api.deepseek.com",
+  "processExit": 0,
+  "guardStatus": "passed",
+  "guardExit": 0,
+  "criteria": [
+    {
+      "id": "V0-01",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V0-02",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V0-03",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V0-04",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V0-05",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V0-06",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V0-07",
+      "status": "fulfilled"
+    }
+  ],
+  "trees": {
+    "core": {
+      "head": "76df3815973597280845a9bb575fa399e9773ccc",
+      "branch": "HEAD",
+      "dirty": "",
+      "untracked": []
+    },
+    "extension": {
+      "head": "d8f8adeb89e26f8a979744b81299d51da45cf0fe",
+      "branch": "HEAD",
+      "dirty": "",
+      "untracked": [
+        "opencode.json"
+      ]
+    }
+  },
+  "reportSha256": "d86154425e14e94e34a512d40f53643c9bfceafc95818526e56a58841f205d94",
+  "verdictSha256": "2b07249aca696a06de5a4abe1e1c43efca5c090bfe599203702dceeef88587f8",
+  "transportSha256": "d7cab05d06f20675144623d25d489c94d2a3e42a4e76acb9f856f5d7e733f0c7",
+  "guardSha256": "768ad9c88d511d104d4e764f241e084c8b5b0a2320c946ae43cbc86fbc478aeb",
+  "vsixSha256": "1f2142f761594705d44390cdf382d610cfeebb90ff3ce824b054bedf3cbfa38d"
+}

@@ -1,0 +1,606 @@
+{
+  "schemaVersion": 1,
+  "phase": "V0",
+  "assignmentBase": {
+    "coreSha": "20b0029d824b3602d9a304320bf0feae4c35c1f9",
+    "extensionSha": "73badd9807f407aea048d397af5549fe907a1501"
+  },
+  "phaseBase": {
+    "coreSha": "20b0029d824b3602d9a304320bf0feae4c35c1f9",
+    "extensionSha": "73badd9807f407aea048d397af5549fe907a1501"
+  },
+  "candidate": {
+    "coreSha": "76df3815973597280845a9bb575fa399e9773ccc",
+    "extensionSha": "d8f8adeb89e26f8a979744b81299d51da45cf0fe"
+  },
+  "worktrees": {
+    "core": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r3/core",
+    "extension": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r3/extension"
+  },
+  "evidenceDirectory": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r3/evidence",
+  "plan": "docs/implementation/vscode-extension/EXECUTION_PLAN.md",
+  "implementationReport": "docs/implementation/vscode-extension/implementation/V0.md",
+  "criteria": [
+    "V0-01",
+    "V0-02",
+    "V0-03",
+    "V0-04",
+    "V0-05",
+    "V0-06",
+    "V0-07"
+  ],
+  "requiredGuiCases": [
+    "GUI-01",
+    "GUI-02",
+    "GUI-03"
+  ],
+  "implementationEvidence": "/Users/stefan/sources/interlis-vscode/build",
+  "supplementalEvidence": [
+    "/Users/stefan/sources/interlis-vscode-evidence/preflight",
+    "/Users/stefan/sources/interlis-vscode-evidence/qualification",
+    "/Users/stefan/sources/interlis-vscode/artifacts",
+    "/Users/stefan/.sdkman/candidates/java/25.0.3-tem",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2"
+  ],
+  "guiTools": {
+    "cache": "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage",
+    "vscodeExecutable": "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage/Visual Studio Code.app/Contents/MacOS/Code",
+    "javaHome": "/Users/stefan/.sdkman/candidates/java/25.0.3-tem",
+    "vscode": "1.140.0",
+    "extester": "8.28.1",
+    "chromedriver": "150.0.7871.250"
+  },
+  "requiredChecks": [
+    {
+      "id": "prepare-dependencies",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "ci",
+        "--ignore-scripts"
+      ],
+      "reason": "Fresh review checkout, exact dependency lock; no Python build helpers"
+    },
+    {
+      "id": "prepare-core-distribution",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "stage:core",
+        "--",
+        "--core-dir",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r3/core"
+      ],
+      "reason": "Build exact committed Core distribution; lock must stay unchanged"
+    },
+    {
+      "id": "build",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "reason": "TypeScript checks, actual bundled client, licenses from used graph"
+    },
+    {
+      "id": "unit",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "test:unit"
+      ],
+      "reason": "Host paths, corruption rejection, wrong Java, manifest and resources"
+    },
+    {
+      "id": "protocol",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "test:protocol"
+      ],
+      "reason": "Real unpacked Java stdio process, actual compiler fixture, definition and shutdown"
+    },
+    {
+      "id": "java-lsp",
+      "cwd": "core",
+      "argv": [
+        "./gradlew",
+        ":interlis-lsp:test",
+        "--tests",
+        "guru.interlis.lsp.LspServerTest",
+        "--tests",
+        "guru.interlis.lsp.LspProcessTest",
+        "--no-daemon"
+      ],
+      "reason": "Targeted initialize/process/shutdown obligations; six existing tests, no full compiler matrix"
+    },
+    {
+      "id": "dependency-graph",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "verify:no-legacy-dependencies"
+      ],
+      "reason": "Complete installed graph/lock/client bundle, no old project links"
+    },
+    {
+      "id": "extension-host",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "test:extension-host"
+      ],
+      "reason": "Real VSCode APIs in an isolated additional host; not a GUI substitute"
+    },
+    {
+      "id": "installed-gui",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "test:gui",
+        "--",
+        "--suite",
+        "smoke",
+        "--vsix",
+        "/Users/stefan/sources/interlis-vscode/build/packages/interlis-vscode-darwin-arm64.vsix",
+        "--cache",
+        "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage"
+      ],
+      "reason": "Reviewer must independently operate installed VSIX, real Java, typing, Problems, F12, format/undo/restart and new diagnostics"
+    },
+    {
+      "id": "negative-canary",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "test:gui",
+        "--",
+        "--suite",
+        "smoke",
+        "--vsix",
+        "/Users/stefan/sources/interlis-vscode/build/packages/interlis-vscode-darwin-arm64.vsix",
+        "--cache",
+        "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage",
+        "--canary",
+        "missing-status"
+      ],
+      "expectedExit": 1,
+      "reason": "Deliberate impossible visible expectation must fail; implementer same-pair raw evidence also available"
+    }
+  ],
+  "notRequiredChecks": [
+    {
+      "id": "full-compiler-conformance-portable",
+      "reason": "No Java parser/semantic/query changes in candidate diff; existing Core content unchanged, only new thin extension host and packaging"
+    },
+    {
+      "id": "full-browser-safari-wasm-corpora",
+      "reason": "No diagram/browser/projection changes; shared renderer starts only in V2"
+    },
+    {
+      "id": "runtime-cross-platform-remote",
+      "reason": "Bundled Java25 runtime, Linux/Windows and Remote are mandatory in V5; V0 explicitly qualifies external Java25 on macOS arm64"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/packages/interlis-vscode-darwin-arm64.vsix",
+      "sha256": "1f2142f761594705d44390cdf382d610cfeebb90ff3ce824b054bedf3cbfa38d",
+      "kind": "vsix"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/antlr4-runtime-4.13.2.jar",
+      "sha256": "dd3e8a13a2d669bf84fb8d834de35ce4875f27157698d206241ec8488aadcaf7"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/error_prone_annotations-2.48.0.jar",
+      "sha256": "b49c5c958316ed67a09c699dda9aa749caf434d51d863dea599ef36a49b9c855"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/gson-2.14.0.jar",
+      "sha256": "2cbd119bf1961c28788310963dc80ba65f58cdeec1dd139c8bdb1240faa2c36f"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/interlis-compiler-0.2.0-SNAPSHOT.jar",
+      "sha256": "5c3513718247b6714956b573e7b43ccce7ead977fbe2da52488476136740db12"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/interlis-lsp-0.2.0-SNAPSHOT.jar",
+      "sha256": "d244a2a3d5358249367b049aaeb757d39d30605da2497c063bc03854df414090"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/interlis-model-0.2.0-SNAPSHOT.jar",
+      "sha256": "e75cadcb6745b4d31b1155f0690a151c24f0bc6e9d040e2228dad46b20f7941d"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/interlis-projection-0.2.0-SNAPSHOT.jar",
+      "sha256": "46fc3a6ad1e35c19e1999c5df09251915fd6631e9c09f19bda9e2ac65b0ade41"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/interlis-repository-0.2.0-SNAPSHOT.jar",
+      "sha256": "fb290c6ff3c82a8683f6cd852b4e7d51228b8b89768e68576087e8bc368db299"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/interlis-workspace-0.2.0-SNAPSHOT.jar",
+      "sha256": "a6763504894431fad80473d5789171513b8555bc050411532051ae0010820867"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/org.eclipse.lsp4j-0.23.1.jar",
+      "sha256": "b16bbc6232a3946e03d537bb9be74e18489dbc6a8b8c5ab6cb7980854df8440f"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/org.eclipse.lsp4j.jsonrpc-0.23.1.jar",
+      "sha256": "4e1aa77474de1791d96dc55932fb46efdf53233548f38f62ba7376f8b0bc6650"
+    },
+    {
+      "kind": "runtime",
+      "path": "/Users/stefan/.sdkman/candidates/java/25.0.3-tem/bin/java",
+      "sha256": "0a1eea36b7899323b32caab6f1d0e416ad7208792b076391278062efab4b15d8",
+      "note": "Explicit external V0 Java25 executable, not a bundled-runtime claim"
+    }
+  ],
+  "implementationRuns": {
+    "qualification": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V0-r4/qualification.json",
+    "guard": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V0-r4/guard.json",
+    "exit": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V0-r4/exit.txt",
+    "guiManifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/smoke/2026-11-01T15-24-14-738Z/manifest.json",
+    "canaryManifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/smoke/2026-11-01T15-24-59-380Z/manifest.json",
+    "javaEvidence": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V0-r2/java-lsp.log",
+    "modelIdentity": "/Users/stefan/sources/interlis-vscode-evidence/preflight/model-identity.json",
+    "guiReadiness": "/Users/stefan/sources/interlis-vscode-evidence/preflight/gui-readiness.md"
+  },
+  "counterprobeRequirement": "Develop and execute at least one new relevant installed GUI counterprobe independently, distinct from the prior Unicode/apostrophe/Java21 probes. Reuse the existing driver infrastructure if useful. This is not permission to edit tracked candidate files. No broad test repetition is needed on unchanged content.",
+  "scopeNotes": [
+    "All reports and raw evidence are claims to inspect independently, not a preset verdict.",
+    "Original Core working tree has unrelated concurrent user changes; do not modify it. Review only the detached exact worktrees above.",
+    "Verbose trace is enabled only in isolated GUI profiles and records actual document/diagnostic versions; production default is off.",
+    "Build/GUI runner outputs go to ignored build folders or evidence. Tracked sources, locks and criteria must remain unchanged."
+  ],
+  "reviewScope": "Focused independent correction of evidence attribution on unchanged V0 product pair. Prior content PASS exists, but its image-view list contains unsupported paths. Do not inherit its conclusion without checking the evidence.",
+  "priorReview": {
+    "report": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/review.md",
+    "verdict": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/verdict.json",
+    "transport": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/transport.json",
+    "guard": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/guard.json",
+    "audit": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/outer-audit-incomplete.json",
+    "session": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/session-sanitized.json"
+  },
+  "requiredEvidenceCorrection": {
+    "missingViewClaims": [
+      "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/extension/build/reports/gui/smoke/2026-11-01T15-29-43-225Z/GUI-02-corrected.png",
+      "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/counterprobes/positive-4/probe-01-ready.png",
+      "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/counterprobes/positive-4/probe-02-f12.png",
+      "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/counterprobes/positive-4/probe-03-problem.png",
+      "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/counterprobes/positive-4/probe-04-template.png"
+    ],
+    "rule": "Open each missing image with the image-capable read tool and record only images actually opened in this fresh session, or explicitly attribute verified earlier read calls to the previous session. Do not claim another run directory merely because its contents look similar. Independently inspect both reports, code, original current-pair raw logs and artifact identities. Produce your own complete review.md and verdict.json for V0, not an implementer-authored amendment."
+  },
+  "allowedReuse": {
+    "rule": "No product/lock/criteria change since the prior review. Independently verify same-pair raw evidence; do not rerun the entire successful Java/API/GUI suite merely because a new review session started. Execute one new real installed GUI counterprobe of your own, and any checks needed to resolve findings. Keep exploratory failures. Attribute reused checks as verified prior evidence, not as your own execution.",
+    "checks": [
+      {
+        "id": "prepare-dependencies",
+        "cwd": "extension",
+        "argv": [
+          "npm",
+          "ci",
+          "--ignore-scripts"
+        ],
+        "exit": 0,
+        "expectedExit": 0,
+        "tests": "dependency lock installiert",
+        "evidence": "checks/prepare-dependencies.log"
+      },
+      {
+        "id": "prepare-core-distribution",
+        "cwd": "extension",
+        "argv": [
+          "npm",
+          "run",
+          "stage:core",
+          "--",
+          "--core-dir",
+          "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/core"
+        ],
+        "exit": 0,
+        "expectedExit": 0,
+        "tests": "installDist aus Core-Kandidat; 11 JARs; Lock-Hash vor/nach identisch",
+        "evidence": "checks/prepare-core-distribution.log, checks/lock-before.sha256, checks/lock-after.sha256, checks/staged-server-hashes.txt"
+      },
+      {
+        "id": "build",
+        "cwd": "extension",
+        "argv": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exit": 0,
+        "expectedExit": 0,
+        "tests": "tsc --noEmit, esbuild Client/Launch, Lizenznotizen",
+        "evidence": "checks/build.log"
+      },
+      {
+        "id": "unit",
+        "cwd": "extension",
+        "argv": [
+          "npm",
+          "run",
+          "test:unit"
+        ],
+        "exit": 0,
+        "expectedExit": 0,
+        "tests": "5 Tests, 5 Pass, 0 Fail, 0 Skip",
+        "evidence": "checks/unit.log"
+      },
+      {
+        "id": "protocol",
+        "cwd": "extension",
+        "argv": [
+          "npm",
+          "run",
+          "test:protocol"
+        ],
+        "exit": 0,
+        "expectedExit": 0,
+        "tests": "1 Test, 1 Pass, 0 Fail/Skip; echter stdio-Prozess; Core 76df381; Exit 0",
+        "evidence": "checks/protocol.log"
+      },
+      {
+        "id": "java-lsp",
+        "cwd": "core",
+        "argv": [
+          "./gradlew",
+          ":interlis-lsp:test",
+          "--tests",
+          "guru.interlis.lsp.LspServerTest",
+          "--tests",
+          "guru.interlis.lsp.LspProcessTest",
+          "--no-daemon"
+        ],
+        "exit": 0,
+        "expectedExit": 0,
+        "tests": "6 Tests (4 LspServerTest + 2 LspProcessTest), 0 Fail, 0 Skip",
+        "evidence": "checks/java-lsp.log; core/interlis-lsp/build/test-results/test/TEST-guru.interlis.lsp.LspServerTest.xml; core/interlis-lsp/build/test-results/test/TEST-guru.interlis.lsp.LspProcessTest.xml"
+      },
+      {
+        "id": "dependency-graph",
+        "cwd": "extension",
+        "argv": [
+          "npm",
+          "run",
+          "verify:no-legacy-dependencies"
+        ],
+        "exit": 0,
+        "expectedExit": 0,
+        "tests": "vollstaendiger npm-Graph, Lock und Client-Bundle ohne @ilic/interlis-language-tools/ilic.wasm",
+        "evidence": "checks/dependency-graph.log"
+      },
+      {
+        "id": "extension-host",
+        "cwd": "extension",
+        "argv": [
+          "npm",
+          "run",
+          "test:extension-host"
+        ],
+        "exit": 0,
+        "expectedExit": 0,
+        "tests": "3 Pruefgruppen: Aktivierung/Commands, echte Definition, ungespeichertes Template; Extension-Host Exit 0",
+        "evidence": "checks/extension-host.log"
+      },
+      {
+        "id": "installed-gui",
+        "cwd": "extension",
+        "argv": [
+          "npm",
+          "run",
+          "test:gui",
+          "--",
+          "--suite",
+          "smoke",
+          "--vsix",
+          "/Users/stefan/sources/interlis-vscode/build/packages/interlis-vscode-darwin-arm64.vsix",
+          "--cache",
+          "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage"
+        ],
+        "exit": 0,
+        "expectedExit": 0,
+        "tests": "GUI-01, GUI-02, GUI-03: 3/3 Cases, echter Java-LSP, PIDs danach []",
+        "evidence": "checks/installed-gui.log; extension/build/reports/gui/smoke/2026-11-01T15-29-43-225Z/manifest.json"
+      },
+      {
+        "id": "negative-canary",
+        "cwd": "extension",
+        "argv": [
+          "npm",
+          "run",
+          "test:gui",
+          "--",
+          "--suite",
+          "smoke",
+          "--vsix",
+          "/Users/stefan/sources/interlis-vscode/build/packages/interlis-vscode-darwin-arm64.vsix",
+          "--cache",
+          "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage",
+          "--canary",
+          "missing-status"
+        ],
+        "exit": 1,
+        "expectedExit": 1,
+        "tests": "2/3 Cases; GUI-01 absichtlich rot wegen unmoeglicher Sichtbedingung; PIDs danach []",
+        "evidence": "checks/negative-canary.log; extension/build/reports/gui/smoke/2026-11-01T15-32-28-934Z/manifest.json"
+      },
+      {
+        "id": "package-vsix-reproduction",
+        "cwd": "extension",
+        "argv": [
+          "npm",
+          "run",
+          "package:vsix",
+          "--",
+          "--target",
+          "darwin-arm64"
+        ],
+        "exit": 0,
+        "expectedExit": 0,
+        "tests": "25 Dateien, 2.99 MB; alle Nutzdateien byte-identisch zum Request-VSIX",
+        "evidence": "checks/package-vsix.log; Vergleich der entpackten Inhalte"
+      },
+      {
+        "id": "launch-negative-paths",
+        "cwd": "extension",
+        "argv": [
+          "node",
+          "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/checks/launch-negative-paths.cjs"
+        ],
+        "exit": 0,
+        "expectedExit": 0,
+        "tests": "fehlendes Serververzeichnis und fehlende Bibliothek abgelehnt; gepacktes Inventar akzeptiert",
+        "evidence": "checks/launch-negative-paths.cjs, checks/launch-negative-paths.log"
+      }
+    ],
+    "priorGuiEvidence": [
+      {
+        "run": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/extension/build/reports/gui/smoke/2026-11-01T15-29-43-225Z",
+        "cases": [
+          "GUI-01",
+          "GUI-02",
+          "GUI-03"
+        ],
+        "result": "3/3 passed, exit 0",
+        "identities": {
+          "extensionSha": "d8f8adeb89e26f8a979744b81299d51da45cf0fe",
+          "coreSha": "76df3815973597280845a9bb575fa399e9773ccc",
+          "vsixSha256": "1f2142f761594705d44390cdf382d610cfeebb90ff3ce824b054bedf3cbfa38d",
+          "bundleSha256": "0f98c54a7575cc3e53320940f93109424a64520c88315b50c55493cd617eccf8"
+        },
+        "screenshotsViewed": [
+          "GUI-01-ready.png",
+          "GUI-02-error.png",
+          "GUI-02-corrected.png",
+          "GUI-03-formatted.png",
+          "GUI-03-output.png",
+          "GUI-03-restarted-error.png",
+          "GUI-03-restarted.png"
+        ],
+        "observations": "Echte Workbench, lesbare Texte, keine Clipping-/Leerpanels; Status Ready; Problems mit echtem Fehler; F12 Zeile 5; Format/Undo/Redo; Dirtybuffer ueber Stop/Restart; frische Diagnose nach Restart; PIDs 9566/9887, remaining=[].",
+        "manifest": "manifest.json",
+        "serverProcesses": {
+          "started": [
+            9566,
+            9887
+          ],
+          "remaining": []
+        }
+      },
+      {
+        "run": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/extension/build/reports/gui/smoke/2026-11-01T15-32-28-934Z",
+        "cases": [
+          "GUI-01 (canary)",
+          "GUI-02",
+          "GUI-03"
+        ],
+        "result": "2/3 passed, exit 1 (erwartet fuer missing-status-Canary)",
+        "screenshotsViewed": [
+          "failure-GUI-01.png"
+        ],
+        "observations": "Workbench zeigt korrekt Ready; der Test erwartete absichtlich einen unmoeglichen Status und scheiterte. PIDs danach [].",
+        "manifest": "manifest.json"
+      },
+      {
+        "run": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/counterprobes/positive-4",
+        "cases": [
+          "eigener Start/Editor/F12/Problems/Template/Snippet"
+        ],
+        "result": "2/2 passed, exit 0",
+        "identities": {
+          "extensionSha": "d8f8adeb89e26f8a979744b81299d51da45cf0fe",
+          "coreSha": "76df3815973597280845a9bb575fa399e9773ccc",
+          "vsixSha256": "1f2142f761594705d44390cdf382d610cfeebb90ff3ce824b054bedf3cbfa38d",
+          "bundleSha256": "0f98c54a7575cc3e53320940f93109424a64520c88315b50c55493cd617eccf8"
+        },
+        "screenshotsViewed": [
+          "probe-01-ready.png",
+          "probe-02-f12.png",
+          "probe-03-problem.png",
+          "probe-04-template.png",
+          "probe-05-snippet.png"
+        ],
+        "observations": "Eigenes Fixture unter 'Andere Modelle/O'Brien Modell.ili'; F12 auf Zeile 5; eigener Typfehler in Problems; Template; contributed topic-Snippet sichtbar eingefuegt; echter Java-Start, remainingServerPids [].",
+        "manifest": "manifest.json",
+        "fixture": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/counterprobes/fixtures/Andere Modelle/O'Brien Modell.ili"
+      },
+      {
+        "run": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/counterprobes/negative-2",
+        "cases": [
+          "falsche Java-Version im installierten Produkt"
+        ],
+        "result": "1/1 passed, exit 0; Status Error, kein Ready, kein Serverstart",
+        "identities": {
+          "extensionSha": "d8f8adeb89e26f8a979744b81299d51da45cf0fe",
+          "coreSha": "76df3815973597280845a9bb575fa399e9773ccc",
+          "vsixSha256": "1f2142f761594705d44390cdf382d610cfeebb90ff3ce824b054bedf3cbfa38d",
+          "bundleSha256": "0f98c54a7575cc3e53320940f93109424a64520c88315b50c55493cd617eccf8"
+        },
+        "screenshotsViewed": [
+          "probe-negative-error.png"
+        ],
+        "observations": "Java-21-Skript als javaPath; sichtbare Meldung 'INTERLIS requires Java 25 without preview.'; Status Error; serverStarts [], remainingServerPids [].",
+        "manifest": "manifest.json"
+      }
+    ],
+    "priorCounterprobes": [
+      {
+        "id": "start-editor-unicode-apostrophe-snippet",
+        "hypothesis": "Der installierte Host funktioniert mit einem eigenen Modell in einem Pfad mit Leerzeichen, Apostroph und Nicht-ASCII; Template und contributed Snippet sind echte Benutzerpfade.",
+        "actions": [
+          "eigenes Fixture 'Andere Modelle/O'Brien Modell.ili' im isolierten Profil oeffnen",
+          "auf sichtbaren Status INTERLIS: Ready warten",
+          "F12 von Distance-Nutzung (Zeile 8) ausfuehren",
+          "Typfehler Undefined tippen, Problems oeffnen, zu Distance korrigieren",
+          "INTERLIS: New Model from Template ueber Palette ausfuehren",
+          "Insert Snippet -> topic ueber echte QuickPick waehlen"
+        ],
+        "expected": "Ready, Sprache INTERLIS, F12 auf Zeile 5, Fehler sichtbar und verschwindet, ungespeichertes Template, sichtbarer Snippettext",
+        "actual": "2/2 Cases bestanden, Exit 0; ein echter Java-Start, keine Rest-PIDs; Screenshots und Textbelege vorhanden",
+        "falsifiable": "Ein falscher Sprung, ausbleibende Diagnose oder fehlendes Snippet haette den Test rot gemacht",
+        "exit": 0,
+        "evidence": "counterprobes/positive-4/manifest.json; probe-01-ready.png, probe-02-f12.png, probe-03-problem.png, probe-04-template.png, probe-05-snippet.png, probe-snippet-text.txt"
+      },
+      {
+        "id": "wrong-java-installed-product",
+        "hypothesis": "Das installierte VSIX lehnt Java 21 sichtbar ab und startet keinen LSP.",
+        "actions": [
+          "isoliertes Profil mit interlisGuru.server.javaPath auf ein ausfuehrbares Java-21-Skript",
+          "eigenes Fixture oeffnen",
+          "auf Status Error warten und Ready ausschliessen"
+        ],
+        "expected": "Status Error, Meldung mit Java-25-Anforderung, nie Ready, kein Java-Prozess",
+        "actual": "1/1 Case bestanden, Exit 0; Status Error; Meldung 'INTERLIS requires Java 25 without preview.'; serverStarts [], remainingServerPids []",
+        "falsifiable": "Ein Ready-Status oder ein gestarteter Server haette den Test rot gemacht",
+        "exit": 0,
+        "evidence": "counterprobes/negative-2/manifest.json; probe-negative-error.png"
+      }
+    ]
+  }
+}

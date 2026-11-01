@@ -1,93 +1,69 @@
 # INTERLIS VS Code – aktueller Ausführungsstand
 
-V0 IN_PROGRESS; V1–V5 PLANNED und durch unabhängige Abnahme gesperrt.
-Erste eigene Entwicklungs-VSIX gebaut/installiert; kein Phasen-PASS.
+**V0 PASS**, unabhängig und operativ validiert. **V1 als nächster Schritt freigegeben.**
+V2–V5 bleiben durch ihre jeweiligen unabhängigen Gates gesperrt. Kein Push/Release.
 
-AssignmentBase und V0 phaseBase (unveränderlich):
-- Core `/Users/stefan/sources/interlis-java`: `20b0029d824b3602d9a304320bf0feae4c35c1f9`.
-- Extension `/Users/stefan/sources/interlis-vscode`: `73badd9807f407aea048d397af5549fe907a1501`.
-
-Beide getrackten Ausgangsbäume sauber; fremdes ungetracktes `.DS_Store` bleibt erhalten.
-Corebranch `codex/compiler-cli-modernization`, Extensionarbeitsbranch `codex/vscode-extension`.
-Core liegt 22 Commits nach Recherchepin b8051493; neue CLI-Farbe und
-Repository-/Verbosearbeiten bleiben erhalten. LSP-/Projektor-/Queryquellen sind
-gegenüber dem Recherchepin unverändert. Kein Zurücksetzen, Push oder Release.
-
-## Preflight
-
-OpenCode 2.0.28 unter `/Users/stefan/.opencode/bin/opencode`; gespeicherte
-DeepSeek-Anmeldung verwendet, kein Keyexport. `run/auth/models --help` geprüft;
-`--standalone --model deepseek/deepseek-flash --format json` tatsächlich ausgeführt.
-[Anbieterzuordnung](https://api-docs.deepseek.com/quick_start/pricing/) am 01.11.2026:
-`deepseek-flash` → DeepSeek-V4.1-Flash-1017; Projektprofil setzt direkte
-`https://api.deepseek.com`. Keine Proxy-/OpenRouterausweichroute.
-
-Frische Bereitschaftssession `ses_e687497f7ffe6Q0D0tNVOcNH1s` las beide detached
-Baselines, führte Nodeassert aus und prüfte Bildlesewerkzeug; Prozess Exit0,
-Guard passed/Exit0. Das ist keine V0-Abnahme. Rohbelege ausserhalb der Produktrepos:
-`/Users/stefan/sources/interlis-vscode-evidence/preflight/`.
-Die erste Suche übersah VSCode unter `/Users/stefan/apps/vscode/`; ihr Befund
-„keine VSCode-Installation“ ist damit widerlegt, kein ungelöster Installationsblocker.
-
-Eigener echter GUI-Preflight: ExTester8.28.1, VSCode1.140.0,
-ChromeDriver150.0.7871.250, macOS15.8.1 arm64; echte Palette per Tastatur,
-Problemscommand, zwei Screenshots, ein Test, Exit0 unter Pythonguard.
-Bild tatsächlich geöffnet: Palette/Command sichtbar, lesbar, echte Workbench.
-Rohbelege `/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/`.
-Unabhängige GUIbereitschaftsprobe beendet: eigener Lauf/Bildprüfung, Exit0, Guard passed0; Bericht `preflight/gui-readiness.md`. GUI-01–03 brauchen weiterhin
-installiertes eigenes VSIX und echten Server.
-
-## V0-Testauswahl vor Implementierung
-
-| Änderung/Consumer | Fällige Prüfung | Begründet nicht fällig |
+| Phase | Stand | Geprüftes Produktpaar / Beleg |
 |---|---|---|
-| Neuer Extensionhost/Start/Shutdown | T0, TSunit/Manifest, echter Distributions-stdio-Prozess, vorhandene LSPstarttests | Keine Parser-/Semantikänderung, kein Compilerkorpus |
-| Staging/VSIX/Java25 | Hashinventar, saubere Installation, fehlender/falscher Java-/Bundlepfad | Runtimebündelung/weitere Pflichtplattformen erst V5 |
-| Syntax/Snippets/Vorlage | Ressourcenkontrolle, Extensionhost und GUI-01–03 | Vollständige Completion-/AutoClosehilfe erst V4 |
-| Echter GUIharness | Installiertes VSIX, Problems/F12/Format/Undo/Restart, Negativcanary, Reviewerbedienbarkeit | UML/Export noch nicht implementiert, daher V2–V4-GUI später |
+| V0 | PASS, alle 7 ACs | Core `76df3815973597280845a9bb575fa399e9773ccc` / Extension `d8f8adeb89e26f8a979744b81299d51da45cf0fe`; [unveränderter Review](reviews/V0/attempt-02/review.md), [Verdict](reviews/V0/attempt-02/verdict.json), [äussere Prüfung](reviews/V0/attempt-02/outer-audit.json) |
+| V1 | Freigegeben, Umsetzung beginnt nach diesem reinen Dokucommit | Java-LSP-/Repository-/Editorparität, GUI-01–11 |
+| V2 | PLANNED | Ein neutraler gemeinsamer interaktiver Sprotty-/ELK-Renderer |
+| V3 | PLANNED | Vollständige UMLbedienung und aktuelle SVG-/PNG-Exporte |
+| V4 | PLANNED | Editorhilfen, Dokumentations-/Textformate |
+| V5 | PLANNED | Gebündelte Runtimes, reale Plattformen/Remote, kumulative 56-AC-Abnahme |
 
-Keine Reviewanfrage vor fertigem sauberem V0-Kandidatenpaar; V1 nur nach validem PASS.
+## Unveränderliche Gesamtbasis und Arbeitsbäume
 
-## Baselinefortschreibung ohne Produktänderung
+AssignmentBase: Core `20b0029d824b3602d9a304320bf0feae4c35c1f9`, Extension
+`73badd9807f407aea048d397af5549fe907a1501`. V0-phaseBase war identisch und blieb
+über alle Reparaturen unverändert. Keine Null-SHAs.
 
-Core wurde extern auf `main`/`76df3815973597280845a9bb575fa399e9773ccc` gewechselt.
-Vollständiger Inhaltsdiff gegen ursprüngliches `20b0029…` leer; reiner Squashstand.
-AssignmentBase/phaseBase bleiben unverändert. Serverlock und künftiges Kandidatenpaar
-verwenden den aktuellen SHA. Keine eigene Coreänderung.
+EXT: `/Users/stefan/sources/interlis-vscode`, Branch `codex/vscode-extension`.
+CORE für diesen Auftrag: `/Users/stefan/sources/interlis-vscode-evidence/product-core`,
+Branch `codex/vscode-extension-core`, derzeit auf dem V0-Core-Kandidaten.
+Der ursprüngliche Core-Checkout `/Users/stefan/sources/interlis-java` enthält
+parallele fremde Arbeit und bleibt unangetastet. Der Wechsel von `20b0029…` auf
+`76df381…` war eine externe Squash-Fortschreibung mit identischem vollständigem
+Tree; Originalstatus und Gründe stehen im [V0-Bericht](implementation/V0.md).
+Die anfängliche fremde `.DS_Store` im Extensionrepo bleibt ungetrackt erhalten.
 
-## Eigene V0-Qualifikation
+## V0-Belege und tatsächliche Grenzen
 
-Sechs vorhandene Java-LSP-Tests, ein echter entpackter stdio-Prozesstest und fünf
-Host-/Manifesttests bestanden; isolierter Extension-Host mit drei Checkgruppen Exit0.
-Installierter Smoke GUI-01–03: drei Fälle bestanden unter Guard am Entwicklungsstand.
-Aktueller vollständiger Lauf `build/reports/gui/smoke/2026-11-01T15-07-08-462Z/`;
-frische Kandidatenbelege folgen nach Commit. Bilder tatsächlich angesehen:
-Problems mit realem Typfehler, korrigierter Editor, Stop/Restart und Output mit
-eigenen Java-PIDs/Core-/Bundlehash. Technische Baselineprosa bleibt als V1-Lücke sichtbar.
-Negativcanary korrekt Exit1, zwei eigene Java-PIDs beendet; unabhängiger V0-Review noch nicht gestartet.
+OpenCode2.0.28 mit `deepseek/deepseek-flash`, direkter Host `api.deepseek.com`;
+Anbieterzuordnung und tatsächliche Sessionmetadaten als DeepSeek-V4.1-Flash-1017
+geprüft. Akzeptierte Session `ses_e6829e6d3ffePmDs0M8Plx1SAp`: ProzessExit0,
+Guard passed/Exit0, beide detached Reviewtrees unverändert. Bericht und Verdict
+stimmen überein; alle Bild-Lesebehauptungen mit tatsächlichen Aufrufen abgeglichen.
+[Unveränderte Versuche und Prozessnotizen](reviews/V0/PROCESS_NOTES.md).
 
-## Isolierter Core-Arbeitsbaum
+Eigene Qualifikation: `…/interlis-vscode-evidence/qualification/V0-r4/`.
+Akzeptierter unabhängiger Lauf: `…/interlis-vscode-evidence/reviews/V0-r3/evidence/`.
+Frisch geprüft: 5 TS-/Hosttests, 1 entpackter stdio-Prozesstest, 6 gezielte Java-LSPtests,
+3 Extension-Host-Prüfgruppen und GUI-01–03 (3/3). Negativcanary korrekt Exit1;
+eigene neue installierte Tamper-GUIprobe des Reviewers (1/1). Keine Rest-Java-PIDs.
+Kein globaler Compiler-/Conformance-/Browserkorpuslauf, weil Java/Parser/IR/Browser
+in V0 unverändert blieben; Auswahl unabhängig bestätigt.
 
-Nach dem ersten Extensioncommit entstanden fremde produktive Änderungen im
-ursprünglichen Core-Arbeitsbaum. Diese bleiben unangetastet. Fortsetzung dieses
-Auftrags in eigenem Git-Worktree
-`/Users/stefan/sources/interlis-vscode-evidence/product-core`, Branch
-`codex/vscode-extension-core`, unverändert auf gelocktem
-`76df3815973597280845a9bb575fa399e9773ccc`. Die strenge Sauberkeitsprüfung hielt
-den Qualifikationslauf vor jedem Test an; dies war kein Test-PASS. Originalbäume
-nicht zurückgesetzt oder fremde Änderungen committet. Künftige V1-Corearbeit
-erst nach V0-PASS auf diesem isolierten Zweig.
+VSIX: `build/packages/interlis-vscode-darwin-arm64.vsix`, SHA-256
+`1f2142f761594705d44390cdf382d610cfeebb90ff3ce824b054bedf3cbfa38d`.
+11 serverseitige JARs sind im [Artefaktlock](../../../release/editor-artifacts.lock.json)
+gepinnt. Alle Nutzdateien reproduzierbar identisch; ZIP-Zeitstempel verändern den
+Containerhash bei erneutem Packen. Primär geprüft: macOS arm64, VSCode1.140.0,
+ExTester8.28.1, ChromeDriver150.0.7871.250, externes Temurin25.0.3.
+Keine Linux-/Windows-/Remote- oder Runtimebündelungsbehauptung vor V5.
 
-Saubere Qualifikation `qualification/V0-r2/qualification.json` bestand für Core
-`76df381…`/Extension `cf850b6…`, tatsächlicher GuardExit0 und unveränderte Trees.
-Vor Review zusätzliche Evidenzabsicherung: normaler standardmässig ausgeschalteter
-LSPtrace als bewusste Diagnoseoption, im isolierten GUIprofil verbose für echte
-Dokument-/Diagnoseversionen. GUI-03 erzeugt und korrigiert nach Restart zusätzlich
-einen neuen Typfehler, damit Ready allein kein Analysefrischebeleg ist. Diese
-Änderung erfordert einen neuen Extensionkandidaten und frische GUIbelege.
+V0 liefert eine installierte dünne Editorintegration, einfache Snippets/Vorlage,
+Syntax, Status/Output und Stop/Restart. Die Diagnoseprosa ist noch technisch;
+Outline, Repositories/Readonly und Rootcompile sind V1-Arbeit. UML, vollständige
+Editorhilfen und Exporte bleiben vollständig beauftragt, aber noch unimplementiert.
+Keine zweite Sprachengine und keine Altprojektabhängigkeit.
 
-Verstärkter GUIentwicklungslauf `build/reports/gui/debug-restart/`: 3Cases, Exit0,
-einschliesslich neuem Fehler und Korrektur nach Restart. Trace enthält tatsächliche
-`didOpen`-/`didChange`-/`publishDiagnostics`-Versionen. Letzte Testnacharbeit betrifft
-nur die maus-/tastaturbasierte Auswahl im Fixture nach Restart; Java und Hostlogik
-unverändert. Für den neuen sauberen Kandidaten finale GUIqualifikation und Review.
+## Für V1 mitnehmen
+
+Lesbare DE/EN-Diagnostik/RelatedInformation, hierarchische Outline, Repositoryhost
+und readonly Quellen, rootbezogenes Compile und robuste Konfiguration. GUI-Fixierung
+von Analysebereitschaft vor F12, breitere Editorfixtures (Kommentare/Metaattribute/
+Warnung), verständlichere fehlende-Bundle-Meldungen und strengere Auswertung der
+GUI-/Serverlogs. Python3 wurde in einem Reviewerhilfsversuch blockiert und nie
+ausgeführt; kommende Reviewprofile sperren solche Befehle zusätzlich explizit.
+Neue PhaseBase vor V1-Codearbeit als echtes aktuelles Core-/Extensionpaar erfassen.

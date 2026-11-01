@@ -1,0 +1,36 @@
+{
+  "candidate": {
+    "coreSha": "76df3815973597280845a9bb575fa399e9773ccc",
+    "extensionSha": "d8f8adeb89e26f8a979744b81299d51da45cf0fe"
+  },
+  "contentVerdict": "PASS",
+  "processExit": 0,
+  "guardExit": 0,
+  "operativeGateAccepted": false,
+  "cause": "MISSING_EVIDENCE: screenshot-view claims have no matching completed read invocation",
+  "missingViewClaims": [
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/extension/build/reports/gui/smoke/2026-11-01T15-29-43-225Z/GUI-02-corrected.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/counterprobes/positive-4/probe-01-ready.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/counterprobes/positive-4/probe-02-f12.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/counterprobes/positive-4/probe-03-problem.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/counterprobes/positive-4/probe-04-template.png"
+  ],
+  "actualImageReads": [
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/extension/build/reports/gui/smoke/2026-11-01T15-29-43-225Z/GUI-01-ready.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/extension/build/reports/gui/smoke/2026-11-01T15-29-43-225Z/GUI-02-error.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/extension/build/reports/gui/smoke/2026-11-01T15-29-43-225Z/GUI-03-restarted-error.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/extension/build/reports/gui/smoke/2026-11-01T15-29-43-225Z/GUI-03-output.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/extension/build/reports/gui/smoke/2026-11-01T15-29-43-225Z/GUI-03-restarted.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/counterprobes/positive/failure-opens an.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/counterprobes/positive/failure-uses pal.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/counterprobes/negative-1/failure-negative.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/counterprobes/negative-2/probe-negative-error.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/counterprobes/positive-3/probe-02-f12.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/counterprobes/positive-3/probe-03-problem.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/counterprobes/positive-3/probe-04-template.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/counterprobes/positive-3/probe-05-snippet.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence/counterprobes/positive-4/probe-05-snippet.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/extension/build/reports/gui/smoke/2026-11-01T15-29-43-225Z/GUI-03-formatted.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/extension/build/reports/gui/smoke/2026-11-01T15-32-28-934Z/failure-GUI-01.png"
+  ]
+}

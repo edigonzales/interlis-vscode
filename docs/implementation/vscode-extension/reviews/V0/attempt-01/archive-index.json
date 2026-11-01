@@ -1,0 +1,31 @@
+{
+  "originalDirectory": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V0-r2/evidence",
+  "status": "not-accepted-evidence-attribution",
+  "files": [
+    {
+      "file": "review.md",
+      "sha256": "dbcbcc90a5262d927536f2b1a8456eaa9bdf778820d4093e685df4e9f8eaa43a"
+    },
+    {
+      "file": "verdict.json",
+      "sha256": "ff7e921c174f6eb1c260597979ff9ab414a1b32dbfefa5c00aa258e45bca21a8"
+    },
+    {
+      "file": "request.json",
+      "sha256": "8c36ac06bb3e3b2c8c033e6ebd4c7f56eb3aba05be392c6c30151c9484e36253"
+    },
+    {
+      "file": "transport.json",
+      "sha256": "e59a7271b05d46e9b18500ad5446783b70bb9a72a4e2703349b33ee42333ed8e"
+    },
+    {
+      "file": "guard.json",
+      "sha256": "a777d6ecd9338031c9e88e78419f532dd75f660366124632a25332694a90b376"
+    },
+    {
+      "file": "outer-audit-incomplete.json",
+      "sha256": "d98e580141c7305fdc5970a4734443ecfffd6f6288e9f6b2827e0cf05fb87c12"
+    }
+  ],
+  "rawEvidencePolicy": "Raw logs, image data, traces, installed profiles and VSIX remain at the original absolute paths and are not product sources."
+}
