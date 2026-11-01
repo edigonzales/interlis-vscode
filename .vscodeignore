@@ -6,4 +6,4 @@
 !resources/**
 !release/editor-artifacts.lock.json
 !licenses/**
-!artifacts/server/**
+!artifacts/**

@@ -80,6 +80,10 @@
       {
         "command": "interlisGuru.compileWorkspace",
         "title": "INTERLIS: Compile Workspace"
+      },
+      {
+        "command": "interlisGuru.showDiagram",
+        "title": "INTERLIS: Show Diagram for This File"
       }
     ],
     "configuration": {
@@ -197,7 +201,22 @@
           "description": "Optional versioned resolution-lock XML from the Java compiler; an empty string disables replay."
         }
       }
-    }
+    },
+    "customEditors": [
+      {
+        "viewType": "interlisGuru.diagram",
+        "displayName": "INTERLIS UML",
+        "selector": [
+          {
+            "filenamePattern": "*.ili"
+          },
+          {
+            "filenamePattern": "*.ILI"
+          }
+        ],
+        "priority": "option"
+      }
+    ]
   },
   "scripts": {
     "build": "node scripts/build.cjs",

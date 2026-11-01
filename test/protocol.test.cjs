@@ -14,6 +14,11 @@ test('packaged Java distribution initializes, diagnoses real fixture and shuts d
   const compiled=await request('workspace/executeCommand',{command:'interlis.compile',arguments:[]});assert.match(JSON.stringify(compiled),/succeeded/i);
   const definition=await request('textDocument/definition',{textDocument:{uri},position:{line:7,character:17}});assert.ok(JSON.stringify(definition).includes('"line":4'),JSON.stringify(definition));
   const current=await request('interlis/compile',{mode:'current',textDocument:{uri,version:1}});assert.equal(current.outcome,'succeeded');
+  assert.equal(result.capabilities.experimental.interlis.diagramProtocolVersion,1);assert.equal(result.capabilities.experimental.interlis.diagramDocumentVersion,'1.0');
+  const diagram=await request('interlis/diagram',{protocolVersion:1,requestId:'packaged-diagram',textDocument:{uri,version:1},options:{schemaVersion:'1.0'}});
+  assert.equal(diagram.protocolVersion,1);assert.equal(diagram.serverInstanceId,result.capabilities.experimental.interlis.serverInstanceId);assert.equal(diagram.rootUri,uri);assert.equal(diagram.documentVersion,1);assert.equal(typeof diagram.document,'object');require('../artifacts/diagram-ui/adapter.cjs').adapt(diagram.document);assert.equal(diagram.document.snapshotId,diagram.snapshotId);assert.equal(diagram.document.completeness,'COMPLETE');assert.ok(diagram.document.nodes.length);
+  const declaration=diagram.document.nodes.find(node=>node.label==='Building');assert.ok(declaration,JSON.stringify(diagram.document.nodes));
+  const location=await request('interlis/diagramNavigate',{protocolVersion:1,serverInstanceId:diagram.serverInstanceId,diagramId:diagram.diagramId,snapshotId:diagram.snapshotId,textDocument:{uri,version:1},elementId:declaration.id});assert.equal(location.uri,uri);assert.equal(location.readonly,false);
   const external=pathToFileURL(path.resolve('test/fixtures/workspace-imports/External.ili')).href;
   send('textDocument/didOpen',{textDocument:{uri:external,languageId:'interlis',version:2,text:fs.readFileSync('test/fixtures/workspace-imports/External.ili','utf8')}});
   const targets=await request('textDocument/definition',{textDocument:{uri:external},position:{line:5,character:32}});assert.ok(targets.length);
@@ -21,6 +26,6 @@ test('packaged Java distribution initializes, diagnoses real fixture and shuts d
   const revision=new URL(handle).search.slice(1);const source=await request('interlis/source',{handle,expectedRevision:revision});
   const fixture=JSON.parse(fs.readFileSync(path.join(temporary,'repository-fixtures.json')));assert.equal(source.text,fixture.sources['RemoteMiddle.ili']);assert.equal(source.readonly,true);assert.equal(source.sourceRevision,revision);
   await assert.rejects(request('interlis/source',{handle:repository.base+'RemoteMiddle.ili',expectedRevision:revision}),/unknown readonly/);
-  await request('shutdown',null);send('exit',null);child.stdin.end();const code=await new Promise(resolve=>child.once('exit',resolve));assert.equal(code,0,stderr);if(protocolError)throw protocolError;assert.equal(buffer.length,0);assert.ok(notifications.some(n=>n.method==='textDocument/publishDiagnostics'));console.log(JSON.stringify({core:plan.coreCommit,bundle:plan.bundleDigest,pid:child.pid,exit:code}));
+  await request('shutdown',null);send('exit',null);child.stdin.end();const code=await new Promise(resolve=>child.once('exit',resolve));assert.equal(code,0,stderr);if(protocolError)throw protocolError;assert.equal(buffer.length,0);assert.ok(notifications.some(n=>n.method==='textDocument/publishDiagnostics'));assert.ok(notifications.some(n=>n.method==='interlis/analysisReady'&&n.params.serverInstanceId===diagram.serverInstanceId));console.log(JSON.stringify({core:plan.coreCommit,bundle:plan.bundleDigest,pid:child.pid,exit:code}));
  }finally{if(child.exitCode===null)child.kill();await repository.close();fs.rmSync(temporary,{recursive:true,force:true});}
 });

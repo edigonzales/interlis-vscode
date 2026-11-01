@@ -1,0 +1,6 @@
+INTERLIS 2.4;
+MODEL Other AT "https://example.org" VERSION "1" =
+  TOPIC OtherData =
+    CLASS A = otherAttribute : TEXT*30; END A;
+  END OtherData;
+END Other.

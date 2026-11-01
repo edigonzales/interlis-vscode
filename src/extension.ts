@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import {spawn} from 'node:child_process';
 import {LanguageClient, State, ErrorAction, CloseAction} from 'vscode-languageclient/node';
 import {resolveLaunchPlan} from './host/launch';
+import {DiagramEditors} from './diagram';
 import {languageSettings} from './host/configuration';
 
 let stopExtension: (() => Promise<void>) | undefined;
@@ -15,10 +16,13 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   const watcher = vscode.workspace.createFileSystemWatcher('**/*.{ili,ILI}');
   context.subscriptions.push(output, status, watcher);
   let client: LanguageClient | undefined;
+  const diagrams=new DiagramEditors(context,()=>client,output);
+  context.subscriptions.push(diagrams,vscode.window.registerCustomEditorProvider(DiagramEditors.viewType,diagrams,{webviewOptions:{retainContextWhenHidden:true},supportsMultipleEditorsPerDocument:true}),vscode.commands.registerCommand('interlisGuru.showDiagram',()=>diagrams.open()));
   let queue = Promise.resolve();
   let stateListener: vscode.Disposable | undefined;
   const setStatus = (text: string) => {status.text = `INTERLIS: ${text}`;};
   async function stop() {
+    diagrams.disconnected();
     const old = client;
     client = undefined;
     stateListener?.dispose(); stateListener = undefined;
@@ -55,6 +59,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
         await stop();
         throw new Error('The Java server does not support editor protocol version 1. Reinstall a matching extension and server bundle.');
       }
+      diagrams.connected();
       setStatus('Ready');
     }
     catch (error) {client = undefined; await next.dispose(); throw error;}

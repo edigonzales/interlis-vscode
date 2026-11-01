@@ -1,0 +1,2 @@
+# Exact CRLF and supplementary Unicode source used by the installed diagram tests.
+test/fixtures/uml-core/Interactive.ili -text whitespace=cr-at-eol

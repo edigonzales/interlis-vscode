@@ -1,0 +1,15 @@
+!! Grüezi 😀
+INTERLIS 2.4;
+MODEL Interactive AT "https://example.org" VERSION "1" =
+DOMAIN Number=0..999; State=(first,second);
+TOPIC Data=OID AS INTERLIS.UUIDOID;
+STRUCTURE Info=value:TEXT*12;END Info;
+CLASS A=number:Number;part:Info;MANDATORY CONSTRAINT number>=0;END A;
+CLASS B EXTENDS A=state:State;END B;
+CLASS C=END C;
+VIEW Overview PROJECTION OF a~A; = ALL OF a; END Overview;
+ASSOCIATION Many=one--{1}A;two--{0..*}B;three--{1}C;note:TEXT*20;END Many;
+ASSOCIATION Contains=owner-<#>{1}A;items--{*}B;END Contains;
+ASSOCIATION Self=parent--{0..1}A;children--{*}A;END Self;
+ASSOCIATION Parallel=fromA--{1}A;toB--{0..*}B;END Parallel;
+END Data;END Interactive.

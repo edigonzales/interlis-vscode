@@ -55,3 +55,13 @@ module.exports.copyText=async function(){
  try{const sentinel='interlis-copy-'+require('node:crypto').randomUUID();clipboard.writeSync(sentinel);await focusEditor();await driver.actions().keyDown(Key.COMMAND).sendKeys('a').keyUp(Key.COMMAND).keyDown(Key.COMMAND).sendKeys('c').keyUp(Key.COMMAND).perform();await waitFor(async()=>clipboard.readSync()!==sentinel,'Native copy did not finish');return clipboard.readSync();}
  finally{clipboard.writeSync(previous);}
 };
+/** Read the actual current process trace as a readiness oracle; all user actions remain native UI. */
+module.exports.waitCurrentAnalysis=async function(){
+ const uri=await editor.getFileUri(),manifest=JSON.parse(fs.readFileSync(path.join(evidence,'manifest.json')));
+ const walk=folder=>fs.existsSync(folder)?fs.readdirSync(folder,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(folder,e.name)):[path.join(folder,e.name)]):[];
+ await waitFor(async()=>{
+  const logs=walk(path.join(manifest.storage,'settings/logs')).filter(p=>p.endsWith('INTERLIS Language Server.log'));
+  for(const log of logs){const all=fs.readFileSync(log,'utf8'),current=all.slice(all.lastIndexOf('Server start pid='));for(const match of current.matchAll(/Received notification 'interlis\/analysisReady'\.\r?\nParams: (\{[\s\S]*?\r?\n\})/g)){try{const value=JSON.parse(match[1]);if(Object.keys(value.documentVersions||{}).some(key=>decodeURIComponent(key)===decodeURIComponent(uri)))return true;}catch{}}}
+  return false;
+ },'Current server has not accepted analysis containing this real editor');
+};
