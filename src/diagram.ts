@@ -30,28 +30,31 @@ export class DiagramEditors implements vscode.CustomTextEditorProvider,vscode.Di
   const document=vscode.window.activeTextEditor?.document;
   if(!editable(document)){void vscode.window.showInformationMessage('Open a local INTERLIS file to show its diagram.');return;}
   if(document.isUntitled){void vscode.window.showInformationMessage('Save the INTERLIS file before opening its diagram.');return;}
-  for(const state of this.panels)if(state.boundUri===document.uri.toString()){state.root=document;state.follow=false;state.response=undefined;this.invalidate(state,'Opening selected source');}
+  for(const state of this.panels)if(state.boundUri===document.uri.toString()){state.root=document;state.panel.title=document.uri.path.split('/').pop()+' — UML';state.follow=false;state.response=undefined;this.invalidate(state,'Opening selected source');}
   await vscode.commands.executeCommand('vscode.openWith',document.uri,DiagramEditors.viewType,{viewColumn:vscode.ViewColumn.Beside,preserveFocus:false});
  }
- async resolveCustomTextEditor(document:vscode.TextDocument,panel:vscode.WebviewPanel):Promise<void> {
-  await verifyDiagramAssets(this.context.extensionPath);
+ async resolveCustomTextEditor(document:vscode.TextDocument,panel:vscode.WebviewPanel,token:vscode.CancellationToken):Promise<void> {
+  let closed=false;const pending=panel.onDidDispose(()=>{closed=true;});
+  try{await verifyDiagramAssets(this.context.extensionPath);}catch(error){pending.dispose();if(closed||token.isCancellationRequested)return;throw error;}
+  if(closed||token.isCancellationRequested){pending.dispose();return;}
   const channel=randomUUID(),nonce=randomUUID().replaceAll('-','');
-  const state:PanelState={boundUri:document.uri.toString(),panel,root:document,follow:false,generation:0,ready:false,disposed:false,association:'ENTITY',channel};this.panels.add(state);
+  const state:PanelState={boundUri:document.uri.toString(),panel,root:document,follow:false,generation:0,ready:false,disposed:false,association:'ENTITY',channel};this.panels.add(state);panel.title=document.uri.path.split('/').pop()+' — UML';
+  let visible=panel.visible;const visibility=panel.onDidChangeViewState(event=>{if(visible===event.webviewPanel.visible)return;visible=event.webviewPanel.visible;this.invalidate(state,visible?'Diagram shown — updating current source':'Diagram hidden — updates paused');});
   panel.webview.options={enableScripts:true,localResourceRoots:[vscode.Uri.joinPath(this.context.extensionUri,'artifacts/diagram-ui'),vscode.Uri.joinPath(this.context.extensionUri,'out')]};
   const resource=(...parts:string[])=>panel.webview.asWebviewUri(vscode.Uri.joinPath(this.context.extensionUri,...parts)).toString();
   const ui=resource('artifacts','diagram-ui','diagram-ui.js'),worker=resource('artifacts','diagram-ui','diagram-layout-worker.js'),css=resource('artifacts','diagram-ui','diagram-ui.css'),bootstrap=resource('out','diagram-webview.js');
   panel.webview.html=`<!doctype html><html><head><meta charset="UTF-8"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'nonce-${nonce}' ${panel.webview.cspSource}; style-src ${panel.webview.cspSource} 'nonce-${nonce}'; worker-src blob:; connect-src ${panel.webview.cspSource}; img-src ${panel.webview.cspSource} data:; font-src ${panel.webview.cspSource};"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="${escape(css)}"><style nonce="${nonce}">html,body{height:100%;margin:0;overflow:hidden;background:var(--vscode-editor-background);color:var(--vscode-editor-foreground);font:13px var(--vscode-font-family)}body{display:flex;flex-direction:column}nav{display:flex;align-items:center;gap:8px;padding:8px;flex-wrap:wrap}button,select{color:var(--vscode-button-foreground);background:var(--vscode-button-background);border:1px solid var(--vscode-focusBorder);padding:4px 10px}#status{padding:4px 10px;min-height:18px;max-height:4em;overflow:auto}#canvas{flex:1;min-height:0;--diagram-background:var(--vscode-editor-background);--diagram-foreground:var(--vscode-editor-foreground);--diagram-container:var(--vscode-sideBar-background);--diagram-border:var(--vscode-editor-foreground);--diagram-selection:var(--vscode-focusBorder)}#root{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:35vw}</style></head><body data-channel="${channel}" data-ui="${escape(ui)}" data-worker="${escape(worker)}"><nav aria-label="Diagram controls"><button id="refresh">Refresh</button><button id="fit">Fit</button><button id="follow" aria-pressed="false">Pinned</button><label>Associations <select id="association"><option value="ENTITY">Entities</option><option value="COMPACT_BINARY">Compact binary</option></select></label><span id="root"></span></nav><div id="status" role="status">Starting diagram…</div><div id="canvas" class="interlis-canvas"></div><script nonce="${nonce}" type="module" src="${escape(bootstrap)}"></script></body></html>`;
   const listener=panel.webview.onDidReceiveMessage(message=>void this.receive(state,message));
-  panel.onDidDispose(()=>{state.disposed=true;this.cancel(state);this.panels.delete(state);listener.dispose();});
+  panel.onDidDispose(()=>{state.disposed=true;this.cancel(state);this.panels.delete(state);listener.dispose();visibility.dispose();});pending.dispose();
  }
  private post(state:PanelState,message:Record<string,unknown>):Thenable<boolean> {return state.panel.webview.postMessage({protocolVersion:1,channel:state.channel,generation:state.generation,...message});}
  private cancel(state:PanelState):void {state.generation++;if(state.timer)clearTimeout(state.timer);state.timer=undefined;state.cancel?.cancel();state.cancel?.dispose();state.cancel=undefined;}
  private invalidate(state:PanelState,message:string):void {
   if(state.disposed||this.closed)return;this.cancel(state);void this.post(state,{type:'status',status:'STALE',message});
-  if(state.ready)state.timer=setTimeout(()=>void this.refresh(state),120);
+  if(state.ready&&state.panel.visible)state.timer=setTimeout(()=>void this.refresh(state),120);
  }
  private async refresh(state:PanelState):Promise<void> {
-  if(state.disposed||!state.ready)return;this.cancel(state);const generation=state.generation,server=this.client(),root=state.root,version=root.version;
+  if(state.disposed||!state.ready||!state.panel.visible)return;this.cancel(state);const generation=state.generation,server=this.client(),root=state.root,version=root.version;
   const capability=server?.initializeResult?.capabilities.experimental?.interlis;
   if(!server?.isRunning()||capability?.diagramProtocolVersion!==1||capability?.diagramDocumentVersion!=='1.0'||typeof capability?.serverInstanceId!=='string'){await this.post(state,{type:'status',status:'ERROR',message:'A matching running diagram protocol 1 server is required.'});return;}
   const cancellation=new vscode.CancellationTokenSource();state.cancel=cancellation;const requestId=randomUUID();
