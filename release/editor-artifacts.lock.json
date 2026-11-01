@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "coreCommit": "765a0c924ce8f2749c98b2e31c9fe60d2b69b730",
+  "coreCommit": "a0189b7c35f4bf1d2a543204e3859a1053898cdf",
   "protocolVersion": "lsp-3.17-baseline",
   "editorProtocolVersion": 1,
   "diagramDocumentVersion": "1.0",
@@ -63,7 +63,7 @@
     },
     {
       "path": "diagram-ui/build-manifest.json",
-      "sha256": "d7abe4f08ec54ad55cf80884cb075850ee02a1afab7a1e307d5fde8a6aec12cc"
+      "sha256": "78e7187a61b77bcf4f6c658905f0fd5649fa7792964ab48e5d26d834620355c1"
     },
     {
       "path": "diagram-ui/contracts/elk.d.ts",
@@ -83,7 +83,7 @@
     },
     {
       "path": "diagram-ui/diagram-ui.js",
-      "sha256": "09e066896ced4a663bbefd787f09c46635f9d83f9c6c324afddefabb413415b2"
+      "sha256": "48d3eea276e2668f0ab7684f08f2fa39479bba970de110c6d88b508e3a120b6b"
     },
     {
       "path": "diagram-ui/diagram-ui.js.LEGAL.txt",
@@ -199,7 +199,7 @@
     },
     {
       "path": "diagram-ui.tgz",
-      "sha256": "e055b033ae03c909dc433bdf6f919f2459160b4ef12e32bb118a250cf5d53de4"
+      "sha256": "29019f72025787838523e3faba87c8b901b7b2361365b260be6bba904d09b78c"
     },
     {
       "path": "renderer-provenance.json",
