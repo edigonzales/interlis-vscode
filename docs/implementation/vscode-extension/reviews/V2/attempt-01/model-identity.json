@@ -1,0 +1,17 @@
+{
+  "checkedAt": "2026-11-01T21:26:15.988Z",
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "apiHost": "api.deepseek.com",
+  "officialMapping": "DeepSeek-V4.1-Flash-1017",
+  "mappingSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+  "sourceVerifiedBy": "Fresh orchestrator web open during V2 preparation, lines30–33 and54; reviewer must independently verify",
+  "openCodeVersion": "opencode v2.0.28",
+  "proxyEnvironment": {
+    "HTTP_PROXY": false,
+    "HTTPS_PROXY": false,
+    "ALL_PROXY": false,
+    "OPENAI_BASE_URL": false,
+    "DEEPSEEK_BASE_URL": false
+  }
+}

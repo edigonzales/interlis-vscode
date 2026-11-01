@@ -1,0 +1,127 @@
+{
+  "successfulReads": [
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-16-compact-self.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/crop16-zoom.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/crop16-zoom.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/crop16b-zoom.png",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-13-node-moved.png",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-14-route-after.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/crop14-zoom.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/extension/build/reports/gui/uml/2026-11-01T21-29-06-518Z/failure-GUI-15.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/extension/build/reports/gui/uml/2026-11-01T21-29-06-518Z/GUI-15-A.png",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-15-readonly.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/cropfailtab-zoom.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/cropfailtab-zoom.png",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-17-current.png",
+    "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili-cprobe-GJa0jP/screenshots/20261101T223608/Independent installed V2 counterprobe (n-aryselfparallel, stale, same simple names) keeps n-aryselfparallel semantics, exact same-name anchors, native dragroute and rejects a held late layout.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-38-00-131Z/CounterProbe-01-open.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-38-00-131Z/failure-keeps-n-ary-self-paralle.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/extension/build/reports/gui/uml/2026-11-01T21-33-05-886Z/GUI-16-compact-self.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-42-00-729Z/failure-keeps-n-ary-self-paralle.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-42-00-729Z/CounterProbe-05-compact.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-42-00-729Z/cp05crop-zoom.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-42-00-729Z/CounterProbe-04-route-after.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-42-00-729Z/CounterProbe-02-drag.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-42-00-729Z/CounterProbe-07-live.png",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-06-held.png"
+  ],
+  "claims": [
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-13-node-moved.png",
+      "readExact": false,
+      "identicalRead": null
+    },
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-14-route-after.png",
+      "readExact": false,
+      "identicalRead": null
+    },
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-15-readonly.png",
+      "readExact": false,
+      "identicalRead": null
+    },
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-16-compact-self.png",
+      "readExact": false,
+      "identicalRead": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/extension/build/reports/gui/uml/2026-11-01T21-33-05-886Z/GUI-16-compact-self.png"
+    },
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-17-current.png",
+      "readExact": false,
+      "identicalRead": null
+    },
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-01-open.png",
+      "readExact": false,
+      "identicalRead": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-38-00-131Z/CounterProbe-01-open.png"
+    },
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-02-drag.png",
+      "readExact": false,
+      "identicalRead": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-42-00-729Z/CounterProbe-02-drag.png"
+    },
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-03-route-before.png",
+      "readExact": false,
+      "identicalRead": null
+    },
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-04-route-after.png",
+      "readExact": false,
+      "identicalRead": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-42-00-729Z/CounterProbe-04-route-after.png"
+    },
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-05-compact.png",
+      "readExact": false,
+      "identicalRead": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-42-00-729Z/CounterProbe-05-compact.png"
+    },
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-06-held.png",
+      "readExact": true,
+      "identicalRead": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-06-held.png"
+    },
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-07-live.png",
+      "readExact": false,
+      "identicalRead": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-42-00-729Z/CounterProbe-07-live.png"
+    },
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-08-late-released.png",
+      "readExact": false,
+      "identicalRead": null
+    }
+  ],
+  "unsupported": [
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-13-node-moved.png",
+      "readExact": false,
+      "identicalRead": null
+    },
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-14-route-after.png",
+      "readExact": false,
+      "identicalRead": null
+    },
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-15-readonly.png",
+      "readExact": false,
+      "identicalRead": null
+    },
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-17-current.png",
+      "readExact": false,
+      "identicalRead": null
+    },
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-03-route-before.png",
+      "readExact": false,
+      "identicalRead": null
+    },
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-08-late-released.png",
+      "readExact": false,
+      "identicalRead": null
+    }
+  ]
+}

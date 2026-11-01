@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "phase": "V2",
+  "candidate": {
+    "coreSha": "7026e7f6b5834bf593d91dfee3323efb60688f3d",
+    "extensionSha": "bae7f3d52ef7e20fc7edf067626a4191c7395717"
+  },
+  "validatedAt": "2026-11-01T21:53:51.735Z",
+  "validIndependentPass": false,
+  "reason": "Independent content verdict PASS rejected as phase gate: six explicit visually-inspected image attributions lack successful session reads or byte-identical aliases. Report section6 additionally claims a much larger actually-viewed set. No V3 advance.",
+  "reviewerSession": "ses_e66fe5d9fffePRtd1zsFSqvtdZ",
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "apiHost": "api.deepseek.com",
+  "processExit": 0,
+  "guardStatus": "passed",
+  "guardExit": 0,
+  "trees": {
+    "core": {
+      "head": "7026e7f6b5834bf593d91dfee3323efb60688f3d",
+      "dirty": ""
+    },
+    "extension": {
+      "head": "bae7f3d52ef7e20fc7edf067626a4191c7395717",
+      "dirty": ""
+    }
+  },
+  "criteria": [
+    {
+      "id": "V2-01",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V2-02",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V2-03",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V2-04",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V2-05",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V2-06",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V2-07",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V2-08",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V2-09",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V2-10",
+      "status": "fulfilled"
+    }
+  ],
+  "unsupportedImages": [
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-13-node-moved.png",
+      "readExact": false,
+      "identicalRead": null
+    },
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-14-route-after.png",
+      "readExact": false,
+      "identicalRead": null
+    },
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-15-readonly.png",
+      "readExact": false,
+      "identicalRead": null
+    },
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-17-current.png",
+      "readExact": false,
+      "identicalRead": null
+    },
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-03-route-before.png",
+      "readExact": false,
+      "identicalRead": null
+    },
+    {
+      "file": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-08-late-released.png",
+      "readExact": false,
+      "identicalRead": null
+    }
+  ],
+  "supportedImageCount": 7,
+  "totalExplicitVerdictImageClaims": 13,
+  "evidencePreserved": true,
+  "limits": [
+    "All ten content criteria were independently marked fulfilled; actual fresh LSP7, projection14, portable18+6, browser3, nativeUI1, unit7, stdio1, host3, cumulative GUI18 and own counterprobe1 passed, plus expected negative canary1. These raw checks remain reusable by unchanged product content.",
+    "Own GUI first attempt14/18 failed focus after a correct readonly range; second same-pair run18/18 passed. Reviewer classified focus as optional hardening; retain both.",
+    "Report prose says Svelte/Sprotty although the package uses Sprotty only; navigation workspaceRevision is validated against captured registry/current host state rather than a request field. No gate relies on these prose inaccuracies."
+  ],
+  "sha256": {
+    "review.md": "47b528a6c4d71a8a8ba28fb3ef86f06d2c307726842ba37917e5debbaf83c65e",
+    "verdict.json": "9b1764e0485828b21322407239e665689b9389de1237d1fca4fbe6384b315ad3",
+    "request.json": "b0fe5e13dcfd9e1438195caa6291ab6744df33a7cb980634743b507272c7d301",
+    "transport.json": "ae4b50050c274e271fd3139bc75f5cca48d71af6db4f2abb46882f354ca6a94f",
+    "guard.json": "a32121cac36661bccec3686efe6110e0e5f18ac54f5d34e1c70e599ebeccfd04",
+    "session-export.json": "9ca6168d37d7f12438dae827b5142042f69840780a07d78fd9049e0d868c8631",
+    "opencode.jsonl": "3315374091a49641349737721de400caab448ddd5041673137810a82014dbadf",
+    "image-attribution-check.json": "1113479a7d49a94c07db834f89764fb5155add1976b8989d56f1551d13fe28e6"
+  }
+}

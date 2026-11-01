@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "phase": "V2",
+  "candidate": {
+    "coreSha": "7026e7f6b5834bf593d91dfee3323efb60688f3d",
+    "extensionSha": "bae7f3d52ef7e20fc7edf067626a4191c7395717"
+  },
+  "openCodeVersion": "opencode v2.0.28",
+  "model": "deepseek/deepseek-flash",
+  "apiHost": "api.deepseek.com",
+  "before": {
+    "core": {
+      "head": "7026e7f6b5834bf593d91dfee3323efb60688f3d",
+      "branch": "HEAD",
+      "dirty": ""
+    },
+    "extension": {
+      "head": "bae7f3d52ef7e20fc7edf067626a4191c7395717",
+      "branch": "HEAD",
+      "dirty": ""
+    }
+  },
+  "status": "completed",
+  "startedAt": "2026-11-01T21:26:22.834Z",
+  "pid": 32682,
+  "exitCode": 0,
+  "signal": null,
+  "finishedAt": "2026-11-01T21:51:15.993Z",
+  "after": {
+    "core": {
+      "head": "7026e7f6b5834bf593d91dfee3323efb60688f3d",
+      "branch": "HEAD",
+      "dirty": ""
+    },
+    "extension": {
+      "head": "bae7f3d52ef7e20fc7edf067626a4191c7395717",
+      "branch": "HEAD",
+      "dirty": ""
+    }
+  }
+}

@@ -1,0 +1,486 @@
+{
+  "schemaVersion": 1,
+  "phase": "V2",
+  "assignmentBase": {
+    "coreSha": "20b0029d824b3602d9a304320bf0feae4c35c1f9",
+    "extensionSha": "73badd9807f407aea048d397af5549fe907a1501"
+  },
+  "phaseBase": {
+    "coreSha": "3b60e6c1309a4897ad6d0e99f6d8dfd137520ca9",
+    "extensionSha": "e576a30e4adcf6e36bfe662b402ca87034450dab"
+  },
+  "candidate": {
+    "coreSha": "7026e7f6b5834bf593d91dfee3323efb60688f3d",
+    "extensionSha": "bae7f3d52ef7e20fc7edf067626a4191c7395717"
+  },
+  "worktrees": {
+    "core": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/core",
+    "extension": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/extension"
+  },
+  "evidenceDirectory": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence",
+  "verdict": "PASS",
+  "verdictScope": "Independent content review of all V2 criteria (V2-01..V2-10) at the exact candidate pair. The outer OpenCode/guard process exit, outer transport manifest and outer immutable-tree closure are not asserted from inside this running session; Codex must verify them after process end. No V3/V5 claim.",
+  "reviewer": {
+    "openCodeVersion": "2.0.28",
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "apiHost": "api.deepseek.com",
+    "modelMappingEvidence": "Own checks in this session: opencode --version = 2.0.28; OpenCode model catalog resolves deepseek/deepseek-flash as 'DeepSeek V4.1 Flash 1017'; official https://api-docs.deepseek.com/quick_start/pricing/ names model deepseek-flash with MODEL VERSION DeepSeek-V4.1-Flash-1017 and BASE URL https://api.deepseek.com; harness opencode.json sets provider deepseek baseURL https://api.deepseek.com; no HTTP_PROXY/HTTPS_PROXY/ALL_PROXY/OPENAI_BASE_URL/DEEPSEEK_BASE_URL set. No credential values read or printed. See evidence/reviewer-identity.md."
+  },
+  "trackedState": {
+    "coreBefore": "clean",
+    "coreAfter": "clean",
+    "extensionBefore": "clean except pre-existing untracked opencode.json (review harness)",
+    "extensionAfter": "clean except pre-existing untracked opencode.json (review harness); only ignored build/test outputs added",
+    "productFilesModifiedByReviewer": false
+  },
+  "artifacts": {
+    "requestVsix": {
+      "path": "/Users/stefan/sources/interlis-vscode/build/packages/interlis-vscode-darwin-arm64.vsix",
+      "sha256": "61d73edf2768f2d6f6cfdc3e7f23cba46af6c52079a99b392b5b47ed88a21776"
+    },
+    "rebuiltVsixUsedForOwnGui": {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/extension/build/packages/interlis-vscode-darwin-arm64.vsix",
+      "sha256": "1bb9a443453d00553e1a03ca26a7d3701df6712b95ee73791bd11ffd28f0796c",
+      "contentIdentity": "69/69 unpacked files byte-identical to the request VSIX; only ZIP container metadata differs"
+    },
+    "installedClientBundle": {
+      "sha256": "03b70c5113c3bb12225da227f28db4765995658b788f4d23719015fcfb7a62f6"
+    },
+    "requestArtifacts": {
+      "count": 54,
+      "allHashesMatched": true,
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/artifact-hashes.log"
+    },
+    "editorBundleRebuild": {
+      "coreCommit": "7026e7f6b5834bf593d91dfee3323efb60688f3d",
+      "files": 53,
+      "allHashesMatchExtensionLock": true,
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/lock-vs-bundle.log"
+    }
+  },
+  "criteria": [
+    {
+      "id": "V2-01",
+      "status": "fulfilled",
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/core/frontend/diagram-ui/src/interactive.ts",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/core/frontend/diagram-ui/src/adapter.ts",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/core/frontend/diagram-ui/build.cjs",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/core/frontend/diagram-ui/provenance.json",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/core/interlis-wasm-teavm/src/main/typescript/diagram-adapter.ts",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/core/interlis-wasm-teavm/build-browser-tools.cjs",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/renderer-prepare.log",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/dependencies.log",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/lock-vs-bundle.log"
+      ],
+      "finding": null,
+      "note": "One own neutral source; browser and extension consume it; no active second renderer or vendor directory; licenses/provenance and dependency guard checks pass."
+    },
+    {
+      "id": "V2-02",
+      "status": "fulfilled",
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/core/interlis-lsp/src/main/java/guru/interlis/lsp/DiagramResponse.java",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/core/interlis-lsp/src/main/java/guru/interlis/lsp/DiagramOptionsDecoder.java",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/core/interlis-lsp/src/main/java/guru/interlis/lsp/LspDiagramService.java",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/core/interlis-lsp/src/test/java/guru/interlis/lsp/LspProcessTest.java",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/lsp-tests.log",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/ext-protocol.log"
+      ],
+      "finding": null,
+      "note": "Typed document object over real stdio; options/root/snapshot/source/client versions and actual completeness; rejected stale versions."
+    },
+    {
+      "id": "V2-03",
+      "status": "fulfilled",
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/manifest.json",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-16-compact-self.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-01-open.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-05-compact.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/projection-tests.log"
+      ],
+      "finding": null,
+      "note": "MODEL/TOPIC/CLASS/STRUCTURE/DOMAIN/VIEW/ASSOCIATION with members, constraints, local/domain enum values; two same-named Item declarations retain distinct identities and anchors."
+    },
+    {
+      "id": "V2-04",
+      "status": "fulfilled",
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/core/interlis-projection/src/test/java/guru/interlis/projection/CompactAssociationProjectionTest.java",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/core/frontend/diagram-ui/src/interactive.ts",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-16-compact-self.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-05-compact.png"
+      ],
+      "finding": null,
+      "note": "N-ary attribution retained; self and three parallel compact associations distinct; composition diamond at the semantic whole end; self-loop visibly open with both ends at the class."
+    },
+    {
+      "id": "V2-05",
+      "status": "fulfilled",
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/core/frontend/diagram-ui/test/interactive.test.cjs",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/native-ui.log",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-13-node-moved.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-14-route-after.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-02-drag.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-04-route-after.png"
+      ],
+      "finding": null,
+      "note": "Real pointer drags move nodes/containers and interior route handles; endpoints, source buffer, dirty state and disk hashes unchanged."
+    },
+    {
+      "id": "V2-06",
+      "status": "fulfilled",
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-15-readonly.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/core/interlis-lsp/src/test/java/guru/interlis/lsp/DiagramProtocolTest.java",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-01-open.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe-r7.log"
+      ],
+      "finding": null,
+      "note": "Class/member/association and readonly import anchors exact (own counterprobe: same-named Item in Alpha 6:15 and Beta 27:15, member hue 27:38); stale versions rejected. One first-run GUI-15 focus flake is documented and passed on the clean identical rerun."
+    },
+    {
+      "id": "V2-07",
+      "status": "fulfilled",
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/extension/src/diagram.ts",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-17-current.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/manifest.json",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-07-live.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-08-late-released.png"
+      ],
+      "finding": null,
+      "note": "Pinned default, explicit follow only for editable INTERLIS sources, live update, partial/stale/error and panel lifecycle; a genuine held ELK result cannot overwrite a newer source; stable moved geometry retained."
+    },
+    {
+      "id": "V2-08",
+      "status": "fulfilled",
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-uml-r2.log",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/manifest.json",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/cases.json",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-13-node-moved.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-14-route-after.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-16-compact-self.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-17-current.png"
+      ],
+      "finding": null,
+      "note": "Own installed cumulative run: GUI-01..18, 18/18, 3 real Java starts, 0 remaining PIDs. The earlier own run under parallel heavy load failed GUI-15 only (14/18) and is retained in evidence/gui-uml.log."
+    },
+    {
+      "id": "V2-09",
+      "status": "fulfilled",
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/projection-tests.log",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/lsp-tests.log",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/wasm-consumer-tests-2.log",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/native-ui.log",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/ext-unit.log",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/ext-host.log"
+      ],
+      "finding": null,
+      "note": "Fresh projection 14/14, LSP 7/7, portable client/adapter 18+6, Chromium/Firefox/WebKit 3/3, native UI 1/1, extension unit 7/7, host 3 checks; one renderer source; no lost semantic fields in adapter/projection tests."
+    },
+    {
+      "id": "V2-10",
+      "status": "fulfilled",
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe-r7.log",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/manifest.json",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-05-compact.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-08-late-released.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/artifact-hashes.log",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/vsix-content-compare.log",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/review.md"
+      ],
+      "finding": null,
+      "note": "Own new installed GUI counterprobe (own fixture, n-ary/self/parallel, same simple names, actual node/container/route mouse actions, held genuine late result, source/dirty/endpoint checks) 1/1; license/dependency verified; identical product pair."
+    }
+  ],
+  "executedChecks": [
+    {
+      "id": "prepare-extension-dependencies",
+      "cwd": "extension",
+      "command": ["npm", "ci", "--ignore-scripts"],
+      "exit": 0,
+      "result": "pinned extension dependency lock installed without scripts",
+      "ownRun": true,
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/ext-npm-ci.log"
+    },
+    {
+      "id": "rebuild-exact-core-editor-bundle",
+      "cwd": "core",
+      "command": ["./gradlew", "editorBundle", "--no-daemon"],
+      "exit": 0,
+      "result": "server 11 + renderer/types/schemas/licenses 42 = 53 files; every hash equals release/editor-artifacts.lock.json; coreCommit 7026e7f6...",
+      "ownRun": true,
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/editor-bundle-build.log",
+      "comparison": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/lock-vs-bundle.log",
+      "note": "scripts/stage-core.cjs itself was not run inside the candidate worktree because it rewrites the tracked release/editor-artifacts.lock.json; its functional core (editorBundle build plus full hash comparison against the unchanged lock) was executed, and the rebuilt bundle was staged as ignored artifacts/ for build and GUI."
+    },
+    {
+      "id": "neutral-renderer-prepare",
+      "cwd": "core",
+      "command": ["node", "frontend/diagram-ui/prepare.cjs"],
+      "exit": 0,
+      "result": "own lock, strict declarations, Sprotty/ELK bundle and license inventory built; no forbidden renderer input",
+      "ownRun": true,
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/renderer-prepare.log"
+    },
+    {
+      "id": "lsp-diagram-transport-and-projection",
+      "cwd": "core",
+      "command": ["./gradlew", ":interlis-lsp:test", "--tests", "*DiagramProtocolTest", "--tests", "*LspProcessTest", "--no-daemon"],
+      "exit": 0,
+      "result": "7/7, 0 skipped (DiagramProtocol 4, real launcher LspProcess 3)",
+      "ownRun": true,
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/lsp-tests.log"
+    },
+    {
+      "id": "projection-compact-and-general",
+      "cwd": "core",
+      "command": ["./gradlew", ":interlis-projection:test", "--tests", "*CompactAssociationProjectionTest", "--tests", "*DiagramProjectionTest", "--no-daemon"],
+      "exit": 0,
+      "result": "14/14, 0 skipped (Compact 1, general 13)",
+      "ownRun": true,
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/projection-tests.log",
+      "note": "The request's single combined argv interleaves --tests filters with two test tasks; filters apply to all Test tasks in one Gradle invocation, so the two tasks were executed separately with their matching class filters."
+    },
+    {
+      "id": "portable-and-browser-consumers",
+      "cwd": "core",
+      "command": ["./gradlew", ":interlis-wasm-teavm:diagramAdapterTest", ":interlis-wasm-teavm:uiProjectionTest", "-PnodeExecutable=/Users/stefan/.cache/interlis-java/runtime/node-v24.22.0-darwin-arm64/bin/node", "--no-daemon"],
+      "exit": 0,
+      "result": "browserClient 18/18, diagramAdapter 6/6, Chromium/Firefox/WebKit UI projection 3/3; browser tools 48 outputs; 0 failures",
+      "ownRun": true,
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/wasm-consumer-tests-2.log",
+      "note": "First invocation failed before tests because interlis-wasm-teavm/node_modules was absent in the fresh worktree; npm ci there preceded this passing run (evidence/wasm-npm-ci.log)."
+    },
+    {
+      "id": "native-sprotty-ui",
+      "cwd": "core",
+      "command": ["node", "--test", "frontend/diagram-ui/test/interactive.test.cjs"],
+      "exit": 0,
+      "result": "1/1: node/container drag, interior handle, endpoints stable, undo barrier, session replacement",
+      "ownRun": true,
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/native-ui.log"
+    },
+    {
+      "id": "extension-build",
+      "cwd": "extension",
+      "command": ["npm", "run", "build"],
+      "exit": 0,
+      "result": "out/extension.cjs sha256 03b70c5113c3bb12225da227f28db4765995658b788f4d23719015fcfb7a62f6",
+      "ownRun": true,
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/ext-build.log"
+    },
+    {
+      "id": "extension-unit",
+      "cwd": "extension",
+      "command": ["npm", "run", "test:unit"],
+      "exit": 0,
+      "result": "7/7, 0 skipped (includes exact renderer/schema digest checks and fail-closed tampering test)",
+      "ownRun": true,
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/ext-unit.log"
+    },
+    {
+      "id": "packaged-stdio-protocol",
+      "cwd": "extension",
+      "command": ["env", "INTERLIS_JAVA=/Users/stefan/.sdkman/candidates/java/25.0.3-tem/bin/java", "npm", "run", "test:protocol"],
+      "exit": 0,
+      "result": "1/1; real packaged Java distribution; typed diagram object, snapshot/completeness, navigation, analysisReady; child exit 0; clean stdout; 0 skipped",
+      "ownRun": true,
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/ext-protocol.log"
+    },
+    {
+      "id": "extension-host",
+      "cwd": "extension",
+      "command": ["env", "INTERLIS_JAVA=/Users/stefan/.sdkman/candidates/java/25.0.3-tem/bin/java", "INTERLIS_TEST_CODE=/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage/Visual Studio Code.app/Contents/MacOS/Code", "npm", "run", "test:extension-host"],
+      "exit": 0,
+      "result": "activation/commands, real definition, unsaved template; extension host exit 0; server stopped",
+      "ownRun": true,
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/ext-host.log"
+    },
+    {
+      "id": "no-legacy-dependencies",
+      "cwd": "extension",
+      "command": ["npm", "run", "verify:no-legacy-dependencies"],
+      "exit": 0,
+      "result": "lock, installed full graph and product bundle free of @ilic/interlis-language-tools/ilic.wasm",
+      "ownRun": true,
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/dependencies.log"
+    },
+    {
+      "id": "package-vsix",
+      "cwd": "extension",
+      "command": ["env", "INTERLIS_JAVA=/Users/stefan/.sdkman/candidates/java/25.0.3-tem/bin/java", "npm", "run", "package:vsix", "--", "--target", "darwin-arm64"],
+      "exit": 0,
+      "result": "69 files, 6.74 MB; sha256 1bb9a443453d00553e1a03ca26a7d3701df6712b95ee73791bd11ffd28f0796c; unpacked content identical to request VSIX",
+      "ownRun": true,
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/ext-package.log",
+      "comparison": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/vsix-content-compare.log"
+    },
+    {
+      "id": "installed-gui-uml-first-attempt",
+      "cwd": "extension",
+      "command": ["env", "INTERLIS_JAVA=/Users/stefan/.sdkman/candidates/java/25.0.3-tem/bin/java", "node", "scripts/gui.cjs", "--suite", "uml", "--cache", "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage"],
+      "exit": 1,
+      "result": "14/18; GUI-15 Go-To-Line timed out because focus was not in the text editor; run under concurrent heavy browser/Gradle load; retained",
+      "ownRun": true,
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-uml.log",
+      "manifest": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/extension/build/reports/gui/uml/2026-11-01T21-29-06-518Z/manifest.json"
+    },
+    {
+      "id": "installed-gui-uml-clean-rerun",
+      "cwd": "extension",
+      "command": ["env", "INTERLIS_JAVA=/Users/stefan/.sdkman/candidates/java/25.0.3-tem/bin/java", "node", "scripts/gui.cjs", "--suite", "uml", "--cache", "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage"],
+      "exit": 0,
+      "result": "18/18 GUI-01..GUI-18; 3 real Java starts; 0 remaining PIDs; no unexpected server exit; installed renderer/server hashes and bundle identity checked",
+      "ownRun": true,
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-uml-r2.log",
+      "manifest": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/manifest.json"
+    },
+    {
+      "id": "negative-canary",
+      "cwd": "extension",
+      "command": ["env", "INTERLIS_JAVA=/Users/stefan/.sdkman/candidates/java/25.0.3-tem/bin/java", "node", "scripts/gui.cjs", "--suite", "smoke", "--cache", "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage", "--canary", "missing-status"],
+      "exit": 1,
+      "expectedExit": 1,
+      "result": "GUI-01 failed on impossible visible status; GUI-02/03 passed; harness correctly failed (2/3 cases); 2 real starts; 0 remaining PIDs",
+      "ownRun": true,
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-canary.log",
+      "manifest": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/extension/build/reports/gui/smoke/2026-11-01T21-46-30-546Z/manifest.json"
+    },
+    {
+      "id": "independent-installed-gui-counterprobe",
+      "cwd": "extension",
+      "command": ["node", "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run.cjs"],
+      "exit": 0,
+      "result": "CP-V2 1/1; own fixture and spec; 1 real Java start; 0 remaining PIDs; exact per-topic anchors, n-ary/self/parallel compact edges, composition side, real node/container/route pointer actions, held genuine ELK result rejected after live source change, source/dirty/disk unchanged",
+      "ownRun": true,
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe-r7.log",
+      "manifest": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/manifest.json"
+    },
+    {
+      "id": "artifact-identity",
+      "cwd": "extension",
+      "command": ["node", "own hash comparison of request.json artifacts"],
+      "exit": 0,
+      "result": "54/54 request artifacts match; rebuilt editor bundle 53/53 matches lock; rebuilt VSIX 69/69 file contents match request VSIX",
+      "ownRun": true,
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/artifact-hashes.log",
+      "comparison": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/vsix-content-compare.log"
+    }
+  ],
+  "guiEvidence": [
+    {
+      "id": "own-installed-uml-cumulative",
+      "kind": "real isolated VS Code 1.140.0 workbench with installed own VSIX, real Java LSP, real custom-editor webview",
+      "manifest": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/manifest.json",
+      "cases": ["GUI-01", "GUI-02", "GUI-03", "GUI-04", "GUI-05", "GUI-06", "GUI-07", "GUI-08", "GUI-09", "GUI-10", "GUI-11", "GUI-12", "GUI-13", "GUI-14", "GUI-15", "GUI-16", "GUI-17", "GUI-18"],
+      "requiredForV2": ["GUI-02", "GUI-05", "GUI-07", "GUI-12", "GUI-13", "GUI-14", "GUI-15", "GUI-16", "GUI-17", "GUI-18"],
+      "status": "passed",
+      "processStarts": 3,
+      "remainingPids": [],
+      "images": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-13-node-moved.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-14-route-after.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-15-readonly.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-16-compact-self.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-own/GUI-17-current.png"
+      ],
+      "visuallyInspected": true,
+      "earlierAttempt": {
+        "log": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/gui-uml.log",
+        "manifest": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/extension/build/reports/gui/uml/2026-11-01T21-29-06-518Z/manifest.json",
+        "result": "14/18; GUI-15 Go-To-Line focus timeout under concurrent load; clean rerun passed"
+      }
+    },
+    {
+      "id": "negative-canary",
+      "kind": "real installed VS Code smoke with deliberately impossible visible status",
+      "manifest": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/extension/build/reports/gui/smoke/2026-11-01T21-46-30-546Z/manifest.json",
+      "cases": ["GUI-02", "GUI-03"],
+      "status": "failed-as-expected",
+      "exit": 1
+    },
+    {
+      "id": "own-independent-counterprobe",
+      "kind": "real installed VS Code workbench, own fixture and own spec",
+      "manifest": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/manifest.json",
+      "cases": ["CP-V2"],
+      "status": "passed",
+      "processStarts": 1,
+      "remainingPids": [],
+      "images": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-01-open.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-02-drag.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-03-route-before.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-04-route-after.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-05-compact.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-06-held.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-07-live.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/CounterProbe-08-late-released.png"
+      ],
+      "visuallyInspected": true
+    }
+  ],
+  "counterprobes": [
+    {
+      "id": "CP-V2-same-name-nary-self-parallel-stale",
+      "type": "own installed GUI counterprobe",
+      "hypothesis": "Existing suites do not jointly prove per-topic identity for equal simple names, visible self-loop plus three parallel compact associations with correct composition end, and rejection of a held genuine ELK result after a real source change without losing manual geometry or mutating the source.",
+      "fixture": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/CounterProbe.ili",
+      "spec": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/spec.cjs",
+      "runner": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run.cjs",
+      "actions": [
+        "open own model via Explorer and Show Diagram command",
+        "double-click Alpha Item title, Beta Item title, Beta hue member",
+        "native pointer drag of class and Topic header",
+        "switch to COMPACT_BINARY through the real select",
+        "select one of three parallel edges and drag its interior routing handle",
+        "hold one genuine ELK Worker response, edit the real source, wait for the newer diagram, release the old response",
+        "revert the unsaved test edit and verify buffer/dirty/disk identity"
+      ],
+      "expected": "exact anchors 6:15, 27:15, 27:38; two Items; n-ary roles/weight; visible self-loop bbox >15 and ends at Item; composition diamond nearer Item than Other; three parallel edges; route changed with stable endpoints and other routes; newer generation wins; late result ignored; stable geometry; source/dirty/disk unchanged",
+      "actual": "passed 1/1, exit 0, 1 real Java start, 0 remaining PIDs; all assertions met",
+      "falsifiability": "Negative canary ends exit 1 with two genuinely passing smoke cases; the counterprobe's earlier instrumented attempts failed on missing OID, member-vs-class click, cursor end-vs-start column, iframe context and unsaved-final-newline restore, demonstrating non-vacuous assertions.",
+      "exit": 0,
+      "ownRun": true,
+      "manifest": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe/run-2026-11-01T21-44-52-125Z/manifest.json",
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/counterprobe-r7.log"
+    }
+  ],
+  "openMandatoryFindings": [],
+  "missingRequiredChecks": [],
+  "observations": [
+    {
+      "id": "O1",
+      "severity": "minor",
+      "topic": "GUI-15 focus flake",
+      "detail": "One own GUI run under concurrent heavy browser/Gradle load failed GUI-15 with a Go-To-Line focus timeout after a correct readonly navigation (server response interlis-source:...RemoteMiddle.ili?2, range 3:7-3:19). The clean identical rerun passed all 18 cases; product bytes identical. Recommend explicit editor focus after navigation as hardening; no incorrect anchor or source mutation observed."
+    },
+    {
+      "id": "O2",
+      "severity": "minor",
+      "topic": "settings surface",
+      "detail": "Plan section 5.2/8.1 intended diagram.autoOpenBeside and diagram.followEditor settings; V2 exposes the behavior through the Show Diagram command (always beside) and a per-panel Follow toggle (default Pinned) instead of VS Code settings. Functionally V2-07 is met."
+    },
+    {
+      "id": "O3",
+      "severity": "minor",
+      "topic": "V3 presentation comfort",
+      "detail": "Fit view of larger models renders labels very small (about 3 CSS px tall in the DOM oracle); labels avoid each other but may sit on edges or the container border. Zoom/scrollbars/filters/label placement are V3 scope."
+    },
+    {
+      "id": "O4",
+      "severity": "minor",
+      "topic": "refresh efficiency",
+      "detail": "analysisReady invalidates all panels instead of using documentVersions for targeted refreshes; correct but can cause unnecessary projections with several panels."
+    }
+  ],
+  "report": "review.md"
+}

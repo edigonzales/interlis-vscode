@@ -1,6 +1,6 @@
 # INTERLIS VS Code – aktueller Ausführungsstand
 
-**V0 und V1 PASS**, unabhängig und operativ validiert. **V2 implementiert und selbst qualifiziert; unabhängiger Review ausstehend.**
+**V0 und V1 PASS**, unabhängig und operativ validiert. **V2 implementiert und selbst qualifiziert; erster unabhängiger Inhalt-PASS operativ verworfen, neuer Review ausstehend.**
 V3–V5 bleiben bis zu ihren jeweiligen unabhängigen Gates gesperrt. Kein Push/Release.
 
 | Phase | Stand | Geprüftes Produktpaar / Beleg |
@@ -67,3 +67,8 @@ Exporte bleiben ihren gesperrten Folgephasen zugeordnet. Keine zweite Sprachengi
 Altprojektabhängigkeit. Linux/Windows/Remote und Runtimebündelung sind V5-Pflicht;
 ein sauberer kumulativer Portablelauf ebenfalls. Kein pauschaler sachfremder
 Korpus-/Benchmark-/Safari-/releaseCheckP3-Lauf.
+
+V2 attempt01: Inhalt-PASS auf Core `7026e7f6b5834bf593d91dfee3323efb60688f3d` / Extension
+`bae7f3d52ef7e20fc7edf067626a4191c7395717`, jedoch sechs unbelegte explizite Bildsichtungen.
+[Äussere Prüfung](reviews/V2/attempt-01/outer-audit.json) verwirft die Phasenfreigabe;
+Originale und alle echten erfolgreichen Rohprüfungen bleiben erhalten. V3 gesperrt.
