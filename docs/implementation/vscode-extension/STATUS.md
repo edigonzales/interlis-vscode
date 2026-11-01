@@ -20,7 +20,7 @@ AssignmentBase: Core `20b0029d824b3602d9a304320bf0feae4c35c1f9`, Extension
 
 EXT: `/Users/stefan/sources/interlis-vscode`, Branch `codex/vscode-extension`.
 CORE für diesen Auftrag: `/Users/stefan/sources/interlis-vscode-evidence/product-core`,
-Branch `codex/vscode-extension-lsp`, auf V1-Core `21e9ea3dd2a948578a64654cc2b187f82572958b` (enthält gepushtes `cf585ec1…`); siehe [V1-Bericht](implementation/V1.md).
+Branch `codex/vscode-extension-lsp`, auf V1-Core `3b60e6c1309a4897ad6d0e99f6d8dfd137520ca9` (enthält gepushtes `cf585ec1…`); siehe [V1-Bericht](implementation/V1.md).
 Der ursprüngliche Core-Checkout `/Users/stefan/sources/interlis-java` bleibt unangetastet; die inzwischen gepushte Repositoryarbeit wurde als Commit in den isolierten Zweig übernommen. Der Wechsel von `20b0029…` auf
 `76df381…` war eine externe Squash-Fortschreibung mit identischem vollständigem
 Tree; Originalstatus und Gründe stehen im [V0-Bericht](implementation/V0.md).
@@ -59,7 +59,7 @@ Keine zweite Sprachengine und keine Altprojektabhängigkeit.
 
 ## V1 zur unabhängigen Abnahme
 
-Corekandidat `21e9ea3dd2a948578a64654cc2b187f82572958b` enthält die ausdrücklich
+Corekandidat `3b60e6c1309a4897ad6d0e99f6d8dfd137520ca9` enthält die ausdrücklich
 berücksichtigte gepushte Repositorysuche und Cachearbeit bis `cf585ec1…`.
 Der [V1-Bericht](implementation/V1.md) beschreibt Umsetzung, Risikogates,
 Fehlversuche und die getrennten Rohbelege. Eigene GUI-01–11 sind nach visueller

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "coreCommit": "21e9ea3dd2a948578a64654cc2b187f82572958b",
+  "coreCommit": "3b60e6c1309a4897ad6d0e99f6d8dfd137520ca9",
   "protocolVersion": "lsp-3.17-baseline",
   "mainClass": "guru.interlis.lsp.Main",
   "serverVersion": "0.2.0-SNAPSHOT",
@@ -23,7 +23,7 @@
     },
     {
       "path": "lib/interlis-lsp-0.2.0-SNAPSHOT.jar",
-      "sha256": "4c456c8171a7a6a047a5de4b22dc285d9fd6312808251e1d143dbf9fa6224a80"
+      "sha256": "56a93ee062b846c1867f82472a144d4c9bd4912c079c8ff08606c6d1105381be"
     },
     {
       "path": "lib/interlis-model-0.2.0-SNAPSHOT.jar",
