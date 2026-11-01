@@ -88,6 +88,17 @@
           "default": "",
           "scope": "machine",
           "description": "Explicit development server distribution. Empty uses the packaged server; every file must match the artifact lock."
+        },
+        "interlisGuru.trace.server": {
+          "type": "string",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "default": "off",
+          "scope": "machine",
+          "description": "Language Server Protocol trace. Verbose includes source contents; enable deliberately for diagnostics."
         }
       }
     }

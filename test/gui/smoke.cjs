@@ -69,8 +69,13 @@ describe('Installed INTERLIS editor smoke',function(){
   await palette('INTERLIS: Stop Language Server');await waitFor(()=>status('Stopped'),'Server did not stop');
   await capture('GUI-03-stopped');await palette('INTERLIS: Restart Language Server');await waitFor(()=>status('Ready'),'Server did not restart');
   assert.equal(await readText(),formatted);assert.equal(await editor.isDirty(),true);
+  const restartedProblems=new ProblemsView();const references=await driver.findElements(By.xpath('//div[contains(@class,"view-lines")]//span[text()="Height"]'));assert.ok(references.length>=2);
+  await driver.actions().doubleClick(references[references.length-1]).sendKeys('MissingHeight').perform();
+  await waitFor(async()=>(await restartedProblems.getAllVisibleMarkers(MarkerType.Error)).length>0,'Restarted server did not publish fresh diagnostics');
+  await capture('GUI-03-restarted-error');const missing=await driver.findElement(By.xpath('//div[contains(@class,"view-lines")]//span[text()="MissingHeight"]'));await driver.actions().doubleClick(missing).sendKeys('Height').perform();
+  await waitFor(async()=>(await restartedProblems.getAllVisibleMarkers(MarkerType.Error)).length===0,'Restarted server did not clear corrected diagnostic');assert.equal(await readText(),formatted);
   await capture('GUI-03-restarted');
   await palette('INTERLIS: Show Language Server Output');await capture('GUI-03-output');
-  record('GUI-03',['F12','Format Document','Palette Undo','Palette Redo','Stop Language Server','Restart Language Server'],['definition line5','semantically same formatted text','Undo restores original','Redo restores format','dirty buffer preserved through restart']);
+  record('GUI-03',['F12','Format Document','Palette Undo','Palette Redo','Stop Language Server','Restart Language Server'],['definition line5','semantically same formatted text','Undo restores original','Redo restores format','dirty buffer preserved through restart','fresh diagnostic and correction after restart']);
  });
 });
