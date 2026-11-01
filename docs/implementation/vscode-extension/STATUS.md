@@ -65,3 +65,15 @@ frische Kandidatenbelege folgen nach Commit. Bilder tatsächlich angesehen:
 Problems mit realem Typfehler, korrigierter Editor, Stop/Restart und Output mit
 eigenen Java-PIDs/Core-/Bundlehash. Technische Baselineprosa bleibt als V1-Lücke sichtbar.
 Negativcanary korrekt Exit1, zwei eigene Java-PIDs beendet; unabhängiger V0-Review noch nicht gestartet.
+
+## Isolierter Core-Arbeitsbaum
+
+Nach dem ersten Extensioncommit entstanden fremde produktive Änderungen im
+ursprünglichen Core-Arbeitsbaum. Diese bleiben unangetastet. Fortsetzung dieses
+Auftrags in eigenem Git-Worktree
+`/Users/stefan/sources/interlis-vscode-evidence/product-core`, Branch
+`codex/vscode-extension-core`, unverändert auf gelocktem
+`76df3815973597280845a9bb575fa399e9773ccc`. Die strenge Sauberkeitsprüfung hielt
+den Qualifikationslauf vor jedem Test an; dies war kein Test-PASS. Originalbäume
+nicht zurückgesetzt oder fremde Änderungen committet. Künftige V1-Corearbeit
+erst nach V0-PASS auf diesem isolierten Zweig.
