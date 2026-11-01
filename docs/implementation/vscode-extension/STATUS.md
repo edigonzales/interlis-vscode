@@ -1,13 +1,13 @@
 # INTERLIS VS Code – aktueller Ausführungsstand
 
-**V0 und V1 PASS**, unabhängig und operativ validiert. **V2 beginnt jetzt.**
+**V0 und V1 PASS**, unabhängig und operativ validiert. **V2 implementiert und selbst qualifiziert; unabhängiger Review ausstehend.**
 V3–V5 bleiben bis zu ihren jeweiligen unabhängigen Gates gesperrt. Kein Push/Release.
 
 | Phase | Stand | Geprüftes Produktpaar / Beleg |
 |---|---|---|
 | V0 | PASS, alle7 ACs | Core `76df3815973597280845a9bb575fa399e9773ccc` / Extension `d8f8adeb89e26f8a979744b81299d51da45cf0fe`; [Originalreview](reviews/V0/attempt-02/review.md), [äussere Prüfung](reviews/V0/attempt-02/outer-audit.json) |
 | V1 | PASS, alle10 ACs | Core `3b60e6c1309a4897ad6d0e99f6d8dfd137520ca9` / Extension `d237d92fbe22f6fb41d7d6f3f0965c0d080e30e9`; [Originalreview](reviews/V1/attempt-01/review.md), [Verdict](reviews/V1/attempt-01/verdict.json), [äussere Prüfung](reviews/V1/attempt-01/outer-audit.json) |
-| V2 | IN_PROGRESS | Ein neutraler gemeinsamer interaktiver Sprotty-/ELK-Renderer |
+| V2 | IN_PROGRESS | Gemeinsamer interaktiver Sprotty-/ELK-Renderer; GUI18 + finale betroffene GUI7/Browser3 geprüft; unabhängiger Review offen |
 | V3 | PLANNED | Vollständige UMLbedienung und aktuelle SVG-/PNG-Exporte |
 | V4 | PLANNED | Editorhilfen und Dokumentations-/Textformate |
 | V5 | PLANNED | Gebündelte Runtimes, reale Plattformen/Remote, kumulative56-AC-Abnahme |
@@ -59,9 +59,11 @@ Current-/Workspacecompile. Standardqueries und versionierte Edits bleiben in Jav
 Einige DE-Regelphrasen sind noch englisch; Restart kann gleichnamige readonly Tabs
 hinterlassen. Die äussere Prüfung hält kleine Prosa-/Beleggrenzen transparent fest.
 
-UML, vollständige Editorhilfen und Exporte bleiben vollständig beauftragt und
-unimplementiert. V2 liefert zuerst echte Node-/Container-/Routeinteraktion aus
-einer gemeinsamen neutralen Sprotty-/ELK-Quelle. Keine zweite Sprachengine oder
+V2 liefert echte Node-/Container-/Routeinteraktion und aktuelle Navigation aus
+einer gemeinsamen neutralen Sprotty-/ELK-Quelle. Details, unveränderte PhaseBase,
+Rohbelege, Fehlversuche und Testwiederverwendung stehen im [V2-Bericht](implementation/V2.md).
+V2 ist noch nicht unabhängig abgenommen. Volle UMLbedienung, Editorhilfen und
+Exporte bleiben ihren gesperrten Folgephasen zugeordnet. Keine zweite Sprachengine oder
 Altprojektabhängigkeit. Linux/Windows/Remote und Runtimebündelung sind V5-Pflicht;
 ein sauberer kumulativer Portablelauf ebenfalls. Kein pauschaler sachfremder
 Korpus-/Benchmark-/Safari-/releaseCheckP3-Lauf.

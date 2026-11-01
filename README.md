@@ -2,10 +2,9 @@
 
 Desktop VS Code extension `edigonzales.interlis-vscode` using the Java INTERLIS
 language server. The initial development package supports the installed editor
-path on macOS arm64. Java25 must be configured explicitly. The V1 development
-candidate adds Java repository resolution/cache, readable diagnostics and root
-compilation. Its independent acceptance is tracked in STATUS. UML and bundled
-runtimes remain later work.
+path on macOS arm64. Java25 must be configured explicitly. The development package includes Java repository resolution/cache, readable
+diagnostics, root compilation and an interactive UML custom editor. Independent
+phase acceptance is tracked in STATUS. Bundled runtimes remain later work.
 
 Install the local VSIX through **Extensions → Install from VSIX**. Set
 `interlisGuru.server.javaPath` in user settings to the absolute Java25 executable
@@ -37,6 +36,17 @@ identities. F12 opens external sources in readonly `interlis-source:` documents;
 opening one grants no edit authority. Handles expire on restart/reconfiguration;
 navigate again from the root to obtain a current source.
 
+Open **INTERLIS: Show Diagram for This File** to view the selected saved source
+beside the editor. Diagrams are pinned by default; **Following** explicitly follows
+another active local INTERLIS document. Drag nodes/topic containers and selected
+inner edge handles to arrange the view. These actions keep source and semantic
+endpoints unchanged. Double click a node, member or association to navigate to its
+current source, including readonly imports. **Refresh**, **Fit** and association
+entity/compact binary modes are available. Partial/stale/error states are explicit;
+new source/server generations reject old layouts and navigation anchors. Each
+panel keeps its own arrangement. Full filtering, layout controls and exports remain
+subsequent planned work.
+
 ## Development and verification
 
 Node22.13.0/npm10.9.2 and Temurin25.0.3 were used. Dependencies are pinned in
@@ -55,9 +65,9 @@ INTERLIS_JAVA=/absolute/jdk25/bin/java npm run test:gui -- --suite smoke
 INTERLIS_JAVA=/absolute/jdk25/bin/java npm run test:gui -- --suite editor
 ```
 
-`stage:core` calls the existing Gradle `:interlis-lsp:installDist` task on the
+`stage:core` calls the Core Gradle `editorBundle` task on the
 explicit clean Core checkout, copies the complete runtime libraries and records
-their identities. It rejects a changing Core HEAD. Use the exact locked Core
+their identities, neutral renderer, worker, schemas and host DTOs. It rejects a changing Core HEAD. Use the exact locked Core
 commit when reproducing a candidate. No separate compiler build is introduced.
 VSIX output: `build/packages/interlis-vscode-darwin-arm64.vsix`.
 
@@ -68,7 +78,7 @@ user-data, extensions, workspace and evidence. `--vsix /absolute/file.vsix`
 chooses an explicit archive. `--canary missing-status` deliberately expects an
 impossible visible state and **must exit nonzero**. Unknown suites/arguments fail.
 No `--passWithNoTests` or hidden product commands are used. Workbench keyboard and
-mouse actions implement GUI-01–03 in smoke and GUI-01–11 in editor; screenshots,
+mouse actions implement GUI-01–03 in smoke and GUI-01–11 in editor, GUI-01–18 in uml and focused GUI-12–18 in diagram; screenshots,
 case results and a manifest live under `build/reports/gui/<suite>/<run>/`. The
 editor suite serves a controlled local HTTP repository, pins its fixture bytes
 and records request counts for offline assertions. A declared suite with missing
