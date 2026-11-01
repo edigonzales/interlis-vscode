@@ -11,7 +11,7 @@ async function palette(command, raw=false,keepOpen=false){
  const input=await driver.wait(async()=>{const fields=await driver.findElements(By.css('.quick-input-widget input'));for(const field of fields)if(await field.isDisplayed())return field;return false;},5000,'Palette input not visible');
  await input.sendKeys(Key.chord(Key.COMMAND,'a'),raw?command:'>'+command);
  await waitFor(async()=>await input.getAttribute('value')===(raw?command:'>'+command),'Palette text mismatch');
- if(!raw){await waitFor(async()=>{const rows=await driver.findElements(By.css('.quick-input-list .monaco-list-row'));for(const row of rows)if((await row.getText()).split('\n')[0]===command){await row.click();return true;}return false;},'Command not offered: '+command);}
+ if(!raw){const choice=await driver.wait(async()=>{try{for(const label of await driver.findElements(By.css('.quick-input-list .monaco-list-row .label-name')))if(await label.isDisplayed() && (await label.getText())===command)return label;return false;}catch(error){if(error.name==='StaleElementReferenceError')return false;throw error;}},20000,'Command not offered: '+command);await choice.click();}
  else await driver.actions().sendKeys(Key.ENTER).perform();
  if(keepOpen){await driver.actions().clear();return;}
  await waitFor(async()=>{const widgets=await driver.findElements(By.css('.quick-input-widget'));return (await Promise.all(widgets.map(x=>x.isDisplayed()))).every(x=>!x);},'Palette did not close');await driver.actions().clear();
