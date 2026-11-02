@@ -1,0 +1,181 @@
+{
+  "schemaVersion": 1,
+  "phase": "V3",
+  "note": "Only paths actually opened with the image-read tool in this review session are listed. A path appearing in evidence but not here was not visually inspected and is not used for visual claims. The canonical counterprobe is run-2026-11-02T07-47-14-685Z (two passing installed-GUI cases).",
+  "viewed": [
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-01-initial.png",
+      "sha256": "bc001e239f9dcf5efcb0efe67bb1b98c1c45fbe6159b88dea4b5c234d6754a40",
+      "toolResult": "success",
+      "observations": "Installed VS Code window with Comfort.ili source and real webview; real diagram visible before fit; filter controls present; status Partial diagram."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-03-node-moved-pinned.png",
+      "sha256": "8918669095a13c520f6cac3f6e41432f9e98ad88293469991b675c38db46a0d2",
+      "toolResult": "success",
+      "observations": "Class B visibly moved after native pointer drag; pin/settle controls visible; filters show hidden VIEW/DOMAIN/indirect imports; source editor unchanged."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-04-container-moved-settled.png",
+      "sha256": "d318f36500d79ab53a2e198ef3923522450877c8f8d3f53262aa212ebe20959c",
+      "toolResult": "success",
+      "observations": "TOPIC container moved with its children after native drag; settled view retains the manual Class B position; filters remain active."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-05-route-redo.png",
+      "sha256": "70e84e1f2338eb7c785143210046880c678ae6bb074195a9494a07d06382f2a3",
+      "toolResult": "success",
+      "observations": "Layout redo restored the manually bent route; node/container positions retained; labels and source text unchanged."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-06-splines-zoomed.png",
+      "sha256": "1a233d28d4babeee48572ac81478160fa3befd4926d95a1b57154111497599e2",
+      "toolResult": "success",
+      "observations": "SPLINES with INKSCAPE target; visible edges are curved rather than segmented; diagram zoomed and readable."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-07-live-edit.png",
+      "sha256": "bad1cfc7ff6d203a36aff043ce72f228ca5eefd8dd092cdf36d212aa32cc1908",
+      "toolResult": "success",
+      "observations": "Real typed edit CLASS C=probe:TEXT*4;END C; in the editor; webview shows C with probe:TEXT*4 from the new Java snapshot; source tab dirty."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-08-restored.png",
+      "sha256": "64274907da192b2e5ff826a37342df813f7cb4bb48e5825c894042305721f6e5",
+      "toolResult": "success",
+      "observations": "After native Undo the source is again CLASS C=END C; and the diagram is current without probe; disk hash unchanged."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-09-error.png",
+      "sha256": "7e293dfa5aaaa018b4733139f031c93476fb7624ca46979c7e1226696aac6c1a",
+      "toolResult": "success",
+      "observations": "Server stopped through the real command; explicit message 'A matching running diagram protocol 1 server is required.'; status bar Stopped; previous graph remains visible but is not claimed as current."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-10-recovered.png",
+      "sha256": "879d772170b74dbbccc8aa8ab7c37c30ff0f931cf9b2a94cc78e386df8aed464",
+      "toolResult": "success",
+      "observations": "After real Restart Language Server the status is Ready and the diagram is current again (Partial diagram — check Problems due to the deliberately broken workspace fixtures)."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-full.png",
+      "sha256": "31e6233e89f8898dfd04b75f1ecf67747c71c1e2a3fb32d4fb31e47997b41002",
+      "toolResult": "success",
+      "observations": "FULL filtered PNG export 1891x923: PARTIAL banner, MODEL/TOPIC frames, classes A/B/C, structure, external V3Middle, roles/cardinalities, inheritance marker, constraints, enums and inherited members; no clipping or external images."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-visible.png",
+      "sha256": "2dcdfbe0321524642752170609c22ee796cde63ba6aa471229d6ef987794afff",
+      "toolResult": "success",
+      "observations": "VISIBLE 489x420 PNG export of the zoomed SPLINES viewport; cropped to the current view, curves visible, same pixels as the visible SVG."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-37-53-293Z/counterprobe-failure.png",
+      "sha256": "599369dd60b79df820d93b03bde2cd45b8403686d3a40da6c42770800205b866",
+      "toolResult": "success",
+      "observations": "Diagnostic image from an intermediate failed probe attempt: source cursor at line 10 column 9, no probe text present; not used as a PASS artifact."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-19-empty.png",
+      "sha256": "a408280dad3c2eea9e332cdee9c6f4a0092829733604313e7f1e814fa0ea8044",
+      "toolResult": "success",
+      "observations": "Filter None produces the explicit visible message 'No visible elements - change or reset filters' with All/None/Reset controls still reachable."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-20-imports.png",
+      "sha256": "939ed4e74ef39d42619e3dde0f8cbc6e94427751390cb1bd6d69b9ded2556130",
+      "toolResult": "success",
+      "observations": "Direct/indirect import switches and kind switches visible; 'Diagram is current'; imported model content rendered."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-21-inherited.png",
+      "sha256": "e164894f9c4d0a7e7ba1e401a67a83c1eea83b307da42ea025183e6d9b442526",
+      "toolResult": "success",
+      "observations": "Members set to OWN_AND_INHERITED; 'Diagram is current'; inherited/compartment controls visible."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-22-pinned-settle.png",
+      "sha256": "48943365d7e686e7ee413e6b0f6484e6c7e301d35c1c4a1fb1b9f80bac92f231",
+      "toolResult": "success",
+      "observations": "Settle/Pin/Reset controls and current diagram after settle; manual geometry visible."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-24-reloaded.png",
+      "sha256": "8b1fe9406afce06592634609e1d1d929ea6e981ee82559565769094620dd3d9a",
+      "toolResult": "success",
+      "observations": "After Developer Reload Window the same manual layout is restored and the diagram is current."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-25-source-highlight.png",
+      "sha256": "28693d08d8dd4a732de3f4fa88840657a3c0b863ab2194eca1ec36ee31f7bd6b",
+      "toolResult": "success",
+      "observations": "Source line for class B is selected in the editor and the diagram is current, showing source-to-diagram selection wiring."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-26-export-view.png",
+      "sha256": "079b9129a6a4cd531d786df2f4692ab91f7842577e2e7fbab442d4d27c46f2bb",
+      "toolResult": "success",
+      "observations": "View kind filter unchecked before the exports; 'Diagram is current'; filter controls and diagram visible."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-27-static-splines.png",
+      "sha256": "eb331a112d7abe070d89f814cea30a31fd9381a6384423e225118c65e52b8c85",
+      "toolResult": "success",
+      "observations": "SPLINES with INKSCAPE target; real curved paths and loops visible; status shows 'Export saved: GUI-27-splines.svg'."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-28-Dark-High-Contrast.png",
+      "sha256": "0f09fc59d078e16e6dfc17230016304e266b9b0fef6a10ecf44cb15fac1565bd",
+      "toolResult": "success",
+      "observations": "Dark High Contrast theme in the real workbench; readable large Info/value labels; controls remain usable and contrast is visibly distinct."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-28-Light-Modern.png",
+      "sha256": "c75d56501b6def67ad8240f25951b849d7f8fe28644533458fa7a5e3d1ed82ad",
+      "toolResult": "success",
+      "observations": "Light Modern theme in the real workbench; dark text on light background, readable Info/value labels, controls and focus visible."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-28-Dark-Modern.png",
+      "sha256": "3fdd0bfe8910e9328f7d249bd3b997e1492183ea59bb95daf9fd430b40ee3834",
+      "toolResult": "success",
+      "observations": "Dark Modern theme in the real workbench; light text on dark background, readable labels, no lost controls."
+    }
+  ],
+  "aliases": [
+    {
+      "canonicalPath": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-03-node-moved-pinned.png",
+      "aliasPath": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-39-57-640Z/counterprobe-03-node-moved-pinned.png",
+      "sha256": "8918669095a13c520f6cac3f6e41432f9e98ad88293469991b675c38db46a0d2"
+    },
+    {
+      "canonicalPath": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-04-container-moved-settled.png",
+      "aliasPath": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-39-57-640Z/counterprobe-04-container-moved-settled.png",
+      "sha256": "d318f36500d79ab53a2e198ef3923522450877c8f8d3f53262aa212ebe20959c"
+    },
+    {
+      "canonicalPath": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-05-route-redo.png",
+      "aliasPath": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-39-57-640Z/counterprobe-05-route-redo.png",
+      "sha256": "70e84e1f2338eb7c785143210046880c678ae6bb074195a9494a07d06382f2a3"
+    },
+    {
+      "canonicalPath": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-06-splines-zoomed.png",
+      "aliasPath": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-39-57-640Z/counterprobe-06-splines-zoomed.png",
+      "sha256": "1a233d28d4babeee48572ac81478160fa3befd4926d95a1b57154111497599e2"
+    },
+    {
+      "canonicalPath": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-full.png",
+      "aliasPath": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-39-57-640Z/counterprobe-full.png",
+      "sha256": "31e6233e89f8898dfd04b75f1ecf67747c71c1e2a3fb32d4fb31e47997b41002"
+    },
+    {
+      "canonicalPath": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-visible.png",
+      "aliasPath": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-39-57-640Z/counterprobe-visible.png",
+      "sha256": "2dcdfbe0321524642752170609c22ee796cde63ba6aa471229d6ef987794afff"
+    }
+  ],
+  "earlierSuccessfulRun": {
+    "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-39-57-640Z",
+    "note": "The first successful single-case run was also visually inspected for its 01/07/08 images; the canonical two-case run above supersedes it. Only byte-identical images are aliased with hashes."
+  }
+}

@@ -1,0 +1,19 @@
+# V3 unabhängige Abnahme
+
+Originale unverändert archiviert. Externe Rohbasis: /Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1.
+Session: ses_e64d9da59ffezKdHVhExON30uJ. opencode.jsonl, sanitierter Sessionexport,
+GUIprofile, Screenshots, gespeicherte SVG/PNG und XML liegen dort.
+Die äussere Prüfung akzeptiert das inhaltliche PASS erst nach Prozessende.
+74 ZIPdateien umfassen72 Extension-Nutzdateien und2 VSIX-Metadateien.
+Der eigene 28er-GUIlauf ist verifiziert wiederverwendet; die neue Reviewer-GUI
+ist ein tatsächlicher frischer Lauf mit2 bestandenen Mocha-Fällen.
+
+28e767db3dc4e3bacf04c2aa462b3827daeb0c9d74f3d267156906fac60ab010  review.md
+ba37eda606e6de6f3dfeb7911fabac6309d506dbaaf8fc5333bb1b605170f1d8  verdict.json
+9877260e974224311bb1f4c1e6abd2a0d9d3fc813ed3fc76c135b51ef731ff25  transport.json
+5fd80924bba30a55d962ba96a5e04348d06fbdf22e8a6ed8358818f8e47a4846  guard.json
+b2e164bbd88b649177b3f03326b407a095ff94e8c9e2a192ecd28d87fcc7a511  image-read-inventory.json
+f9e1066c99207441e3c0489328c4bd8e8ddf45c58f391b43a53999fafb54eaac  outer-image-read-audit.json
+58b9c04ec7dab90ce6f0cf9a44aca01f33d0d3e21683cd95c88febe896ad7b1d  model-identity.json
+8f6feb81936341bbe9dfd2517c107e88b9f3560ce08982559075f02c6cadc31e  review-checks.json
+abeea24eca93ff3ab1a515dbda4eb20f917ecfbbc66fee007447ed45da349407  outer-audit.json

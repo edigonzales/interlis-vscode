@@ -1,0 +1,399 @@
+{
+  "schemaVersion": 1,
+  "phase": "V3",
+  "assignmentBase": {
+    "coreSha": "20b0029d824b3602d9a304320bf0feae4c35c1f9",
+    "extensionSha": "73badd9807f407aea048d397af5549fe907a1501"
+  },
+  "phaseBase": {
+    "coreSha": "7026e7f6b5834bf593d91dfee3323efb60688f3d",
+    "extensionSha": "e1ae6e6bee3cd3e4c5c9f47b51170532ed5265d3"
+  },
+  "candidate": {
+    "coreSha": "a0272965c4691320ca316d519581d4db4cefc930",
+    "extensionSha": "dd6e4fd342dbe58a43dc648e2b2ad285db6896e2"
+  },
+  "verdict": "PASS",
+  "reviewer": {
+    "openCodeVersion": "2.0.28",
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "apiHost": "https://api.deepseek.com",
+    "modelMappingEvidence": "opencode v2.0.28 with provider deepseek/model deepseek-flash; /Users/stefan/sources/interlis-vscode-evidence/phases/V3/model-preflight.json (DeepSeek-V4.1-Flash-1017, direct api.deepseek.com, credentialInspection=false); independently fetched https://api-docs.deepseek.com/quick_start/pricing/ shows MODEL deepseek-flash, MODEL VERSION DeepSeek-V4.1-Flash-1017, BASE URL https://api.deepseek.com; effective review opencode.json baseURL matches; no proxy/provider fallback"
+  },
+  "criteria": [
+    {
+      "id": "V3-01",
+      "status": "fulfilled",
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/core/frontend/diagram-ui/src/filters.ts",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/extension/test/gui/comfort.cjs",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/extension/build/reports/gui/reviewer-counterprobe/2026-11-02T07-47-14-685Z/manifest.json",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-result.json",
+        "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-19-empty.png",
+        "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-20-imports.png"
+      ],
+      "finding": null
+    },
+    {
+      "id": "V3-02",
+      "status": "fulfilled",
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/core/frontend/diagram-ui/src/interactive.ts",
+        "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-22-pinned-settle.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-result.json"
+      ],
+      "finding": null
+    },
+    {
+      "id": "V3-03",
+      "status": "fulfilled",
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/core/frontend/diagram-ui/src/layout.ts",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/extension/test/gui/comfort.cjs",
+        "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-27-splines.svg",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-result.json"
+      ],
+      "finding": null
+    },
+    {
+      "id": "V3-04",
+      "status": "fulfilled",
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/core/frontend/diagram-ui/src/interactive.ts",
+        "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/cases.json",
+        "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-24-reloaded.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-result.json"
+      ],
+      "finding": null
+    },
+    {
+      "id": "V3-05",
+      "status": "fulfilled",
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/core/frontend/diagram-ui/src/interactive.ts",
+        "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/cases.json",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/core/frontend/diagram-ui/test/comfort.test.cjs"
+      ],
+      "notes": "ResizeObserver/fit/scroll/zoom bounds in interactive.ts; GUI-23 native wheel/scrollbar/keyboard/Fit; Playwright UI comfort test uses deviceScaleFactor 2.",
+      "finding": null
+    },
+    {
+      "id": "V3-06",
+      "status": "fulfilled",
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/core/interlis-lsp/src/main/java/guru/interlis/lsp/LspDiagramService.java",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/core/interlis-lsp/src/test/java/guru/interlis/lsp/DiagramProtocolTest.java",
+        "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-25-source-highlight.png",
+        "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/cases.json",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-result.json"
+      ],
+      "finding": null
+    },
+    {
+      "id": "V3-07",
+      "status": "fulfilled",
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/core/frontend/diagram-ui/src/view-state.ts",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/extension/src/host/diagram-state.ts",
+        "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-24-reloaded.png",
+        "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/cases.json"
+      ],
+      "notes": "GUI-17 live edit and GUI-24 reload; state store bounded at 16 entries/8 MB.",
+      "finding": null
+    },
+    {
+      "id": "V3-08",
+      "status": "fulfilled",
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/core/frontend/diagram-ui/src/export.ts",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/extension/src/host/diagram-export.ts",
+        "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-26-SVG-FULL.svg",
+        "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-26-SVG-VISIBLE.svg",
+        "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-26-PNG-FULL.png",
+        "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-26-PNG-VISIBLE.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-result.json"
+      ],
+      "finding": null
+    },
+    {
+      "id": "V3-09",
+      "status": "fulfilled",
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/core/frontend/diagram-ui/src/export.ts",
+        "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-27-orthogonal.svg",
+        "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-27-polyline.svg",
+        "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-27-splines.svg",
+        "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-27-static-splines.png"
+      ],
+      "finding": null
+    },
+    {
+      "id": "V3-10",
+      "status": "fulfilled",
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-19-empty.png",
+        "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/GUI-28-Dark-High-Contrast.png",
+        "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/cases.json",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-09-error.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-10-recovered.png"
+      ],
+      "notes": "GUI-17 STALE/PARTIAL and GUI-28 themes/inert labels; own probe adds explicit ERROR and restart recovery.",
+      "finding": null
+    },
+    {
+      "id": "V3-11",
+      "status": "fulfilled",
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/core/interlis-lsp/build/test-results/test/",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/core/interlis-projection/build/test-results/test/",
+        "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/manifest.json",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/extension/build/reports/gui/reviewer-counterprobe/2026-11-02T07-47-14-685Z/manifest.json",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/extension/build/reports/gui/smoke/2026-11-02T07-43-38-107Z/manifest.json"
+      ],
+      "finding": null
+    },
+    {
+      "id": "V3-12",
+      "status": "fulfilled",
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-result.json",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/extension/build/reports/gui/reviewer-counterprobe/2026-11-02T07-47-14-685Z/manifest.json",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/image-read-inventory.json"
+      ],
+      "finding": null
+    }
+  ],
+  "executedChecks": [
+    {
+      "id": "exact-dependencies-artifacts",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "ci",
+        "--ignore-scripts"
+      ],
+      "exit": 0,
+      "fresh": true,
+      "result": "318 packages installed; lock unchanged",
+      "evidence": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/extension/package-lock.json"
+    },
+    {
+      "id": "stage-core-and-build-candidate",
+      "cwd": "extension",
+      "argv": [
+        "node",
+        "scripts/stage-core.cjs",
+        "--core-dir",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/core"
+      ],
+      "exit": 0,
+      "fresh": true,
+      "result": "editorBundle a027296 staged; lock/artifacts reproduced; node scripts/build.cjs exit 0; out extension.cjs fb5dfce2..., diagram-webview.js 8ab97031...; 74/74 VSIX payload files byte-identical to designated 03022a1d VSIX",
+      "evidence": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/extension/release/editor-artifacts.lock.json"
+    },
+    {
+      "id": "new-shared-ui",
+      "cwd": "core/frontend/diagram-ui",
+      "argv": [
+        "npm",
+        "test"
+      ],
+      "exit": 0,
+      "fresh": true,
+      "result": "8/8 tests, 0 fail/skip",
+      "evidence": "console output; test/*.test.cjs"
+    },
+    {
+      "id": "java-changed-contracts",
+      "cwd": "core",
+      "argv": [
+        "./gradlew",
+        ":interlis-lsp:test",
+        ":interlis-projection:test",
+        "--no-daemon"
+      ],
+      "exit": 0,
+      "fresh": true,
+      "result": "LSP 70/70, projection 22/22, 0 failures/errors/skips",
+      "evidence": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/core/interlis-lsp/build/test-results/test/; /Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/core/interlis-projection/build/test-results/test/"
+    },
+    {
+      "id": "shared-browser",
+      "cwd": "core",
+      "argv": [
+        "./gradlew",
+        ":interlis-wasm-teavm:uiProjectionTest",
+        "-PnodeExecutable=/Users/stefan/.cache/interlis-java/runtime/node-v24.22.0-darwin-arm64/bin/node",
+        "-Dorg.gradle.jvmargs=-Xmx4g -Dfile.encoding=UTF-8",
+        "--no-daemon"
+      ],
+      "exit": 0,
+      "fresh": true,
+      "result": "Chromium/Firefox/WebKit 3/3; first attempt with default 2g failed before tests with TeaVM BufferAllocationException; rerun green",
+      "evidence": "console output; core/interlis-wasm-teavm/build"
+    },
+    {
+      "id": "host-and-real-stdio",
+      "cwd": "extension",
+      "argv": [
+        "node",
+        "--test",
+        "test/unit/*.test.cjs",
+        "test/protocol.test.cjs"
+      ],
+      "exit": 0,
+      "fresh": true,
+      "result": "11/11 tests, 0 fail/skip; real packaged stdio case included",
+      "evidence": "console output"
+    },
+    {
+      "id": "installed-uml-and-editor",
+      "cwd": "extension",
+      "argv": [
+        "node",
+        "scripts/gui.cjs",
+        "--suite",
+        "comfort",
+        "--cache",
+        "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage"
+      ],
+      "exit": 0,
+      "fresh": false,
+      "verification": "raw current run verified: extension cbe0f40 (candidate differs only docs), VSIX payload byte-identical, installed bundle fb5dfce2..., manifest status passed, 28/28 cases, 4 Java starts, remaining []",
+      "result": "28/28 (GUI-01..28)",
+      "evidence": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z/manifest.json; .../cumulative-gui-r2.log; .../cases.json"
+    },
+    {
+      "id": "installed-own-counterprobe",
+      "cwd": "extension",
+      "argv": [
+        "node",
+        "build/probe/run.cjs"
+      ],
+      "exit": 0,
+      "fresh": true,
+      "result": "2/2 installed GUI cases, 42s; 2 Java starts, remaining []; manifest passed; result status passed",
+      "evidence": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/extension/build/reports/gui/reviewer-counterprobe/2026-11-02T07-47-14-685Z/manifest.json; /Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-result.json"
+    },
+    {
+      "id": "negative-canary",
+      "cwd": "extension",
+      "argv": [
+        "node",
+        "scripts/gui.cjs",
+        "--suite",
+        "smoke",
+        "--canary",
+        "missing-status",
+        "--cache",
+        "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage"
+      ],
+      "expectedExit": 1,
+      "exit": 1,
+      "fresh": true,
+      "result": "GUI-01 failed with impossible visible readiness timeout; GUI-02/03 passed; remaining []; controlled negative as expected",
+      "evidence": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/extension/build/reports/gui/smoke/2026-11-02T07-43-38-107Z/manifest.json"
+    },
+    {
+      "id": "dependency-graph",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "verify:no-legacy-dependencies"
+      ],
+      "exit": 0,
+      "fresh": true,
+      "result": "Dependency lock, installed full graph and product bundle checked; no @ilic/interlis-language-tools/ilic.wasm match",
+      "evidence": "console output; package.json/package-lock.json"
+    },
+    {
+      "id": "git-state",
+      "cwd": "core+extension",
+      "argv": [
+        "git",
+        "status",
+        "--porcelain=v1"
+      ],
+      "exit": 0,
+      "fresh": true,
+      "result": "both HEADs at candidate; tracked trees clean; extension has pre-existing untracked opencode.json; core has untracked java_pid68094.hprof from the first failed TeaVM attempt (not a product file)",
+      "evidence": "console output"
+    }
+  ],
+  "guiEvidence": [
+    {
+      "kind": "own-cumulative-28",
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T07-16-55-511Z",
+      "status": "passed",
+      "cases": "GUI-01..28, 28/28",
+      "identity": {
+        "coreSha": "a0272965c4691320ca316d519581d4db4cefc930",
+        "extensionSha": "cbe0f40c22283d993a92f59df99056258cfef86d",
+        "candidateExtensionSha": "dd6e4fd342dbe58a43dc648e2b2ad285db6896e2",
+        "vsixSha256": "03022a1dd760824ee0273ddbd8c6e402167cf5a4e7f2cfa18ab86d57218e60f9",
+        "installedBundleSha256": "fb5dfce25f930828d04a64b0dede6f1115297b84b927cd90ed5495e3807c2029"
+      }
+    },
+    {
+      "kind": "reviewer-installed-counterprobe",
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/extension/build/reports/gui/reviewer-counterprobe/2026-11-02T07-47-14-685Z",
+      "status": "passed",
+      "cases": "2/2: combined layout/filter/export/live-edit/error-recovery",
+      "identity": {
+        "coreSha": "a0272965c4691320ca316d519581d4db4cefc930",
+        "extensionSha": "dd6e4fd342dbe58a43dc648e2b2ad285db6896e2",
+        "vsixSha256": "1cf99c6dbdcb77351e68481ce4bde9ee0f976898183fc10737d7c66d1430e51d",
+        "installedBundleSha256": "fb5dfce25f930828d04a64b0dede6f1115297b84b927cd90ed5495e3807c2029"
+      },
+      "evidence": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z"
+    },
+    {
+      "kind": "negative-canary",
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/extension/build/reports/gui/smoke/2026-11-02T07-43-38-107Z",
+      "status": "failed-as-expected",
+      "cases": "GUI-01 timeout on impossible readiness; GUI-02/03 passed"
+    },
+    {
+      "kind": "image-read-inventory",
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/image-read-inventory.json",
+      "status": "created-from-actual-reads"
+    }
+  ],
+  "counterprobes": [
+    {
+      "id": "reviewer-v3-new-installed-combination",
+      "type": "positive-new-gui",
+      "hypothesis": "A new combination of live semantic edit, local filters, manual node/container/route layout, pin/settle, layout undo/redo and real FULL/VISIBLE SVG/PNG exports must stay consistent in an installed VS Code workbench without changing the source buffer or disk file.",
+      "result": "passed",
+      "exit": 0,
+      "evidence": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/evidence/counterprobe/run-2026-11-02T07-47-14-685Z/counterprobe-result.json",
+      "assertions": [
+        "local filters left data-diagram-id unchanged; after live edit the accepted diagram id changed",
+        "route drag kept semantic source/target endpoints; undo/redo restored exact paths",
+        "FULL SVG/PNG 1891x923 differ by 0 over 6,981,572 RGBA channels",
+        "VISIBLE SVG/PNG 489x420 differ by 0 over 821,520 RGBA channels",
+        "source buffer and dirty state unchanged by layout/filter/export; disk hash unchanged after live edit and undo",
+        "ERROR state without server is explicit; restart produced a new accepted diagram id"
+      ]
+    },
+    {
+      "id": "reviewer-v3-negative-canary",
+      "type": "negative-control",
+      "hypothesis": "The installed GUI harness must actually fail when a visible readiness condition is impossible.",
+      "result": "failed-as-expected",
+      "exit": 1,
+      "evidence": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V3-r1/extension/build/reports/gui/smoke/2026-11-02T07-43-38-107Z/manifest.json"
+    }
+  ],
+  "openMandatoryFindings": [],
+  "missingRequiredChecks": [],
+  "optionalObservations": [
+    "Constraint label in the export shows constraint@299 : MandatoryConstraint (generated name plus Java class name) instead of the constraint expression; pre-existing V2 projection behavior, outside the V3 diff.",
+    "The expanded filter tree makes the control area tight in small panels and scrolls; functional and reachable, but UX could be improved.",
+    "The own cumulative 28-case manifest records 4 Java starts but only 2 exit lines while remaining is empty; process check passed, so this is a logging gap rather than an orphan process.",
+    "The first fresh TeaVM browser build needed -Xmx4g instead of the repository default -Xmx2g; the rerun passed 3/3. This is a build environment memory sensitivity."
+  ],
+  "report": "review.md"
+}

@@ -1,0 +1,36 @@
+{
+  "checkedAt": "2026-11-02T08:03:46.420Z",
+  "sessionId": "ses_e64d9da59ffezKdHVhExON30uJ",
+  "sessionOutcome": "succeeded",
+  "sessionModel": {
+    "id": "deepseek-flash",
+    "providerID": "deepseek",
+    "variant": "default"
+  },
+  "sessionCreatedAt": "2026-11-02T07:25:31.344Z",
+  "transportStartedAt": "2026-11-02T07:25:30.093Z",
+  "openCodeVersion": "opencode v2.0.28",
+  "directBaseURL": "https://api.deepseek.com",
+  "preflight": {
+    "verifiedAt": "2026-11-02T07:06:55.800Z",
+    "openCodeVersion": "opencode v2.0.28",
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "modelVersion": "DeepSeek-V4.1-Flash-1017",
+    "directBaseURL": "https://api.deepseek.com",
+    "officialSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "officialFields": "Model Details, model/version/base URL and footnote 1; refreshed through web tool on this turn",
+    "credentialInspection": false
+  },
+  "proxyEnvironment": {
+    "HTTP_PROXY": false,
+    "HTTPS_PROXY": false,
+    "ALL_PROXY": false,
+    "http_proxy": false,
+    "https_proxy": false,
+    "all_proxy": false,
+    "OPENAI_BASE_URL": false,
+    "DEEPSEEK_BASE_URL": false
+  },
+  "credentialInspection": false
+}

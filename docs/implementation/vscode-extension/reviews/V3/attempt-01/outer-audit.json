@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-11-02T08:03:46.869Z",
+  "phase": "V3",
+  "candidate": {
+    "coreSha": "a0272965c4691320ca316d519581d4db4cefc930",
+    "extensionSha": "dd6e4fd342dbe58a43dc648e2b2ad285db6896e2"
+  },
+  "accepted": true,
+  "verdict": "PASS",
+  "process": {
+    "status": "completed",
+    "exitCode": 0,
+    "finishedAt": "2026-11-02T07:52:44.651Z",
+    "guardStatus": "passed",
+    "guardExitCode": 0
+  },
+  "trees": {
+    "core": {
+      "head": "a0272965c4691320ca316d519581d4db4cefc930",
+      "trackedDirty": ""
+    },
+    "extension": {
+      "head": "dd6e4fd342dbe58a43dc648e2b2ad285db6896e2",
+      "trackedDirty": ""
+    }
+  },
+  "sessionId": "ses_e64d9da59ffezKdHVhExON30uJ",
+  "modelIdentity": "model-identity.json",
+  "criteria": {
+    "fulfilled": 12,
+    "violated": 0,
+    "unverified": 0
+  },
+  "openMandatoryFindings": [],
+  "missingRequiredChecks": [],
+  "imageAudit": {
+    "file": "outer-image-read-audit.json",
+    "actualReads": 26,
+    "declaredViewed": 23,
+    "allAccepted": true
+  },
+  "checks": "review-checks.json",
+  "limits": [
+    "74 ZIP files comprise 72 extension payload files and 2 VSIX metadata files; all 74 byte-identical.",
+    "Reviewer custom GUI manifest leaves cases empty; actual Mocha output independently proves two passing native GUI cases, result assertions and passed manifest.",
+    "Cumulative GUI01–28 is verified original implementation evidence, not a fresh reviewer rerun; candidate differs from its extension commit only in excluded documentation.",
+    "Optional observations in original review remain optional: technical constraint labels, small-panel controls, Java exit logging, TeaVM memory default. No mandatory findings."
+  ],
+  "nextPermittedPhase": "V4"
+}
