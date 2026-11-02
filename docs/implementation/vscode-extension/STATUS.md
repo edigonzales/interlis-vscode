@@ -9,7 +9,7 @@ V5 bleibt bis zum unabhängigen V4-PASS gesperrt. Kein Push/Release.
 | V1 | PASS, alle10 ACs | Core `3b60e6c1309a4897ad6d0e99f6d8dfd137520ca9` / Extension `d237d92fbe22f6fb41d7d6f3f0965c0d080e30e9`; [Originalreview](reviews/V1/attempt-01/review.md), [Verdict](reviews/V1/attempt-01/verdict.json), [äussere Prüfung](reviews/V1/attempt-01/outer-audit.json) |
 | V2 | PASS, alle10 ACs | Core `7026e7f6b5834bf593d91dfee3323efb60688f3d` / Extension `01f353114cc7a19a9ac6dd884cb0b285ac723c9c`; [Originalreview](reviews/V2/attempt-02/review.md), [äussere Prüfung](reviews/V2/attempt-02/outer-audit.json) |
 | V3 | PASS, alle12 ACs | Core `a0272965c4691320ca316d519581d4db4cefc930` / Extension `dd6e4fd342dbe58a43dc648e2b2ad285db6896e2`; [Originalreview](reviews/V3/attempt-01/review.md), [äussere Prüfung](reviews/V3/attempt-01/outer-audit.json) |
-| V4 | IN_PROGRESS | Editorhilfen und Dokumentations-/Textformate |
+| V4 | READY_FOR_REVIEW | Eigene Qualifikation abgeschlossen; unabhängige Abnahme offen. [Bericht](implementation/V4.md) |
 | V5 | PLANNED | Gebündelte Runtimes, reale Plattformen/Remote, kumulative56-AC-Abnahme |
 
 ## Unveränderliche Gesamtbasis und Arbeitsbäume
@@ -44,7 +44,7 @@ Reviewer-Gegenproben2/2. Frisch unabhängig LSP65, Repository64, Workspace23,
 Model23/Compiler766, Unit5, echter stdio-Transport1 und Extension-Host. Keine
 Rest-Java-PIDs. Einzelheiten und Fehlversuche im [V1-Bericht](implementation/V1.md).
 
-Aktuelles V1-VSIX: `build/packages/interlis-vscode-darwin-arm64.vsix`, SHA-256
+Historischer V1-VSIX-Nachweis (der ursprüngliche Buildpfad wird je Phase neu erzeugt): `build/packages/interlis-vscode-darwin-arm64.vsix`, SHA-256
 `07071ebe6ebee9c803ce53bc367dd7b0fc51d095a028c01f7cef3fc8a30e7049`.
 Elf JARs im [Artefaktlock](../../../release/editor-artifacts.lock.json).
 Primärplattform macOS arm64, VSCode1.140.0, ExTester8.28.1,
@@ -84,3 +84,22 @@ GUI-Gegenprobe2; erwartete Negativcanary1. Eigene kumulative GUI28 verifiziert
 wiederverwendet, alle74 ZIPdateien byte-identisch.26 tatsächliche Bildreads
 decken alle23 Sichtungsangaben ab (sechs nachgewiesene identische Aliaspfade).
 Originale und optionale Beobachtungen unter `reviews/V3/attempt-01`.
+
+## V3 erneut validiert und V4 zur Prüfung bereit
+
+Die erneute V3-Validierung am02.11.2026 unter
+`/Users/stefan/sources/interlis-vscode-evidence/phases/V3/revalidation-2026-11-02.json`
+bestätigt Originalgleichheit, exaktes Reviewpaar, saubere detached Trees,
+Session-/Modell-/Prozessabschluss und die ursprünglichen GUI-Belege. Alle12 ACs
+sind erfüllt. Eigene GUI28 und zwei tatsächliche neue Reviewer-GUI-Gegenfälle
+sind belegt; das leere Reviewer-Manifestcases-Array ist anhand echter Mocha-
+Ausgabe ausdrücklich aufgelöst. Alle74 ZIPeinträge waren bytegleich,61Artefakte
+geprüft;26 tatsächliche Bildreads decken23 Sichtungsangaben. Keine offene Pflicht.
+Das ursprüngliche V3-VSIX ist extern unveränderlich aufbewahrt.
+
+V4 besitzt nun reine Java-Editorpläne, vollständige Snippets/Slots/Metaattribute,
+drei sichere Fixes, CompiledSchema-Dokumentation mit MD/HTML/echtem DOCX und
+drei Graphtextformaten. Eigene native GUI29–35 7/7 und frische GUI01–28 28/28,
+erwartete Negativcanary, keine verbleibenden Java-PIDs. Java-/Transport-/Artefakt-
+nachweise und genaue Wiederverwendung stehen im [V4-Bericht](implementation/V4.md).
+Das ist kein unabhängiger V4-PASS. V5 darf weiterhin nicht beginnen.
