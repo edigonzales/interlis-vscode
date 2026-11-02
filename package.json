@@ -104,6 +104,22 @@
       {
         "command": "interlisGuru.diagram.export",
         "title": "INTERLIS: Export Current Diagram"
+      },
+      {
+        "command": "interlisGuru.documentation.preview",
+        "title": "INTERLIS: Preview Documentation"
+      },
+      {
+        "command": "interlisGuru.documentation.export",
+        "title": "INTERLIS: Export Documentation"
+      },
+      {
+        "command": "interlisGuru.documentation.configure",
+        "title": "INTERLIS: Documentation Options"
+      },
+      {
+        "command": "interlisGuru.exportGraph",
+        "title": "INTERLIS: Export Graph"
       }
     ],
     "configuration": {
@@ -304,6 +320,52 @@
           "default": "GAPS",
           "scope": "window",
           "description": "Initial local diagram presentation setting; each panel has independent controls."
+        },
+        "interlisGuru.documentation.language": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "DE",
+            "FR",
+            "IT",
+            "EN"
+          ],
+          "default": "auto",
+          "scope": "window",
+          "description": "Language of catalogue labels; identifiers and model comments stay unchanged."
+        },
+        "interlisGuru.documentation.inheritance": {
+          "type": "string",
+          "enum": [
+            "SEPARATE",
+            "INLINE",
+            "INLINE_ABSTRACT_ONLY"
+          ],
+          "default": "SEPARATE",
+          "scope": "window",
+          "description": "How inherited members are presented."
+        },
+        "interlisGuru.documentation.headers": {
+          "type": "object",
+          "default": {},
+          "additionalProperties": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "scope": "window",
+          "description": "Catalogue header labels (catalog, name, kind, type, cardinality, origin, description, constraints, inherited, base)."
+        },
+        "interlisGuru.templates.url": {
+          "type": "string",
+          "default": "",
+          "scope": "window",
+          "description": "Explicitly selected HTTPS template URL. HTTP is allowed only for a loopback test server."
+        },
+        "interlisGuru.templates.file": {
+          "type": "string",
+          "default": "",
+          "scope": "window",
+          "description": "Explicit absolute path to an optional local template."
         }
       }
     },
@@ -320,6 +382,68 @@
           }
         ],
         "priority": "option"
+      }
+    ],
+    "keybindings": [
+      {
+        "key": "enter",
+        "command": "acceptSelectedSuggestion",
+        "when": "editorTextFocus && editorLangId == interlis && suggestWidgetVisible && suggestionMakesTextEdit"
+      },
+      {
+        "key": "enter",
+        "command": "interlisGuru.snippet.next",
+        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible"
+      },
+      {
+        "key": "left",
+        "command": "interlisGuru.snippet.cursorLeft",
+        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible"
+      },
+      {
+        "key": "right",
+        "command": "interlisGuru.snippet.cursorRight",
+        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible"
+      },
+      {
+        "key": "up",
+        "command": "interlisGuru.snippet.cursorUp",
+        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible"
+      },
+      {
+        "key": "down",
+        "command": "interlisGuru.snippet.cursorDown",
+        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible"
+      },
+      {
+        "key": "home",
+        "command": "interlisGuru.snippet.cursorHome",
+        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible"
+      },
+      {
+        "key": "end",
+        "command": "interlisGuru.snippet.cursorEnd",
+        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible"
+      },
+      {
+        "key": "pageup",
+        "command": "interlisGuru.snippet.cursorPageUp",
+        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible"
+      },
+      {
+        "key": "pagedown",
+        "command": "interlisGuru.snippet.cursorPageDown",
+        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible"
+      },
+      {
+        "key": "tab",
+        "command": "interlisGuru.snippet.next",
+        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible"
+      },
+      {
+        "key": "escape",
+        "command": "interlisGuru.snippet.leave",
+        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && !suggestWidgetVisible"
       }
     ]
   },

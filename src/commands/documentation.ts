@@ -1,0 +1,47 @@
+import * as vscode from 'vscode';
+import {LanguageClient} from 'vscode-languageclient/node';
+import {randomUUID} from 'node:crypto';
+
+import type {ExportFormat as Format,ExportArtifact as Artifact} from '../../artifacts/types/editor-protocol';
+const formats:Format[]=['MARKDOWN','HTML','DOCX','MERMAID','PLANTUML','GRAPHML'];
+const extensions:Record<Format,string>={MARKDOWN:'md',HTML:'html',DOCX:'docx',MERMAID:'mmd',PLANTUML:'puml',GRAPHML:'graphml'};
+
+/** Native dialogs/previews around Java-owned immutable export artifacts. */
+export class DocumentationCommands implements vscode.Disposable {
+  private generation=0;
+  private lastSource:vscode.TextEditor|undefined;
+  private readonly subscriptions:vscode.Disposable[]=[];
+  private readonly previews=new Map<string,string>();
+  constructor(private readonly getClient:()=>LanguageClient|undefined,private readonly output:vscode.OutputChannel){
+    this.lastSource=vscode.window.activeTextEditor;
+    this.subscriptions.push(vscode.workspace.onDidChangeTextDocument(event=>{if(event.document.languageId==='interlis')this.generation++;}),vscode.workspace.onDidChangeConfiguration(event=>{if(event.affectsConfiguration('interlisGuru'))this.generation++;}),vscode.window.onDidChangeActiveTextEditor(editor=>{if(editor?.document.languageId==='interlis')this.lastSource=editor;}),vscode.workspace.registerTextDocumentContentProvider('interlis-documentation',{provideTextDocumentContent:uri=>{const text=this.previews.get(uri.toString());if(text===undefined)throw new Error('This preview has expired. Generate it again.');return text;}}),vscode.workspace.onDidCloseTextDocument(doc=>{if(doc.uri.scheme==='interlis-documentation')this.previews.delete(doc.uri.toString());}));
+    for(const [command,action] of [['documentation.preview',()=>this.preview()],['documentation.export',()=>this.save(false)],['exportGraph',()=>this.save(true)],['documentation.configure',()=>this.configure()]] as const)this.subscriptions.push(vscode.commands.registerCommand('interlisGuru.'+command,()=>action().catch(error=>{this.output.appendLine(`Export error: ${String(error)}`);void vscode.window.showErrorMessage(`INTERLIS: ${error instanceof Error?error.message:String(error)}`);}))); 
+  }
+  dispose(){for(const disposable of this.subscriptions)disposable.dispose();this.previews.clear();}
+  private source():vscode.TextDocument {const doc=(vscode.window.activeTextEditor?.document.languageId==='interlis'?vscode.window.activeTextEditor:this.lastSource)?.document;if(!doc||doc.isClosed||!['file','untitled'].includes(doc.uri.scheme))throw new Error('Open a local INTERLIS model first.');return doc;}
+  private options(){const config=vscode.workspace.getConfiguration('interlisGuru.documentation');let language=config.get<string>('language','auto');if(language==='auto')language=['de','fr','it'].includes(vscode.env.language.split('-')[0])?vscode.env.language.split('-')[0].toUpperCase():'EN';return {language,inheritance:config.get('inheritance','SEPARATE'),headers:config.get('headers',{})};}
+  private async generate(format:Format,doc:vscode.TextDocument):Promise<Artifact|undefined>{
+    if(!vscode.workspace.isTrusted)throw new Error('Trust this workspace before generating documentation.');const server=this.getClient();if(!server?.isRunning()||server.initializeResult?.capabilities.experimental?.interlis?.documentation!==true)throw new Error('A matching running documentation protocol server is required.');const version=doc.version,generation=this.generation;const instance=server.initializeResult?.capabilities.experimental?.interlis?.serverInstanceId;
+    return vscode.window.withProgress({location:vscode.ProgressLocation.Notification,title:'INTERLIS: generating '+format,cancellable:true},async(_,token)=>{
+      // Compile-current asks the authoritative server to disambiguate multiple models.
+      const choice=await server.sendRequest<{outcome:string;modelChoices:{modelName:string;modelVersion:string}[]}>('interlis/compile',{mode:'current',textDocument:{uri:doc.uri.toString(),version}},token);let model: {modelName:string;modelVersion:string}|undefined;
+      if(choice.outcome==='selectionRequired'){const selected=await vscode.window.showQuickPick(choice.modelChoices.map(m=>({label:m.modelName,description:m.modelVersion,model:m})),{title:'Select model to export'});if(!selected)return undefined;model=selected.model;}
+      if(token.isCancellationRequested)return undefined;
+      const artifact=await server.sendRequest<Artifact>('interlis/export',{protocolVersion:1,textDocument:{uri:doc.uri.toString(),version},format,...model,options:this.options()},token);
+      if(token.isCancellationRequested)return undefined;
+      if(generation!==this.generation||server!==this.getClient()||doc.isClosed||doc.version!==version||artifact.sourceSnapshot?.rootUri!==doc.uri.toString()||artifact.sourceSnapshot.documentVersion!==version||artifact.sourceSnapshot.serverInstanceId!==instance||typeof artifact.sourceSnapshot.snapshotId!=='string')throw new Error('The export source or server changed; generate it again.');
+      if(typeof artifact.content!=='string'||Buffer.byteLength(artifact.content)>8_000_000||!Array.isArray(artifact.limitations))throw new Error('Invalid or oversized export artifact.');
+      const expectedBinary=format==='DOCX';if(artifact.encoding!==(expectedBinary?'base64':'utf8')||!artifact.fileNameSuggestion.endsWith('.'+extensions[format]))throw new Error('Mismatched export format.');
+      this.output.appendLine(`Export ${format} snapshot=${artifact.sourceSnapshot.snapshotId} version=${version}`);for(const limit of artifact.limitations)this.output.appendLine(limit);
+      if(artifact.limitations.length)void vscode.window.showInformationMessage(artifact.limitations.join(' '));return artifact;
+    });
+  }
+  private async preview(){const selected=await vscode.window.showQuickPick(formats.filter(f=>f==='MARKDOWN'||f==='HTML').map(format=>({label:format,format})),{title:'Documentation preview format'});if(!selected)return;const format=selected.format;const doc=this.source(),artifact=await this.generate(format,doc);if(!artifact)return;
+    if(format==='HTML'){const panel=vscode.window.createWebviewPanel('interlisGuru.documentation','INTERLIS Object Catalogue',vscode.ViewColumn.Beside,{enableScripts:false,localResourceRoots:[]});panel.webview.html=artifact.content;}
+    else {const uri=vscode.Uri.from({scheme:'interlis-documentation',path:'/'+randomUUID()+'/'+artifact.fileNameSuggestion});this.previews.set(uri.toString(),artifact.content);while(this.previews.size>8)this.previews.delete(this.previews.keys().next().value!);const preview=await vscode.workspace.openTextDocument(uri);await vscode.languages.setTextDocumentLanguage(preview,'markdown');await vscode.window.showTextDocument(preview,{viewColumn:vscode.ViewColumn.Beside,preview:true});await vscode.commands.executeCommand('markdown.showPreviewToSide',uri);}
+  }
+  private async save(graph:boolean){const selected=await vscode.window.showQuickPick(formats.filter(f=>(graph?['MERMAID','PLANTUML','GRAPHML']:['MARKDOWN','HTML','DOCX']).includes(f)).map(format=>({label:format,format})),{title:graph?'Graph export format':'Documentation export format'});if(!selected)return;const format=selected.format;const doc=this.source();const base=doc.uri.scheme==='file'?doc.uri:vscode.workspace.workspaceFolders?.[0]?.uri;const defaultUri=base?base.with({path:base.path.replace(/[^/]*$/, '')+'catalog.'+extensions[format]}):undefined;
+    const target=await vscode.window.showSaveDialog({title:'Save INTERLIS '+format,defaultUri,filters:{[format]:[extensions[format]]}});if(!target)return;const artifact=await this.generate(format,doc);if(!artifact)return;const version=doc.version,generation=this.generation,server=this.getClient();const bytes=artifact.encoding==='base64'?Buffer.from(artifact.content,'base64'):Buffer.from(artifact.content,'utf8');if(artifact.encoding==='base64'&&(bytes.toString('base64')!==artifact.content||bytes[0]!==0x50||bytes[1]!==0x4b))throw new Error('Invalid binary export.');const temp=target.with({path:target.path+'.'+randomUUID()+'.tmp'});try{await vscode.workspace.fs.writeFile(temp,bytes);if(doc.isClosed||doc.version!==version||generation!==this.generation||server!==this.getClient()||server?.initializeResult?.capabilities.experimental?.interlis?.serverInstanceId!==artifact.sourceSnapshot.serverInstanceId)throw new Error('Source or server changed while saving.');await vscode.workspace.fs.rename(temp,target,{overwrite:true});}finally{try{await vscode.workspace.fs.delete(temp);}catch{/* absent after atomic rename */}}void vscode.window.showInformationMessage('INTERLIS: saved '+target.toString(true));
+  }
+  private async configure(){const language=await vscode.window.showQuickPick(['EN','DE','FR','IT'],{title:'Documentation label language'});if(!language)return;const inheritance=await vscode.window.showQuickPick(['SEPARATE','INLINE','INLINE_ABSTRACT_ONLY'],{title:'Inherited members'});if(!inheritance)return;const title=await vscode.window.showInputBox({title:'Catalogue title override (empty uses translated default)',value:''});if(title===undefined)return;const config=vscode.workspace.getConfiguration('interlisGuru.documentation');await config.update('language',language,vscode.ConfigurationTarget.Workspace);await config.update('inheritance',inheritance,vscode.ConfigurationTarget.Workspace);await config.update('headers',title?{catalog:title}:{},vscode.ConfigurationTarget.Workspace);}
+}

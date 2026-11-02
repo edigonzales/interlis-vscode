@@ -3,6 +3,9 @@ import {spawn} from 'node:child_process';
 import {LanguageClient, State, ErrorAction, CloseAction} from 'vscode-languageclient/node';
 import {resolveLaunchPlan} from './host/launch';
 import {DiagramEditors} from './diagram';
+import {newFromTemplate} from './commands/templates';
+import {DocumentationCommands} from './commands/documentation';
+import {SnippetInteraction} from './editor/snippets';
 import {languageSettings} from './host/configuration';
 
 let stopExtension: (() => Promise<void>) | undefined;
@@ -16,6 +19,8 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   const watcher = vscode.workspace.createFileSystemWatcher('**/*.{ili,ILI}');
   context.subscriptions.push(output, status, watcher);
   let client: LanguageClient | undefined;
+  const snippets=new SnippetInteraction();context.subscriptions.push(snippets);
+  context.subscriptions.push(new DocumentationCommands(()=>client,output));
   const diagrams=new DiagramEditors(context,()=>client,output);
   context.subscriptions.push(diagrams,vscode.window.registerCustomEditorProvider(DiagramEditors.viewType,diagrams,{webviewOptions:{retainContextWhenHidden:true},supportsMultipleEditorsPerDocument:true}),...(['refresh','settle','resetLayout','export'] as const).map(action=>vscode.commands.registerCommand('interlisGuru.diagram.'+action,()=>diagrams.viewAction(action))),vscode.commands.registerCommand('interlisGuru.diagram.reveal',()=>diagrams.reveal()),vscode.commands.registerCommand('interlisGuru.showDiagram',()=>diagrams.open()));
   let queue = Promise.resolve();
@@ -43,6 +48,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     }, {
       documentSelector: [{language: 'interlis', scheme: 'file'}, {language: 'interlis', scheme: 'untitled'}, {language: 'interlis', scheme: 'interlis-source'}],
       initializationOptions: languageSettings(context),
+      middleware:{provideCompletionItem:async(document,position,context,token,next)=>snippets.suppress(document)?null:next(document,position,context,token)},
       synchronize: {fileEvents: watcher},
       outputChannel: output,
       revealOutputChannelOn: 4,
@@ -119,11 +125,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     vscode.commands.registerCommand('interlisGuru.restartServer', () => perform(async () => {await stop(); await start();})),
     vscode.commands.registerCommand('interlisGuru.stopServer', () => perform(stop)),
     vscode.commands.registerCommand('interlisGuru.showOutput', () => output.show(true)),
-    vscode.commands.registerCommand('interlisGuru.newFromTemplate', async () => {
-      const bytes = await vscode.workspace.fs.readFile(vscode.Uri.joinPath(context.extensionUri, 'resources/templates/model.ili'));
-      const doc = await vscode.workspace.openTextDocument({language: 'interlis', content: Buffer.from(bytes).toString('utf8')});
-      await vscode.window.showTextDocument(doc);
-    }),
+    vscode.commands.registerCommand('interlisGuru.newFromTemplate', () => newFromTemplate(context).catch(error=>{void vscode.window.showErrorMessage(`INTERLIS: ${error instanceof Error?error.message:String(error)}`);})),
     vscode.workspace.onDidGrantWorkspaceTrust(() => void perform(start)),
     vscode.workspace.onDidChangeWorkspaceFolders(() => void perform(async () => {await stop(); await start();})),
     vscode.workspace.onDidChangeConfiguration(event => {
