@@ -1,0 +1,409 @@
+{
+  "total_count": 3,
+  "jobs": [
+    {
+      "id": 125465432791,
+      "run_id": 41500206767,
+      "workflow_name": "Short platform smoke",
+      "head_branch": "codex/vscode-extension",
+      "run_url": "https://api.github.com/repos/edigonzales/interlis-vscode/actions/runs/41500206767",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVfEgJs8AAAAdNlKS1w",
+      "head_sha": "3a888507b11c5ecefb03e4fe34aa11499894039c",
+      "url": "https://api.github.com/repos/edigonzales/interlis-vscode/actions/jobs/125465432791",
+      "html_url": "https://github.com/edigonzales/interlis-vscode/actions/runs/41500206767/job/125465432791",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-02T18:24:04Z",
+      "started_at": "2026-11-02T18:24:06Z",
+      "completed_at": "2026-11-02T18:25:54Z",
+      "name": "packages",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-02T18:24:06Z",
+          "completed_at": "2026-11-02T18:24:09Z"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-02T18:24:09Z",
+          "completed_at": "2026-11-02T18:24:10Z"
+        },
+        {
+          "name": "Run node extension/scripts/ci/core-ref.cjs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-02T18:24:10Z",
+          "completed_at": "2026-11-02T18:24:13Z"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-02T18:24:13Z",
+          "completed_at": "2026-11-02T18:24:14Z"
+        },
+        {
+          "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-02T18:24:14Z",
+          "completed_at": "2026-11-02T18:24:17Z"
+        },
+        {
+          "name": "Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-02T18:24:17Z",
+          "completed_at": "2026-11-02T18:24:21Z"
+        },
+        {
+          "name": "Run npm ci --ignore-scripts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-02T18:24:21Z",
+          "completed_at": "2026-11-02T18:24:24Z"
+        },
+        {
+          "name": "Check native process tracing",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-02T18:24:24Z",
+          "completed_at": "2026-11-02T18:24:24Z"
+        },
+        {
+          "name": "Build locked packages with complete descendant exec tracing",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-02T18:24:24Z",
+          "completed_at": "2026-11-02T18:25:43Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-11-02T18:25:43Z",
+          "completed_at": "2026-11-02T18:25:48Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-02T18:25:48Z",
+          "completed_at": "2026-11-02T18:25:49Z"
+        },
+        {
+          "name": "Post Run actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-11-02T18:25:49Z",
+          "completed_at": "2026-11-02T18:25:49Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20,
+          "started_at": "2026-11-02T18:25:49Z",
+          "completed_at": "2026-11-02T18:25:49Z"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21,
+          "started_at": "2026-11-02T18:25:49Z",
+          "completed_at": "2026-11-02T18:25:49Z"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 22,
+          "started_at": "2026-11-02T18:25:49Z",
+          "completed_at": "2026-11-02T18:25:49Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 23,
+          "started_at": "2026-11-02T18:25:49Z",
+          "completed_at": "2026-11-02T18:25:49Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/edigonzales/interlis-vscode/check-runs/125465432791",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000017060,
+      "runner_name": "GitHub Actions 1000017060",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 125466414921,
+      "run_id": 41500206767,
+      "workflow_name": "Short platform smoke",
+      "head_branch": "codex/vscode-extension",
+      "run_url": "https://api.github.com/repos/edigonzales/interlis-vscode/actions/runs/41500206767",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVfEgJs8AAAAdNmGPSQ",
+      "head_sha": "3a888507b11c5ecefb03e4fe34aa11499894039c",
+      "url": "https://api.github.com/repos/edigonzales/interlis-vscode/actions/jobs/125466414921",
+      "html_url": "https://github.com/edigonzales/interlis-vscode/actions/runs/41500206767/job/125466414921",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-02T18:25:54Z",
+      "started_at": "2026-11-02T18:25:56Z",
+      "completed_at": "2026-11-02T18:27:30Z",
+      "name": "smoke (ubuntu-24.04)",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-02T18:25:57Z",
+          "completed_at": "2026-11-02T18:25:58Z"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-02T18:25:58Z",
+          "completed_at": "2026-11-02T18:25:59Z"
+        },
+        {
+          "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-02T18:25:59Z",
+          "completed_at": "2026-11-02T18:26:03Z"
+        },
+        {
+          "name": "Run npm ci --ignore-scripts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-02T18:26:03Z",
+          "completed_at": "2026-11-02T18:26:08Z"
+        },
+        {
+          "name": "Run actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-02T18:26:08Z",
+          "completed_at": "2026-11-02T18:26:17Z"
+        },
+        {
+          "name": "Prepare package inputs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-02T18:26:17Z",
+          "completed_at": "2026-11-02T18:26:17Z"
+        },
+        {
+          "name": "Native runtime, stdio, Unicode CLI installation and rejection smoke",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-02T18:26:17Z",
+          "completed_at": "2026-11-02T18:27:15Z"
+        },
+        {
+          "name": "Native Windows smoke with actual descendant process events",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 8,
+          "started_at": "2026-11-02T18:27:15Z",
+          "completed_at": "2026-11-02T18:27:15Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-02T18:27:15Z",
+          "completed_at": "2026-11-02T18:27:16Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-11-02T18:27:16Z",
+          "completed_at": "2026-11-02T18:27:16Z"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18,
+          "started_at": "2026-11-02T18:27:16Z",
+          "completed_at": "2026-11-02T18:27:17Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-11-02T18:27:17Z",
+          "completed_at": "2026-11-02T18:27:17Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/edigonzales/interlis-vscode/check-runs/125466414921",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000017061,
+      "runner_name": "GitHub Actions 1000017061",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 125466415190,
+      "run_id": 41500206767,
+      "workflow_name": "Short platform smoke",
+      "head_branch": "codex/vscode-extension",
+      "run_url": "https://api.github.com/repos/edigonzales/interlis-vscode/actions/runs/41500206767",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVfEgJs8AAAAdNmGQVg",
+      "head_sha": "3a888507b11c5ecefb03e4fe34aa11499894039c",
+      "url": "https://api.github.com/repos/edigonzales/interlis-vscode/actions/jobs/125466415190",
+      "html_url": "https://github.com/edigonzales/interlis-vscode/actions/runs/41500206767/job/125466415190",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-02T18:25:54Z",
+      "started_at": "2026-11-02T18:25:55Z",
+      "completed_at": "2026-11-02T18:27:17Z",
+      "name": "smoke (windows-2025)",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-02T18:25:56Z",
+          "completed_at": "2026-11-02T18:25:57Z"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-02T18:25:57Z",
+          "completed_at": "2026-11-02T18:26:02Z"
+        },
+        {
+          "name": "Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-02T18:26:02Z",
+          "completed_at": "2026-11-02T18:26:12Z"
+        },
+        {
+          "name": "Run npm ci --ignore-scripts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-11-02T18:26:12Z",
+          "completed_at": "2026-11-02T18:26:25Z"
+        },
+        {
+          "name": "Run actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-02T18:26:25Z",
+          "completed_at": "2026-11-02T18:26:29Z"
+        },
+        {
+          "name": "Prepare package inputs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-02T18:26:29Z",
+          "completed_at": "2026-11-02T18:26:29Z"
+        },
+        {
+          "name": "Native runtime, stdio, Unicode CLI installation and rejection smoke",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 7,
+          "started_at": "2026-11-02T18:26:29Z",
+          "completed_at": "2026-11-02T18:26:29Z"
+        },
+        {
+          "name": "Native Windows smoke with actual descendant process events",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-02T18:26:29Z",
+          "completed_at": "2026-11-02T18:27:10Z"
+        },
+        {
+          "name": "Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-11-02T18:27:10Z",
+          "completed_at": "2026-11-02T18:27:11Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-11-02T18:27:11Z",
+          "completed_at": "2026-11-02T18:27:11Z"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18,
+          "started_at": "2026-11-02T18:27:11Z",
+          "completed_at": "2026-11-02T18:27:13Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-11-02T18:27:13Z",
+          "completed_at": "2026-11-02T18:27:13Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/edigonzales/interlis-vscode/check-runs/125466415190",
+      "labels": [
+        "windows-2025"
+      ],
+      "runner_id": 1000017062,
+      "runner_name": "GitHub Actions 1000017062",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ]
+}

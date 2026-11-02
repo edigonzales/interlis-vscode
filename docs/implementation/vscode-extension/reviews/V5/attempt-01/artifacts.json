@@ -1,0 +1,29 @@
+{
+  "coreSha": "6983baf95c47a7e20dbb41a2e50500185f578c37",
+  "extensionSha": "3a888507b11c5ecefb03e4fe34aa11499894039c",
+  "qualifiedMacOs": "cf8f200243ed568c5eb05f0e2be9281e043e1c9c21335433c3e7b73d6f6dc7aa",
+  "ciRun": "https://github.com/edigonzales/interlis-vscode/actions/runs/41500206767",
+  "artifacts": [
+    {
+      "target": "darwin-arm64",
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/interlis-vscode-darwin-arm64-cf8f200243ed568c5eb05f0e2be9281e043e1c9c21335433c3e7b73d6f6dc7aa.vsix",
+      "sha256": "cf8f200243ed568c5eb05f0e2be9281e043e1c9c21335433c3e7b73d6f6dc7aa"
+    },
+    {
+      "target": "linux-x64",
+      "path": "/Users/stefan/sources/interlis-vscode/build/packages/interlis-vscode-linux-x64.vsix",
+      "retainedCiPath": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/platform-packages/packages/interlis-vscode-linux-x64.vsix",
+      "sha256": "833aab19862e78aa81c2e6add5fadbf49bf14502c6d257cd696e869cd144be56",
+      "nativeSmokeMs": 57688,
+      "guiTested": false
+    },
+    {
+      "target": "win32-x64",
+      "path": "/Users/stefan/sources/interlis-vscode/build/packages/interlis-vscode-win32-x64.vsix",
+      "retainedCiPath": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/platform-packages/packages/interlis-vscode-win32-x64.vsix",
+      "sha256": "37ad2202d393e77ab136279dd73b97578bcd90b136224ce20fbf0de32431e5da",
+      "nativeSmokeMs": 37284,
+      "guiTested": false
+    }
+  ]
+}

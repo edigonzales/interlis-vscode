@@ -1,0 +1,258 @@
+{
+  "at": "2026-11-02T19:07:05.748Z",
+  "java": {
+    "interlis-compiler": 66,
+    "interlis-documentation": 8,
+    "interlis-lsp": 75,
+    "interlis-wasm-bridge": 24,
+    "interlis-projection": 22,
+    "interlis-compiler-cli": 1
+  },
+  "totalJava": 196,
+  "sharedUi": {
+    "total": 8,
+    "browserIncluded": 3,
+    "nonBrowser": 5
+  },
+  "ownFreshUnit": 13,
+  "ownFreshStdio": 1,
+  "gui": [
+    {
+      "manifest": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/build/reports/gui/comfort/2026-11-02T18-41-46-465Z/manifest.json",
+      "cases": 28,
+      "started": [
+        62703,
+        62724,
+        62893,
+        62908,
+        62921,
+        63312
+      ],
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili GUI ä-qZrHL3"
+    },
+    {
+      "manifest": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/manifest.json",
+      "cases": 2,
+      "started": [
+        67452,
+        67465
+      ],
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili GUI ä-review-EKHhRP"
+    },
+    {
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json",
+      "cases": 28,
+      "started": [
+        57281,
+        57292,
+        57522,
+        57537,
+        57550,
+        58131
+      ],
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili GUI ä-80T3Tu"
+    },
+    {
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/authoring/2026-11-02T18-28-30-943Z/manifest.json",
+      "cases": 7,
+      "started": [
+        58604
+      ],
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili GUI ä-x8LP2m"
+    },
+    {
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/resilience/2026-11-02T18-30-19-305Z/manifest.json",
+      "cases": 5,
+      "started": [
+        59347,
+        59389,
+        59405,
+        59412,
+        59414,
+        59416,
+        59442,
+        59458,
+        59461,
+        59468,
+        59634
+      ],
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili GUI ä-GOvyVl"
+    },
+    {
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/distribution/2026-11-02T18-32-06-943Z/manifest.json",
+      "cases": 2,
+      "started": [
+        59893
+      ],
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili GUI ä-offline-bnNEm5"
+    }
+  ],
+  "counterRuns": [
+    {
+      "run": "2026-11-02T18-46-01-242Z",
+      "status": "failed",
+      "exit": 1,
+      "cases": 0,
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili GUI ä-review-0grf6Y"
+    },
+    {
+      "run": "2026-11-02T18-46-30-206Z",
+      "status": "failed",
+      "exit": 1,
+      "cases": 0,
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili GUI ä-review-EoYtnl"
+    },
+    {
+      "run": "2026-11-02T18-47-20-756Z",
+      "status": "failed",
+      "exit": 1,
+      "cases": 0,
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili GUI ä-review-wiwH4i"
+    },
+    {
+      "run": "2026-11-02T18-47-52-452Z",
+      "status": "failed",
+      "exit": 1,
+      "cases": 0,
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili GUI ä-review-3MJjKI"
+    },
+    {
+      "run": "2026-11-02T18-48-19-708Z",
+      "status": "failed",
+      "exit": 1,
+      "cases": 0,
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili GUI ä-review-spQqOS"
+    },
+    {
+      "run": "2026-11-02T18-48-42-423Z",
+      "status": "failed",
+      "exit": 1,
+      "cases": 0,
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili GUI ä-review-yXnPlm"
+    },
+    {
+      "run": "2026-11-02T18-49-05-589Z",
+      "status": "failed",
+      "exit": 1,
+      "cases": 0,
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili GUI ä-review-4l1rzr"
+    },
+    {
+      "run": "2026-11-02T18-49-26-685Z",
+      "status": "failed",
+      "exit": 1,
+      "cases": 0,
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili GUI ä-review-6xUcsW"
+    },
+    {
+      "run": "2026-11-02T18-49-52-061Z",
+      "status": "failed",
+      "exit": 1,
+      "cases": 0,
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili GUI ä-review-Nu8PAy"
+    },
+    {
+      "run": "2026-11-02T18-50-11-736Z",
+      "status": "failed",
+      "exit": 1,
+      "cases": 1,
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili GUI ä-review-AQ7QSI"
+    },
+    {
+      "run": "2026-11-02T18-50-46-637Z",
+      "status": "failed",
+      "exit": 1,
+      "cases": 1,
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili GUI ä-review-RQdOLk"
+    },
+    {
+      "run": "2026-11-02T18-51-22-468Z",
+      "status": "failed",
+      "exit": 1,
+      "cases": 1,
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili GUI ä-review-jPl4Cg"
+    },
+    {
+      "run": "2026-11-02T18-52-20-168Z",
+      "status": "failed",
+      "exit": 1,
+      "cases": 1,
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili GUI ä-review-a8G1Ki"
+    },
+    {
+      "run": "2026-11-02T18-52-49-002Z",
+      "status": "failed",
+      "exit": 1,
+      "cases": 1,
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili GUI ä-review-dhz1Dv"
+    },
+    {
+      "run": "2026-11-02T18-53-21-712Z",
+      "status": "passed",
+      "exit": 0,
+      "cases": 2,
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili GUI ä-review-0kCqHr"
+    },
+    {
+      "run": "2026-11-02T18-55-12-106Z",
+      "status": "passed",
+      "exit": 0,
+      "cases": 2,
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili GUI ä-review-EKHhRP"
+    }
+  ],
+  "negative": {
+    "path": "counterprobes/2026-11-02T18-54-07-082Z-negative/result.json",
+    "checks": 7,
+    "protocol": 999,
+    "stockRestored": true
+  },
+  "authorNegative": {
+    "exit": 1,
+    "positiveCases": 0,
+    "serverStarts": 0,
+    "restored": true
+  },
+  "exactDirty": "outer-exact-dirty-buffer.json",
+  "ci": {
+    "runId": 41500206767,
+    "url": "https://github.com/edigonzales/interlis-vscode/actions/runs/41500206767",
+    "jobs": 3,
+    "smokes": [
+      {
+        "os": "ubuntu-24.04",
+        "target": "linux-x64",
+        "manifest": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/smoke-ubuntu-24.04/smoke-linux-x64/result.json",
+        "processAuditStatus": "passed",
+        "vsix": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/platform-packages/packages/interlis-vscode-linux-x64.vsix",
+        "vsixSha256": "833aab19862e78aa81c2e6add5fadbf49bf14502c6d257cd696e869cd144be56",
+        "runtimeDigest": "c4f933f8d21783d489666c780299cc559810890f595f70551709168bae75056d",
+        "elapsedMs": 57688,
+        "cliInstalled": true,
+        "stdioRoot": "/home/runner/work/interlis-vscode/interlis-vscode/build/ci/smoke-linux-x64/Unicode Modelle ä/extension/artifacts/runtime/linux-x64/bin/java",
+        "missingServerRejected": true,
+        "guiTested": false
+      },
+      {
+        "os": "windows-2025",
+        "target": "win32-x64",
+        "manifest": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/smoke-windows-2025/smoke-win32-x64/result.json",
+        "processAuditStatus": "passed",
+        "vsix": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/platform-packages/packages/interlis-vscode-win32-x64.vsix",
+        "vsixSha256": "37ad2202d393e77ab136279dd73b97578bcd90b136224ce20fbf0de32431e5da",
+        "runtimeDigest": "0603aab7aea27ff5503a7de80c55f23b69ed82b4b48c729056fa90705834485e",
+        "elapsedMs": 37284,
+        "cliInstalled": true,
+        "stdioRoot": "D:\\a\\interlis-vscode\\interlis-vscode\\build\\ci\\smoke-win32-x64\\Unicode Modelle ä\\extension\\artifacts\\runtime\\win32-x64\\bin\\java.exe",
+        "missingServerRejected": true,
+        "guiTested": false
+      }
+    ]
+  },
+  "resources": {
+    "cycles": 20,
+    "maxRssGrowthBytes": 188448768,
+    "budget": 268435456
+  },
+  "activeOwnGuiProcesses": []
+}

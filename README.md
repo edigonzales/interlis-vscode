@@ -3,8 +3,8 @@
 Desktop VS Code extension `edigonzales.interlis-vscode` using the Java INTERLIS
 language server. Target-specific VSIX packages contain a pinned, verified Java25
 runtime, repository resolution/cache, readable diagnostics, root compilation and
-an interactive UML custom editor. V0–V4 have independent acceptance; V5 is under
-qualification. Current platform evidence and the exact accepted product pair are
+an interactive UML custom editor. V0–V5 have independent cumulative acceptance under the
+user-adjusted platform scope. Current platform evidence and the exact accepted product pair are
 tracked in [STATUS](docs/implementation/vscode-extension/STATUS.md).
 
 Install the local VSIX through **Extensions → Install from VSIX**. Set

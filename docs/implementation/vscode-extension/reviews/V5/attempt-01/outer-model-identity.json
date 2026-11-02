@@ -1,0 +1,23 @@
+{
+  "sessionId": "ses_e62738eb6ffertVz0srlweQyfb",
+  "createdAt": "2026-11-02T18:36:29.598Z",
+  "idleAt": "2026-11-02T19:01:07.644Z",
+  "model": {
+    "id": "deepseek-flash",
+    "providerID": "deepseek",
+    "variant": "default"
+  },
+  "outcome": "succeeded",
+  "directApiBase": "https://api.deepseek.com",
+  "officialMapping": {
+    "checkedAt": "2026-11-02T18:21:47.129Z",
+    "openCode": "2.0.28",
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "modelVersion": "DeepSeek-V4.1-Flash-1017",
+    "apiBaseUrl": "https://api.deepseek.com",
+    "officialSource": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "verification": "Official current provider table explicitly maps alias and direct API base; actual review session/transport will be checked separately."
+  },
+  "sessionExportSha256": "78b20d022bfebc9c68926ec0a7653a1ea83555bb7531394884a5065942dc49b8"
+}

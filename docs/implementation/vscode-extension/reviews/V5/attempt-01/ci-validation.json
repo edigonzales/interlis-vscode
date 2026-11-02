@@ -1,0 +1,77 @@
+{
+  "runId": 41500206767,
+  "url": "https://github.com/edigonzales/interlis-vscode/actions/runs/41500206767",
+  "extensionSha": "3a888507b11c5ecefb03e4fe34aa11499894039c",
+  "coreSha": "6983baf95c47a7e20dbb41a2e50500185f578c37",
+  "status": "validated",
+  "artifacts": [
+    {
+      "id": 13168705978,
+      "name": "package-process-audit",
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/package-process-audit.zip",
+      "sha256": "83181243c81d8ba2ddba15f6e89475493694048d8ef0161edcdb3de6610c6970",
+      "githubDigest": "sha256:83181243c81d8ba2ddba15f6e89475493694048d8ef0161edcdb3de6610c6970"
+    },
+    {
+      "id": 13168617197,
+      "name": "smoke-ubuntu-24.04",
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/smoke-ubuntu-24.04.zip",
+      "sha256": "70e99afb5cab8e42106b81ebb47fbfe9a92688bcb9264618c7aa484f71a9510d",
+      "githubDigest": "sha256:70e99afb5cab8e42106b81ebb47fbfe9a92688bcb9264618c7aa484f71a9510d"
+    },
+    {
+      "id": 13168077761,
+      "name": "platform-packages",
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/platform-packages.zip",
+      "sha256": "c1c831a9326dd115146f9ee8799d8b6c23375904a6a27ffb8b519a3df887803e",
+      "githubDigest": "sha256:c1c831a9326dd115146f9ee8799d8b6c23375904a6a27ffb8b519a3df887803e"
+    },
+    {
+      "id": 13167788413,
+      "name": "smoke-windows-2025",
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/smoke-windows-2025.zip",
+      "sha256": "676313ccf938171dd809b5ab82f69c246c1a032ddf7251c4904a1fc51b412066",
+      "githubDigest": "sha256:676313ccf938171dd809b5ab82f69c246c1a032ddf7251c4904a1fc51b412066"
+    }
+  ],
+  "finishedAt": "2026-11-02T18:30:30.712Z",
+  "validatedAt": "2026-11-02T18:32:11.119Z",
+  "buildProvenance": {
+    "startedAt": "2026-11-02T18:24:24.545Z",
+    "coreSha": "6983baf95c47a7e20dbb41a2e50500185f578c37",
+    "extensionSha": "3a888507b11c5ecefb03e4fe34aa11499894039c",
+    "purpose": "Build short platform-smoke packages, not GUI qualification",
+    "finishedAt": "2026-11-02T18:25:43.824Z",
+    "trackedDirty": ""
+  },
+  "nativeSmokes": [
+    {
+      "os": "ubuntu-24.04",
+      "target": "linux-x64",
+      "manifest": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/smoke-ubuntu-24.04/smoke-linux-x64/result.json",
+      "processAuditStatus": "passed",
+      "vsix": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/platform-packages/packages/interlis-vscode-linux-x64.vsix",
+      "vsixSha256": "833aab19862e78aa81c2e6add5fadbf49bf14502c6d257cd696e869cd144be56",
+      "runtimeDigest": "c4f933f8d21783d489666c780299cc559810890f595f70551709168bae75056d",
+      "elapsedMs": 57688,
+      "cliInstalled": true,
+      "stdioRoot": "/home/runner/work/interlis-vscode/interlis-vscode/build/ci/smoke-linux-x64/Unicode Modelle ä/extension/artifacts/runtime/linux-x64/bin/java",
+      "missingServerRejected": true,
+      "guiTested": false
+    },
+    {
+      "os": "windows-2025",
+      "target": "win32-x64",
+      "manifest": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/smoke-windows-2025/smoke-win32-x64/result.json",
+      "processAuditStatus": "passed",
+      "vsix": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/platform-packages/packages/interlis-vscode-win32-x64.vsix",
+      "vsixSha256": "37ad2202d393e77ab136279dd73b97578bcd90b136224ce20fbf0de32431e5da",
+      "runtimeDigest": "0603aab7aea27ff5503a7de80c55f23b69ed82b4b48c729056fa90705834485e",
+      "elapsedMs": 37284,
+      "cliInstalled": true,
+      "stdioRoot": "D:\\a\\interlis-vscode\\interlis-vscode\\build\\ci\\smoke-win32-x64\\Unicode Modelle ä\\extension\\artifacts\\runtime\\win32-x64\\bin\\java.exe",
+      "missingServerRejected": true,
+      "guiTested": false
+    }
+  ]
+}

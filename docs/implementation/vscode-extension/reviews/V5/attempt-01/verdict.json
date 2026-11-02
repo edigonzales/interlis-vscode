@@ -1,0 +1,211 @@
+{
+  "schemaVersion": 1,
+  "phase": "V5",
+  "assignmentBase": {
+    "coreSha": "20b0029d824b3602d9a304320bf0feae4c35c1f9",
+    "extensionSha": "73badd9807f407aea048d397af5549fe907a1501"
+  },
+  "phaseBase": {
+    "coreSha": "6983baf95c47a7e20dbb41a2e50500185f578c37",
+    "extensionSha": "b19ac4306347f39da994db549137165448fb23cb"
+  },
+  "candidate": {
+    "coreSha": "6983baf95c47a7e20dbb41a2e50500185f578c37",
+    "extensionSha": "3a888507b11c5ecefb03e4fe34aa11499894039c"
+  },
+  "actualHeads": {
+    "coreSha": "6983baf95c47a7e20dbb41a2e50500185f578c37",
+    "extensionSha": "3a888507b11c5ecefb03e4fe34aa11499894039c",
+    "coreTrackedClean": true,
+    "extensionTrackedClean": true,
+    "extensionUntrackedHarnessFile": "opencode.json",
+    "productFilesChangedByReview": false
+  },
+  "verdict": "PASS",
+  "reviewer": {
+    "openCodeVersion": "2.0.28",
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "apiHost": "https://api.deepseek.com",
+    "modelMappingEvidence": {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/review-preflight/model-identity.json",
+      "sha256": "d7e995e8fbb7ae0b6d2cfba66300e4ae01c629f1939ecce0451a542c82464fe6",
+      "modelVersion": "DeepSeek-V4.1-Flash-1017"
+    },
+    "transport": {
+      "openCodeVersion": "2.0.28",
+      "model": "deepseek/deepseek-flash",
+      "apiHost": "api.deepseek.com",
+      "independentSession": true
+    }
+  },
+  "scopeAdjustment": {
+    "source": "EXECUTION_PLAN.md / PLATFORM_TEST_SCOPE.md / request.scopeNotes",
+    "effect": "Full native macOS GUI plus short native Linux/Windows CLI/runtime/stdio/rejection smokes. Linux/Windows GUI and additional Remote/Container GUI are explicitly not required and are not claimed as PASS. V5-03 is assessed as local Multi-root with the unqualified Remote limitation preserved. All other product goals remain.",
+    "notFabricated": [
+      "Linux GUI",
+      "Windows GUI",
+      "Remote/Dev-Container GUI"
+    ]
+  },
+  "criteria": [
+    {"id": "V0-01", "status": "fulfilled", "evidence": ["/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/docs/implementation/vscode-extension/STATUS.md", "git rev-parse/status in both detached worktrees", "assignmentBase→candidate diff"], "note": "Current complete basis, ownership and preserved prior work confirmed; no reimplementation of CLI work."},
+    {"id": "V0-02", "status": "fulfilled", "evidence": ["/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/package.json", "own verify:no-legacy-dependencies exit 0", "installed VSIX manifest"], "note": "Own identity, commands/settings, language, snippets, template; no @ilic/legacy backend."},
+    {"id": "V0-03", "status": "fulfilled", "evidence": ["own node --test test/protocol.test.cjs exit 0", "own comfort GUI 28/28", "author negative missing-server run"], "note": "Real Java stdio, clean shutdown, bundled runtime; missing server rejected."},
+    {"id": "V0-04", "status": "fulfilled", "evidence": ["own comfort GUI 28/28", "installed VSIX 9f5b6f4f...", "no Core checkout required"], "note": "Valid/invalid model, Problems, F12 and formatting in isolated profile."},
+    {"id": "V0-05", "status": "fulfilled", "evidence": ["own ExTester/Selenium comfort run", "own PROBE-1/2", "image-read-inventory.json"], "note": "Native workbench/webview harness, not API-only."},
+    {"id": "V0-06", "status": "fulfilled", "evidence": ["FEATURE_AUDIT.md", "FEATURE_EVIDENCE.md", "docs/provenance/source-adoptions.md", "release locks"], "note": "Audit, provenance/licence plan, version pins and gate mapping present."},
+    {"id": "V0-07", "status": "fulfilled", "evidence": ["/Users/stefan/sources/interlis-vscode-evidence/reviews/V0/attempt-02/review.md", "own V5 independent session and probes"], "note": "Historical independent PASS plus current identity/evidence audit; outer process closure checked by Codex."},
+    {"id": "V1-01", "status": "fulfilled", "evidence": ["own comfort GUI-02/GUI-04", "author gui-comfort raw cases"], "note": "Readable DE/EN, codes/severity/version/related information, no messageKey/ANSI."},
+    {"id": "V1-02", "status": "fulfilled", "evidence": ["own comfort GUI-09", "build/reports/gui/comfort/2026-11-02T18-25-34-055Z/repository-stats.json"], "note": "Dirty > disk > repository, transitive imports, offline/cache, ambiguity actually exercised."},
+    {"id": "V1-03", "status": "fulfilled", "evidence": ["own comfort GUI-10", "readonly interlis-source handle assertions"], "note": "External source navigable and read-only after didOpen; typing/rename has no effect."},
+    {"id": "V1-04", "status": "fulfilled", "evidence": ["own comfort GUI-03/05/06/07"], "note": "Completion/hover/definition/references/prepareRename/rename on current snapshot; closed sources/version conflicts covered."},
+    {"id": "V1-05", "status": "fulfilled", "evidence": ["own comfort GUI-11", "author formatter/CRLF cases"], "note": "Hierarchical outline, folding, semantic tokens, formatting."},
+    {"id": "V1-06", "status": "fulfilled", "evidence": ["own comfort GUI-08", "author rootcompile cases"], "note": "Compile current uses dirty root/version; workspace compile explicit; unrelated broken model not root."},
+    {"id": "V1-07", "status": "fulfilled", "evidence": ["own comfort GUI-09", "author GUI-39/41", "author resilience cases"], "note": "Workspace/repository config, watcher, Multi-root and cancellation bounded/revision-safe."},
+    {"id": "V1-08", "status": "fulfilled", "evidence": ["own comfort GUI-04..11", "author gui-comfort 28/28"], "note": "Problems, RelatedLocation, Hover, F12, References, Rename, Import/Readonly, Outline with real server."},
+    {"id": "V1-09", "status": "fulfilled", "evidence": ["qualification/V5-final-r1/java-results", "own unit 13/13", "own protocol 1/1", "author extension-host 3"], "note": "Java196 and transport fresh; synchronization/path/closed-rename regressions retained."},
+    {"id": "V1-10", "status": "fulfilled", "evidence": ["own V5 GUI/workspace/counterprobes", "unchanged detached trees"], "note": "Independent reviewer confirms V1 goals and new workspace/dirty/repository/GUI cases."},
+    {"id": "V2-01", "status": "fulfilled", "evidence": ["core/frontend/diagram-ui", "artifacts/renderer-provenance.json", "own verify:no-legacy-dependencies"], "note": "Own neutral renderer with provenance; no B/@ilic build/type/runtime dependency; one source for browser and extension."},
+    {"id": "V2-02", "status": "fulfilled", "evidence": ["own protocol stdio test", "own comfort GUI-12"], "note": "Typed versioned DiagramDocument with options, root/snapshot/source/client versions, completeness."},
+    {"id": "V2-03", "status": "fulfilled", "evidence": ["own comfort GUI-12"], "note": "MODEL/TOPIC/Classes/Structures/Domains/Views/Associations, members/enums/constraints without label collisions."},
+    {"id": "V2-04", "status": "fulfilled", "evidence": ["own comfort GUI-16", "author GUI-16-end-labels.json"], "note": "N-ary, self/parallel, attributes, roles/cardinalities/diamonds at correct ends."},
+    {"id": "V2-05", "status": "fulfilled", "evidence": ["own comfort GUI-13/14", "own PROBE-1 geometry", "author GUI-13-geometry/GUI-14-route"], "note": "Real pointer drag/route handles; no source/buffer/semantic endpoint change."},
+    {"id": "V2-06", "status": "fulfilled", "evidence": ["own comfort GUI-15", "own comfort GUI-10"], "note": "Diagram→source for node/member/association; readonly import; no stale jump."},
+    {"id": "V2-07", "status": "fulfilled", "evidence": ["own comfort GUI-17/18", "own PROBE-2 stale"], "note": "Pinning/follow, live update, partial/stale/error, panel lifecycle; late layout not accepted."},
+    {"id": "V2-08", "status": "fulfilled", "evidence": ["own comfort GUI-12..18", "image-read-inventory.json"], "note": "Real model→Java-LSP→custom editor→Sprotty with native mouse/keyboard and before/after images."},
+    {"id": "V2-09", "status": "fulfilled", "evidence": ["author shared-diagram-ui 8/8 (3 browser)", "author projection 22", "own GUI/transport"], "note": "Diagram/schema/adapter tests fresh; no second renderer copy or lost semantic information."},
+    {"id": "V2-10", "status": "fulfilled", "evidence": ["own PROBE-1/2", "own negative package/protocol", "licence/dependency audit"], "note": "Independent GUI/N-ary/stale countercase on identical pair."},
+    {"id": "V3-01", "status": "fulfilled", "evidence": ["own comfort GUI-19/20/21"], "note": "Filter F26/F33–35 including direct/indirect imports, All/None/Reset, stubs; no recompile per click."},
+    {"id": "V3-02", "status": "fulfilled", "evidence": ["own comfort GUI-22", "own PROBE-2"], "note": "Settle vs Reset distinct; pins/routes preserved until explicit reset."},
+    {"id": "V3-03", "status": "fulfilled", "evidence": ["own comfort GUI-22/27"], "note": "Orthogonal/polyline/splines and NodePlacement work; splines are real cubic Béziers; endpoints unchanged."},
+    {"id": "V3-04", "status": "fulfilled", "evidence": ["own comfort GUI-24", "author GUI-16"], "note": "Layout undo/redo, container/edge movement, self-loops, parallel edges, asymmetric cardinalities."},
+    {"id": "V3-05", "status": "fulfilled", "evidence": ["own comfort GUI-23"], "note": "Pan/zoom/fit/scrollbars/keyboard at HiDPI; gestures distinguishable."},
+    {"id": "V3-06", "status": "fulfilled", "evidence": ["own comfort GUI-25", "own comfort GUI-15"], "note": "Text→diagram and diagram→text without feedback; exact identity/revision; no semantic bidirectional claim."},
+    {"id": "V3-07", "status": "fulfilled", "evidence": ["own comfort GUI-24", "author GUI-41"], "note": "Panel state across hide/show/reload/live edits; removed/renamed elements safely reconciled; bounded memory."},
+    {"id": "V3-08", "status": "fulfilled", "evidence": ["own comfort GUI-26", "author GUI-26 files/pixels", "own PROBE-1/2 exports"], "note": "Full/visible SVG and PNG reflect filtered/manual view; XML/PNG/viewBox/pixels/clipping and real files checked."},
+    {"id": "V3-09", "status": "fulfilled", "evidence": ["own comfort GUI-27", "author GUI-27 SVG files"], "note": "Inkscape groups/connections, GAPS/PLAIN, UML markers; no active external resources."},
+    {"id": "V3-10", "status": "fulfilled", "evidence": ["own comfort GUI-28", "author GUI-28 images", "GUI-37/40"], "note": "Light/Dark/High Contrast, Empty/Loading/Stale/Error, safe labels/comments; no XSS/layout loss."},
+    {"id": "V3-11", "status": "fulfilled", "evidence": ["own comfort GUI-19..28", "author 42/42", "author shared UI 8/8"], "note": "GUI-19..28 plus V2 smoke; tests selected by impact."},
+    {"id": "V3-12", "status": "fulfilled", "evidence": ["own PROBE-1/2", "source hashes", "image-read-inventory.json"], "note": "Reviewer operated GUI and invented new layout/filter/export/cancel combinations; source/buffer unchanged."},
+    {"id": "V4-01", "status": "fulfilled", "evidence": ["author GUI-29/31", "author Java EditorCompletion/VersionScope"], "note": "Completion slots include 2.3/2.4, metaattributes, scope-aware segment replacement; no client semantics."},
+    {"id": "V4-02", "status": "fulfilled", "evidence": ["author GUI-29/30"], "note": "Snippets/mirrored names/Enter/Tab/cursor; comments/strings/value assignments/existing END produce no false block close."},
+    {"id": "V4-03", "status": "fulfilled", "evidence": ["author GUI-31"], "note": "Three safe quick fixes with current versions and Undo; incomplete analysis does not offer unused-import fix."},
+    {"id": "V4-04", "status": "fulfilled", "evidence": ["author GUI-33", "author Java documentation 8"], "note": "Current full documentation projection with inheritance/structure/type/role/constraint/docs; no AST text leak/unbounded recursion."},
+    {"id": "V4-05", "status": "fulfilled", "evidence": ["author GUI-33/34", "own artifact inspection of MD/HTML/DOCX"], "note": "Valid Markdown/HTML/DOCX, DE/FR/IT/EN labels/header overrides, ABSTRACT notation, identifiers unchanged."},
+    {"id": "V4-06", "status": "fulfilled", "evidence": ["author GUI-35", "own GraphML/Mermaid/PlantUML inspection"], "note": "Mermaid/PlantUML text and GraphML from same projection; no foreign compiler/network renderer."},
+    {"id": "V4-07", "status": "fulfilled", "evidence": ["author gui-authoring 7/7", "own image/artifact checks", "prior V4 attempt02 PASS"], "note": "GUI-29..35 on same pair/VSIX; actual saved docs/graphs and cancel checked."},
+    {"id": "V4-08", "status": "fulfilled", "evidence": ["author Java196 no fail/skip", "own unit/protocol", "V5 core diff empty"], "note": "Fresh Java/LSP/TS/export/GUI tests by impact; compiler sentinels retained; no new XFAIL/norm change."},
+    {"id": "V4-09", "status": "fulfilled", "evidence": ["prior V4 attempt02 PASS", "current F01–F60 audit", "artefact files"], "note": "Source/target parity through V4 confirmed; no missing mandatory evidence."},
+    {"id": "V5-01", "status": "fulfilled", "evidence": ["own VSIX inventory 344 files", "own comfort GUI installation", "author GUI-36 offline", "secret/legacy scan"], "note": "Only own extension/UI/LSP/runtime/assets/licences; no old backend/test harness/secrets; offline start."},
+    {"id": "V5-02", "status": "fulfilled", "evidence": ["author macOS GUI 42/42", "Actions run 41500206767: packages/ubuntu/windows success", "smoke-linux-x64/result.json", "smoke-win32-x64/result.json"], "note": "Scope-adjusted: full macOS GUI plus actual native Linux/Windows CLI/runtime/stdio/rejection smokes. guiTested=false on Linux/Windows; no GUI PASS claimed."},
+    {"id": "V5-03", "status": "fulfilled", "evidence": ["author GUI-39 local Multi-root", "PLATFORM_TEST_SCOPE.md"], "note": "Scope-adjusted: local Multi-root Add/Remove/Re-Add and F12 into second root pass; Remote GUI explicitly not required/tested and not claimed."},
+    {"id": "V5-04", "status": "fulfilled", "evidence": ["author GUI-37/38/39/40/41", "own PROBE-2 cancel/stale", "own negative package/protocol"], "note": "Trust, missing runtime/bundle, protocol mismatch, crash/restart, cancel, Multi-root, rapid edits, panel cleanup without data loss."},
+    {"id": "V5-05", "status": "fulfilled", "evidence": ["FEATURE_EVIDENCE.md F01–F60", "own feature audit table", "42 GUI + CI + Java196"], "note": "All 60 features mapped within declared scope; exclusions visible; no silent downgrade. F54 Remote part explicitly unverified, not claimed."},
+    {"id": "V5-06", "status": "fulfilled", "evidence": ["own comfort 28/28", "own probes 2/2", "author 42/42", "author Java196", "author shared 8/8", "CI 3/3"], "note": "Final product passes extension/LSP/diagram/export/GUI suite; Core extensions by impact, not blanket full corpus."},
+    {"id": "V5-07", "status": "fulfilled", "evidence": ["README.md", "docs/development.md", "docs/provenance/source-adoptions.md", "release locks", ".vscode/launch.json"], "note": "Docs/protocol/build/test/licences/locks consistent; F5/VSIX reproducible; no old ID/sibling link. STATUS/V5 intentionally OPEN until archival doc commit."},
+    {"id": "V5-08", "status": "fulfilled", "evidence": ["this review.md", "own PROBE-1/2", "own negative package/protocol", "clean tracked SHAs"], "note": "Independent cumulative 56-AC review, two new GUI variants and a genuine negative package/protocol case. Outer transport/guard exit is Codex's post-process check and is not asserted here."}
+  ],
+  "executedChecks": [
+    {"id": "read-full-cumulative-code-and-contracts", "cwd": "core+extension", "command": "read EXECUTION_PLAN, FEATURE_AUDIT, GUI_TEST_MATRIX, OPENCODE_REVIEW_PROMPT, PLATFORM_TEST_SCOPE, FEATURE_EVIDENCE, STATUS, V5 report and cumulative/phase diffs", "exit": 0, "result": "All binding documents read; assignmentBase→candidate and phaseBase→candidate analysed in both detached trees; all 56 ACs and F01–F60 individually assessed."},
+    {"id": "validate-author-42-and-native-ci", "cwd": "author evidence", "command": "inspect qualification result, 42 GUI cases/manifests, raw images/artifacts and CI validation/jobs/smokes", "exit": 0, "result": "42 unique GUI IDs, all positive suites passed, expected negative canary failed; exact pair/VSIX hashes; CI 3/3 jobs success with downloaded digests."},
+    {"id": "native-independent-risk-smoke-and-counterprobes", "cwd": "extension", "command": "own installed GUI smoke + PROBE-1/PROBE-2 + package/protocol negative", "exit": 0, "result": "28/28 comfort, 2/2 new cross-feature probes, 7/7 negative checks; no product file changed."},
+    {"id": "own-build-and-distribution-inventory", "cwd": "extension", "command": "npm ci --ignore-scripts; node scripts/stage-core.cjs --core-dir .../core; node scripts/stage-runtime.cjs --target darwin-arm64 --cache ...; node scripts/package.cjs --target darwin-arm64", "exit": 0, "result": "Editor lock unchanged 2a91b62f..., runtime lock unchanged 0a86e53c..., 344-file VSIX, content byte-identical to author VSIX (diff -r empty)."},
+    {"id": "fresh-extension-and-real-stdio", "cwd": "extension", "command": "node scripts/build.cjs; node --test test/unit/*.test.cjs; env -u INTERLIS_JAVA node --test test/protocol.test.cjs; npm run verify:no-legacy-dependencies", "exit": 0, "result": "Build 0; unit 13/13; real packaged stdio 1/1 (Shutdown 0); dependency graph/bundle clean."},
+    {"id": "own-native-gui-comfort", "cwd": "extension", "command": "node scripts/gui.cjs --suite comfort --vsix build/packages/interlis-vscode-darwin-arm64.vsix --cache ...", "exit": 0, "result": "28/28 cases, 6 real Java starts, 0 remaining; manifest passed; extension SHA 3a88850; VSIX 9f5b6f4f..."},
+    {"id": "own-cross-feature-counterprobes", "cwd": "extension", "command": "node build/review-probes/run.cjs --vsix build/packages/interlis-vscode-darwin-arm64.vsix --cache ...", "exit": 0, "result": "PROBE-1/PROBE-2 2/2; 2 Java starts, 0 remaining; disk fixture hashes unchanged."},
+    {"id": "own-negative-package-protocol", "cwd": "extension", "command": "node build/review-probes/negative.cjs", "exit": 0, "result": "7 checks: stock accepted; tampered java/missing LSP/foreign target/lock mismatch rejected; real Java protocol 999 rejected; stock bytes restored."},
+    {"id": "author-qualification", "cwd": "author workspace", "command": "scripts/qualify-macos.cjs", "exit": 0, "result": "12 jobs; package/unit+dependency/protocol/extension-host/Java196/shared-UI/GUI comfort/authoring/resilience/distribution all 0; expected negative exit 1; 42 unique GUI cases."},
+    {"id": "author-shared-diagram-ui", "cwd": "core/frontend/diagram-ui", "command": "npm test", "exit": 0, "result": "8/8, including 3 real browser cases; evidence-count-correction.json explains the stale request summary 11."},
+    {"id": "native-ci", "cwd": "GitHub Actions run 41500206767", "command": "Short platform smoke", "exit": 0, "result": "3/3 jobs success: Linux x64 57,688 ms, Windows x64 37,284 ms; CLI install, bundled runtime, real stdio, missing-server rejection; GUI not tested."}
+  ],
+  "guiEvidence": {
+    "ownNativeRuns": [
+      "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/build/reports/gui/comfort/2026-11-02T18-41-46-465Z/manifest.json",
+      "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/build/reports/gui/comfort/2026-11-02T18-41-46-465Z/cases.json",
+      "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/manifest.json",
+      "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/cases.json"
+    ],
+    "authorRawRuns": [
+      "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json",
+      "/Users/stefan/sources/interlis-vscode/build/reports/gui/authoring/2026-11-02T18-28-30-943Z/manifest.json",
+      "/Users/stefan/sources/interlis-vscode/build/reports/gui/resilience/2026-11-02T18-30-19-305Z/manifest.json",
+      "/Users/stefan/sources/interlis-vscode/build/reports/gui/distribution/2026-11-02T18-32-06-943Z/manifest.json",
+      "/Users/stefan/sources/interlis-vscode/build/reports/gui/smoke/2026-11-02T18-32-22-291Z/manifest.json"
+    ],
+    "authorGuiCases": 42,
+    "authorNegativeCanary": "gui-missing-server-negative: exit 1, 0 Java starts, JAR hash restored, not counted as positive GUI",
+    "nativeCiSmokes": [
+      "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/smoke-ubuntu-24.04/smoke-linux-x64/result.json",
+      "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/smoke-windows-2025/smoke-win32-x64/result.json"
+    ],
+    "notClaimed": [
+      "Linux GUI",
+      "Windows GUI",
+      "Remote/Dev-Container GUI"
+    ],
+    "imageReadInventory": "image-read-inventory.json"
+  },
+  "counterprobes": [
+    {
+      "id": "PROBE-1",
+      "hypothesis": "Native drag/filter/export plus dirty edit and server restart must not alter disk source or lose the dirty buffer; diagram must recover.",
+      "actions": ["Pointer drag node A", "hide VIEW", "save FULL SVG", "type added:TEXT*8; in CLASS C", "restart server", "verify buffer/disk/diagram/export"],
+      "expected": "geometry change, export without Overview, live diagram shows added, disk hash unchanged, dirty buffer survives restart",
+      "actual": "all assertions passed",
+      "exit": 0,
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-1-geometry.json",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-1-filtered.svg",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-1-drag-before.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-1-drag-after.png"
+      ]
+    },
+    {
+      "id": "PROBE-2",
+      "hypothesis": "A cancelled real ELK response must stay STALE, pinned manual layout must survive Refresh, filtered export must match the view, and source must remain unchanged.",
+      "actions": ["new 24-class fixture", "drag/pin C12", "hold one real ELK response", "Refresh then native Cancel", "release obsolete response", "Refresh", "hide types", "save FULL SVG", "verify buffer/disk"],
+      "expected": "STALE after release, no obsolete acceptance, pinned translate(303.68,913.58) survives, export without TEXT, disk hash unchanged",
+      "actual": "all assertions passed",
+      "exit": 0,
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-2-geometry.json",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-2-filtered.svg",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-2-stale.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-2-recovered.png"
+      ]
+    },
+    {
+      "id": "NEGATIVE-PACKAGE-PROTOCOL",
+      "hypothesis": "Tampered runtime, missing LSP JAR, foreign target, bad lock hash and protocol 999 must be rejected; stock bytes must be restored.",
+      "actions": ["extract VSIX", "accept stock", "tamper java", "delete LSP jar", "foreign distribution target", "bad lock hash", "compile/run protocol-999 Java fixture", "restore stock"],
+      "expected": "all negative cases rejected; real process reports 999 and extension compatibility check rejects; restored stock accepted",
+      "actual": "7/7 checks passed; protocol 999 pid 67132, exit 0; stock restored",
+      "exit": 0,
+      "evidence": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-54-07-082Z-negative/result.json"
+      ]
+    }
+  ],
+  "openMandatoryFindings": [],
+  "missingRequiredChecks": [],
+  "optionalObservations": [
+    "evidence-count-correction.json corrects the request summary sharedUiAndBrowser=11 to the actual raw 8/8 (3 browser cases). Raw log is authoritative; no missing test inferred.",
+    "Author VSIX cf8f... and independently rebuilt VSIX 9f5b... differ only in ZIP container metadata; diff -r over 344 files/206,552,971 bytes is empty and executable modes match.",
+    "STATUS.md and implementation/V5.md intentionally remain OPEN until the post-review archival documentation commit; this is chronology, not missing current evidence.",
+    "Fit-all author screenshots are small; geometry/route JSON and own more legible runs confirm movement and exports.",
+    "Own probes ran with an unrelated broken External.ili in the workspace, so PARTIAL is shown honestly; the independent comfort run is FRESH."
+  ],
+  "artifacts": [
+    {"path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/interlis-vscode-darwin-arm64-cf8f200243ed568c5eb05f0e2be9281e043e1c9c21335433c3e7b73d6f6dc7aa.vsix", "sha256": "cf8f200243ed568c5eb05f0e2be9281e043e1c9c21335433c3e7b73d6f6dc7aa", "kind": "vsix-author-macos"},
+    {"path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/build/packages/interlis-vscode-darwin-arm64.vsix", "sha256": "9f5b6f4f8aad965442551557c0951655dd33a625539e494a18c6a686a4eb2062", "kind": "vsix-own-rebuild-macos"},
+    {"path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/platform-packages/packages/interlis-vscode-linux-x64.vsix", "sha256": "833aab19862e78aa81c2e6add5fadbf49bf14502c6d257cd696e869cd144be56", "kind": "vsix-linux-x64"},
+    {"path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/platform-packages/packages/interlis-vscode-win32-x64.vsix", "sha256": "37ad2202d393e77ab136279dd73b97578bcd90b136224ce20fbf0de32431e5da", "kind": "vsix-win32-x64"},
+    {"path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/release/editor-artifacts.lock.json", "sha256": "2a91b62f883db93898e1963217313e20a074aa7234541cedb659cfdb58fdcf45", "kind": "editor-lock"},
+    {"path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/release/runtime-artifacts.lock.json", "sha256": "0a86e53ce7dadf377837f847c09cbd017291b19e0150b918e4d3cca3fa41d73e", "kind": "runtime-lock"},
+    {"path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/release/runtime-sources.lock.json", "sha256": "1bfcb221bec85c6d6c7519170884fa5c6dbbbfa571c5436dbe3f67e703397ab4", "kind": "runtime-sources"}
+  ],
+  "report": "review.md",
+  "imageReadInventory": "image-read-inventory.json",
+  "outerProcessCompletion": "NOT ASSERTED BY THIS REVIEW: Codex must verify the actual transport/guard exit, guard manifest not running, and unchanged tracked trees after this process ends. Content PASS above does not replace that outer closure."
+}

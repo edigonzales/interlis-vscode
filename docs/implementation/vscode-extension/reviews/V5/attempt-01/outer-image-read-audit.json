@@ -1,0 +1,469 @@
+{
+  "checkedAt": "2026-11-02T19:02:49.519Z",
+  "method": "Completed read tool plus actual embedded PNG bytes and dimensions; declared source-file SHA256 verified. OpenCode image-read downsizes 2810x1750 screenshots to 2000x1246, so transmitted bytes have their own hash and must not be falsely required to equal the original. Exact read path or explicitly verified byte-identical retained alias required. No filename-only inference.",
+  "successfulActualImageReads": 29,
+  "declaredViewed": 23,
+  "allAccepted": true,
+  "results": [
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/GUI-01-ready.png",
+      "expectedSha256": "06fd24304abd6e7a4dd11648d51ad6668fbbf52575cad73f2c893459ab834aee",
+      "actualSha256": "06fd24304abd6e7a4dd11648d51ad6668fbbf52575cad73f2c893459ab834aee",
+      "readMatches": [
+        {
+          "row": 286,
+          "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/GUI-01-ready.png",
+          "sha256": "3ade6423afbca35f1e2d5bc519df0d4e78a3aa7527519b8b8a87d634e4f12616",
+          "bytes": 254689,
+          "width": 2000,
+          "height": 1245,
+          "mime": "image/png",
+          "start": 1793645680627,
+          "end": 1793645682107
+        }
+      ],
+      "verifiedByteIdenticalAliases": [],
+      "accepted": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/GUI-13-before.png",
+      "expectedSha256": "0c855c9fc7ab360a34c3b270c054a583a9aa30a77d7469390b3a28f12b36ca3c",
+      "actualSha256": "0c855c9fc7ab360a34c3b270c054a583a9aa30a77d7469390b3a28f12b36ca3c",
+      "readMatches": [
+        {
+          "row": 291,
+          "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/GUI-13-before.png",
+          "sha256": "f33c63ec57bb88a85bc78627363d310cf453ffc622d1a547edb9800bcfed8c6e",
+          "bytes": 672459,
+          "width": 2000,
+          "height": 1245,
+          "mime": "image/png",
+          "start": 1793645680808,
+          "end": 1793645683793
+        }
+      ],
+      "verifiedByteIdenticalAliases": [],
+      "accepted": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/GUI-13-node-moved.png",
+      "expectedSha256": "a05199b6f7a22502cbe94c1026f103b6ca3dae415f6d3d1cf374540327b70c80",
+      "actualSha256": "a05199b6f7a22502cbe94c1026f103b6ca3dae415f6d3d1cf374540327b70c80",
+      "readMatches": [
+        {
+          "row": 288,
+          "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/GUI-13-node-moved.png",
+          "sha256": "498580e50e29175db70802b13f31ad71a0695f5397058b4c8fc7926f42d00842",
+          "bytes": 673960,
+          "width": 2000,
+          "height": 1245,
+          "mime": "image/png",
+          "start": 1793645680972,
+          "end": 1793645682752
+        }
+      ],
+      "verifiedByteIdenticalAliases": [],
+      "accepted": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/GUI-14-handle-before.png",
+      "expectedSha256": "cf3baf8e509c396c5b5544c4bc82598de37426b8d2cbefb3441d48919cd5cbce",
+      "actualSha256": "cf3baf8e509c396c5b5544c4bc82598de37426b8d2cbefb3441d48919cd5cbce",
+      "readMatches": [
+        {
+          "row": 287,
+          "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/GUI-14-handle-before.png",
+          "sha256": "c393fcd289d4c0ff8a0d8e50257fdb9307b0f63f4affc421cd2edf5ce4e95d3c",
+          "bytes": 667106,
+          "width": 2000,
+          "height": 1245,
+          "mime": "image/png",
+          "start": 1793645681157,
+          "end": 1793645682430
+        }
+      ],
+      "verifiedByteIdenticalAliases": [],
+      "accepted": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/GUI-14-route-after.png",
+      "expectedSha256": "4f948b3feedf4fb63630cc7351fac44326d9de9e802e4262bf6587efc19aa835",
+      "actualSha256": "4f948b3feedf4fb63630cc7351fac44326d9de9e802e4262bf6587efc19aa835",
+      "readMatches": [
+        {
+          "row": 289,
+          "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/GUI-14-route-after.png",
+          "sha256": "b6a96eff43a3982515793524b17701a897059ac2aeb5258f48e5f24846176dbd",
+          "bytes": 667696,
+          "width": 2000,
+          "height": 1245,
+          "mime": "image/png",
+          "start": 1793645681322,
+          "end": 1793645683114
+        }
+      ],
+      "verifiedByteIdenticalAliases": [],
+      "accepted": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/GUI-19-empty.png",
+      "expectedSha256": "cb669bff2cd63ecfdbd8dd5689363cacf30b533d3d3448adb0165b4167e5e2ee",
+      "actualSha256": "cb669bff2cd63ecfdbd8dd5689363cacf30b533d3d3448adb0165b4167e5e2ee",
+      "readMatches": [
+        {
+          "row": 290,
+          "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/GUI-19-empty.png",
+          "sha256": "27aeb67d76a4523350719561772af87c086ca3684b0ddf5c755c072f4ad02557",
+          "bytes": 554828,
+          "width": 2000,
+          "height": 1245,
+          "mime": "image/png",
+          "start": 1793645681505,
+          "end": 1793645683439
+        }
+      ],
+      "verifiedByteIdenticalAliases": [],
+      "accepted": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/GUI-16-entity.png",
+      "expectedSha256": "ae3fbe6058f99afa3fbffb23af58e1033c367d763ca0b54ecf74888f16617d8a",
+      "actualSha256": "ae3fbe6058f99afa3fbffb23af58e1033c367d763ca0b54ecf74888f16617d8a",
+      "readMatches": [
+        {
+          "row": 294,
+          "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/GUI-16-entity.png",
+          "sha256": "48aad2c5c1c08859997b07e7123fc2137c6311455763a4cf0a0da20fdca47d01",
+          "bytes": 652268,
+          "width": 2000,
+          "height": 1245,
+          "mime": "image/png",
+          "start": 1793645688193,
+          "end": 1793645689952
+        }
+      ],
+      "verifiedByteIdenticalAliases": [],
+      "accepted": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/resilience/2026-11-02T18-30-19-305Z/GUI-37-restricted.png",
+      "expectedSha256": "312a9cbfcd8c2d803ffb245f29bfb4de89220446b45e75df2c596ffbe6591dde",
+      "actualSha256": "312a9cbfcd8c2d803ffb245f29bfb4de89220446b45e75df2c596ffbe6591dde",
+      "readMatches": [
+        {
+          "row": 298,
+          "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/resilience/2026-11-02T18-30-19-305Z/GUI-37-restricted.png",
+          "sha256": "f92894b15ce2e6461b9532a509c40be9e981286ee4421c3152276a2e3bfae68e",
+          "bytes": 290313,
+          "width": 2000,
+          "height": 1244,
+          "mime": "image/png",
+          "start": 1793645688358,
+          "end": 1793645691290
+        }
+      ],
+      "verifiedByteIdenticalAliases": [],
+      "accepted": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/resilience/2026-11-02T18-30-19-305Z/GUI-40-cancelled.png",
+      "expectedSha256": "62ae50af7ecb3a7b6bba18a6a4756882f2ede0f1a03102dc3d2e04a6f46fde46",
+      "actualSha256": "62ae50af7ecb3a7b6bba18a6a4756882f2ede0f1a03102dc3d2e04a6f46fde46",
+      "readMatches": [
+        {
+          "row": 299,
+          "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/resilience/2026-11-02T18-30-19-305Z/GUI-40-cancelled.png",
+          "sha256": "fb7dcde4cb37a137e97cda1a085f923203dfbfa93b3b14f417ef5b680f1d74fc",
+          "bytes": 1043120,
+          "width": 2000,
+          "height": 1244,
+          "mime": "image/png",
+          "start": 1793645688540,
+          "end": 1793645691654
+        }
+      ],
+      "verifiedByteIdenticalAliases": [],
+      "accepted": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/authoring/2026-11-02T18-28-30-943Z/GUI-33-html-preview.png",
+      "expectedSha256": "cb3987b6f86b040b8173ee72de5a1c266d06ab7501fb74594b04174079dd02da",
+      "actualSha256": "cb3987b6f86b040b8173ee72de5a1c266d06ab7501fb74594b04174079dd02da",
+      "readMatches": [
+        {
+          "row": 295,
+          "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/authoring/2026-11-02T18-28-30-943Z/GUI-33-html-preview.png",
+          "sha256": "4406d6e9f3f8efbd681f5858926f6adbc988256fe61bb9dd3510be600b1ecc43",
+          "bytes": 734986,
+          "width": 2000,
+          "height": 1244,
+          "mime": "image/png",
+          "start": 1793645689010,
+          "end": 1793645690273
+        }
+      ],
+      "verifiedByteIdenticalAliases": [],
+      "accepted": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/authoring/2026-11-02T18-28-30-943Z/GUI-34-saved.png",
+      "expectedSha256": "5f1c79b155745389e2cab3e74dde4b3059289c14a49cb327dc81c861851f94c7",
+      "actualSha256": "5f1c79b155745389e2cab3e74dde4b3059289c14a49cb327dc81c861851f94c7",
+      "readMatches": [
+        {
+          "row": 296,
+          "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/authoring/2026-11-02T18-28-30-943Z/GUI-34-saved.png",
+          "sha256": "329db6877b48d6ee06d63e2ef9d5161644eb588ac432a24caf65403f33b4e3fb",
+          "bytes": 474746,
+          "width": 2000,
+          "height": 1244,
+          "mime": "image/png",
+          "start": 1793645689184,
+          "end": 1793645690605
+        }
+      ],
+      "verifiedByteIdenticalAliases": [],
+      "accepted": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/distribution/2026-11-02T18-32-06-943Z/GUI-36-offline-diagram.png",
+      "expectedSha256": "70d8b29fe5b5ed2c1b97422be9de8d120d82bfac90c3c35d64acee3dad87a558",
+      "actualSha256": "70d8b29fe5b5ed2c1b97422be9de8d120d82bfac90c3c35d64acee3dad87a558",
+      "readMatches": [
+        {
+          "row": 297,
+          "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/distribution/2026-11-02T18-32-06-943Z/GUI-36-offline-diagram.png",
+          "sha256": "fc57c08bec5a8293cdcd54070ec0cff095d59966d93233cd5d1590bcd83183a3",
+          "bytes": 451891,
+          "width": 2000,
+          "height": 1245,
+          "mime": "image/png",
+          "start": 1793645689352,
+          "end": 1793645690953
+        }
+      ],
+      "verifiedByteIdenticalAliases": [],
+      "accepted": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/build/reports/gui/comfort/2026-11-02T18-41-46-465Z/GUI-13-before.png",
+      "expectedSha256": "b781dbfea3d7cf41b7a3e3cfdb37cfdc54c8dae3b739bb80b2d3513d719d9019",
+      "actualSha256": "b781dbfea3d7cf41b7a3e3cfdb37cfdc54c8dae3b739bb80b2d3513d719d9019",
+      "readMatches": [
+        {
+          "row": 318,
+          "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/build/reports/gui/comfort/2026-11-02T18-41-46-465Z/GUI-13-before.png",
+          "sha256": "db320c360706e12f03d0dfc40beeb17d6cea5314f3f07bd5af69daa34b67b327",
+          "bytes": 672683,
+          "width": 2000,
+          "height": 1245,
+          "mime": "image/png",
+          "start": 1793645741562,
+          "end": 1793645743311
+        }
+      ],
+      "verifiedByteIdenticalAliases": [],
+      "accepted": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/build/reports/gui/comfort/2026-11-02T18-41-46-465Z/GUI-13-node-moved.png",
+      "expectedSha256": "69700c114d2b094b37384f6035fd70fb0ae26a640618a5a4ac47fc3a3fcf5b32",
+      "actualSha256": "69700c114d2b094b37384f6035fd70fb0ae26a640618a5a4ac47fc3a3fcf5b32",
+      "readMatches": [
+        {
+          "row": 317,
+          "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/build/reports/gui/comfort/2026-11-02T18-41-46-465Z/GUI-13-node-moved.png",
+          "sha256": "dcb3eea61e983bda3da9fca4fa9d0249ee9e11a93c650492894d29e71d93b483",
+          "bytes": 673956,
+          "width": 2000,
+          "height": 1245,
+          "mime": "image/png",
+          "start": 1793645741791,
+          "end": 1793645742990
+        }
+      ],
+      "verifiedByteIdenticalAliases": [],
+      "accepted": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/build/reports/gui/comfort/2026-11-02T18-41-46-465Z/GUI-14-handle-before.png",
+      "expectedSha256": "ea73ae78015477e6c53c2f4f6c42826e2f4d4751d4862632e0af9124d75ef963",
+      "actualSha256": "ea73ae78015477e6c53c2f4f6c42826e2f4d4751d4862632e0af9124d75ef963",
+      "readMatches": [
+        {
+          "row": 322,
+          "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/build/reports/gui/comfort/2026-11-02T18-41-46-465Z/GUI-14-handle-before.png",
+          "sha256": "7917df5912e10648ff9812b15fb0bf6ddb908b748113e29cfb153ffe5fe475c6",
+          "bytes": 688779,
+          "width": 2000,
+          "height": 1245,
+          "mime": "image/png",
+          "start": 1793645741995,
+          "end": 1793645744350
+        }
+      ],
+      "verifiedByteIdenticalAliases": [],
+      "accepted": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/build/reports/gui/comfort/2026-11-02T18-41-46-465Z/GUI-14-route-after.png",
+      "expectedSha256": "61b911b9995d9d5d0e1a3c38a535e532ec17e102652214584aeda43c74669638",
+      "actualSha256": "61b911b9995d9d5d0e1a3c38a535e532ec17e102652214584aeda43c74669638",
+      "readMatches": [
+        {
+          "row": 320,
+          "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/build/reports/gui/comfort/2026-11-02T18-41-46-465Z/GUI-14-route-after.png",
+          "sha256": "371c76fc3a06e7d7c43cf8a084d688ce024f790d2741d083b1a5c290f52c19b6",
+          "bytes": 667797,
+          "width": 2000,
+          "height": 1245,
+          "mime": "image/png",
+          "start": 1793645742208,
+          "end": 1793645743674
+        }
+      ],
+      "verifiedByteIdenticalAliases": [],
+      "accepted": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/build/reports/gui/comfort/2026-11-02T18-41-46-465Z/GUI-26-full-decoded.png",
+      "expectedSha256": "6f70ff8c7f562388aa63acec534b51895a6435d6b237bce586b69ce1dbce0c3d",
+      "actualSha256": "6f70ff8c7f562388aa63acec534b51895a6435d6b237bce586b69ce1dbce0c3d",
+      "readMatches": [
+        {
+          "row": 321,
+          "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/build/reports/gui/comfort/2026-11-02T18-41-46-465Z/GUI-26-full-decoded.png",
+          "sha256": "4290474f5701d0c6e6511d6d30e4c4717f53c1a62fa638f5c207e2f62f1eb63c",
+          "bytes": 592789,
+          "width": 2000,
+          "height": 1245,
+          "mime": "image/png",
+          "start": 1793645742404,
+          "end": 1793645744000
+        }
+      ],
+      "verifiedByteIdenticalAliases": [],
+      "accepted": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-1-drag-before.png",
+      "expectedSha256": "94807ce77ea8aabbb099ba538bc93e282083150b811011f7cdd61cf0abf8a6c5",
+      "actualSha256": "94807ce77ea8aabbb099ba538bc93e282083150b811011f7cdd61cf0abf8a6c5",
+      "readMatches": [
+        {
+          "row": 336,
+          "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-1-drag-before.png",
+          "sha256": "218bceb51ec99cd13fd50652d855769de896d6be5ae0cbb3a38e805a4e158cb2",
+          "bytes": 647913,
+          "width": 2000,
+          "height": 1245,
+          "mime": "image/png",
+          "start": 1793645759384,
+          "end": 1793645762234
+        }
+      ],
+      "verifiedByteIdenticalAliases": [],
+      "accepted": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-1-drag-after.png",
+      "expectedSha256": "6b53f17156f9cc07a5b1a73b3950d816854ece30775e6e567587f1108ec12660",
+      "actualSha256": "6b53f17156f9cc07a5b1a73b3950d816854ece30775e6e567587f1108ec12660",
+      "readMatches": [
+        {
+          "row": 333,
+          "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-1-drag-after.png",
+          "sha256": "1bf316bf4429d248ad9605654f5634c522777f277c9d89b19a8cd937884b071b",
+          "bytes": 647752,
+          "width": 2000,
+          "height": 1245,
+          "mime": "image/png",
+          "start": 1793645759582,
+          "end": 1793645761229
+        }
+      ],
+      "verifiedByteIdenticalAliases": [],
+      "accepted": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-1-filtered.png",
+      "expectedSha256": "e7d98a9e5b870cc09a1ee660e8fb6bac8f2af0b7a114b05d303a87670bdce849",
+      "actualSha256": "e7d98a9e5b870cc09a1ee660e8fb6bac8f2af0b7a114b05d303a87670bdce849",
+      "readMatches": [
+        {
+          "row": 335,
+          "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-1-filtered.png",
+          "sha256": "7b28d85a22308e164698a3c581521c53c1a0c6f1574714003d589043f98648db",
+          "bytes": 569088,
+          "width": 2000,
+          "height": 1245,
+          "mime": "image/png",
+          "start": 1793645759778,
+          "end": 1793645761904
+        }
+      ],
+      "verifiedByteIdenticalAliases": [],
+      "accepted": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-2-stale.png",
+      "expectedSha256": "ae01ee4e9fbce043cf18bd46de4762b7185888ca6329a88f36f7f3b6461b4530",
+      "actualSha256": "ae01ee4e9fbce043cf18bd46de4762b7185888ca6329a88f36f7f3b6461b4530",
+      "readMatches": [
+        {
+          "row": 337,
+          "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-2-stale.png",
+          "sha256": "2a59934bdb54f93e863266e0fa630d666701b0ec1a05963f19363df56013a8a8",
+          "bytes": 750114,
+          "width": 2000,
+          "height": 1245,
+          "mime": "image/png",
+          "start": 1793645759974,
+          "end": 1793645762639
+        }
+      ],
+      "verifiedByteIdenticalAliases": [],
+      "accepted": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-2-recovered.png",
+      "expectedSha256": "9582787f397b3cfc6a819824350d6fe4ad2264a21cc3533688404ec08ae46d76",
+      "actualSha256": "9582787f397b3cfc6a819824350d6fe4ad2264a21cc3533688404ec08ae46d76",
+      "readMatches": [
+        {
+          "row": 332,
+          "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-2-recovered.png",
+          "sha256": "f3ef515d14ff3ab5652bd6e4a57a13f0586d597b1e4c6d80d93a3e83eb250da4",
+          "bytes": 751126,
+          "width": 2000,
+          "height": 1245,
+          "mime": "image/png",
+          "start": 1793645760171,
+          "end": 1793645760912
+        }
+      ],
+      "verifiedByteIdenticalAliases": [],
+      "accepted": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-2-filtered.png",
+      "expectedSha256": "a7e14ba550959f62eb84f38320c77d6a71af08996b90ec7cf0e73df4ef526f05",
+      "actualSha256": "a7e14ba550959f62eb84f38320c77d6a71af08996b90ec7cf0e73df4ef526f05",
+      "readMatches": [
+        {
+          "row": 334,
+          "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-2-filtered.png",
+          "sha256": "1e88cee3cec7523e9523bb57614800bf34dba0b34d2259c4ec910bd23e946ddb",
+          "bytes": 782537,
+          "width": 2000,
+          "height": 1245,
+          "mime": "image/png",
+          "start": 1793645760477,
+          "end": 1793645761554
+        }
+      ],
+      "verifiedByteIdenticalAliases": [],
+      "accepted": true
+    }
+  ]
+}

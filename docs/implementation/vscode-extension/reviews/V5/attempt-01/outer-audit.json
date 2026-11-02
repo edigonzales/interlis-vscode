@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-11-02T19:07:05.748Z",
+  "phase": "V5",
+  "candidate": {
+    "coreSha": "6983baf95c47a7e20dbb41a2e50500185f578c37",
+    "extensionSha": "3a888507b11c5ecefb03e4fe34aa11499894039c"
+  },
+  "assignmentBase": {
+    "coreSha": "20b0029d824b3602d9a304320bf0feae4c35c1f9",
+    "extensionSha": "73badd9807f407aea048d397af5549fe907a1501"
+  },
+  "phaseBase": {
+    "coreSha": "6983baf95c47a7e20dbb41a2e50500185f578c37",
+    "extensionSha": "b19ac4306347f39da994db549137165448fb23cb"
+  },
+  "accepted": true,
+  "verdict": "PASS",
+  "criteria": {
+    "fulfilled": 56,
+    "violated": 0,
+    "unverified": 0,
+    "scope": "V5-02/V5-03/GUI39/42 adjusted by explicit user instruction; Linux/Windows/Remote GUI remain unqualified."
+  },
+  "featuresIndividuallyAssessed": 60,
+  "process": {
+    "joined": true,
+    "status": "completed",
+    "exit": 0,
+    "finishedAt": "2026-11-02T19:01:08.269Z",
+    "guardStatus": "passed",
+    "guardExit": 0
+  },
+  "trees": {
+    "core": {
+      "head": "6983baf95c47a7e20dbb41a2e50500185f578c37",
+      "branch": "HEAD",
+      "trackedDirty": ""
+    },
+    "extension": {
+      "head": "3a888507b11c5ecefb03e4fe34aa11499894039c",
+      "branch": "HEAD",
+      "trackedDirty": ""
+    }
+  },
+  "modelIdentity": "outer-model-identity.json",
+  "images": {
+    "actualReads": 29,
+    "declaredReads": 23,
+    "allAccepted": true,
+    "report": "outer-image-read-audit.json"
+  },
+  "payload": {
+    "entries": 344,
+    "bytes": 206552971,
+    "allBytesAndModesEqual": true,
+    "report": "outer-payload-comparison.json"
+  },
+  "checks": "outer-review-checks.json",
+  "openMandatoryFindings": [],
+  "missingRequiredChecks": [],
+  "originals": {
+    "requestSha256": "5742edb6321d1bf65eb2f8f097e9d4f234031780a4059f7e8d180dd38992537c",
+    "reviewSha256": "f07729e6dc01c75612bf0400b84381df859526484fc425ea0e6c265ab0f8fb13",
+    "verdictSha256": "1b240a15ace232d79f3a1b3534e499b451fcb23cc3bcb1645fc16b9c70a342d6"
+  },
+  "limits": [
+    "Linux/Windows are short real native CLI/runtime/stdio/rejection smokes; no GUI support or Remote-GUI PASS is claimed.",
+    "Shared UI count is8 including3 browser cases; original request summary11 was corrected from actual raw output without altering originals.",
+    "Reviewer PROBE-1 visible-DOM comparison normalized comments/bidi; outer exact LSP didOpen comparison independently proves full dirty text, comments, bidi and newline survived Restart.",
+    "Reviewer negative protocol test uses real Java protocol999 and explicitly mirrors the compatibility predicate; author GUI38 separately exercises the actual native extension Error/recovery path. Genuine independent package-rejection probes call the actual product launch validator.",
+    "Reviewer report F30 mentions PROBE-2 beside route handles; that probe exercises pin/cancel/filter rather than a route handle. Fresh own full GUI14 proves the actual route-handle requirement.",
+    "Failed reviewer-only harness iterations are retained and excluded from pass counts; final two cross-feature variants pass. Fit-all overview is small and narrow controls scroll; no claim that every control is simultaneously visible.",
+    "Temporary installation profiles are removed after exit per user cleanup preference; original logs/images/fixture bytes and immutable VSIX artifacts remain."
+  ],
+  "completion": "Cumulative V5 accepted under explicit user-adjusted platform scope; only archival documentation remains."
+}

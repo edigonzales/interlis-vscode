@@ -1,5 +1,9 @@
 # F01–F60: konkrete Zuordnung zur kumulativen V5-Prüfung
 
+Aktueller Abschluss: **V5 PASS, kumulativ56/56 ACs** am in [STATUS](STATUS.md)
+festgehaltenen Produktpaar; [Originalreview](reviews/V5/attempt-01/review.md) und
+[validierte äussere Prüfung](reviews/V5/attempt-01/outer-audit.json).
+
 Diese Tabelle ist keine vorweggenommene Freigabe. Jede Zuordnung wird anhand der
 aktuellen macOS-Qualifikation, der nativen CI-Rohbelege und des unabhängigen
 V5-Verdicts am konkreten Produktpaar geprüft. Frühere Phasenreviews sind in STATUS

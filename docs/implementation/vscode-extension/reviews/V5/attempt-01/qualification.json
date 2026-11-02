@@ -1,0 +1,989 @@
+{
+  "schemaVersion": 1,
+  "phase": "V5",
+  "coreSha": "6983baf95c47a7e20dbb41a2e50500185f578c37",
+  "extensionSha": "3a888507b11c5ecefb03e4fe34aa11499894039c",
+  "startedAt": "2026-11-02T18:24:39.625Z",
+  "status": "passed",
+  "jobs": [
+    {
+      "name": "package",
+      "startedAt": "2026-11-02T18:24:39.676Z",
+      "finishedAt": "2026-11-02T18:24:50.779Z",
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/package.log",
+      "exit": 0,
+      "signal": null,
+      "negative": false,
+      "command": {
+        "cwd": "/Users/stefan/sources/interlis-vscode",
+        "exe": "/Users/stefan/apps/node-v22.13.0-darwin-arm64/bin/node",
+        "args": [
+          "scripts/package.cjs",
+          "--target",
+          "darwin-arm64"
+        ]
+      },
+      "guard": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/package.guard.json"
+    },
+    {
+      "name": "extension-unit-and-stdio",
+      "startedAt": "2026-11-02T18:24:50.976Z",
+      "finishedAt": "2026-11-02T18:24:53.468Z",
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/extension-unit-and-stdio.log",
+      "exit": 0,
+      "signal": null,
+      "negative": false,
+      "command": {
+        "cwd": "/Users/stefan/sources/interlis-vscode",
+        "exe": "/Users/stefan/apps/node-v22.13.0-darwin-arm64/bin/node",
+        "args": [
+          "--test",
+          "test/unit/diagram-assets.test.cjs",
+          "test/unit/diagram-export.test.cjs",
+          "test/unit/diagram-state.test.cjs",
+          "test/unit/launch.test.cjs",
+          "test/unit/runtime.test.cjs",
+          "test/protocol.test.cjs"
+        ]
+      },
+      "guard": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/extension-unit-and-stdio.guard.json"
+    },
+    {
+      "name": "dependencies",
+      "startedAt": "2026-11-02T18:24:53.574Z",
+      "finishedAt": "2026-11-02T18:24:54.417Z",
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/dependencies.log",
+      "exit": 0,
+      "signal": null,
+      "negative": false,
+      "command": {
+        "cwd": "/Users/stefan/sources/interlis-vscode",
+        "exe": "/Users/stefan/apps/node-v22.13.0-darwin-arm64/bin/node",
+        "args": [
+          "scripts/verify-dependencies.cjs"
+        ]
+      },
+      "guard": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/dependencies.guard.json"
+    },
+    {
+      "name": "protocol-negative-fixture",
+      "startedAt": "2026-11-02T18:24:54.532Z",
+      "finishedAt": "2026-11-02T18:24:55.471Z",
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/protocol-negative-fixture.log",
+      "exit": 0,
+      "signal": null,
+      "negative": false,
+      "command": {
+        "cwd": "/Users/stefan/sources/interlis-vscode",
+        "exe": "/Users/stefan/apps/node-v22.13.0-darwin-arm64/bin/node",
+        "args": [
+          "scripts/prepare-test-fixtures.cjs",
+          "--java-home",
+          "/Users/stefan/.sdkman/candidates/java/25.0.3-tem"
+        ]
+      },
+      "guard": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/protocol-negative-fixture.guard.json"
+    },
+    {
+      "name": "extension-host",
+      "startedAt": "2026-11-02T18:24:55.578Z",
+      "finishedAt": "2026-11-02T18:25:01.767Z",
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/extension-host.log",
+      "exit": 0,
+      "signal": null,
+      "negative": false,
+      "command": {
+        "cwd": "/Users/stefan/sources/interlis-vscode",
+        "exe": "/Users/stefan/apps/node-v22.13.0-darwin-arm64/bin/node",
+        "args": [
+          "scripts/extension-host.cjs"
+        ]
+      },
+      "guard": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/extension-host.guard.json"
+    },
+    {
+      "name": "java-editor-lsp-projections",
+      "startedAt": "2026-11-02T18:25:01.873Z",
+      "finishedAt": "2026-11-02T18:25:25.926Z",
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/java-editor-lsp-projections.log",
+      "exit": 0,
+      "signal": null,
+      "negative": false,
+      "command": {
+        "cwd": "/Users/stefan/sources/interlis-vscode-evidence/product-core",
+        "exe": "/Users/stefan/sources/interlis-vscode-evidence/product-core/gradlew",
+        "args": [
+          ":interlis-compiler:test",
+          "--tests",
+          "guru.interlis.compiler.EditorAssistanceTest",
+          "--tests",
+          "guru.interlis.compiler.EditorCompletionTest",
+          "--tests",
+          "guru.interlis.compiler.EditorTemplateContractTest",
+          "--tests",
+          "guru.interlis.compiler.EditorPartialStateContractTest",
+          "--tests",
+          "guru.interlis.compiler.QueryOwnershipTest",
+          "--tests",
+          "guru.interlis.compiler.SnapshotOwnershipTest",
+          "--tests",
+          "guru.interlis.compiler.P3CompletionScopeContractTest",
+          "--tests",
+          "guru.interlis.compiler.RenameSafetyTest",
+          "--tests",
+          "guru.interlis.compiler.FormatterContractTest",
+          "--tests",
+          "guru.interlis.compiler.P3FormatterPolicyContractTest",
+          "--tests",
+          "guru.interlis.compiler.LexicalRecoveryContractTest",
+          "--tests",
+          "guru.interlis.compiler.VersionScopeTest",
+          "--tests",
+          "guru.interlis.compiler.SyntaxContractTest",
+          "--tests",
+          "guru.interlis.compiler.AssociationRulesContractTest",
+          "--tests",
+          "guru.interlis.compiler.TopicDependencyContractTest",
+          "--tests",
+          "guru.interlis.compiler.UnitTypeContractTest",
+          "--tests",
+          "guru.interlis.compiler.ViewContractTest",
+          "--tests",
+          "guru.interlis.compiler.DomainRestrictionContractTest",
+          ":interlis-documentation:test",
+          ":interlis-lsp:test",
+          ":interlis-wasm-bridge:test",
+          "--rerun-tasks",
+          ":interlis-projection:test",
+          ":interlis-compiler-cli:test",
+          "--tests",
+          "guru.interlis.cli.CliApplicationTest.diagramExportUsesCheckedSchema",
+          "--no-daemon"
+        ]
+      },
+      "guard": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/java-editor-lsp-projections.guard.json"
+    },
+    {
+      "name": "shared-diagram-ui",
+      "startedAt": "2026-11-02T18:25:26.055Z",
+      "finishedAt": "2026-11-02T18:25:33.197Z",
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/shared-diagram-ui.log",
+      "exit": 0,
+      "signal": null,
+      "negative": false,
+      "command": {
+        "cwd": "/Users/stefan/sources/interlis-vscode-evidence/product-core/frontend/diagram-ui",
+        "exe": "npm",
+        "args": [
+          "test"
+        ]
+      },
+      "guard": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/shared-diagram-ui.guard.json"
+    },
+    {
+      "name": "gui-comfort",
+      "startedAt": "2026-11-02T18:25:33.309Z",
+      "finishedAt": "2026-11-02T18:28:29.934Z",
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/gui-comfort.log",
+      "exit": 0,
+      "signal": null,
+      "negative": false,
+      "command": {
+        "cwd": "/Users/stefan/sources/interlis-vscode",
+        "exe": "/Users/stefan/apps/node-v22.13.0-darwin-arm64/bin/node",
+        "args": [
+          "scripts/gui.cjs",
+          "--suite",
+          "comfort",
+          "--vsix",
+          "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/interlis-vscode-darwin-arm64-cf8f200243ed568c5eb05f0e2be9281e043e1c9c21335433c3e7b73d6f6dc7aa.vsix",
+          "--cache",
+          "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage"
+        ]
+      },
+      "guard": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/gui-comfort.guard.json",
+      "guiManifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "name": "gui-authoring",
+      "startedAt": "2026-11-02T18:28:30.065Z",
+      "finishedAt": "2026-11-02T18:30:18.216Z",
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/gui-authoring.log",
+      "exit": 0,
+      "signal": null,
+      "negative": false,
+      "command": {
+        "cwd": "/Users/stefan/sources/interlis-vscode",
+        "exe": "/Users/stefan/apps/node-v22.13.0-darwin-arm64/bin/node",
+        "args": [
+          "scripts/gui.cjs",
+          "--suite",
+          "authoring",
+          "--vsix",
+          "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/interlis-vscode-darwin-arm64-cf8f200243ed568c5eb05f0e2be9281e043e1c9c21335433c3e7b73d6f6dc7aa.vsix",
+          "--cache",
+          "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage"
+        ]
+      },
+      "guard": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/gui-authoring.guard.json",
+      "guiManifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/authoring/2026-11-02T18-28-30-943Z/manifest.json"
+    },
+    {
+      "name": "gui-resilience",
+      "startedAt": "2026-11-02T18:30:18.436Z",
+      "finishedAt": "2026-11-02T18:32:05.547Z",
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/gui-resilience.log",
+      "exit": 0,
+      "signal": null,
+      "negative": false,
+      "command": {
+        "cwd": "/Users/stefan/sources/interlis-vscode",
+        "exe": "/Users/stefan/apps/node-v22.13.0-darwin-arm64/bin/node",
+        "args": [
+          "scripts/gui-resilience-run.cjs",
+          "--core-dir",
+          "/Users/stefan/sources/interlis-vscode-evidence/product-core",
+          "--cache",
+          "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage",
+          "--java-home",
+          "/Users/stefan/.sdkman/candidates/java/25.0.3-tem",
+          "--vsix",
+          "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/interlis-vscode-darwin-arm64-cf8f200243ed568c5eb05f0e2be9281e043e1c9c21335433c3e7b73d6f6dc7aa.vsix"
+        ]
+      },
+      "guiManifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/resilience/2026-11-02T18-30-19-305Z/manifest.json",
+      "resourceObserver": "/Users/stefan/sources/interlis-vscode/build/reports/resource-observer/2026-11-02T18-30-18-489Z/result.json",
+      "guard": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/gui-resilience.guard.json"
+    },
+    {
+      "name": "gui-distribution",
+      "startedAt": "2026-11-02T18:32:05.922Z",
+      "finishedAt": "2026-11-02T18:32:21.398Z",
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/gui-distribution.log",
+      "exit": 0,
+      "signal": null,
+      "negative": false,
+      "command": {
+        "cwd": "/Users/stefan/sources/interlis-vscode",
+        "exe": "/Users/stefan/apps/node-v22.13.0-darwin-arm64/bin/node",
+        "args": [
+          "scripts/gui-offline-run.cjs",
+          "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage",
+          "/Users/stefan/sources/interlis-vscode-evidence/product-core"
+        ]
+      },
+      "guiManifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/distribution/2026-11-02T18-32-06-943Z/manifest.json",
+      "guard": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/gui-distribution.guard.json"
+    },
+    {
+      "name": "gui-missing-server-negative",
+      "startedAt": "2026-11-02T18:32:21.505Z",
+      "finishedAt": "2026-11-02T18:33:30.639Z",
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/gui-missing-server-negative.log",
+      "exit": 1,
+      "signal": null,
+      "negative": true,
+      "command": {
+        "cwd": "/Users/stefan/sources/interlis-vscode",
+        "exe": "/Users/stefan/apps/node-v22.13.0-darwin-arm64/bin/node",
+        "args": [
+          "scripts/gui.cjs",
+          "--suite",
+          "smoke",
+          "--vsix",
+          "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/interlis-vscode-darwin-arm64-cf8f200243ed568c5eb05f0e2be9281e043e1c9c21335433c3e7b73d6f6dc7aa.vsix",
+          "--cache",
+          "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage",
+          "--canary",
+          "missing-server"
+        ]
+      },
+      "guard": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/gui-missing-server-negative.guard.json",
+      "guiManifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/smoke/2026-11-02T18-32-22-291Z/manifest.json"
+    }
+  ],
+  "guiCases": [
+    {
+      "id": "GUI-01",
+      "actions": [
+        "Explorer double click Example.ili",
+        "wait visible INTERLIS Ready"
+      ],
+      "assertions": [
+        "language INTERLIS",
+        "real source visible",
+        "server ready"
+      ],
+      "at": "2026-11-02T18:25:41.960Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-02",
+      "actions": [
+        "type MissingHeight",
+        "Problems row double click",
+        "type Height"
+      ],
+      "assertions": [
+        "live diagnostic appears",
+        "Problems navigation line8",
+        "diagnostic disappears"
+      ],
+      "at": "2026-11-02T18:25:43.614Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-03",
+      "actions": [
+        "F12",
+        "Format Document",
+        "Palette Undo",
+        "Palette Redo",
+        "Stop Language Server",
+        "Restart Language Server"
+      ],
+      "assertions": [
+        "definition line5",
+        "semantically same formatted text",
+        "Undo restores original",
+        "Redo restores format",
+        "dirty buffer preserved through restart",
+        "fresh diagnostic and correction after restart"
+      ],
+      "at": "2026-11-02T18:25:49.244Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-04",
+      "actions": [
+        "edit duplicate class",
+        "save DE/EN language settings through Settings editor",
+        "expand Problems and double-click related declaration"
+      ],
+      "assertions": [
+        "readable DE/EN messages",
+        "no message keys or ANSI",
+        "original declaration line5"
+      ],
+      "at": "2026-11-02T18:25:57.015Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-05",
+      "actions": [
+        "paste changed declaration and qualified use into dirty editor",
+        "Show or Focus Hover",
+        "F12 on model segment",
+        "F12 on domain segment"
+      ],
+      "assertions": [
+        "current domain in hover",
+        "model line3",
+        "domain line5",
+        "disk remains original",
+        "dirty text preserved"
+      ],
+      "at": "2026-11-02T18:26:00.680Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-06",
+      "actions": [
+        "Find All References on imported class",
+        "expand Base.ili",
+        "click declaration result and press Enter"
+      ],
+      "assertions": [
+        "both source files in semantic result list",
+        "closed declaration opens at line13"
+      ],
+      "at": "2026-11-02T18:26:03.056Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-07",
+      "actions": [
+        "close declaration tab",
+        "F2 rename imported class",
+        "confirm Enter",
+        "open changed Base",
+        "Undo workspace rename"
+      ],
+      "assertions": [
+        "declaration and END changed",
+        "qualified uses changed",
+        "both sources restored by Undo",
+        "no direct test file writes"
+      ],
+      "at": "2026-11-02T18:26:06.951Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-08",
+      "actions": [
+        "make numeric range invalid in neighbour",
+        "Compile Current Model in Example",
+        "Compile Current Model in Broken",
+        "restore neighbour"
+      ],
+      "assertions": [
+        "valid root succeeds",
+        "selected invalid root rejected",
+        "open buffers retained"
+      ],
+      "at": "2026-11-02T18:26:12.460Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-09",
+      "actions": [
+        "F12 through two remote imports",
+        "copy complete readonly contents",
+        "enable offline in Settings JSON",
+        "restart server three times",
+        "navigate cached source after each restart",
+        "select uncached repository offline",
+        "introduce and remove duplicate local model"
+      ],
+      "assertions": [
+        "exact pinned leaf version2 bytes",
+        "same cached middle bytes after restart",
+        "fresh session handles",
+        "zero offline HTTP requests",
+        "specific offline miss",
+        "local duplicate remains ambiguous"
+      ],
+      "at": "2026-11-02T18:26:41.069Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-10",
+      "actions": [
+        "F12 external source",
+        "type into readonly buffer",
+        "F2 readonly symbol",
+        "request hover"
+      ],
+      "assertions": [
+        "opaque readonly URI",
+        "text unchanged",
+        "editor not dirty",
+        "readonly editor offers no rename input",
+        "hover still works"
+      ],
+      "at": "2026-11-02T18:26:44.142Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-11",
+      "actions": [
+        "expand semantic MODEL→TOPIC→CLASS outline",
+        "select attribute",
+        "fold and unfold class",
+        "accept qualified completion",
+        "select light theme"
+      ],
+      "assertions": [
+        "hierarchical outline selection line13",
+        "source prefix preserved",
+        "completion Count offered",
+        "semantic coloring visible in screenshots"
+      ],
+      "at": "2026-11-02T18:26:50.096Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-12",
+      "actions": [
+        "open Interactive.ili from Explorer",
+        "Show Diagram for This File command",
+        "wait for current custom editor"
+      ],
+      "assertions": [
+        "MODEL/TOPIC and actual projected node categories",
+        "real SVG Sprotty edges",
+        "pinned default",
+        "current Java result"
+      ],
+      "at": "2026-11-02T18:26:53.693Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-13",
+      "actions": [
+        "native mouse drag class A",
+        "native mouse drag Topic header",
+        "copy buffer through native clipboard"
+      ],
+      "assertions": [
+        "node and incident paths moved",
+        "children move with container",
+        "disk hash text and dirty state unchanged"
+      ],
+      "at": "2026-11-02T18:26:57.342Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-14",
+      "actions": [
+        "click real edge path",
+        "drag native routing handle",
+        "check another route"
+      ],
+      "assertions": [
+        "route changed",
+        "no source/target handles",
+        "semantic endpoints unchanged",
+        "other routes unchanged",
+        "source unchanged"
+      ],
+      "at": "2026-11-02T18:27:00.500Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-15",
+      "actions": [
+        "double click class member and association",
+        "double click imported domain",
+        "type into readonly import"
+      ],
+      "assertions": [
+        "exact UTF-16 line/column after CRLF/emoji",
+        "correct URI",
+        "readonly imported source remains unchanged"
+      ],
+      "at": "2026-11-02T18:27:06.687Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-16",
+      "actions": [
+        "inspect ternary association members",
+        "select Compact binary through native option",
+        "inspect self path and end notation"
+      ],
+      "assertions": [
+        "three roles and own attribute retained",
+        "composition diamond present",
+        "self edge visible",
+        "all role/cardinality labels readable without overlaps",
+        "source unchanged"
+      ],
+      "at": "2026-11-02T18:27:09.414Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-17",
+      "actions": [
+        "hold one real ELK Worker response",
+        "add source attribute with native paste",
+        "wait for newer live analysis",
+        "release the old actual response"
+      ],
+      "assertions": [
+        "current attribute shown",
+        "obsolete worker cannot publish",
+        "stable moved node retains geometry",
+        "source changes only through explicit text editing"
+      ],
+      "at": "2026-11-02T18:27:16.921Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-18",
+      "actions": [
+        "activate B while A is pinned",
+        "explicitly enable Follow",
+        "activate B again",
+        "pin B and open A separately"
+      ],
+      "assertions": [
+        "pinned A retains source",
+        "only explicit follow switches to B",
+        "A/B labels and layout are separate"
+      ],
+      "at": "2026-11-02T18:27:28.400Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-19",
+      "actions": [
+        "native kind checkboxes and All/None/Reset"
+      ],
+      "assertions": [
+        "consistent actual Java nodes",
+        "honest empty status",
+        "source unchanged"
+      ],
+      "at": "2026-11-02T18:27:37.483Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-20",
+      "actions": [
+        "native direct/indirect import filters"
+      ],
+      "assertions": [
+        "real imported model closure",
+        "restored geometry",
+        "no empty dangling frames"
+      ],
+      "at": "2026-11-02T18:27:48.376Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-21",
+      "actions": [
+        "OWN/NONE/inherited and enum/type switches"
+      ],
+      "assertions": [
+        "original inherited and inline enum text",
+        "constraints independent of attributes",
+        "abstract non-colour marker"
+      ],
+      "at": "2026-11-02T18:27:51.384Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-22",
+      "actions": [
+        "native drag pin settle reset",
+        "all routing and placement choices",
+        "direction change"
+      ],
+      "assertions": [
+        "Settle preserves user position",
+        "Reset changes it",
+        "actual cubic SVG for SPLINES",
+        "source unchanged"
+      ],
+      "at": "2026-11-02T18:27:57.446Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-23",
+      "actions": [
+        "native zoom and scrollbar keyboard action",
+        "canvas arrow pan",
+        "editor arrow and Fit"
+      ],
+      "assertions": [
+        "viewport transform changed",
+        "bounded usable view",
+        "separate editor focus"
+      ],
+      "at": "2026-11-02T18:28:00.166Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-24",
+      "actions": [
+        "native move undo redo",
+        "Developer Reload Window"
+      ],
+      "assertions": [
+        "view-only undo",
+        "exact manual position restored",
+        "source unchanged"
+      ],
+      "at": "2026-11-02T18:28:06.080Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-25",
+      "actions": [
+        "native cursor and Reveal command",
+        "focus selected",
+        "Core translation model choice"
+      ],
+      "assertions": [
+        "Java-versioned highlight",
+        "new projected scope",
+        "actual translated Core labels"
+      ],
+      "at": "2026-11-02T18:28:15.484Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-26",
+      "actions": [
+        "native full/visible SVG/PNG Save dialogs",
+        "native Cancel"
+      ],
+      "assertions": [
+        "four actual files validated",
+        "real browser SVG and PNG decoders and exact pixel equality",
+        "filtered View absent",
+        "PNG IHDR dimensions",
+        "Cancel writes nothing"
+      ],
+      "at": "2026-11-02T18:28:18.691Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-27",
+      "actions": [
+        "native Inkscape routing and crossing switches",
+        "actual SVG saves"
+      ],
+      "assertions": [
+        "live connector references only straight routing",
+        "static spline references",
+        "screen images and actual files"
+      ],
+      "at": "2026-11-02T18:28:22.018Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-28",
+      "actions": [
+        "native theme selection Light Dark High Contrast",
+        "native keyboard checkbox activation"
+      ],
+      "assertions": [
+        "visible text/background differ",
+        "accessible native controls",
+        "source unchanged"
+      ],
+      "at": "2026-11-02T18:28:28.531Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json"
+    },
+    {
+      "id": "GUI-29",
+      "actions": [
+        "native Suggestions/Enter/Tab for five templates",
+        "edit mirrored names and MODEL header fields",
+        "native Enter in final body"
+      ],
+      "assertions": [
+        "MODEL period and mirrored identifier",
+        "CLASS suffix separate from END identifier",
+        "DOMAIN/UNIT have no END",
+        "VIEW TOPIC DEPENDS ON target",
+        "2.3/2.4 replace only the current complete qualified segment",
+        "body Enter inserts a newline"
+      ],
+      "at": "2026-11-02T18:28:56.286Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/authoring/2026-11-02T18-28-30-943Z/manifest.json"
+    },
+    {
+      "id": "GUI-30",
+      "actions": [
+        "native Enter after multiline ABSTRACT and VIEW TOPIC heads",
+        "native Enter in value/comment/meta/string cases and before existing END"
+      ],
+      "assertions": [
+        "Java body caret",
+        "VIEW TOPIC DEPENDS ON",
+        "no false or duplicate END"
+      ],
+      "at": "2026-11-02T18:29:11.079Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/authoring/2026-11-02T18-28-30-943Z/manifest.json"
+    },
+    {
+      "id": "GUI-31",
+      "actions": [
+        "visible native Quick Fix menu for END name, semicolon and unused import",
+        "one Undo per fix"
+      ],
+      "assertions": [
+        "only intended source edit",
+        "END restored",
+        "semicolon restored",
+        "IMPORTS line restored"
+      ],
+      "at": "2026-11-02T18:29:18.275Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/authoring/2026-11-02T18-28-30-943Z/manifest.json"
+    },
+    {
+      "id": "GUI-32",
+      "actions": [
+        "native template choices built-in/local/loopback HTTP",
+        "controlled HTTP503 and oversized response",
+        "native progress Cancel"
+      ],
+      "assertions": [
+        "unsaved INTERLIS documents",
+        "source shown literally",
+        "visible failures",
+        "real request cancelled",
+        "Catalog not overwritten"
+      ],
+      "at": "2026-11-02T18:29:33.548Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/authoring/2026-11-02T18-28-30-943Z/manifest.json"
+    },
+    {
+      "id": "GUI-33",
+      "actions": [
+        "native documentation options for DE EN FR IT and three inheritance modes",
+        "actual Save dialogs for MD and HTML",
+        "actual Markdown and inert HTML preview"
+      ],
+      "assertions": [
+        "translated labels/header override",
+        "identifiers unchanged",
+        "types constraints structures and ABSTRACT notation",
+        "source text inert",
+        "source unchanged"
+      ],
+      "at": "2026-11-02T18:30:04.152Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/authoring/2026-11-02T18-28-30-943Z/manifest.json"
+    },
+    {
+      "id": "GUI-34",
+      "actions": [
+        "native DOCX Save dialog with Unicode path",
+        "read actual ZIP/OOXML",
+        "native Save Cancel"
+      ],
+      "assertions": [
+        "five valid XML package parts",
+        "real headings tables types relationships",
+        "recursive structure reference bounded",
+        "all model classes retained",
+        "Cancel writes no file"
+      ],
+      "at": "2026-11-02T18:30:07.504Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/authoring/2026-11-02T18-28-30-943Z/manifest.json"
+    },
+    {
+      "id": "GUI-35",
+      "actions": [
+        "native format picks and Save dialogs for three graph formats",
+        "parse actual GraphML and verify endpoints"
+      ],
+      "assertions": [
+        "Mermaid PlantUML delimiters and semantic labels",
+        "GraphML stable unique IDs and valid references",
+        "roles and multiplicity",
+        "source buffer unchanged"
+      ],
+      "at": "2026-11-02T18:30:17.004Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/authoring/2026-11-02T18-28-30-943Z/manifest.json"
+    },
+    {
+      "id": "GUI-37",
+      "actions": [
+        "open real Restricted Mode workspace",
+        "native Manage Workspace Trust and Trust"
+      ],
+      "assertions": [
+        "Restricted Mode has zero Java processes and zero HTTP",
+        "workspace executable marker absent before/after Trust",
+        "bundled Java starts after explicit Trust"
+      ],
+      "at": "2026-11-02T18:30:30.452Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/resilience/2026-11-02T18-30-19-305Z/manifest.json"
+    },
+    {
+      "id": "GUI-38",
+      "actions": [
+        "SIGKILL only recorded own Java PID",
+        "native Restart",
+        "invalid user runtime setting",
+        "isolated protocol999 Java fixture then exact restore"
+      ],
+      "assertions": [
+        "Stopped and stale diagram",
+        "new PID/snapshot",
+        "dirty text retained",
+        "bounded actionable runtime/protocol Error",
+        "stock bytes restored and Ready"
+      ],
+      "at": "2026-11-02T18:30:46.326Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/resilience/2026-11-02T18-30-19-305Z/manifest.json"
+    },
+    {
+      "id": "GUI-39",
+      "actions": [
+        "native Add Folder",
+        "F12 into second root",
+        "native Remove Folder",
+        "native Add Folder and F12 again"
+      ],
+      "assertions": [
+        "actual local shared model space",
+        "target Unicode URI in second folder",
+        "removed root yields missing import",
+        "re-add restores resolution",
+        "Remote GUI excluded by user platform scope"
+      ],
+      "at": "2026-11-02T18:30:57.853Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/resilience/2026-11-02T18-30-19-305Z/manifest.json"
+    },
+    {
+      "id": "GUI-40",
+      "actions": [
+        "single native rapid edit/backspace/final token sequence",
+        "hold one actual ELK result for 180-class model",
+        "native Cancel then release obsolete actual event",
+        "Refresh then small model"
+      ],
+      "assertions": [
+        "latest real text wins",
+        "cancelled view stays STALE after old response",
+        "fresh worker accepts next request",
+        "small model usable and source exact"
+      ],
+      "at": "2026-11-02T18:31:10.561Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/resilience/2026-11-02T18-30-19-305Z/manifest.json"
+    },
+    {
+      "id": "GUI-41",
+      "actions": [
+        "20 alternating same-basename native panel open/close cycles",
+        "native Window Reload and reopen"
+      ],
+      "assertions": [
+        "correct Alpha/Beta source identities",
+        "bounded observed own process RSS and CDP worker targets",
+        "no retained visible panels after close",
+        "source bytes unchanged",
+        "workspace executable never ran"
+      ],
+      "at": "2026-11-02T18:32:04.310Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/resilience/2026-11-02T18-30-19-305Z/manifest.json"
+    },
+    {
+      "id": "GUI-36",
+      "actions": [
+        "native Explorer open and Show Diagram",
+        "native SVG Save in network/source sandbox"
+      ],
+      "assertions": [
+        "Ready from bundled Java25",
+        "no JVM on child PATH",
+        "source repository read denied",
+        "external IP network denied",
+        "real UML and SVG content"
+      ],
+      "at": "2026-11-02T18:32:18.742Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/distribution/2026-11-02T18-32-06-943Z/manifest.json"
+    },
+    {
+      "id": "GUI-42",
+      "actions": [
+        "native open from Unicode Modelle workspace",
+        "read exact fresh installed VSIX/runtime identity"
+      ],
+      "assertions": [
+        "real installed Ready and UML export",
+        "separate missing-server canary is required by aggregate qualification"
+      ],
+      "at": "2026-11-02T18:32:20.542Z",
+      "manifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/distribution/2026-11-02T18-32-06-943Z/manifest.json"
+    }
+  ],
+  "platformScope": "Full macOS; short native Linux/Windows Actions smokes recorded separately; no Linux/Windows/Remote GUI claim",
+  "vsixSha256": "cf8f200243ed568c5eb05f0e2be9281e043e1c9c21335433c3e7b73d6f6dc7aa",
+  "vsix": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/interlis-vscode-darwin-arm64-cf8f200243ed568c5eb05f0e2be9281e043e1c9c21335433c3e7b73d6f6dc7aa.vsix",
+  "javaModules": {
+    "interlis-compiler": 66,
+    "interlis-documentation": 8,
+    "interlis-lsp": 75,
+    "interlis-wasm-bridge": 24,
+    "interlis-projection": 22,
+    "interlis-compiler-cli": 1
+  },
+  "finishedAt": "2026-11-02T18:33:30.740Z"
+}

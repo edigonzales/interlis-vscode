@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 1,
+  "phase": "V5",
+  "createdAt": "2026-11-02T19:58:00.000Z",
+  "method": "Only images successfully opened with the image-read tool in this fresh review session are listed. Existing-file inventory alone was not treated as viewing evidence.",
+  "images": [
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/GUI-01-ready.png",
+      "sha256": "06fd24304abd6e7a4dd11648d51ad6668fbbf52575cad73f2c893459ab834aee",
+      "success": true,
+      "observation": "Installed Extension shows Example.ili in INTERLIS, status bar INTERLIS: Ready, zero problems, real Java-backed editor."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/GUI-13-before.png",
+      "sha256": "0c855c9fc7ab360a34c3b270c054a583a9aa30a77d7469390b3a28f12b36ca3c",
+      "success": true,
+      "observation": "Author before-drag view of Interactive.ili UML; readable toolbar, diagram current, full overview is small at Fit."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/GUI-13-node-moved.png",
+      "sha256": "a05199b6f7a22502cbe94c1026f103b6ca3dae415f6d3d1cf374540327b70c80",
+      "success": true,
+      "observation": "Author after-drag view; node/route positions differ from before, source text and Problems remain unchanged."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/GUI-14-handle-before.png",
+      "sha256": "cf3baf8e509c396c5b5544c4bc82598de37426b8d2cbefb3441d48919cd5cbce",
+      "success": true,
+      "observation": "Author route handle before edit; selected edge and interior handle visible, no source/target reconnect handles."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/GUI-14-route-after.png",
+      "sha256": "4f948b3feedf4fb63630cc7351fac44326d9de9e802e4262bf6587efc19aa835",
+      "success": true,
+      "observation": "Author route after edit; the blue edge visibly bends differently while source/target identities stay unchanged."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/GUI-19-empty.png",
+      "sha256": "cb669bff2cd63ecfdbd8dd5689363cacf30b533d3d3448adb0165b4167e5e2ee",
+      "success": true,
+      "observation": "Filter None shows the explicit text 'No visible elements - change or reset filters'; All/None/Reset remain reachable."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/GUI-16-entity.png",
+      "sha256": "ae3fbe6058f99afa3fbffb23af58e1033c367d763ca0b54ecf74888f16617d8a",
+      "success": true,
+      "observation": "Real Sprotty diagram alongside source with toolbar, pinned state and several panels; no placeholder image."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/resilience/2026-11-02T18-30-19-305Z/GUI-37-restricted.png",
+      "sha256": "312a9cbfcd8c2d803ffb245f29bfb4de89220446b45e75df2c596ffbe6591dde",
+      "success": true,
+      "observation": "Genuine Restricted Mode banner and status 'INTERLIS: Trust required'; no server-ready claim and no diagram."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/resilience/2026-11-02T18-30-19-305Z/GUI-40-cancelled.png",
+      "sha256": "62ae50af7ecb3a7b6bba18a6a4756882f2ede0f1a03102dc3d2e04a6f46fde46",
+      "success": true,
+      "observation": "Cancel leaves 'Diagram update cancelled - Refresh to continue'; view is stale, toolbar and editor remain usable."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/authoring/2026-11-02T18-28-30-943Z/GUI-33-html-preview.png",
+      "sha256": "cb3987b6f86b040b8173ee72de5a1c266d06ab7501fb74594b04174079dd02da",
+      "success": true,
+      "observation": "HTML catalogue preview shows translated section labels, snapshot provenance, escaped override title and no executed script."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/authoring/2026-11-02T18-28-30-943Z/GUI-34-saved.png",
+      "sha256": "5f1c79b155745389e2cab3e74dde4b3059289c14a49cb327dc81c861851f94c7",
+      "success": true,
+      "observation": "Editor keeps a script-like comment inert; native save toast confirms a real DOCX export path."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/distribution/2026-11-02T18-32-06-943Z/GUI-36-offline-diagram.png",
+      "sha256": "70d8b29fe5b5ed2c1b97422be9de8d120d82bfac90c3c35d64acee3dad87a558",
+      "success": true,
+      "observation": "Offline installed distribution renders a readable UML with Building/Height domain; status current and no network assets."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/build/reports/gui/comfort/2026-11-02T18-41-46-465Z/GUI-13-before.png",
+      "sha256": "b781dbfea3d7cf41b7a3e3cfdb37cfdc54c8dae3b739bb80b2d3513d719d9019",
+      "success": true,
+      "observation": "My own installed run before dragging node A; real editor, real Problems, current Sprotty diagram."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/build/reports/gui/comfort/2026-11-02T18-41-46-465Z/GUI-13-node-moved.png",
+      "sha256": "69700c114d2b094b37384f6035fd70fb0ae26a640618a5a4ac47fc3a3fcf5b32",
+      "success": true,
+      "observation": "My own run after node drag; selected node and incident route visibly moved, editor text and problem set unchanged."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/build/reports/gui/comfort/2026-11-02T18-41-46-465Z/GUI-14-handle-before.png",
+      "sha256": "ea73ae78015477e6c53c2f4f6c42826e2f4d4751d4862632e0af9124d75ef963",
+      "success": true,
+      "observation": "My own route edit before state; chosen parallel edge is identifiable and interior handle is exposed."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/build/reports/gui/comfort/2026-11-02T18-41-46-465Z/GUI-14-route-after.png",
+      "sha256": "61b911b9995d9d5d0e1a3c38a535e532ec17e102652214584aeda43c74669638",
+      "success": true,
+      "observation": "My own route edit after state; only the selected edge route changed, endpoints and source text unchanged."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/build/reports/gui/comfort/2026-11-02T18-41-46-465Z/GUI-26-full-decoded.png",
+      "sha256": "6f70ff8c7f562388aa63acec534b51895a6435d6b237bce586b69ce1dbce0c3d",
+      "success": true,
+      "observation": "My own exported FULL SVG decoded back in the real browser at 3136x794; labels, routes and markers are visible and no external assets are present."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-1-drag-before.png",
+      "sha256": "94807ce77ea8aabbb099ba538bc93e282083150b811011f7cdd61cf0abf8a6c5",
+      "success": true,
+      "observation": "My new cross-feature probe before drag; status honestly says Partial because the probe workspace also contains a broken unrelated model."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-1-drag-after.png",
+      "sha256": "6b53f17156f9cc07a5b1a73b3950d816854ece30775e6e567587f1108ec12660",
+      "success": true,
+      "observation": "After native drag node A moved from translate(830,154.33) to translate(1216.28,329.92); source text and disk hash unchanged."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-1-filtered.png",
+      "sha256": "e7d98a9e5b870cc09a1ee660e8fb6bac8f2af0b7a114b05d303a87670bdce849",
+      "success": true,
+      "observation": "My new probe after hiding VIEW; Overview is removed from the canvas and export, no semantic source change."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-2-stale.png",
+      "sha256": "ae01ee4e9fbce043cf18bd46de4762b7185888ca6329a88f36f7f3b6461b4530",
+      "success": true,
+      "observation": "My new stale countercase: after native Cancel the visible status is 'Diagram update cancelled - Refresh to continue'; no obsolete response is accepted."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-2-recovered.png",
+      "sha256": "9582787f397b3cfc6a819824350d6fe4ad2264a21cc3533688404ec08ae46d76",
+      "success": true,
+      "observation": "After Refresh the diagram is usable again; pinned manual position survives, and the remaining 'Partial' label reflects the intentionally broken unrelated fixture."
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence/counterprobes/2026-11-02T18-55-12-106Z/PROBE-2-filtered.png",
+      "sha256": "a7e14ba550959f62eb84f38320c77d6a71af08996b90ec7cf0e73df4ef526f05",
+      "success": true,
+      "observation": "My new probe with types hidden; the exported FULL SVG contains C12 but no TEXT type labels, matching the filtered view."
+    }
+  ]
+}

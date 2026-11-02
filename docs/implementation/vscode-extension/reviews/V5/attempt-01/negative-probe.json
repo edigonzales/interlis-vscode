@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "coreSha": "6983baf95c47a7e20dbb41a2e50500185f578c37",
+  "extensionSha": "3a888507b11c5ecefb03e4fe34aa11499894039c",
+  "vsix": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/build/packages/interlis-vscode-darwin-arm64.vsix",
+  "vsixSha256": "9f5b6f4f8aad965442551557c0951655dd33a625539e494a18c6a686a4eb2062",
+  "startedAt": "2026-11-02T18:54:07.165Z",
+  "checks": [
+    {
+      "label": "stock extraction launches bundled runtime",
+      "result": "accepted",
+      "runtimeDigest": "2cf1d396e2c8726271fc3aa5a9ed6363e9e41c97a433e9007c63c3d32cd21688"
+    },
+    {
+      "label": "tampered bundled java",
+      "expected": "/runtime digest|inventory mismatch/i",
+      "result": "rejected"
+    },
+    {
+      "label": "missing LSP jar",
+      "expected": "/missing|inventory|ENOENT/i",
+      "result": "rejected"
+    },
+    {
+      "label": "foreign target distribution",
+      "expected": "/different workspace host/i",
+      "result": "rejected"
+    },
+    {
+      "label": "lock hash mismatch",
+      "expected": "/digest|inventory|mismatch/i",
+      "result": "rejected"
+    },
+    {
+      "label": "incompatible Java protocol 999",
+      "result": "rejected",
+      "pid": 67132,
+      "reportedProtocol": 999,
+      "extensionMessage": "The Java server does not support editor protocol version 1. Reinstall a matching extension and server bundle.",
+      "exit": 0
+    },
+    {
+      "label": "stock bytes restored after negative probe",
+      "result": "accepted"
+    }
+  ],
+  "status": "passed",
+  "archiveEntries": 344,
+  "finishedAt": "2026-11-02T18:54:11.321Z"
+}

@@ -1,0 +1,745 @@
+{
+  "schemaVersion": 1,
+  "phase": "V5",
+  "assignmentBase": {
+    "coreSha": "20b0029d824b3602d9a304320bf0feae4c35c1f9",
+    "extensionSha": "73badd9807f407aea048d397af5549fe907a1501"
+  },
+  "phaseBase": {
+    "coreSha": "6983baf95c47a7e20dbb41a2e50500185f578c37",
+    "extensionSha": "b19ac4306347f39da994db549137165448fb23cb"
+  },
+  "candidate": {
+    "coreSha": "6983baf95c47a7e20dbb41a2e50500185f578c37",
+    "extensionSha": "3a888507b11c5ecefb03e4fe34aa11499894039c"
+  },
+  "worktrees": {
+    "core": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/core",
+    "extension": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension"
+  },
+  "evidenceDirectory": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/evidence",
+  "plan": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/docs/implementation/vscode-extension/EXECUTION_PLAN.md",
+  "implementationReport": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/docs/implementation/vscode-extension/implementation/V5.md",
+  "criteria": [
+    "V0-01",
+    "V0-02",
+    "V0-03",
+    "V0-04",
+    "V0-05",
+    "V0-06",
+    "V0-07",
+    "V1-01",
+    "V1-02",
+    "V1-03",
+    "V1-04",
+    "V1-05",
+    "V1-06",
+    "V1-07",
+    "V1-08",
+    "V1-09",
+    "V1-10",
+    "V2-01",
+    "V2-02",
+    "V2-03",
+    "V2-04",
+    "V2-05",
+    "V2-06",
+    "V2-07",
+    "V2-08",
+    "V2-09",
+    "V2-10",
+    "V3-01",
+    "V3-02",
+    "V3-03",
+    "V3-04",
+    "V3-05",
+    "V3-06",
+    "V3-07",
+    "V3-08",
+    "V3-09",
+    "V3-10",
+    "V3-11",
+    "V3-12",
+    "V4-01",
+    "V4-02",
+    "V4-03",
+    "V4-04",
+    "V4-05",
+    "V4-06",
+    "V4-07",
+    "V4-08",
+    "V4-09",
+    "V5-01",
+    "V5-02",
+    "V5-03",
+    "V5-04",
+    "V5-05",
+    "V5-06",
+    "V5-07",
+    "V5-08"
+  ],
+  "originalCriteria": [
+    {
+      "id": "V0-01",
+      "text": "Aktuelle vollständige Core-/Extensionbasis, Änderungen seit b8051493, Scope und neue Eigentümerschaft sind nachvollziehbar erfasst; fremde Änderungen erhalten; keine Reimplementierung alter CLI-Aufträge."
+    },
+    {
+      "id": "V0-02",
+      "text": "Neue Identität/Commands/Settings, Sprache, einfache Snippets und eingebettete Vorlage funktionieren; keine Altbackend- oder @ilic-Abhängigkeit im neuen Paketgraphen."
+    },
+    {
+      "id": "V0-03",
+      "text": "Echtes Java-LSP startet aus bezeichnetem Artefakt, stdio bleibt protokollrein, Shutdown und fehlende/falsche Java-/Bundlekonfiguration sind geprüft."
+    },
+    {
+      "id": "V0-04",
+      "text": "Installation des erzeugten VSIX in isoliertem Profil ohne Source-Checkoutabhängigkeit; echter GUItest öffnet gültiges/ungültiges Modell, zeigt Problems und F12/Formatting-Basisfunktion."
+    },
+    {
+      "id": "V0-05",
+      "text": "Native GUI-Harness/Artefakte und Reviewerzugriff sind funktionsfähig; keine Direkt-APIprobe wird als Maus-/Tastatur-GUItest gezählt."
+    },
+    {
+      "id": "V0-06",
+      "text": "Feature-Audit/Paritätsdelta, Sourceadoption-/Lizenzplan, konkrete Versionspins und risikobasierte Gatezuordnung sind kurz festgelegt; nächste Phase nicht implementiert."
+    },
+    {
+      "id": "V0-07",
+      "text": "Unabhängiger OpenCode-Review auf beiden SHAs, mindestens eigene neue Start-/GUIgegenprobe, tatsächliches Prozessende und PASS."
+    },
+    {
+      "id": "V1-01",
+      "text": "Lesbare DE/EN-Diagnostics mit Codes, Severity, Version, echten RelatedInformation; kein technischer messageKey-/ANSI-Dump; globale Fehler verschwinden nicht still."
+    },
+    {
+      "id": "V1-02",
+      "text": "Dirtybuffer vor Disk, lokale/geschlossene Workspacequellen vor externen Repositories; transitive Imports, Mehrdeutigkeit, Offline/Cache und Ausfallfälle sind echt geprüft."
+    },
+    {
+      "id": "V1-03",
+      "text": "Externe Quellen sind korrekt navigierbar und readonly, auch nach didOpen; keine fremden Dateien durch Rename oder CodeAction änderbar."
+    },
+    {
+      "id": "V1-04",
+      "text": "Completion/Hover/Definition/References/PrepareRename/Rename nutzen den gemeinsamen aktuellen Snapshot; qualifizierte Segmente, geschlossene Quellen und Versionskonflikte sind abgedeckt."
+    },
+    {
+      "id": "V1-05",
+      "text": "Hierarchische Outline, Folding, SemanticTokens und Formatting werden über Standard-LSP geliefert; Kommentare, CRLF und Unicode bleiben korrekt."
+    },
+    {
+      "id": "V1-06",
+      "text": "Compile-current benutzt Root und ungespeicherte Version, Compile-workspace ist explizit; Root-/Auftragsdiagnosen und komplette IDEanalyse werden nicht verwechselt."
+    },
+    {
+      "id": "V1-07",
+      "text": "Workspace-/Repositorykonfiguration, Watcher, Multi-root und Cancellation bleiben begrenzt/revisionssicher; ungültige Konfiguration verwirft nicht die letzte gültige."
+    },
+    {
+      "id": "V1-08",
+      "text": "GUI-04..11 bestehen mit echtem Server: Problems, RelatedLocation, Hover, F12, Referenzen, Rename, Importfehler/Readonly, Outline; kein Fake-LSP."
+    },
+    {
+      "id": "V1-09",
+      "text": "Relevante Java-/Transport-/Extensiontests frisch; bisherige Synchronisations-/Pfad-/Closed-Rename-Regressionen erhalten; Testauswahl anhand Diff begründet."
+    },
+    {
+      "id": "V1-10",
+      "text": "Unabhängiger Reviewer bestätigt alle V1-Ziele und führt eigene neue Workspace-/Dirty-/Repositorygegenprobe sowie GUIprüfung aus; gültiges PASS für Produktpaar."
+    },
+    {
+      "id": "V2-01",
+      "text": "Ein eigener neutraler Renderer mit Provenienz/Lizenzen; keine Build-/Type-/Runtime-Abhängigkeit von B oder @ilic; Extension und bestehender Core-Browser benutzen dieselbe Quelle."
+    },
+    {
+      "id": "V2-02",
+      "text": "Realer stdio-Diagrammrequest liefert typisierten versionierten DiagramDocument-Vertrag mit Optionen, Root-/Snapshot-/Source-/Clientversionen und tatsächlicher Completeness."
+    },
+    {
+      "id": "V2-03",
+      "text": "MODEL-/TOPICcontainer, Classes/Structures/Domains/Views/Associations samt Membern/Enums/Constraints werden fachlich korrekt und ohne Namenskollisionen gezeichnet."
+    },
+    {
+      "id": "V2-04",
+      "text": "N-äre, Self-/Parallelassociationen und Attribute bleiben erhalten; Rollen, Kardinalitäten und Aggregations-/Kompositionsmarker stehen am richtigen Ende."
+    },
+    {
+      "id": "V2-05",
+      "text": "Mausdrag bewegt Knoten/Container wirklich; Kantenhandles ändern Routen; keine `.ili`-/Buffer-/semantischen Endpunktänderung."
+    },
+    {
+      "id": "V2-06",
+      "text": "Diagramm→Quelle für Knoten, Member und Association; readonly Importnavigation; veraltete Antwort/Range liefert keinen falschen Sprung."
+    },
+    {
+      "id": "V2-07",
+      "text": "Anheften/Folgen, Liveupdate, Partial/Stale/Error und Panel-Lifecycle funktionieren; Nicht-ILI-Fokus oder verspätetes Layout übernimmt nicht die falsche Quelle."
+    },
+    {
+      "id": "V2-08",
+      "text": "GUI-12..18 bestehen auf echtem Modell → Java-LSP → Customeditor → Sprotty, mit Maus-/Tastaturaktionen und Screenshots vor/nach Drag und Route."
+    },
+    {
+      "id": "V2-09",
+      "text": "Diagramm-/Schema-/Adaptertests und betroffener bestehender Browserconsumer frisch erfolgreich; keine zweite Rendererkopie und keine verlorene semantische Information."
+    },
+    {
+      "id": "V2-10",
+      "text": "Eigener unabhängiger GUI-/N-är-/Stale-Gegenfall des Reviewers, Lizenz-/Dependencyprüfung und PASS auf identischem Core-/Extensionpaar."
+    },
+    {
+      "id": "V3-01",
+      "text": "Filter F26/F33–35 inkl. direkte/indirekte Imports, All/None/Reset und externer Stubregel funktionieren; keine unnötige volle Compileranalyse pro Klick."
+    },
+    {
+      "id": "V3-02",
+      "text": "Reset und Settle haben unterschiedliche belegte Wirkung; manuelle Positionen/Pins und Routen bleiben bis zu bewusstem Reset erhalten."
+    },
+    {
+      "id": "V3-03",
+      "text": "ORTHOGONAL/POLYLINE/SPLINES und NodePlacement arbeiten wirklich; Splinekurven sind Bézierkurven, Kantenendpunkte fachlich unverändert."
+    },
+    {
+      "id": "V3-04",
+      "text": "Layout-Undo/Redo, Container-/Kantenbewegung, Self-Loops, parallele Kanten und asymmetrische Kardinalitäten bleiben korrekt."
+    },
+    {
+      "id": "V3-05",
+      "text": "Pan/Zoom/Fit/Scrollbars/Tastatur funktionieren bei HiDPI und geänderter Panelgrösse; Auswahl-/Drag-/Navigationsgesten sind unterscheidbar."
+    },
+    {
+      "id": "V3-06",
+      "text": "Text→Diagrammselektion und Diagramm→Text ohne Rückkopplung, mit exakter Identität/Revision; keine behauptete semantische Bidirektionalität."
+    },
+    {
+      "id": "V3-07",
+      "text": "Panelzustand über Hide/Show/Reload und Liveedits erhalten; entfernte/umbenannte Elemente werden sicher abgeglichen, Speicher bleibt begrenzt."
+    },
+    {
+      "id": "V3-08",
+      "text": "Full-/Visible-SVG und PNG spiegeln den aktuellen gefilterten/manuell angeordneten View; Signatur/XML/Viewbox/Pixel/Clipping und tatsächliche Dateien geprüft."
+    },
+    {
+      "id": "V3-09",
+      "text": "Inkscape-kompatible SVGgruppen/Verbindungen, GAPS/PLAIN und UMLmarker bleiben in Exporten korrekt; keine externen aktiven Ressourcen."
+    },
+    {
+      "id": "V3-10",
+      "text": "Light/Dark/HighContrast, Empty/Loading/Stale/Error und sichere Modell-/Kommentar-/Metadatenanzeige sind visuell geprüft; kein XSS oder Layoutverlust."
+    },
+    {
+      "id": "V3-11",
+      "text": "GUI-19..28 plus UML-Smokeregression aus V2 bestehen; UI-/Worker-/Export-Unit-/Browserprüfungen nach Änderungsauswirkung, keine unnötige volle Compilerplattformmatrix."
+    },
+    {
+      "id": "V3-12",
+      "text": "Reviewer bedient selbst die GUI, erfindet mindestens eine neue Layout-/Export-/Filterkombination und prüft Sourcehash/Bufferfreiheit; PASS auf Produktpaar."
+    },
+    {
+      "id": "V4-01",
+      "text": "Completion F11/F15/F16 deckt belegte Slots versions-/scopesicher ab; nur passende Ziele/Metaattribute; keine zweite Clientsemantik."
+    },
+    {
+      "id": "V4-02",
+      "text": "Snippets/gespiegelte Namen/Enter-/Tab-/Cursorverträge F12–14 funktionieren in echtem Editor; Kommentare/Strings/Wertzuweisungen und vorhandenes END erzeugen keine falschen Blockenden."
+    },
+    {
+      "id": "V4-03",
+      "text": "Mindestens die drei sicheren QuickFixarten funktionieren mit aktuellen Versionen und Undo; unvollständige Analyse erlaubt keinen unsicheren Importlöschfix."
+    },
+    {
+      "id": "V4-04",
+      "text": "DocumentationProjector liefert aktuelle vollständige Inhalte, Vererbungsoptionen, Struktur-/Typ-/Rollen-/Constraint-/Dokumentationsdaten; keine ASTtextlecks/Endlosrekursion."
+    },
+    {
+      "id": "V4-05",
+      "text": "Markdown-/HTML-/DOCX-Exports sind valide und inhaltlich geprüft; DE/FR/IT/EN-Labels/Headeroverrides und Abstractnotation; IDs unverändert."
+    },
+    {
+      "id": "V4-06",
+      "text": "Mermaid-/PlantUML-Text und GraphML funktionieren aus derselben Projektion; keine zusätzlichen fremden Compiler/Netzrenderer."
+    },
+    {
+      "id": "V4-07",
+      "text": "GUI-29..35 bestehen: Suggestions/Placeholders/AutoClose/QuickFix, Vorlagen, Markdown/HTMLpreview, echte gespeicherte Dokument-/Graphdateien und Cancel."
+    },
+    {
+      "id": "V4-08",
+      "text": "Neue Java-/LSP-/TS-/Export-/GUItests nach Auswirkung frisch; gezielte Compiler-Sentinels bei Queryänderung; bestehende Normprofile/XFAILs unverändert."
+    },
+    {
+      "id": "V4-09",
+      "text": "Reviewer prüft Quelle/Ziel-Parität F01–F60 bis hier, erfindet neuen Snippet-/QuickFix-/Dokumentgegenfall und führt GUI-/Artefaktprüfung aus; PASS."
+    },
+    {
+      "id": "V5-01",
+      "text": "Sauber gebautes VSIX enthält genau eigene Extension/UI/LSP/Runtime/Assets/Lizenzen, keine Altbackends/Testharnesses/Secrets; Start ohne weitere Compiler-/B-Repos und ohne Installationsnetzwerk."
+    },
+    {
+      "id": "V5-02",
+      "text": "macOS arm64, Linux x64 und Windows x64 sind durch reale Installations-/Start-/GUI-Smoketests des jeweils angegebenen Artefakts nachgewiesen; nicht nur Crossbuild."
+    },
+    {
+      "id": "V5-03",
+      "text": "Mindestens ein echter Linux-Remote-/Dev-Container-Workflow mit VS-Code-Client funktioniert; Server am Workspacehost, URI/Exports/Readonly korrekt. Nicht getestete Plattformen klar abgegrenzt."
+    },
+    {
+      "id": "V5-04",
+      "text": "Trust, missing runtime/bundle, Protokollmismatch, Serverrestart/Crash, Cancel, Multi-root, schnelle Edits und Panelcleanup sind mit GUI-/Prozessbelegen ohne Datenverlust geprüft."
+    },
+    {
+      "id": "V5-05",
+      "text": "Alle verpflichtenden F01–F60 innerhalb ihres erklärten Scopes sind mit realen Tests/Code/GUIbelegen verknüpft; bewusste Ausschlüsse unverändert sichtbar, kein leises Downgrading."
+    },
+    {
+      "id": "V5-06",
+      "text": "Finaler aktueller Produktpaarstand besteht gesamte Extension-/LSP-/Diagramm-/Export-/GUI-Suite; Coreweiterungen nach §10, kein pauschaler Zwang zum sachfremden Full-Corpus-/Safari-Gesamtlauf."
+    },
+    {
+      "id": "V5-07",
+      "text": "README/Architektur/Protokoll/Build-/Nutzer-/Testanleitung, Sourceadoption/Lizenzen und Artefaktlocks sind konsistent; lokaler F5-/VSIXweg reproduzierbar, keine alte ID oder unkontrollierter Siblinglink."
+    },
+    {
+      "id": "V5-08",
+      "text": "Unabhängige kumulative Prüfung aller 56 ACs, eigene neue GUI- und negative Paket-/Protokollgegenprobe, saubere beide SHAs, vollständiger Prozessabschluss und PASS; kein Push/Release."
+    }
+  ],
+  "requiredGuiCases": [
+    "GUI-01",
+    "GUI-02",
+    "GUI-03",
+    "GUI-04",
+    "GUI-05",
+    "GUI-06",
+    "GUI-07",
+    "GUI-08",
+    "GUI-09",
+    "GUI-10",
+    "GUI-11",
+    "GUI-12",
+    "GUI-13",
+    "GUI-14",
+    "GUI-15",
+    "GUI-16",
+    "GUI-17",
+    "GUI-18",
+    "GUI-19",
+    "GUI-20",
+    "GUI-21",
+    "GUI-22",
+    "GUI-23",
+    "GUI-24",
+    "GUI-25",
+    "GUI-26",
+    "GUI-27",
+    "GUI-28",
+    "GUI-29",
+    "GUI-30",
+    "GUI-31",
+    "GUI-32",
+    "GUI-33",
+    "GUI-34",
+    "GUI-35",
+    "GUI-36",
+    "GUI-37",
+    "GUI-38",
+    "GUI-39",
+    "GUI-40",
+    "GUI-41",
+    "GUI-42"
+  ],
+  "implementationEvidence": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1",
+  "supplementalEvidence": [
+    "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage",
+    "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/runtime-downloads",
+    "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/review-preflight",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/authoring/2026-11-02T18-28-30-943Z",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/resilience/2026-11-02T18-30-19-305Z",
+    "/Users/stefan/sources/interlis-vscode/build/reports/resource-observer/2026-11-02T18-30-18-489Z",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/distribution/2026-11-02T18-32-06-943Z",
+    "/Users/stefan/sources/interlis-vscode/build/reports/gui/smoke/2026-11-02T18-32-22-291Z",
+    "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850"
+  ],
+  "guiTools": {
+    "cache": "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage",
+    "vscodeExecutable": "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage/Visual Studio Code.app/Contents/MacOS/Code",
+    "javaHome": "/Users/stefan/.sdkman/candidates/java/25.0.3-tem",
+    "vscode": "1.140.0",
+    "extester": "8.28.1",
+    "chromedriver": "150.0.7871.250"
+  },
+  "scopeNotes": [
+    {
+      "source": "Explicit latest user instruction",
+      "quote": "Fahre mit V5 fort: vollständige macOS-Tests, kurze Linux-/Windows-Smoke-Tests in GitHub Actions und anschliessend die unabhängige kumulative V5-Abnahme.",
+      "precedingQuote": "Ich würde das dahingehend anpassen, dass wir bei den Plattformtests nur macOS machen und für Linux und Windows uns auf nicht langdauernde Tests (eventuell nur smoke-tests) in einer gh action beschränken.",
+      "document": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/docs/implementation/vscode-extension/PLATFORM_TEST_SCOPE.md",
+      "effect": "V5-02: full native macOS GUI plus short actual native Linux/Windows CLI/runtime/stdio/rejection smokes. V5-03 and GUI39 Remote part: explicitly not required/tested; assess local Multi-root, preserve unqualified Remote limitation. GUI42 other OS: short native CLI/runtime/negative smoke, no GUI requirement. Necessary isolated CI branch pushes/runs authorized; no merge/tag/release. Apply this explicit user adjustment when assessing all56 ACs; do not fabricate a Remote/Linux/Windows-GUI PASS."
+    },
+    {
+      "note": "At the candidate commit STATUS/V5 report intentionally remain OPEN: qualification executes after committing so reports carry exact current SHA. Fresh raw qualification is now passed and CI validated. Only after your actual accepted cumulative review will a pure archival documentation commit record completion. This chronology does not imply missing current raw checks."
+    },
+    {
+      "note": "GUI temporary installation/profile directories have been removed after all PIDs exited, as requested by user to avoid waste. Their verified installation/runtime manifests, all raw logs/images/workspaces and immutable exact VSIX remain. Re-extract an archive for file checks; do not require old /tmp install folders still to exist. Reuse one pinned unpacked VSCode/ChromeDriver cache and cleanup only your own temporary profiles after preserving evidence."
+    }
+  ],
+  "requiredChecks": [
+    {
+      "id": "read-full-cumulative-code-and-contracts",
+      "reason": "Read all assignment docs and latest PLATFORM_TEST_SCOPE/FEATURE_EVIDENCE/README/development docs; analyze cumulative assignmentBase→candidate and V5 phaseBase→candidate in both detached trees. Assess all56 criteria and F01–F60 individually."
+    },
+    {
+      "id": "own-build-and-distribution-inventory",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "ci",
+        "--ignore-scripts"
+      ],
+      "also": [
+        [
+          "node",
+          "scripts/stage-core.cjs",
+          "--core-dir",
+          "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/core"
+        ],
+        [
+          "node",
+          "scripts/stage-runtime.cjs",
+          "--target",
+          "darwin-arm64",
+          "--cache",
+          "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/runtime-downloads"
+        ],
+        [
+          "node",
+          "scripts/package.cjs",
+          "--target",
+          "darwin-arm64"
+        ]
+      ],
+      "reason": "Independently build exact Core and actual Mac VSIX, verify JAR/UI/worker/schema/runtime/license inventories and stock payloads. Bootstrap inputs are untrusted. Do not change product files; rebuilt locks must remain identical."
+    },
+    {
+      "id": "fresh-extension-and-real-stdio",
+      "cwd": "extension",
+      "argv": [
+        "node",
+        "scripts/build.cjs"
+      ],
+      "also": [
+        [
+          "npm",
+          "run",
+          "test:unit"
+        ],
+        [
+          "npm",
+          "run",
+          "test:protocol"
+        ],
+        [
+          "npm",
+          "run",
+          "verify:no-legacy-dependencies"
+        ]
+      ],
+      "reason": "Fresh bounded own unit/real stdio proof using bundled Java (clear INTERLIS_JAVA) and actual packaged runtime, no legacy backend."
+    },
+    {
+      "id": "native-independent-risk-smoke-and-counterprobes",
+      "reason": "Own fresh installed GUI smoke must include installation, real editor/diagnostics, node and route drag, filter, actual export and restart. Design and execute at least TWO new cross-feature native counterprobes, plus own negative package/protocol test. Use test-only code under build/evidence if needed; no product or source-test edits. Never use executeCommand API-only as GUI. Preserve failures and real exits."
+    },
+    {
+      "id": "validate-author-42-and-native-ci",
+      "reason": "Independently inspect raw author qualification, all42 case assertions and actual relevant images/artifacts, exact same candidate pair/VSIX. Validate completed GitHub jobs and downloaded artifact digests on exact pair; native CLI and Java process evidence are not GUI claims. Verify limits of outside-sandbox fixed RSS observer and single offline/interpreter sandbox; do not nest sandbox-exec inside this review guard."
+    }
+  ],
+  "notRequiredChecks": [
+    "No duplicate full corpus/benchmark/release/Safari/browser-image gate: Core unchanged in V5 and bounded cumulative Java196 plus actual UI/browser and full42 native GUI are supplied. Inspect them and add independent targeted counterprobes rather than duplicate all broad runs.",
+    "No Linux/Windows/Remote GUI per explicit user scope. No UTM work or Windows ISO acquisition.",
+    "Do not start the combined offline or resource-observer outer runner underneath the review sandbox: macOS nested/setuid restrictions are explicit. Reuse and rigorously inspect their same-pair raw evidence; own new native risk GUI remains required."
+  ],
+  "allowedReuse": "Author fresh same-pair raw Core Java196/shared-UI/browser/42GUI/CI evidence may be verified. Prior accepted V0–V4 reviews are historical corroboration only; latest cumulative product behavior must be assessed. Do not repeat all broad suites without a concrete finding.",
+  "counterprobeRequirement": "Two newly designed cross-feature native GUI variants and a genuine negative packaged/protocol case, in addition to own current risk smoke. Actual image reads, artifact contents and all56 dispositions are required.",
+  "imageAttributionRules": {
+    "mandatory": "Before writing review.md/verdict.json, create image-read-inventory.json ONLY from paths that you successfully opened with the image-read tool in THIS fresh session. For each, record actual path and successful tool result. Only attribute actual visual observations to those files; a list of existing evidence images is an INVENTORY, not proof you viewed them. Do not claim to have viewed all images from a run unless you actually read all. Byte-identical aliases must be explicitly mapped with hashes. A small honest viewed subset covering before/after node/route and your new stale countercase is sufficient; no need to open every screenshot.",
+    "history": "V2 attempt01 image-attribution failure was separately repaired in attempt02. This is fresh V4 attempt02, after V4 attempt01 FAIL; no prefilled current review/verdict exists."
+  },
+  "preflightEvidence": [
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/review-preflight/model-identity.json",
+      "sha256": "d7e995e8fbb7ae0b6d2cfba66300e4ae01c629f1939ecce0451a542c82464fe6"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/review-preflight/run-help.txt",
+      "sha256": "7a138276d9e67c37aa13875e2879a997858c1baff45e676e82e4b2bff8ff4b7d"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/review-preflight/models-all.txt",
+      "sha256": "93b8642cc3e800e97c1515155f01d832a770dc5859e193ef2d964a01ebb69bcc"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/interlis-vscode-darwin-arm64-cf8f200243ed568c5eb05f0e2be9281e043e1c9c21335433c3e7b73d6f6dc7aa.vsix",
+      "sha256": "cf8f200243ed568c5eb05f0e2be9281e043e1c9c21335433c3e7b73d6f6dc7aa"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/platform-packages/packages/interlis-vscode-linux-x64.vsix",
+      "sha256": "833aab19862e78aa81c2e6add5fadbf49bf14502c6d257cd696e869cd144be56"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/platform-packages/packages/interlis-vscode-win32-x64.vsix",
+      "sha256": "37ad2202d393e77ab136279dd73b97578bcd90b136224ce20fbf0de32431e5da"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/release/editor-artifacts.lock.json",
+      "sha256": "2a91b62f883db93898e1963217313e20a074aa7234541cedb659cfdb58fdcf45"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/release/runtime-artifacts.lock.json",
+      "sha256": "0a86e53ce7dadf377837f847c09cbd017291b19e0150b918e4d3cca3fa41d73e"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/release/runtime-sources.lock.json",
+      "sha256": "1bfcb221bec85c6d6c7519170884fa5c6dbbbfa571c5436dbe3f67e703397ab4"
+    }
+  ],
+  "implementationRuns": [
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/result.json",
+      "sha256": "906e0574eeeb251bc456f17f88aed277db4828828807782b922f55c0ca08289b"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/validation.json",
+      "sha256": "4cb6a25f041b0bea48088cbfde89ef93a84344fa8547a3027da0270e42dacf67"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/package.log",
+      "sha256": "c621d4a161f2afdd919b665f29122c12c545c2838c0c468b759d141d5bed68c5"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/package.guard.json",
+      "sha256": "7789e4464dde860d124418e341704f735bc89a80282e28b72b4c629600645d35"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/extension-unit-and-stdio.log",
+      "sha256": "1fe25ebe08584342cb35436de65d532315e20b06b85d50106baf16f0df817cc2"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/extension-unit-and-stdio.guard.json",
+      "sha256": "23892424bd225e6a4713b71b7667d9f6722cd08a74446cc0647d6edea9f5a38a"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/dependencies.log",
+      "sha256": "5a5aebe5526a9f31fde5fe21504aaac2e846b96048113548527693172f1882fc"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/dependencies.guard.json",
+      "sha256": "bd7a79cb29ac9e63f1020ae2e7c9ac369ce730d24fe0c6c5e37f5b7e15f61d2d"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/protocol-negative-fixture.log",
+      "sha256": "c3775a3468c3bca97de61a2e0c6ad6d123587fe5359709d7ad788fdd07aefb00"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/protocol-negative-fixture.guard.json",
+      "sha256": "6982afb2843152c5a214a8777dcd210053ae6619e1c4586831666b34bb1c20e8"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/extension-host.log",
+      "sha256": "fe463ae033dd142b42f8efa2aaa527ffc23939b1d81b6220a0ce6cb798347b35"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/extension-host.guard.json",
+      "sha256": "b2ac5a34616bf5a8ae3b7dd5108f6c5faf262338d19d82ec19d0c9f99d014345"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/java-editor-lsp-projections.log",
+      "sha256": "4703da903de688dc75a3dec847b80962a4aa831c3181b22da257cc54c1a38c43"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/java-editor-lsp-projections.guard.json",
+      "sha256": "3a2640e7e0eb48125e635849c65596eacc721885edab02764e80924360287c13"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/shared-diagram-ui.log",
+      "sha256": "d0cade9f916516344ca66382d8c9c68a02b7fe31780afc118b8493bd62bbb045"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/shared-diagram-ui.guard.json",
+      "sha256": "b14de68750f867d042abe6b93267e4bd81e601fc89ec0dfed4ead53ac98e39c7"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/gui-comfort.log",
+      "sha256": "26eb834a25c6092434af38d7d4e3596169a89e9e95b921e533e9cb72a9f50969"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/gui-comfort.guard.json",
+      "sha256": "7438d7e75c062a56177de4bdd27dd571a38c8c5d42023035709be2c0dc66b1fd"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/manifest.json",
+      "sha256": "575735be10565b79c55e4e29fc06daaef34516878ca0ff09058ad83dc08e067f"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T18-25-34-055Z/cases.json",
+      "sha256": "1a545b3d3adc2e406d6beb4b6a641097b23db14876e213d55292c4b8e9543b43"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/gui-authoring.log",
+      "sha256": "538ab04d52567e0d57b0bacdf398950b4782fc56ac38ef6e0c91cb4f7acde923"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/gui-authoring.guard.json",
+      "sha256": "4a1935d1da95860f4b18bb0b21c3c7c08b15433c6c57cc18de0e4ebd84c3e6bb"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/authoring/2026-11-02T18-28-30-943Z/manifest.json",
+      "sha256": "823eb0a9cb2d9e97fb1d875c87261de926095d67f0bb281926c6ef15ee6e4ab9"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/authoring/2026-11-02T18-28-30-943Z/cases.json",
+      "sha256": "331e0b7e46dc1112ad101024f08041bab8aa9af7e6e10c79fe288e4171293dac"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/gui-resilience.log",
+      "sha256": "c5cafae82cb334edab6b1abab86c4a461dc8185901bc4a7222cc1b7c7deec519"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/gui-resilience.guard.json",
+      "sha256": "cf2f99c892262cd3ca38768204a985ff1106b191ded04625b6371a508fa1ec10"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/resilience/2026-11-02T18-30-19-305Z/manifest.json",
+      "sha256": "b83340c829f12804c10269578601cd51275eb9c87408b66cb3d45f25f32f717e"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/resilience/2026-11-02T18-30-19-305Z/cases.json",
+      "sha256": "ee92e88a42182be0b7fae0643f77eec949f95dde00b9626039331040fd4a8411"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/resource-observer/2026-11-02T18-30-18-489Z/result.json",
+      "sha256": "3e55d9eb14b1de18a98782442d296323ddee217435c2ef12242e3a69beb62be4"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/gui-distribution.log",
+      "sha256": "beaf6949003742a684da8c9fd89de4ee6b033e15aa47a6adc823591ef64b5fc2"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/gui-distribution.guard.json",
+      "sha256": "06a9e33abb8696f55c4e35f9a94f9c45bde8ee704fd1557d78283c84a9b6e4b8"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/distribution/2026-11-02T18-32-06-943Z/manifest.json",
+      "sha256": "a643e33fae7051b1d016f13295fdb658fdc09d9bc3ce56795173b02e3b1f11e2"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/distribution/2026-11-02T18-32-06-943Z/cases.json",
+      "sha256": "b6d431f514d6f98fb85b3f7ad5485105f0c15a5d4e687dcf49b7cdbbd5296d57"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/gui-missing-server-negative.log",
+      "sha256": "b88ef34fe97400af6cb4aff3446de1066814c7b3cadbd7150c3b55f508447a40"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/gui-missing-server-negative.guard.json",
+      "sha256": "173780da3db34c64e860002c3d56c1099314def4ff344233cd927f27807006ee"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/smoke/2026-11-02T18-32-22-291Z/manifest.json",
+      "sha256": "9decda2aa35cdcc09a93c3f5bec4923cd8ad8149c11f1a81ca4c07514e4b8497"
+    }
+  ],
+  "nativeCI": {
+    "runId": 41500206767,
+    "url": "https://github.com/edigonzales/interlis-vscode/actions/runs/41500206767",
+    "metadataDirectory": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850",
+    "validationStatus": "validated",
+    "smokes": [
+      {
+        "os": "ubuntu-24.04",
+        "target": "linux-x64",
+        "manifest": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/smoke-ubuntu-24.04/smoke-linux-x64/result.json",
+        "processAuditStatus": "passed",
+        "vsix": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/platform-packages/packages/interlis-vscode-linux-x64.vsix",
+        "vsixSha256": "833aab19862e78aa81c2e6add5fadbf49bf14502c6d257cd696e869cd144be56",
+        "runtimeDigest": "c4f933f8d21783d489666c780299cc559810890f595f70551709168bae75056d",
+        "elapsedMs": 57688,
+        "cliInstalled": true,
+        "stdioRoot": "/home/runner/work/interlis-vscode/interlis-vscode/build/ci/smoke-linux-x64/Unicode Modelle ä/extension/artifacts/runtime/linux-x64/bin/java",
+        "missingServerRejected": true,
+        "guiTested": false
+      },
+      {
+        "os": "windows-2025",
+        "target": "win32-x64",
+        "manifest": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/smoke-windows-2025/smoke-win32-x64/result.json",
+        "processAuditStatus": "passed",
+        "vsix": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/platform-packages/packages/interlis-vscode-win32-x64.vsix",
+        "vsixSha256": "37ad2202d393e77ab136279dd73b97578bcd90b136224ce20fbf0de32431e5da",
+        "runtimeDigest": "0603aab7aea27ff5503a7de80c55f23b69ed82b4b48c729056fa90705834485e",
+        "elapsedMs": 37284,
+        "cliInstalled": true,
+        "stdioRoot": "D:\\a\\interlis-vscode\\interlis-vscode\\build\\ci\\smoke-win32-x64\\Unicode Modelle ä\\extension\\artifacts\\runtime\\win32-x64\\bin\\java.exe",
+        "missingServerRejected": true,
+        "guiTested": false
+      }
+    ],
+    "artifacts": [
+      {
+        "id": 13168705978,
+        "name": "package-process-audit",
+        "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/package-process-audit.zip",
+        "sha256": "83181243c81d8ba2ddba15f6e89475493694048d8ef0161edcdb3de6610c6970",
+        "githubDigest": "sha256:83181243c81d8ba2ddba15f6e89475493694048d8ef0161edcdb3de6610c6970"
+      },
+      {
+        "id": 13168617197,
+        "name": "smoke-ubuntu-24.04",
+        "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/smoke-ubuntu-24.04.zip",
+        "sha256": "70e99afb5cab8e42106b81ebb47fbfe9a92688bcb9264618c7aa484f71a9510d",
+        "githubDigest": "sha256:70e99afb5cab8e42106b81ebb47fbfe9a92688bcb9264618c7aa484f71a9510d"
+      },
+      {
+        "id": 13168077761,
+        "name": "platform-packages",
+        "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/platform-packages.zip",
+        "sha256": "c1c831a9326dd115146f9ee8799d8b6c23375904a6a27ffb8b519a3df887803e",
+        "githubDigest": "sha256:c1c831a9326dd115146f9ee8799d8b6c23375904a6a27ffb8b519a3df887803e"
+      },
+      {
+        "id": 13167788413,
+        "name": "smoke-windows-2025",
+        "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V5/ci-final-3a88850/smoke-windows-2025.zip",
+        "sha256": "676313ccf938171dd809b5ab82f69c246c1a032ddf7251c4904a1fc51b412066",
+        "githubDigest": "sha256:676313ccf938171dd809b5ab82f69c246c1a032ddf7251c4904a1fc51b412066"
+      }
+    ]
+  },
+  "implementationRunSummary": {
+    "java": {
+      "interlis-compiler": 66,
+      "interlis-documentation": 8,
+      "interlis-lsp": 75,
+      "interlis-wasm-bridge": 24,
+      "interlis-projection": 22,
+      "interlis-compiler-cli": 1
+    },
+    "guiCases": 42,
+    "extensionUnitAndRealStdio": 14,
+    "extensionHost": 3,
+    "sharedUiAndBrowser": 11,
+    "negative": "Separate missing-LSP installed test copy: real GUI exit1, zero Java starts, exact JAR restored, actual guard exit1 expected; not counted as a positive GUI test."
+  },
+  "additionalRequiredDocuments": [
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/docs/implementation/vscode-extension/PLATFORM_TEST_SCOPE.md",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/docs/implementation/vscode-extension/FEATURE_EVIDENCE.md"
+  ],
+  "attachmentsForReviewer": [
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/docs/implementation/vscode-extension/PLATFORM_TEST_SCOPE.md",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/docs/implementation/vscode-extension/FEATURE_EVIDENCE.md"
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "total_count": 4,
+  "artifacts": [
+    {
+      "id": 13168705978,
+      "node_id": "MDg6QXJ0aWZhY3QxMzE2ODcwNTk3OA==",
+      "name": "package-process-audit",
+      "size_in_bytes": 9462,
+      "url": "https://api.github.com/repos/edigonzales/interlis-vscode/actions/artifacts/13168705978",
+      "archive_download_url": "https://api.github.com/repos/edigonzales/interlis-vscode/actions/artifacts/13168705978/zip",
+      "expired": false,
+      "digest": "sha256:83181243c81d8ba2ddba15f6e89475493694048d8ef0161edcdb3de6610c6970",
+      "created_at": "2026-11-02T18:25:48Z",
+      "updated_at": "2026-11-02T18:25:48Z",
+      "expires_at": "2027-01-31T18:24:04Z",
+      "workflow_run": {
+        "id": 41500206767,
+        "repository_id": 1441865766,
+        "head_repository_id": 1441865766,
+        "head_branch": "codex/vscode-extension",
+        "head_sha": "3a888507b11c5ecefb03e4fe34aa11499894039c"
+      }
+    },
+    {
+      "id": 13168617197,
+      "node_id": "MDg6QXJ0aWZhY3QxMzE2ODYxNzE5Nw==",
+      "name": "smoke-ubuntu-24.04",
+      "size_in_bytes": 4938,
+      "url": "https://api.github.com/repos/edigonzales/interlis-vscode/actions/artifacts/13168617197",
+      "archive_download_url": "https://api.github.com/repos/edigonzales/interlis-vscode/actions/artifacts/13168617197/zip",
+      "expired": false,
+      "digest": "sha256:70e99afb5cab8e42106b81ebb47fbfe9a92688bcb9264618c7aa484f71a9510d",
+      "created_at": "2026-11-02T18:27:16Z",
+      "updated_at": "2026-11-02T18:27:16Z",
+      "expires_at": "2026-11-16T18:27:15Z",
+      "workflow_run": {
+        "id": 41500206767,
+        "repository_id": 1441865766,
+        "head_repository_id": 1441865766,
+        "head_branch": "codex/vscode-extension",
+        "head_sha": "3a888507b11c5ecefb03e4fe34aa11499894039c"
+      }
+    },
+    {
+      "id": 13168077761,
+      "node_id": "MDg6QXJ0aWZhY3QxMzE2ODA3Nzc2MQ==",
+      "name": "platform-packages",
+      "size_in_bytes": 134453950,
+      "url": "https://api.github.com/repos/edigonzales/interlis-vscode/actions/artifacts/13168077761",
+      "archive_download_url": "https://api.github.com/repos/edigonzales/interlis-vscode/actions/artifacts/13168077761/zip",
+      "expired": false,
+      "digest": "sha256:c1c831a9326dd115146f9ee8799d8b6c23375904a6a27ffb8b519a3df887803e",
+      "created_at": "2026-11-02T18:25:48Z",
+      "updated_at": "2026-11-02T18:25:48Z",
+      "expires_at": "2026-11-16T18:25:43Z",
+      "workflow_run": {
+        "id": 41500206767,
+        "repository_id": 1441865766,
+        "head_repository_id": 1441865766,
+        "head_branch": "codex/vscode-extension",
+        "head_sha": "3a888507b11c5ecefb03e4fe34aa11499894039c"
+      }
+    },
+    {
+      "id": 13167788413,
+      "node_id": "MDg6QXJ0aWZhY3QxMzE2Nzc4ODQxMw==",
+      "name": "smoke-windows-2025",
+      "size_in_bytes": 3091,
+      "url": "https://api.github.com/repos/edigonzales/interlis-vscode/actions/artifacts/13167788413",
+      "archive_download_url": "https://api.github.com/repos/edigonzales/interlis-vscode/actions/artifacts/13167788413/zip",
+      "expired": false,
+      "digest": "sha256:676313ccf938171dd809b5ab82f69c246c1a032ddf7251c4904a1fc51b412066",
+      "created_at": "2026-11-02T18:27:10Z",
+      "updated_at": "2026-11-02T18:27:10Z",
+      "expires_at": "2026-11-16T18:27:10Z",
+      "workflow_run": {
+        "id": 41500206767,
+        "repository_id": 1441865766,
+        "head_repository_id": 1441865766,
+        "head_branch": "codex/vscode-extension",
+        "head_sha": "3a888507b11c5ecefb03e4fe34aa11499894039c"
+      }
+    }
+  ]
+}

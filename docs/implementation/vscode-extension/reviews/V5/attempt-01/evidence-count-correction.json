@@ -1,0 +1,9 @@
+{
+  "at": "2026-11-02T18:47:23.881Z",
+  "source": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/shared-diagram-ui.log",
+  "sourceSha256": "d0cade9f916516344ca66382d8c9c68a02b7fe31780afc118b8493bd62bbb045",
+  "actualTotal": 8,
+  "browserCasesIncluded": 3,
+  "nonBrowserCases": 5,
+  "correction": "The author request implementationRunSummary.sharedUiAndBrowser=11 incorrectly added three browser cases to an eight-case suite that already includes them. Actual fresh npm test total is8, including3 real browser cases; all8 passed, no skips/failures. No missing test is inferred from the erroneous summary. Raw logs and test sources are authoritative. Original review request is preserved unchanged."
+}

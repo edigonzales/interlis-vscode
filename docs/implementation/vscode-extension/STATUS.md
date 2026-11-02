@@ -1,10 +1,16 @@
 # INTERLIS VS Code – aktueller Ausführungsstand
 
-**V0–V4 PASS**, unabhängig und operativ validiert. **V5 ist geöffnet.**
-V5 benötigt die macOS-Gesamtprüfung, kurze native Linux-/Windows-CI-Smokes und
-die kumulative unabhängige Abnahme. Der Nutzer hat den Plattformumfang geändert:
-[verbindlicher aktueller Umfang](PLATFORM_TEST_SCOPE.md). Isolierte Testbranches
-und Actions-Läufe sind beauftragt; kein Merge, Tag oder Produktrelease.
+**V0–V5 PASS**, unabhängig und operativ validiert. Die kumulative V5-Abnahme
+umfasst **56/56 Kriterien** und die Einzelbewertung F01–F60 am Produktpaar
+Core `6983baf95c47a7e20dbb41a2e50500185f578c37` / Extension
+`3a888507b11c5ecefb03e4fe34aa11499894039c`.
+Vollständige macOS-Tests und kurze native Linux-/Windows-CI-Smokes sind bestanden.
+Linux-/Windows-/Remote-GUI bleiben gemäss [Nutzerumfang](PLATFORM_TEST_SCOPE.md)
+ausdrücklich ungeprüft. [Originalreview](reviews/V5/attempt-01/review.md),
+[Verdict](reviews/V5/attempt-01/verdict.json),
+[äussere Abschlussprüfung](reviews/V5/attempt-01/outer-audit.json).
+Dieser reine Archiv-Dokuabschluss verändert die geprüften Produktartefakte nicht.
+Kein Merge, Tag oder Marketplace-/npm-/Open-VSX-Release wurde durchgeführt.
 
 | Phase | Stand | Geprüftes Produktpaar / Beleg |
 |---|---|---|
@@ -13,14 +19,14 @@ und Actions-Läufe sind beauftragt; kein Merge, Tag oder Produktrelease.
 | V2 | PASS, alle10 ACs | Core `7026e7f6b5834bf593d91dfee3323efb60688f3d` / Extension `01f353114cc7a19a9ac6dd884cb0b285ac723c9c`; [Originalreview](reviews/V2/attempt-02/review.md), [äussere Prüfung](reviews/V2/attempt-02/outer-audit.json) |
 | V3 | PASS, alle12 ACs | Core `a0272965c4691320ca316d519581d4db4cefc930` / Extension `dd6e4fd342dbe58a43dc648e2b2ad285db6896e2`; [Originalreview](reviews/V3/attempt-01/review.md), [äussere Prüfung](reviews/V3/attempt-01/outer-audit.json) |
 | V4 | PASS, alle9 ACs | Core `6983baf95c47a7e20dbb41a2e50500185f578c37` / Extension `36b87bc798eaa53cbe3f5b9f89ac58b92ea0eafc`; [Originalreview](reviews/V4/attempt-02/review.md), [äussere Prüfung](reviews/V4/attempt-02/outer-audit.json) |
-| V5 | OPEN | Gebündelte Runtimes implementiert; macOS-GUI36–42, native CI-Smokes und kumulative56-AC-Abnahme noch offen |
+| V5 | PASS, kumulativ alle56 ACs | Core `6983baf95c47a7e20dbb41a2e50500185f578c37` / Extension `3a888507b11c5ecefb03e4fe34aa11499894039c`; [Originalreview](reviews/V5/attempt-01/review.md), [äussere Prüfung](reviews/V5/attempt-01/outer-audit.json) |
 
 ## Unveränderliche Gesamtbasis und Arbeitsbäume
 
 AssignmentBase: Core `20b0029d824b3602d9a304320bf0feae4c35c1f9`, Extension
 `73badd9807f407aea048d397af5549fe907a1501`. Die jeweilige phaseBase bleibt über
-Nacharbeit unverändert; die nächste Basis wird nach diesem reinen Archiv-Dokucommit
-extern festgehalten. Keine Null-SHAs oder Selbstreferenz.
+Nacharbeit unverändert; die V5-PhaseBase lautet Core `6983baf95c47a7e20dbb41a2e50500185f578c37` /
+Extension `b19ac4306347f39da994db549137165448fb23cb`. Keine Null-SHAs oder Selbstreferenz.
 
 EXT: `/Users/stefan/sources/interlis-vscode`, Branch `codex/vscode-extension`.
 CORE: `/Users/stefan/sources/interlis-vscode-evidence/product-core`, Branch
@@ -54,7 +60,7 @@ Primärplattform macOS arm64, VSCode1.140.0, ExTester8.28.1,
 ChromeDriver150.0.7871.250, externes Temurin25.0.3. ZIP-Zeitstempel können beim
 erneuten Packen den Containerhash ändern; Nutzdateien werden separat geprüft.
 
-## Grenzen und nächster Umfang
+## Historische Phasenentwicklung und Grenzen
 
 V1 liefert zentrale Diagnoseprosa/RelatedInformation, hierarchische Outline,
 Repositoryhost mit transitivem Cache/Offline, readonly Quellhandles und explizites
@@ -66,8 +72,8 @@ V2 liefert echte Node-/Container-/Routeinteraktion und aktuelle Navigation aus
 einer gemeinsamen neutralen Sprotty-/ELK-Quelle. Details, unveränderte PhaseBase,
 Rohbelege, Fehlversuche und Testwiederverwendung stehen im [V2-Bericht](implementation/V2.md).
 V2 ist unabhängig abgenommen; die ursprünglichen Entwicklungsbelege bleiben erhalten. V3 ergänzt volle UMLbedienung und aktuelle Exporte und ist unabhängig abgenommen. Editorhilfen bleiben V4 zugeordnet. Keine zweite Sprachengine oder
-Altprojektabhängigkeit. Linux/Windows/Remote und Runtimebündelung sind V5-Pflicht;
-ein sauberer kumulativer Portablelauf ebenfalls. Kein pauschaler sachfremder
+Altprojektabhängigkeit. Runtimebündelung und kumulative Qualifikation wurden in V5 abgeschlossen;
+der aktuelle Plattformumfang folgt der expliziten Nutzeränderung. Kein pauschaler sachfremder
 Korpus-/Benchmark-/Safari-/releaseCheckP3-Lauf.
 
 V2 attempt01: Inhalt-PASS auf Core `7026e7f6b5834bf593d91dfee3323efb60688f3d` / Extension
@@ -88,7 +94,7 @@ wiederverwendet, alle74 ZIPdateien byte-identisch.26 tatsächliche Bildreads
 decken alle23 Sichtungsangaben ab (sechs nachgewiesene identische Aliaspfade).
 Originale und optionale Beobachtungen unter `reviews/V3/attempt-01`.
 
-## V3 erneut validiert und V4 zur Prüfung bereit
+## Historische V3-Revalidierung und V4-Prüfung
 
 Die erneute V3-Validierung am02.11.2026 unter
 `/Users/stefan/sources/interlis-vscode-evidence/phases/V3/revalidation-2026-11-02.json`
@@ -105,7 +111,7 @@ drei sichere Fixes, CompiledSchema-Dokumentation mit MD/HTML/echtem DOCX und
 drei Graphtextformaten. Eigene native GUI29–35 7/7 und frische GUI01–28 28/28,
 erwartete Negativcanary, keine verbleibenden Java-PIDs. Java-/Transport-/Artefakt-
 nachweise und genaue Wiederverwendung stehen im [V4-Bericht](implementation/V4.md).
-Das ist kein unabhängiger V4-PASS. V5 darf weiterhin nicht beginnen.
+Dies war vor dem unabhängigen V4-Review noch keine Phasenfreigabe.
 
 V4 attempt01: Original-FAIL auf Core `668caa9a975ffac41a56880c9349a70ee3fdc788` /
 Extension `e38cfb73e781952ad8ae0b597d2e6ea5504ae717`. Frische Session
@@ -114,7 +120,7 @@ Pflichtbefunde: umgekehrte Mermaid-Vererbung und zweimal nicht-grüner voller
 Comfort-Lauf wegen GUI09 nach Offline-Neustart. Native Authoring7, neue
 Gegenfälle3, gezielte UML2 und V3-Subset10 sowie Java/Build waren grün; das
 ersetzt kein PASS. Originale unverändert archiviert; V4-PhaseBase unverändert,
-V5 gesperrt. Temporäre Reviewer-Profile wurden bei dessen Speicherbereinigung
+V5 war bis zum erfolgreichen attempt02 gesperrt. Temporäre Reviewer-Profile wurden bei dessen Speicherbereinigung
 entfernt; persistente Logs/Bilder/Artefakte und Original-VSIX bleiben erhalten.
 
 V4 attempt02: vollständig validiertes PASS auf obigem Paar; frische Session
@@ -123,3 +129,32 @@ native GUI7+28 sowie neue Gegenproben4 und Wire-Race grün, richtige Negativcana
 Alle75 VSIXeinträge bytegleich,23 tatsächliche Bildreads verifiziert. Originale
 unter reviews/V4/attempt-02; Bericht erklärt Fehlversuche und aufgelösten falschen
 PythonFree-Logverweis. Beide Pflichtbefunde geschlossen. V5 darf jetzt beginnen.
+
+## Kumulative V5-Abnahme abgeschlossen
+
+OpenCode2.0.28, direkte DeepSeek-API, Modell `deepseek-flash` mit geprüfter
+Zuordnung DeepSeek-V4.1-Flash-1017; Session `ses_e62738eb6ffertVz0srlweQyfb`.
+Prozess und Guard mit Exit0 beendet am 02.11.2026 um 19:01:08.269 UTC; beide
+detached Trees unverändert. Alle56 ACs erfüllt, alle60 Features einzeln bewertet,
+keine offene Pflicht. 23 deklarierte Bildsichtungen sind durch29 tatsächliche
+Bildreads belegt; alle344 VSIX-Nutzdateien samt Unixmodi unabhängig identisch.
+
+Eigene macOS-Qualifikation: GUI01–42 bestanden, Java196, Unit13, echter
+stdio1, Extension-Host3 und Shared-UI8 einschliesslich3 Browserfälle. Der frühere
+Summenfehler11 ist unverändert transparent [korrigiert](reviews/V5/attempt-01/evidence-count-correction.json).
+Unabhängig frisch GUI28/28 plus zwei neue kombinierte GUI-Gegenfälle und sieben
+negative Paket-/Protokollprüfungen. Fehlgeschlagene reine Reviewer-Harnessiterationen
+bleiben erhalten und zählen nicht als PASS. Ein exakter LSP-Textvergleich belegt
+Dirtybuffer-Erhalt inklusive Kommentaren, Bidi-Zeichen und Schlusszeile.
+
+[Actions41500206767](https://github.com/edigonzales/interlis-vscode/actions/runs/41500206767):
+alle drei Jobs erfolgreich, unverändertes Produktpaar, alle vier heruntergeladenen
+Artefakt-ZIPdigests gegen GitHub verifiziert. Native Smokes Linux57,688s und
+Windows37,284s: echte CLIinstallation, gebündeltes Java/stdio, Unicodepfade und
+fehlender-JAR-Ablehnung, ausdrücklich keine GUI.
+
+[Abschlussbericht](implementation/V5.md) und [äussere Prüfung mit Grenzen](reviews/V5/attempt-01/outer-audit.json)
+ordnen alle Rohbelege und Einschränkungen zu. VS Code/ChromeDriver werden aus dem
+Cache wiederverwendet; temporäre Installationen nach Prozessende entfernt.
+16 eigene ältere Kopien (rund32GB laut du) und das heruntergeladene Windows-ISO
+wurden entfernt; Logs, Bilder und qualifizierte VSIX-Dateien bleiben erhalten.

@@ -1,0 +1,2078 @@
+{
+  "checkedAt": "2026-11-02T19:04:12.259Z",
+  "authorVsix": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V5-final-r1/interlis-vscode-darwin-arm64-cf8f200243ed568c5eb05f0e2be9281e043e1c9c21335433c3e7b73d6f6dc7aa.vsix",
+  "authorSha256": "cf8f200243ed568c5eb05f0e2be9281e043e1c9c21335433c3e7b73d6f6dc7aa",
+  "independentVsix": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V5-r1/extension/build/packages/interlis-vscode-darwin-arm64.vsix",
+  "independentSha256": "9f5b6f4f8aad965442551557c0951655dd33a625539e494a18c6a686a4eb2062",
+  "entries": 344,
+  "totalUncompressedBytes": 206552971,
+  "executableFiles": 7,
+  "allByteAndModeIdentical": true,
+  "differences": [],
+  "inventory": [
+    {
+      "path": "[Content_Types].xml",
+      "bytes": 1798,
+      "sha256": "4cc4eaabeca5b5471cec5ae15cb2b316b14f4b87a0e2c2c9509f9851804be3ec",
+      "mode": 436
+    },
+    {
+      "path": "extension.vsixmanifest",
+      "bytes": 2638,
+      "sha256": "25b11ce6f6d5f106fad908b4859ede05d6604ec852d75593ccea3fffc918ccf1",
+      "mode": 436
+    },
+    {
+      "path": "extension/artifacts/diagram-ui.tgz",
+      "bytes": 1885758,
+      "sha256": "2dc6e90f572fde2cf5acb48b3859e0b2cf86255f56a43e279603c652b7c403f7",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/adapter.cjs",
+      "bytes": 3584065,
+      "sha256": "b1e8ac3aa344bcb9355fe5ca4c1f3247505a6160932023f3c23471387ef3c5f5",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/adapter.d.ts",
+      "bytes": 4268,
+      "sha256": "613723fbf870dc68277fcaea66c5f373dc597848a78e5e16accc1316713ef9d2",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/build-manifest.json",
+      "bytes": 23507,
+      "sha256": "5cf5a3ce7b1a1502a99c9ea9480ceb94284d68c480ecb8e7b796427f2c573d3a",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/contracts/elk.d.ts",
+      "bytes": 3288,
+      "sha256": "2e992211afcd079a0cd0a5df424086388b4ffcb0bd8d9ff3741940ad52006d4a",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/contracts/libavoid-js.d.ts",
+      "bytes": 2383,
+      "sha256": "85f2c7a7721e2cd8f6a61a296e9238d4199bf3f361bcfd49d2d7c19119c90cb7",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/controls.d.ts",
+      "bytes": 564,
+      "sha256": "f1609e1cb2b5a06229af7a966865e29bbc8728231f66d36bb0ebfd528b746bfd",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/diagram-layout-worker.js",
+      "bytes": 1613729,
+      "sha256": "c0dc844ac1739a1e1e4f64d08a9ec4594818d5aa7e0cb26e5096b6d34b864e2b",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/diagram-ui.css",
+      "bytes": 3578,
+      "sha256": "99ee2f0f8f5aab6122dc26b065488578bd10e0e511b062a95a686d8e75dc975b",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/diagram-ui.js",
+      "bytes": 4800078,
+      "sha256": "fa5804193bd9390e6b1b4235379b50c8a19894ce71cc1460da8864df9f9d3b28",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/diagram-ui.js.LEGAL.txt",
+      "bytes": 886,
+      "sha256": "d7d178cf2029faf34c444be41614e205af12d50a04c22175f65046160c03c3a5",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/elk-layout-service.d.ts",
+      "bytes": 808,
+      "sha256": "f87c01ded4e7bf977cad235cba47cfc455fe228f145ef5f7bc2442da195defc9",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/export.d.ts",
+      "bytes": 785,
+      "sha256": "88920e85ee536130e4387f681748e1254a24c30ec55a9c54c5c7ab28d94dc7d8",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/filters.d.ts",
+      "bytes": 1531,
+      "sha256": "7c770ae2b686e0ce43256bbb3549e54dd035260d31097191bfed6f4424a0d661",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/geometry.d.ts",
+      "bytes": 1131,
+      "sha256": "a967bea7ede97ebb22d5acd4c7ac14c0af3a9e2a694b4bd529c4dec6e3f908db",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/identity.d.ts",
+      "bytes": 697,
+      "sha256": "ef42378b2b6576bf64f0045dfeedfe56e98e31c734fce1e6decb72e30065fe6e",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/interactive.d.ts",
+      "bytes": 3973,
+      "sha256": "7014f0df6e8099364ba02a4c5273a42ce7bb457b1c48d7b36df7342c1f6f668e",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/layout.d.ts",
+      "bytes": 3959,
+      "sha256": "2861414d3b7dd2329ca656309321fac624ae0cacc1e9f4fae0c2936122f323e0",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/libavoid-router.d.ts",
+      "bytes": 584,
+      "sha256": "163ace9f66b994881256862ca06ac347687f106b3431ea46035a360f4151fb93",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/libavoid-router.js",
+      "bytes": 5964,
+      "sha256": "bd491f90a73f5b38789ffd1f6793ba91d93c6e19c1436b279646dca7dc516056",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/licenses/@inversifyjs-common-LICENSE",
+      "bytes": 1066,
+      "sha256": "e7f118bca6d3c2ea16a30302f1e0062b6c7ba63bb1718a0602f969062b67ecbd",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/licenses/@inversifyjs-core-LICENSE",
+      "bytes": 1066,
+      "sha256": "e7f118bca6d3c2ea16a30302f1e0062b6c7ba63bb1718a0602f969062b67ecbd",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/licenses/@inversifyjs-reflect-metadata-utils-LICENSE",
+      "bytes": 1066,
+      "sha256": "e7f118bca6d3c2ea16a30302f1e0062b6c7ba63bb1718a0602f969062b67ecbd",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/licenses/adopted-renderer-MIT.txt",
+      "bytes": 1071,
+      "sha256": "91904e7f7a936e2f873b6c7d893b34ecc43fa9f2beffe96a9d8e24c9ad449798",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/licenses/ajv-LICENSE",
+      "bytes": 1090,
+      "sha256": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/licenses/autocompleter-MIT.txt",
+      "bytes": 1057,
+      "sha256": "9d548e9bd6dee30719b95fae5e5fefdf8ac36f3a61cff5f8766ad6f5e33b16b9",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/licenses/autocompleter-readme.md",
+      "bytes": 15466,
+      "sha256": "765cea95206473d6337fd481de82bc4f63c7732702aa1e9033112c2fb9e45838",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/licenses/elkjs-LICENSE.md",
+      "bytes": 14480,
+      "sha256": "89591d4578fb1ebd91501312a3d25f021bd865a2e436641c1cf7b1bc7e3c1617",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/licenses/file-saver-LICENSE.md",
+      "bytes": 1101,
+      "sha256": "2d1d7a93b46e4274355ac2904428707c4ee47ee8c6029fa394ebf405648d3f63",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/licenses/interlis-diagram-ui-MIT.txt",
+      "bytes": 1071,
+      "sha256": "91904e7f7a936e2f873b6c7d893b34ecc43fa9f2beffe96a9d8e24c9ad449798",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/licenses/inventory.json",
+      "bytes": 1827,
+      "sha256": "0309b6d9173f76fc5563625e459e65dacbadb8f13cd86e2f5a2f1dc342ca4c40",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/licenses/inversify-LICENSE",
+      "bytes": 1087,
+      "sha256": "bcb17487689c15a9124a3c11995c95a74150f5c1a3350aa86ec4753510bb4795",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/licenses/libavoid-js-LICENSE",
+      "bytes": 26527,
+      "sha256": "6da7ddf40cfea6f568961825b14478e879875f6ad033fad57889ae5bd52103f4",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/licenses/reflect-metadata-LICENSE",
+      "bytes": 9141,
+      "sha256": "c5217b0544ea9c91d010863582d6f6b35ec50e4146c34dee085ddcec5dd92def",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/licenses/snabbdom-LICENSE",
+      "bytes": 1086,
+      "sha256": "40b17e30359787ee415582223f3d10440f8bab87c5967e03406ea59120c59311",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/licenses/sprotty-LICENSE",
+      "bytes": 14198,
+      "sha256": "0becf16567beb77fa252b7664631dd177c8f9a1889e48995b45379c7130e5303",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/licenses/sprotty-protocol-LICENSE",
+      "bytes": 14198,
+      "sha256": "0becf16567beb77fa252b7664631dd177c8f9a1889e48995b45379c7130e5303",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/licenses/tinyqueue-LICENSE",
+      "bytes": 750,
+      "sha256": "780453e05abdc22307ee01c706a2e73f508d3e484fc4c804485ebf6fe0964694",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/presentation.d.ts",
+      "bytes": 671,
+      "sha256": "9b774ebad0132ae126349e6dcd4f28c22a5a4538f8c33d5dc4bfd3bbb38f6a70",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/render-types.d.ts",
+      "bytes": 1209,
+      "sha256": "e209e030962bda020a5734cad041102fadcfe10766f79f610661a4584c68c2b6",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/types.d.ts",
+      "bytes": 4908,
+      "sha256": "ae25650add1e8730c1472187c7127d214b51b712f83d802d5b7a6c116946ccff",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/diagram-ui/view-state.d.ts",
+      "bytes": 1643,
+      "sha256": "d3e88c246a4aee844ab02f81f10228c01da934e32a641ecbd33663dd920caf44",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/manifest.json",
+      "bytes": 8949,
+      "sha256": "137cb712dde3b3a8b176e337072cc143404829c2c9a429bfb9b52c4cf1a0f5dd",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/renderer-provenance.json",
+      "bytes": 2275,
+      "sha256": "bad89aaa9fb9ddc3f9ad86b4ac4fad0aa68bfbc45d781bc43d0ca1b2c728e016",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/bin/java",
+      "bytes": 70432,
+      "sha256": "d6b5c8ffce485baa7e9aacfd9c652e2999c89053a5070104c598731636bd2249",
+      "mode": 493
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/bin/jfr",
+      "bytes": 70448,
+      "sha256": "bc032f8a84b34f1f79400dfe150a2d22e72b21a498d41deb75ca0265cdd791d9",
+      "mode": 493
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/bin/jrunscript",
+      "bytes": 70464,
+      "sha256": "eebb0f90c0e4e57a0c79798d93d399c1d1097ef6ba5eedaa69c0c49f06761858",
+      "mode": 493
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/bin/jwebserver",
+      "bytes": 70464,
+      "sha256": "4b724946dab9defc6df1ba03752c0ec78f51641985dcddf2aefe6d2dbdcdbde8",
+      "mode": 493
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/bin/keytool",
+      "bytes": 70464,
+      "sha256": "81000ba72d00096cd7b165d78041b8aa2d29807c2065e74ae86ae743e04c1c5e",
+      "mode": 493
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/bin/rmiregistry",
+      "bytes": 70464,
+      "sha256": "860ddbb8538bb67d05b56867824e9a9587a216fea30dfe7cc691633f007faf8c",
+      "mode": 493
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/conf/jaxp-strict.properties.template",
+      "bytes": 4937,
+      "sha256": "3cc9b87633769414b22c24c97ecded8a15df630fe5ab12abca2398d88e31b32b",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/conf/jaxp.properties",
+      "bytes": 8222,
+      "sha256": "d4f45052a100e5aef02b6638a3b9c69b2bdd46155ceb58a52671e5d594c30100",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/conf/logging.properties",
+      "bytes": 2740,
+      "sha256": "8590633e1e8a7d88ffe74cc04189c5c61b1ed4703180cbc851dcd5575efcce74",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/conf/management/jmxremote.access",
+      "bytes": 3997,
+      "sha256": "0c25d26ee212ca1e8c33f67c3c460d43fe849c3a1d23dbe341148517602b280c",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/conf/management/jmxremote.password.template",
+      "bytes": 5690,
+      "sha256": "0273b6a6b9e20e6ce54c5aee70164028e0395063b2b7d39060a40b6495543dbf",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/conf/management/management.properties",
+      "bytes": 15015,
+      "sha256": "75e60327531d34d1ce5eb507db52711a1d926b9c77d14d6b3a392d747105488d",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/conf/net.properties",
+      "bytes": 7341,
+      "sha256": "f0093906820c30e079cbf79bd744d761aaf32ae917598c7ce71fac7eae16f86d",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/conf/security/java.security",
+      "bytes": 73820,
+      "sha256": "84083dbeeb9f071254d5bb21cb1fd50310b2989746159aed05877213b9ce3c2f",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/conf/security/policy/limited/default_local.policy",
+      "bytes": 647,
+      "sha256": "2b2627548e61316150d47ffc3e6cad465ca05b3cccd4785eb7d21aa7baa0f441",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/conf/security/policy/limited/default_US_export.policy",
+      "bytes": 146,
+      "sha256": "758b930a526fc670ab7537f8c26321527050a31f5f42149a2dda623c56a0a1a9",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/conf/security/policy/limited/exempt_local.policy",
+      "bytes": 566,
+      "sha256": "8c3d7648abcd95a272ce12db870082937f4d7f6878d730d83cb7fbb31eb8b2c9",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/conf/security/policy/README.txt",
+      "bytes": 2390,
+      "sha256": "6da0747334b0fea7592fd92614b2bbc8b126535e129b1fee483774d914e98eb5",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/conf/security/policy/unlimited/default_local.policy",
+      "bytes": 193,
+      "sha256": "8d8a318e6d90dfd7e26612d2b6385aa704f686ca6134c551f8928418d92b851a",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/conf/security/policy/unlimited/default_US_export.policy",
+      "bytes": 146,
+      "sha256": "758b930a526fc670ab7537f8c26321527050a31f5f42149a2dda623c56a0a1a9",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/conf/sound.properties",
+      "bytes": 1210,
+      "sha256": "299c2360b6155eb28990ec49cd21753f97e43442fe8fab03e04f3e213df43a66",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.base/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.base/aes.md",
+      "bytes": 1444,
+      "sha256": "45c6d4da48325edfbff3dcf71c704e504c057904435ed23c6d57046d551eb69d",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.base/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.base/c-libutl.md",
+      "bytes": 1556,
+      "sha256": "bef40679922d6fdfb7e4ddb223ad6722300f6054ba737bbf6188d60fcec517f9",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.base/cldr.md",
+      "bytes": 8790,
+      "sha256": "472e341c36efc1136860ed7a6461a2af4a53ae95d55d1126726340f5ba62b06a",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.base/icu.md",
+      "bytes": 4147,
+      "sha256": "be23ad20a8231d2241b37fcf401548febd8597de8373f89268882020cb7c8818",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.base/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.base/public_suffix.md",
+      "bytes": 17783,
+      "sha256": "861de1e4992a7d28f1de25c73cd50d26a94779ebd749c0643fecfa56442c3429",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.base/siphash.md",
+      "bytes": 8256,
+      "sha256": "5a792b5a74ad2a5f3d6a7ad8b7a841116e58a772c18bc6e392320a365b222c76",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.base/unicode.md",
+      "bytes": 15098,
+      "sha256": "5194d6760f2e7eccc07804196cc619f84e730fa9d10c0529b71416186f4d12dc",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.base/zlib.md",
+      "bytes": 1010,
+      "sha256": "c9c70c36a1f0325e8788771906202d42ba6ab4205caca44ec0f665707e83226b",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.compiler/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.compiler/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.compiler/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.datatransfer/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.datatransfer/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.datatransfer/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.desktop/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.desktop/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.desktop/colorimaging.md",
+      "bytes": 167,
+      "sha256": "04d61e3e8e71dd452ebe52008af5378d9f6640d14578aeb515dc5375973b0189",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.desktop/freetype.md",
+      "bytes": 30570,
+      "sha256": "e1f43089a3d7f846ac72709ba3f5e3dfe4a07955cbb1f5b580c3c41cf93792dd",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.desktop/giflib.md",
+      "bytes": 1689,
+      "sha256": "206aab89ec75968e48a6a1ed6df7d8b9bfb7aea12cbe4c9345d93e5d97460a25",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.desktop/harfbuzz.md",
+      "bytes": 3629,
+      "sha256": "5ec7cba7f8e7fc3a089213140aab6fa1b3bd5bf8a91bf8bddb3b8d315fc5f7d0",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.desktop/jpeg.md",
+      "bytes": 3474,
+      "sha256": "c1dfb9719a71ad9f861f8728550542d681e25c8ef40e6393606e6e2a0c1d653a",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.desktop/lcms.md",
+      "bytes": 2655,
+      "sha256": "6d409e73a4ce3c25479b4fb01d05fe79c0458bcd1dccc07f72d3e211d64ac8ce",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.desktop/libpng.md",
+      "bytes": 7519,
+      "sha256": "f73afb394792f3aeecd959e89487603677a430e56b44eba596d8b572accfd540",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.desktop/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.desktop/mesa3d.md",
+      "bytes": 5732,
+      "sha256": "63f4e6f75caebbccb95d903fb43e46ac7111b3624d0a34f146b276d7d9e7b152",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.desktop/pipewire.md",
+      "bytes": 1479,
+      "sha256": "56a8fb1652c70ac204d13bb52ca4d678162e7d21a97d10209c2a633de8082de0",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.desktop/xwd.md",
+      "bytes": 1348,
+      "sha256": "1d4ffa93c87f35084b02a7aa90a21084b4019db4fe1003c2e5ce775b4a384f59",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.instrument/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.instrument/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.instrument/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.logging/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.logging/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.logging/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.management.rmi/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.management.rmi/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.management.rmi/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.management/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.management/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.management/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.naming/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.naming/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.naming/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.net.http/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.net.http/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.net.http/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.prefs/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.prefs/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.prefs/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.rmi/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.rmi/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.rmi/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.scripting/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.scripting/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.scripting/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.se/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.se/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.se/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.security.jgss/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.security.jgss/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.security.jgss/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.security.sasl/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.security.sasl/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.security.sasl/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.smartcardio/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.smartcardio/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.smartcardio/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.smartcardio/pcsclite.md",
+      "bytes": 2155,
+      "sha256": "3ad4c89f51e0c79170a6e5eaaae1429db25745dbe5a84fc61804caeec2fec54f",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.sql.rowset/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.sql.rowset/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.sql.rowset/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.sql/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.sql/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.sql/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.transaction.xa/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.transaction.xa/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.transaction.xa/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.xml.crypto/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.xml.crypto/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.xml.crypto/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.xml.crypto/santuario.md",
+      "bytes": 11505,
+      "sha256": "d08690d25f660f145c73365d260ed522cd0aace8a0e1396706551b7a1ae8c9a3",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.xml/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.xml/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.xml/bcel.md",
+      "bytes": 11196,
+      "sha256": "cd578186ad93de46cca29ec8ace2b11f9da751987f3f140e6095c528596cc8c1",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.xml/dom.md",
+      "bytes": 3761,
+      "sha256": "6686e8877667584a3a7c07344baadca1a03e29f677162d87c3c0811e990d1148",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.xml/jcup.md",
+      "bytes": 1448,
+      "sha256": "8d5dcfdf50455a3c34c753a98f21e953248af200415a9084e3f102cb6c43b8bf",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.xml/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.xml/schema10part1.md",
+      "bytes": 2138,
+      "sha256": "b220f891e5bfa3aa4b2a4b34dfab53a291553c2ae0fd0b15a4cb1116d4e97770",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.xml/schema10part2.md",
+      "bytes": 2136,
+      "sha256": "2350e35e91866d5ee5bd7ee7c303b3e424bbca335d36c71452588aac494eaa3e",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.xml/xalan.md",
+      "bytes": 13477,
+      "sha256": "02bd013fc3f438dbb8fa41fa57888177e015efa6431d37fce6e794c6f353a6a1",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.xml/xerces.md",
+      "bytes": 11848,
+      "sha256": "4a6bf6b367193ee68681cb2d9fed30ffc5d62dd2d477bd62e0271707d71b3244",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.xml/xhtml10.md",
+      "bytes": 2634,
+      "sha256": "9a5cde47073ca80cf59127891420f4aed603eb65070738ad027bb19e76fb9319",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.xml/xhtml10schema.md",
+      "bytes": 7521,
+      "sha256": "7bc51d884aaae6ef27551ee78d404ba3116356790da3d06b665679eb2e1cc002",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.xml/xhtml11.md",
+      "bytes": 3258,
+      "sha256": "4f99a390896f0f55a0b78376de89bfd2ac845713de85e67e37f884b77e0c3122",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.xml/xhtml11schema.md",
+      "bytes": 3224,
+      "sha256": "8cd69b1392e286538008f4cb003f85caea3a375c619e697813d820b69857cf74",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.xml/xmlspec.md",
+      "bytes": 2719,
+      "sha256": "afec263bf5dc67697ee33734ee243f86a878161335ef6298273e4041673b0544",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/java.xml/xmlxsd.md",
+      "bytes": 1951,
+      "sha256": "498a5fec63509a8f3949983bb6878ac5c95aaf1d5e3679272d93314371aa0211",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.accessibility/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.accessibility/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.accessibility/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.charsets/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.charsets/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.charsets/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.crypto.cryptoki/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.crypto.cryptoki/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.crypto.cryptoki/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.crypto.cryptoki/pkcs11cryptotoken.md",
+      "bytes": 4095,
+      "sha256": "1f36ff1342a581142c858f90064e20633d43529ac82adb85345bd902a14e18b2",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.crypto.cryptoki/pkcs11wrapper.md",
+      "bytes": 2131,
+      "sha256": "371974b1fca3744a3892c7ee1fcc593b8b4281fc218f4cafd2f709e9df5fd81d",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.dynalink/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.dynalink/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.dynalink/dynalink.md",
+      "bytes": 1502,
+      "sha256": "17312591cabee3ef6c34ed8897d92e4e361ba9cea41ec00dcd61a322a8fc2cdb",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.dynalink/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.graal.compiler.management/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.graal.compiler.management/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.graal.compiler.management/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.graal.compiler/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.graal.compiler/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.graal.compiler/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.httpserver/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.httpserver/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.httpserver/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.incubator.vector/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.incubator.vector/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.incubator.vector/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.internal.vm.ci/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.internal.vm.ci/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.internal.vm.ci/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.jdwp.agent/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.jdwp.agent/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.jdwp.agent/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.jfr/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.jfr/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.jfr/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.jsobject/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.jsobject/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.jsobject/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.localedata/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.localedata/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.localedata/cldr.md",
+      "bytes": 8790,
+      "sha256": "472e341c36efc1136860ed7a6461a2af4a53ae95d55d1126726340f5ba62b06a",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.localedata/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.localedata/thaidict.md",
+      "bytes": 1346,
+      "sha256": "c326144a2351c9608fa708b5d7d3c5a3da03e82b66479b128e9db4969539824a",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.management.agent/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.management.agent/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.management.agent/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.management.jfr/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.management.jfr/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.management.jfr/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.management/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.management/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.management/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.naming.dns/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.naming.dns/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.naming.dns/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.naming.rmi/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.naming.rmi/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.naming.rmi/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.net/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.net/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.net/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.nio.mapmode/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.nio.mapmode/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.nio.mapmode/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.sctp/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.sctp/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.sctp/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.security.auth/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.security.auth/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.security.auth/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.security.jgss/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.security.jgss/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.security.jgss/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.unsupported/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.unsupported/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.unsupported/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.xml.dom/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.xml.dom/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.xml.dom/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.zipfs/ADDITIONAL_LICENSE_INFO",
+      "bytes": 2114,
+      "sha256": "a69bce275ba7a3570af6579cb0f55682cd75fedfcd49e0e8e9022270c447c916",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.zipfs/ASSEMBLY_EXCEPTION",
+      "bytes": 1514,
+      "sha256": "75292f03bf23d3db7c985aecc191029b93883200721ed23ed34a2e601463df33",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/legal/jdk.zipfs/LICENSE",
+      "bytes": 19274,
+      "sha256": "4b9abebc4338048a7c2dc184e9f800deb349366bdf28eb23c2677a77b4c87726",
+      "mode": 292
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/classlist",
+      "bytes": 84758,
+      "sha256": "8c01b2c5fbd6689debd3abca5be0d8c342ccdbdb51fec11d77fd473019fcbaf5",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/fontconfig.bfc",
+      "bytes": 2922,
+      "sha256": "5409952a218126c5c11cf0e4963665711aeeab50f5648264d70866fca705a950",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/fontconfig.properties.src",
+      "bytes": 8931,
+      "sha256": "c8d20a4a39240665252306bdd3dbc8d71e1e246c8cd8c7985b32e4101658a148",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/jfr/default.jfc",
+      "bytes": 40505,
+      "sha256": "26f2d7bf2f8473b3849f9480629eee695edf59fd667da838890a22919237718a",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/jfr/profile.jfc",
+      "bytes": 40387,
+      "sha256": "3e2c847608b1e7d182337f56bbf75b6a026ba4e9634b398bd92aec865e9ea8a7",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/jrt-fs.jar",
+      "bytes": 109853,
+      "sha256": "9db95684ba3dcd3ef5409df32a3f32388b0f59f502a437591f3cf5a7ba0fcf58",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/jspawnhelper",
+      "bytes": 71904,
+      "sha256": "39181d4ebd23e022acee99387a8c7d5df87a7674ac767029558569c051ea7a2c",
+      "mode": 493
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/jvm.cfg",
+      "bytes": 29,
+      "sha256": "aa9efb969444c1484e29adecab55a122458090616e766b2f1230ef05bc3867e0",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libawt_lwawt.dylib",
+      "bytes": 1208080,
+      "sha256": "cf8733397e55003d335a88aaa9594e8cfeff547b454f1f090428f22737c5b5e0",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libawt.dylib",
+      "bytes": 551104,
+      "sha256": "06dc858fbe18109785a94c8c4cb28f949c8cf484e5ba13c66fc4ad902a9599a6",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libdt_socket.dylib",
+      "bytes": 73712,
+      "sha256": "ccc35ffb65f9cbb274802fae942017a421a8959fb5746e9c7cf34fd17f98cfe8",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libextnet.dylib",
+      "bytes": 71024,
+      "sha256": "0b45ebb6a6fe48d618d29ffc3be06f9ce8d4e6dcbc0e07b9a0fb537e16fa76ca",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libfontmanager.dylib",
+      "bytes": 1093632,
+      "sha256": "e4f519e15c9441543eaf5eeaf363ccc31b6ed6ff244f19a2261762a24fa20db0",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libfreetype.dylib",
+      "bytes": 645440,
+      "sha256": "745d1ed06dbf3a75cbf41ec488c714f198a4ca05f950210a7c451b8464b3d413",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libinstrument.dylib",
+      "bytes": 91968,
+      "sha256": "4a724d39dfbf011cded4a8753d7826999e338f9945a748d87722d41a81a866e0",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libj2gss.dylib",
+      "bytes": 92544,
+      "sha256": "d8afce6256310c27d39447694624852f5784fab4fdea05de76871d7bff67e31a",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libj2pcsc.dylib",
+      "bytes": 71552,
+      "sha256": "8cd48c4c52a885905c1d2d09e244cbd322609adeeb78334c62948261e8975c27",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libj2pkcs11.dylib",
+      "bytes": 130672,
+      "sha256": "a8ddd8a42dc0ce703b9c159f5c27e6ac10275276e60f1bb79f1c78ed75c582fd",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libjaas.dylib",
+      "bytes": 70016,
+      "sha256": "b3a2881ceb1f07fcb9139ea4a49f04e1455b6c7806f0a19951c6d0e3fd0e9519",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libjava.dylib",
+      "bytes": 186704,
+      "sha256": "32dc275c514388f3a5e1ecc82975e8b0645f160168246ad1c2e045dd03241cd3",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libjavajpeg.dylib",
+      "bytes": 248016,
+      "sha256": "fad5127074a5c60874f06e640064ef43ed9100da3a454066648d0ad22c32bfd3",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libjawt.dylib",
+      "bytes": 53424,
+      "sha256": "0e555db8ae7c35a44e593a818ff5bbd8a8866b7ae819282da33ac77cced97ef9",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libjdwp.dylib",
+      "bytes": 295360,
+      "sha256": "84f009617f1db975a40eb4e5bcbbc3f87f66df8febb906f69ef65cde57416543",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libjimage.dylib",
+      "bytes": 75984,
+      "sha256": "d338502b8362e5b7fea6d46aafea2729d22b164ab1c97d4e984241c9b3123429",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libjli.dylib",
+      "bytes": 131472,
+      "sha256": "ffabc392b7d4b4f1f8eed8a435f77f577ab3d8dc82baefbc993bf27f4122dc47",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libjsig.dylib",
+      "bytes": 70960,
+      "sha256": "655028e91d7272ae7ef9da4594f6b5b606179c2b60c14ab2caf6272585320b52",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libjsound.dylib",
+      "bytes": 135072,
+      "sha256": "0587bd3a7a3e3e64e956506674ca9a78878373c2aa24fdd6c7bab73330e9d49a",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/liblcms.dylib",
+      "bytes": 299584,
+      "sha256": "1eba264dc0895192b6259d2364f7edd2507822562e2293548f1c0aa451b9fa9f",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libmanagement_agent.dylib",
+      "bytes": 69952,
+      "sha256": "75ac6dcfa5ea9439e95fc0893129341827d34fae34333b47638cbdca2c8f67eb",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libmanagement_ext.dylib",
+      "bytes": 75312,
+      "sha256": "c68d0f770cb2bca46094466c32d93601655c4d6c5355e1e6f7dc6a264cbbb0f4",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libmanagement.dylib",
+      "bytes": 76960,
+      "sha256": "8fda7008842a667ad373c05c297f1d03f8da84882dfc2c328ba7212915d5b712",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libmlib_image.dylib",
+      "bytes": 490224,
+      "sha256": "c7bd9035df68cabb7f19283de4dbef99c9191f04e557a400dd44b766024dd571",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libnet.dylib",
+      "bytes": 97760,
+      "sha256": "425fbf82925f2c040a0ec369d4af5d218a12e04f8948f012805c6a4d09bc6ab3",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libnio.dylib",
+      "bytes": 127376,
+      "sha256": "10ee1b6cbe9129e61c2479629b32d4885aa736b20e16e0e421b262425259a9ab",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libosx.dylib",
+      "bytes": 74720,
+      "sha256": "bec94f405309a31700de12d69793c6947f669c3ece372d816bd97b566f95c57c",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libosxapp.dylib",
+      "bytes": 189712,
+      "sha256": "ef70a91ea51dffb3ced5321017eaf515e923802a5241bbc893c60d33623574d1",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libosxkrb5.dylib",
+      "bytes": 74528,
+      "sha256": "1b5e5d535dc12323573095db77e19ebb23c0d6482de8e2c143ba0c58a93c0809",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libosxsecurity.dylib",
+      "bytes": 76032,
+      "sha256": "0c0c1d3764feef9e592c1cfacc76b48eda664adb917f337e046888ddc8f1a01c",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libosxui.dylib",
+      "bytes": 99600,
+      "sha256": "0da5e781846b2658b59cba5c0816eb43f74d0f5cd76f77680b67422f0b66ef54",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libprefs.dylib",
+      "bytes": 74560,
+      "sha256": "885b23fe77252325adfd4a1253a8699be1c85fffa6249496bae506449ec2e6c7",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/librmi.dylib",
+      "bytes": 69648,
+      "sha256": "350abf4b8ebabba311d25c0eb263f541d124b5e7b3acc16793241e8226e90100",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libsleef.dylib",
+      "bytes": 88192,
+      "sha256": "94495343598b49750c5bf0fd8507eccc0b5a5d8f7583fc1e717bb2b3a9169835",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libsplashscreen.dylib",
+      "bytes": 242256,
+      "sha256": "c5a31dc74e315a78888efaa64c21d30c3800f0afb614532810f72a50f794441a",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libsyslookup.dylib",
+      "bytes": 36336,
+      "sha256": "9755e7bc718f04f1d0b033800f34e4fc27cc3d2add0d09ff7bfb7c29fd7bbc9f",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libverify.dylib",
+      "bytes": 106800,
+      "sha256": "50e2d853dafef0b4b21c54fd2ff0ebbbfc3fbbeac54f199e334c3b8228693fbc",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/libzip.dylib",
+      "bytes": 126528,
+      "sha256": "63571d1b05b99ce3a6e9c2ec34e723b3d42d727f536b5744b7bf6729a5d0b1a3",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/modules",
+      "bytes": 99255918,
+      "sha256": "4ee2c29ba45fe7e7aefb7878398bb63475ec68f02a45fd30439e424e3443a34a",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/psfont.properties.ja",
+      "bytes": 3793,
+      "sha256": "5a4bd51b969bf187ff86d94f4a71fdfbfa602762975fa3c73d264b4575f7c78f",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/psfontj2d.properties",
+      "bytes": 11402,
+      "sha256": "cfb2f55fc4a22368567273c38f1afe3fc627ad56710a1d922ada68015710e53f",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/security/blocked.certs",
+      "bytes": 2488,
+      "sha256": "96572f243f31c2ef81a6e627542e596f6a9295cff3c7ae095c1b595cb1457ded",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/security/cacerts",
+      "bytes": 154503,
+      "sha256": "628b436e6698c364c5498a32c5bff91806bea7a9b501f75e2289ddc60b4ca7ef",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/security/public_suffix_list.dat",
+      "bytes": 227396,
+      "sha256": "16b42002aa6f83a7763c4cdbd399ecf738460377d447e362884495545afd60a3",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/server/classes_coh.jsa",
+      "bytes": 15237120,
+      "sha256": "522ac98ed0b8afc7668919e875f65af39e1a76cf419f49ad0817712ea4fcca22",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/server/classes_nocoops_coh.jsa",
+      "bytes": 15548416,
+      "sha256": "3fe62ac4964c23cfd99bb255b965153278aafed177eefe2cbaae607a8b21d533",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/server/classes_nocoops.jsa",
+      "bytes": 14876672,
+      "sha256": "f84f61180dd13fdf206e55d3cc0c07e91c0a5388b00476a694a9e67e17fab041",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/server/classes.jsa",
+      "bytes": 14532608,
+      "sha256": "3147d26374d3e33140a1744351a31a09d0341b66362d0babfe1a78e3bdd97ad3",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/server/libjsig.dylib",
+      "bytes": 70960,
+      "sha256": "655028e91d7272ae7ef9da4594f6b5b606179c2b60c14ab2caf6272585320b52",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/server/libjvm.dylib",
+      "bytes": 19561328,
+      "sha256": "c6721c8b330da5cf17890d385f0786a322ef986fbaf7e975d91b5461711426f0",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/shaders.metallib",
+      "bytes": 156397,
+      "sha256": "7a2758084a5dbe418dc9f4360276234dc02a415ca1371b40202de50ad89ef9b7",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/lib/tzdb.dat",
+      "bytes": 103876,
+      "sha256": "a02e3a23d67255782b11ab81070902235ab564080f0f65ffe2a989cdaa86fe89",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/NOTICE",
+      "bytes": 2400,
+      "sha256": "c02756bcd9fa8191bf0fda4451bc018414dd44ee35bf09922c24377a475e4b5a",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/runtime/darwin-arm64/release",
+      "bytes": 1603,
+      "sha256": "e5adee44ac1fce045ddb628573a28de5fb3cceb3c6e69bd4a56961e9fea97859",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/schemas/diagram-document-1.0.schema.json",
+      "bytes": 11928,
+      "sha256": "105e7eeb24f6ef682e04695ecbbc127a51805178c6ee1a4310cb7ca1426fc779",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/schemas/diagram-options-1.0.schema.json",
+      "bytes": 2423,
+      "sha256": "825c35756a4c00f743bdbacc0700def78b871d75f2b7c74c06a1daabbfd87b91",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/server/lib/antlr4-runtime-4.13.2.jar",
+      "bytes": 326307,
+      "sha256": "dd3e8a13a2d669bf84fb8d834de35ce4875f27157698d206241ec8488aadcaf7",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/server/lib/error_prone_annotations-2.48.0.jar",
+      "bytes": 20255,
+      "sha256": "b49c5c958316ed67a09c699dda9aa749caf434d51d863dea599ef36a49b9c855",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/server/lib/gson-2.14.0.jar",
+      "bytes": 313604,
+      "sha256": "2cbd119bf1961c28788310963dc80ba65f58cdeec1dd139c8bdb1240faa2c36f",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/server/lib/interlis-compiler-0.2.0-SNAPSHOT.jar",
+      "bytes": 1091054,
+      "sha256": "30c817cd80f7918d856ff2a29dbc204344dc53877930cd16179ab7395c1d73c0",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/server/lib/interlis-documentation-0.2.0-SNAPSHOT.jar",
+      "bytes": 49021,
+      "sha256": "1e4d4c4d0fbdb6df6c7592f77939f5e618449cc058f4a0d7e8271d74728d19fa",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/server/lib/interlis-lsp-0.2.0-SNAPSHOT.jar",
+      "bytes": 192301,
+      "sha256": "c143012d70ca0530d3181554fd3db75872653065a21b55ddd3965c2237ba1d8d",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/server/lib/interlis-model-0.2.0-SNAPSHOT.jar",
+      "bytes": 432241,
+      "sha256": "c28c22fc522b2411032a35fee5e6c2b59ff435332fc52d7634aaa6f44b8d3848",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/server/lib/interlis-projection-0.2.0-SNAPSHOT.jar",
+      "bytes": 90743,
+      "sha256": "5cd9ad4e233cb01f5237fd94dcb371093c3a26e66999da2617d86475d417dd56",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/server/lib/interlis-repository-0.2.0-SNAPSHOT.jar",
+      "bytes": 135097,
+      "sha256": "7f8b20e0dc60e4f0291f55c26c22dd3e951486f6109b52dd83d2fe3d8536130d",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/server/lib/interlis-workspace-0.2.0-SNAPSHOT.jar",
+      "bytes": 81559,
+      "sha256": "e9efee37214c38e1292fd26d3f802c2ada1e25bf0abdb7a77b015ef8724085ad",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/server/lib/org.eclipse.lsp4j-0.23.1.jar",
+      "bytes": 614640,
+      "sha256": "b16bbc6232a3946e03d537bb9be74e18489dbc6a8b8c5ab6cb7980854df8440f",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/server/lib/org.eclipse.lsp4j.jsonrpc-0.23.1.jar",
+      "bytes": 151978,
+      "sha256": "4e1aa77474de1791d96dc55932fb46efdf53233548f38f62ba7376f8b0bc6650",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/types/diagram-document.ts",
+      "bytes": 4409,
+      "sha256": "2f3b7bb797320aa526b50800947e8c9a8c51f494c4727833d95bdf2d17d900d3",
+      "mode": 420
+    },
+    {
+      "path": "extension/artifacts/types/editor-protocol.ts",
+      "bytes": 2894,
+      "sha256": "d0d0aab0a8d145c34780a640d79b21502b7b1b9445798ec61b3fbffaae3ba58c",
+      "mode": 420
+    },
+    {
+      "path": "extension/LICENSE.txt",
+      "bytes": 1071,
+      "sha256": "91904e7f7a936e2f873b6c7d893b34ecc43fa9f2beffe96a9d8e24c9ad449798",
+      "mode": 420
+    },
+    {
+      "path": "extension/licenses/bundled-node-notices.txt",
+      "bytes": 12649,
+      "sha256": "ad80b43ecd03584a47f0b415a61385e36cf90952e5201ba42407d0d921509544",
+      "mode": 420
+    },
+    {
+      "path": "extension/licenses/interlis-java.txt",
+      "bytes": 1071,
+      "sha256": "91904e7f7a936e2f873b6c7d893b34ecc43fa9f2beffe96a9d8e24c9ad449798",
+      "mode": 420
+    },
+    {
+      "path": "extension/licenses/runtime-NOTICE.txt",
+      "bytes": 978,
+      "sha256": "af1598c7a94191304ec92039f47bfde2b422f9e5bfaf0b48daf0fb4034e722af",
+      "mode": 420
+    },
+    {
+      "path": "extension/licenses/syntax-resources-MIT.txt",
+      "bytes": 1071,
+      "sha256": "91904e7f7a936e2f873b6c7d893b34ecc43fa9f2beffe96a9d8e24c9ad449798",
+      "mode": 420
+    },
+    {
+      "path": "extension/out/diagram-webview.js",
+      "bytes": 6353,
+      "sha256": "79a900ee7a5d9d841b7bf769aee9cb8e055c1312be2ac0df5c9f8d9440bc946b",
+      "mode": 420
+    },
+    {
+      "path": "extension/out/extension.cjs",
+      "bytes": 963258,
+      "sha256": "77dea49fd6738fedee8aa56ef41e54ab38cb8fec5465140c530dc23470328852",
+      "mode": 420
+    },
+    {
+      "path": "extension/package.json",
+      "bytes": 17561,
+      "sha256": "cc39613860edc09c01ea8b8879fe415ddc3c8a5dca26e5fc118e146b63582b04",
+      "mode": 420
+    },
+    {
+      "path": "extension/readme.md",
+      "bytes": 11062,
+      "sha256": "ad7fafc2ea07646459b4073d3e9c8c072296a8a5c18923d6d8a0dcb1f9dbc34f",
+      "mode": 436
+    },
+    {
+      "path": "extension/release/distribution.json",
+      "bytes": 144,
+      "sha256": "4259748195c0b080d3e6c71c35296e2fa57f0c2a5d12d40474a595a339787b0c",
+      "mode": 420
+    },
+    {
+      "path": "extension/release/editor-artifacts.lock.json",
+      "bytes": 9010,
+      "sha256": "2a91b62f883db93898e1963217313e20a074aa7234541cedb659cfdb58fdcf45",
+      "mode": 420
+    },
+    {
+      "path": "extension/release/runtime-artifacts.lock.json",
+      "bytes": 163745,
+      "sha256": "0a86e53ce7dadf377837f847c09cbd017291b19e0150b918e4d3cca3fa41d73e",
+      "mode": 420
+    },
+    {
+      "path": "extension/release/runtime-sources.lock.json",
+      "bytes": 3225,
+      "sha256": "1bfcb221bec85c6d6c7519170884fa5c6dbbbfa571c5436dbe3f67e703397ab4",
+      "mode": 420
+    },
+    {
+      "path": "extension/resources/language-configuration.json",
+      "bytes": 1136,
+      "sha256": "7fae0314a4f60e4fbea69e341216ff653d1ceb9874c9ec1795fcf4513b9b7aaf",
+      "mode": 420
+    },
+    {
+      "path": "extension/resources/snippets/interlis.json",
+      "bytes": 388,
+      "sha256": "a98658069018608fe277e648e5ef426d2812fabdf8f32e8b83410510e99725ae",
+      "mode": 420
+    },
+    {
+      "path": "extension/resources/syntaxes/interlis.tmLanguage.json",
+      "bytes": 3390,
+      "sha256": "989a3f5b3d265f582cf933adaa1ed89224287604379ca38f57e7e058c30035bc",
+      "mode": 420
+    },
+    {
+      "path": "extension/resources/templates/model.ili",
+      "bytes": 172,
+      "sha256": "9df9d625957fe560d305fa237325e6b289228e987f757b329f5bbc4e961ebd01",
+      "mode": 420
+    }
+  ]
+}

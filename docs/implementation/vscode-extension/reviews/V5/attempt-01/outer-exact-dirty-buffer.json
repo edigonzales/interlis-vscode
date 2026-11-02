@@ -1,0 +1,9 @@
+{
+  "checkedAt": "2026-11-02T19:03:39.483Z",
+  "method": "Exact actual didOpen payloads from real LSP trace: original versus full raw dirty text resynchronized after Restart. Includes comments, bidi controls and terminal newline; resolves the reviewer visible-DOM comparison that normalized comments/bidi.",
+  "didOpenCount": 2,
+  "originalTextSha256": "5f6e3c6ba0c37755cb9c01649222d9acd42bd4b07caa5dd9763e52128b73dee7",
+  "expectedDirtySha256": "f1bd0b6370f354d50e2c4768ec01e6749a9cdc2ab8424c2318dfd04935689b0e",
+  "actualRestartedDirtySha256": "f1bd0b6370f354d50e2c4768ec01e6749a9cdc2ab8424c2318dfd04935689b0e",
+  "accepted": true
+}
