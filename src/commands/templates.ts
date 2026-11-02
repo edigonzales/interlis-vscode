@@ -1,4 +1,5 @@
 import * as vscode from 'vscode';
+import {isAbsolute} from 'node:path';
 
 /** User-selected sources only. Templates become unsaved text and are never executed. */
 export async function newFromTemplate(context:vscode.ExtensionContext):Promise<void>{
@@ -9,7 +10,7 @@ export async function newFromTemplate(context:vscode.ExtensionContext):Promise<v
   if(choice.source==='builtin')content=Buffer.from(await vscode.workspace.fs.readFile(vscode.Uri.joinPath(context.extensionUri,'resources/templates/model.ili'))).toString('utf8');
   else {
     if(!vscode.workspace.isTrusted)throw new Error('Trust this workspace before loading a configured template.');
-    if(choice.source==='local'){const uri=vscode.Uri.file(local);const stat=await vscode.workspace.fs.stat(uri);if(stat.size>1_000_000)throw new Error('Template exceeds 1 MB.');content=new TextDecoder('utf-8',{fatal:true}).decode(await vscode.workspace.fs.readFile(uri));}
+    if(choice.source==='local'){if(!isAbsolute(local))throw new Error('The configured local template path must be absolute.');const uri=vscode.Uri.file(local);const stat=await vscode.workspace.fs.stat(uri);if(stat.size>1_000_000)throw new Error('Template exceeds 1 MB.');content=new TextDecoder('utf-8',{fatal:true}).decode(await vscode.workspace.fs.readFile(uri));}
     else content=await vscode.window.withProgress({location:vscode.ProgressLocation.Notification,title:'INTERLIS: loading selected template',cancellable:true},async(_,token)=>{
       const abort=new AbortController(),subscription=token.onCancellationRequested(()=>abort.abort()),timeout=setTimeout(()=>abort.abort(),10_000);
       try {let url=new URL(remote);for(let redirects=0;redirects<5;redirects++){

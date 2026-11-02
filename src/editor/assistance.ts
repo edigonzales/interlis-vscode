@@ -32,7 +32,7 @@ export class EditorAssistance implements vscode.Disposable {
       if(!Array.isArray(result.edits)||result.edits.length>8||!result.caret||![result.caret.line,result.caret.character].every(Number.isSafeInteger)||result.caret.line<0||result.caret.line>document.lineCount+64||result.caret.character<0||result.caret.character>65536)throw new Error('Invalid editor assistance result.');
       const edits=result.edits.map(edit=>{if(typeof edit.newText!=='string'||edit.newText.length>65536)throw new Error('Oversized editor edit.');const range=new vscode.Range(edit.range.start.line,edit.range.start.character,edit.range.end.line,edit.range.end.character);if(!document.validateRange(range).isEqual(range))throw new Error('Editor edit range is outside the current buffer.');return {range,text:edit.newText};});
       const applied=await editor.edit(builder=>{for(const edit of edits)builder.replace(edit.range,edit.text);},{undoStopBefore:false,undoStopAfter:false});
-      if(applied&&editor===vscode.window.activeTextEditor){const caret=document.validatePosition(new vscode.Position(result.caret.line,result.caret.character));editor.selection=new vscode.Selection(caret,caret);editor.revealRange(new vscode.Range(caret,caret));}
+      if(applied&&document.version===version+1&&server===this.getClient()&&editor===vscode.window.activeTextEditor){const caret=document.validatePosition(new vscode.Position(result.caret.line,result.caret.character));editor.selection=new vscode.Selection(caret,caret);editor.revealRange(new vscode.Range(caret,caret));}
     }finally{if(this.pending===cancellation){this.pending=undefined;this.pendingDocument=undefined;}cancellation.dispose();}
   }
 }
