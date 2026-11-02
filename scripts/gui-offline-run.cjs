@@ -1,0 +1,24 @@
+// A single inherited OS profile: macOS rejects nested sandbox-exec calls.
+const fs=require('node:fs'),path=require('node:path'),cp=require('node:child_process');
+if(process.platform!=='darwin')throw Error('macOS-only qualification runner');
+const root=path.resolve(__dirname,'..'),sources=path.dirname(root),cache=process.argv[2];
+if(!path.isAbsolute(cache||''))throw Error('Supply the pre-acquired GUI cache directory');
+const sourceState=()=>({sha:cp.execFileSync('git',['rev-parse','HEAD'],{cwd:root,encoding:'utf8'}).trim(),dirty:cp.execFileSync('git',['status','--porcelain'],{cwd:root,encoding:'utf8'})});const before=sourceState();const storage=fs.mkdtempSync(path.join(require('node:os').tmpdir(),'ili GUI ä-offline-'));for(const name of ['Visual Studio Code.app','chromedriver-mac-arm64'])fs.cpSync(path.join(cache,name),path.join(storage,name),{recursive:true,verbatimSymlinks:true,mode:fs.constants.COPYFILE_FICLONE});
+const output=path.resolve('build/reports/offline-guard',new Date().toISOString().replace(/[:.]/g,'-'));fs.mkdirSync(output,{recursive:true});
+const profile=path.join(output,'environment.sb'),record=path.join(output,'environment.json');
+const deny='(deny process-exec (regex #".*/([Pp]ython[^/]*|[Pp]y[Pp]y[^/]*|[Pp][Ii][Pp][0-9.]*|[Uu][Vv][Xx]?)$"))';
+const allowed=['scripts','test','node_modules','build','release','out','.git'].map(name=>path.join(root,name));allowed.push(cache);
+fs.writeFileSync(profile,'(version 1)\n(allow default)\n'+deny+'\n(deny network-outbound (remote ip "*:*"))\n(allow network-outbound (remote ip "localhost:*"))\n(deny file-read-data (subpath '+JSON.stringify(sources)+'))\n'+'(allow file-read-data (literal '+JSON.stringify(sources)+') (literal '+JSON.stringify(root)+'))\n'+allowed.map(folder=>'(allow file-read-data (subpath '+JSON.stringify(folder)+'))').join('\n')+'\n(allow file-read-data (literal '+JSON.stringify(path.join(root,'package.json'))+'))\n');
+const probe=(exe,args)=>cp.spawnSync('/usr/bin/sandbox-exec',['-f',profile,exe,...args],{encoding:'utf8'});
+const good=probe('/bin/cat',[path.join(root,'test/fixtures/editor-basic/Example.ili')]);
+const bad=probe('/bin/cat',[path.join(sources,'interlis-vscode-evidence/product-core/interlis-lsp/src/main/java/guru/interlis/lsp/Main.java')]);
+const ext=probe('/bin/cat',[path.join(root,'src/extension.ts')]);
+const network=probe('/usr/bin/curl',['--max-time','3','--head','https://example.org']);
+const sentinel=path.join(output,'python-guard-node-sentinel');fs.copyFileSync(process.execPath,sentinel);fs.chmodSync(sentinel,0o755);
+const interpreter=probe(process.execPath,['-e','const r=require("child_process").spawnSync(process.argv[1],["--version"]);if(r.error?.code!=="EPERM")process.exit(1);',sentinel]);fs.unlinkSync(sentinel);
+const info={startedAt:new Date().toISOString(),profile,scope:'Single inherited execution, network and source-data sandbox for entire GUI harness and all product descendants. Harness scripts/test/dependencies/build/locks and already-acquired tools remain readable; Core and extension source directories do not.',allowed:{exit:good.status},sourceDenied:{exit:bad.status,stderr:bad.stderr},extensionSourceDenied:{exit:ext.status,stderr:ext.stderr},externalNetworkDenied:{exit:network.status,stderr:network.stderr},interpreterDenied:interpreter.status===0,status:'running'};
+fs.writeFileSync(record,JSON.stringify(info,null,2));
+if(good.status!==0||bad.status===0||ext.status===0||network.status===0||interpreter.status!==0)throw Error('Combined offline guard preflight failed');
+const child=cp.spawnSync('/usr/bin/sandbox-exec',['-f',profile,process.execPath,path.join(root,'scripts/gui.cjs'),'--suite','distribution','--cache',cache],{cwd:root,env:{...process.env,INTERLIS_JAVA:'',INTERLIS_OFFLINE_BOUNDARY:record,INTERLIS_GUI_SOURCE_STATE:JSON.stringify(before),INTERLIS_GUI_PREPARED_STORAGE:storage},stdio:'inherit'});
+info.sourceBefore=before;info.sourceAfter=sourceState();if(JSON.stringify(info.sourceBefore)!==JSON.stringify(info.sourceAfter))throw Error('Source state changed during isolated GUI');
+info.finishedAt=new Date().toISOString();info.exit=child.status;info.status=child.status===0?'passed':'failed';fs.writeFileSync(record,JSON.stringify(info,null,2));process.exitCode=child.status===0?0:1;

@@ -1,0 +1,10 @@
+const fs=require('node:fs'),path=require('node:path'),cp=require('node:child_process');
+if(process.platform!=='linux')throw Error('Linux exec tracing only');
+const args=process.argv.slice(2);if(!args.length)throw Error('Supply a command');
+const output=path.resolve('build/ci/process-audit');fs.mkdirSync(output,{recursive:true});
+const trace=path.join(output,'execve.log');
+const result=cp.spawnSync('/usr/bin/strace',['-f','-e','trace=execve,execveat','-s','4096','-o',trace,...args],{stdio:'inherit',env:process.env});
+const text=fs.readFileSync(trace,'utf8'),executed=[...text.matchAll(/execve\("([^"\n]+)"[^\n]*= 0/g)].map(m=>m[1]);
+const forbidden=executed.filter(file=>/^(?:python.*|pypy.*|pip[0-9.]*|uvx?)$/i.test(path.basename(file)));
+const report={platform:process.platform,command:args,exit:result.status,signal:result.signal,executed,forbidden,scope:'Observed successful execs of the command and every traced descendant; this is Linux process evidence, not the macOS sandbox.',status:result.status===0&&executed.length>0&&forbidden.length===0?'passed':'failed'};
+fs.writeFileSync(path.join(output,'result.json'),JSON.stringify(report,null,2));process.exitCode=report.status==='passed'?0:1;

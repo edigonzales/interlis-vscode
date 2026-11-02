@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   packages:
-    runs-on: macos-15
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
@@ -32,8 +32,11 @@ jobs:
           java-version: 25.0.3
       - run: npm ci --ignore-scripts
         working-directory: extension
-      - name: Build locked packages under the macOS Python guard
-        run: node core/tools/verification/without-python.cjs node "$GITHUB_WORKSPACE/extension/scripts/ci/build-smokes.cjs"
+      - name: Check native process tracing
+        run: command -v strace || sudo apt-get install --yes --no-install-recommends strace
+      - name: Build locked packages with complete descendant exec tracing
+        run: node scripts/ci/trace-linux.cjs node scripts/ci/build-smokes.cjs
+        working-directory: extension
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: platform-packages
@@ -46,8 +49,8 @@ jobs:
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
-          name: package-guard
-          path: core/build/reports/python-free/environment.json
+          name: package-process-audit
+          path: extension/build/ci/process-audit/
   smoke:
     needs: packages
     strategy:
@@ -73,7 +76,12 @@ jobs:
           cp build/download/packages/* build/packages/
           cp build/download/ci/build-provenance.json build/packages/
       - name: Native runtime, stdio, Unicode CLI installation and rejection smoke
-        run: node scripts/ci/smoke.cjs
+        if: runner.os == 'Linux'
+        run: node scripts/ci/trace-linux.cjs node scripts/ci/smoke.cjs
+      - name: Native Windows smoke with actual descendant process events
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: ./scripts/ci/trace-windows.ps1
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
@@ -83,3 +91,4 @@ jobs:
           path: |
             build/ci/smoke-*/result.json
             build/ci/smoke-*/command-*.log
+            build/ci/process-audit/
