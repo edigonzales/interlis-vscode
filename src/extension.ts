@@ -5,6 +5,7 @@ import {resolveLaunchPlan} from './host/launch';
 import {DiagramEditors} from './diagram';
 import {newFromTemplate} from './commands/templates';
 import {DocumentationCommands} from './commands/documentation';
+import {InterlisLanguageClient,EditorAssistance} from './editor/assistance';
 import {SnippetInteraction} from './editor/snippets';
 import {languageSettings} from './host/configuration';
 
@@ -20,7 +21,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   context.subscriptions.push(output, status, watcher);
   let client: LanguageClient | undefined;
   const snippets=new SnippetInteraction();context.subscriptions.push(snippets);
-  context.subscriptions.push(new DocumentationCommands(()=>client,output));
+  context.subscriptions.push(new DocumentationCommands(()=>client,output),new EditorAssistance(()=>client,output));
   const diagrams=new DiagramEditors(context,()=>client,output);
   context.subscriptions.push(diagrams,vscode.window.registerCustomEditorProvider(DiagramEditors.viewType,diagrams,{webviewOptions:{retainContextWhenHidden:true},supportsMultipleEditorsPerDocument:true}),...(['refresh','settle','resetLayout','export'] as const).map(action=>vscode.commands.registerCommand('interlisGuru.diagram.'+action,()=>diagrams.viewAction(action))),vscode.commands.registerCommand('interlisGuru.diagram.reveal',()=>diagrams.reveal()),vscode.commands.registerCommand('interlisGuru.showDiagram',()=>diagrams.open()));
   let queue = Promise.resolve();
@@ -40,7 +41,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     setStatus('Starting');
     const settings = vscode.workspace.getConfiguration('interlisGuru');
     const plan = await resolveLaunchPlan(context.extensionPath, settings.get<string>('server.javaPath', ''), settings.get<string>('server.bundlePath', ''));
-    const next = new LanguageClient('interlisGuru', 'INTERLIS', () => {
+    const next = new InterlisLanguageClient('interlisGuru', 'INTERLIS', () => {
       const child = spawn(plan.java, plan.args, {shell: false, stdio: 'pipe'});
       output.appendLine(`Server start pid=${child.pid} core=${plan.coreCommit} bundle=${plan.bundleDigest}${settings.get('server.bundlePath') ? ' developer override' : ' packaged distribution'}`);
       child.once('exit', (code, signal) => output.appendLine(`Server exit pid=${child.pid} code=${code} signal=${signal}`));

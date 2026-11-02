@@ -444,6 +444,11 @@
         "key": "escape",
         "command": "interlisGuru.snippet.leave",
         "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && !suggestWidgetVisible"
+      },
+      {
+        "key": "enter",
+        "command": "interlisGuru.editor.newline",
+        "when": "editorTextFocus && editorLangId == interlis && !editorReadonly && !suggestWidgetVisible && !hasNextTabstop"
       }
     ]
   },
