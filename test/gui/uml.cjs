@@ -14,7 +14,7 @@ async function dragElement(element,dx,dy){await ui.driver.actions().move({origin
 async function node(label){return ui.driver.findElement(By.css('[data-label='+JSON.stringify(label)+']'));}
 async function unchanged(){await back();await openSource('Interactive.ili');assert.equal(await ui.copyText(),original);assert.equal(await ui.editor.isDirty(),dirty);assert.equal(digest(path.join(evidence,'Unicode Modelle/Interactive.ili')),sourceHash);}
 function record(id,actions,assertions){ui.record(id,actions,assertions);}
-async function copySelection(){const clipboard=(await import('clipboardy')).default,previous=clipboard.readSync();try{clipboard.writeSync('interlis-selection-pending');await ui.driver.actions().keyDown(Key.COMMAND).sendKeys('c').keyUp(Key.COMMAND).perform();await ui.waitFor(()=>clipboard.readSync()!=='interlis-selection-pending','Native selected-text copy did not finish');return clipboard.readSync();}finally{clipboard.writeSync(previous);}}
+async function copySelection(){const clipboard=(await import('clipboardy')).default,previous=clipboard.readSync();try{clipboard.writeSync('interlis-selection-pending');await ui.driver.actions().keyDown(ui.primaryModifier).sendKeys('c').keyUp(ui.primaryModifier).perform();await ui.waitFor(()=>clipboard.readSync()!=='interlis-selection-pending','Native selected-text copy did not finish');return clipboard.readSync();}finally{clipboard.writeSync(previous);}}
 
 describe('Installed live Java diagram and native Sprotty editor',function(){
  this.timeout(120000);this.bail(true);

@@ -9,7 +9,7 @@ async function settings(patch){
  await ui.waitEditor('settings.json');
  const config={...JSON.parse(await ui.copyText()),...patch};
  await ui.replaceText(JSON.stringify(config));
- await ui.driver.actions().keyDown(Key.COMMAND).sendKeys('s').keyUp(Key.COMMAND).perform();
+ await ui.driver.actions().keyDown(ui.primaryModifier).sendKeys('s').keyUp(ui.primaryModifier).perform();
  await ui.waitFor(async()=>!(await ui.editor.isDirty()),'Settings were not saved');
  fs.writeFileSync(path.join(evidence,'settings.json'),JSON.stringify(config,null,2));
 }
@@ -66,11 +66,11 @@ describe('Installed INTERLIS repository and editor parity',function(){
   ui.record('GUI-06',['Find All References on imported class','expand Base.ili','click declaration result and press Enter'],['both source files in semantic result list','closed declaration opens at line13']);
  });
  it('GUI-07 applies a project rename and undo across declarations END names and uses',async()=>{
-  await ui.driver.actions().keyDown(Key.COMMAND).sendKeys('w').keyUp(Key.COMMAND).perform();
+  await ui.driver.actions().keyDown(ui.primaryModifier).sendKeys('w').keyUp(ui.primaryModifier).perform();
   await ui.openFile('Survey.ili');await ui.go(12,fixture('Survey.ili').split('\n')[11].indexOf('BaseBuilding')+2);
   await ui.driver.actions().sendKeys(Key.F2).perform();
   const input=await ui.driver.wait(async()=>{for(const item of await ui.driver.findElements(By.css('.rename-box input')))if(await item.isDisplayed())return item;return false;},5000,'Rename input did not appear');
-  await input.sendKeys(Key.chord(Key.COMMAND,'a'),'RenamedBuilding',Key.ENTER);
+  await input.sendKeys(Key.chord(ui.primaryModifier,'a'),'RenamedBuilding',Key.ENTER);
   await ui.waitFor(async()=>(await ui.readText()).includes('Base.Common.RenamedBuilding'),'Survey rename was not applied');await ui.capture('GUI-07-reference');
   await ui.openFile('Base.ili');const renamed=await ui.readText();assert.ok(renamed.includes('CLASS RenamedBuilding'));assert.ok(renamed.includes('END RenamedBuilding;'));await ui.capture('GUI-07-declaration');
   await ui.focusEditor();await ui.palette('Undo');
@@ -128,7 +128,7 @@ describe('Installed INTERLIS repository and editor parity',function(){
   await ui.select(13,col,5);await ui.driver.actions().sendKeys('Co').perform();await ui.palette('Trigger Suggest');
   const suggestion=await ui.driver.wait(async()=>{for(const row of await ui.driver.findElements(By.css('.suggest-widget .monaco-list-row')))if((await row.getText()).includes('Count'))return row;return false;},8000,'Qualified Count completion missing');await ui.driver.actions().doubleClick(suggestion).perform();await ui.waitFor(async()=>(await ui.readText()).includes('Base.Count'),'Qualified completion did not preserve prefix');assert.equal(await ui.copyText(),original,'Completion changed more than the selected identifier');await ui.capture('GUI-11-completion');
   await ui.palette('Preferences: Color Theme',false,true);
-  const field=await ui.driver.wait(async()=>{for(const input of await ui.driver.findElements(By.css('.quick-input-widget input')))if(await input.isDisplayed())return input;return false;},5000,'Theme picker missing');await field.sendKeys(Key.chord(Key.COMMAND,'a'),'Light Modern');
+  const field=await ui.driver.wait(async()=>{for(const input of await ui.driver.findElements(By.css('.quick-input-widget input')))if(await input.isDisplayed())return input;return false;},5000,'Theme picker missing');await field.sendKeys(Key.chord(ui.primaryModifier,'a'),'Light Modern');
   const theme=await ui.driver.wait(async()=>{for(const row of await ui.driver.findElements(By.css('.quick-input-list .monaco-list-row')))if(await row.isDisplayed() && /^Light Modern(?:\s|$)/.test((await row.getText()).trim()))return row;return false;},5000,'Built-in Light Modern theme was not offered');
   await theme.click();await ui.waitFor(async()=>await ui.driver.executeScript('return document.querySelector(".monaco-workbench").classList.contains("vs")'),'Workbench did not actually switch to light theme');await ui.capture('GUI-11-light');
   await ui.openFile('Base.ili');await ui.capture('GUI-11-tokens');

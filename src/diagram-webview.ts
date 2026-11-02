@@ -13,9 +13,10 @@ const send=(type:string,values:Record<string,unknown>={})=>api.postMessage({prot
 const {DiagramCanvas,mountDiagramControls}=await import(/* @vite-ignore */ body.dataset.ui!);
 const workerResponse=await fetch(body.dataset.worker!);if(!workerResponse.ok)throw Error('The packaged layout worker could not be loaded');
 const workerUrl=URL.createObjectURL(new Blob([await workerResponse.arrayBuffer()],{type:'application/javascript'}));
-const canvas=new DiagramCanvas(element,{navigate:(id:string)=>send('navigate',{elementId:id}),status:(_state:string,message:string)=>{status.textContent=message.slice(0,1000);},changed:()=>{if(saveTimer)clearTimeout(saveTimer);const mark=generation;saveTimer=setTimeout(()=>{void canvas.saveState().then((viewState:unknown)=>{if(alive&&mark===generation&&viewState)send('saveState',{viewState});}).catch(()=>{});},250);}},workerUrl);
+const canvas=new DiagramCanvas(element,{navigate:(id:string)=>send('navigate',{elementId:id}),status:(state:string,message:string)=>{status.textContent=message.slice(0,1000);(document.getElementById('diagram-cancel') as HTMLButtonElement).disabled=!['LOADING','STALE'].includes(state)||/cancelled|stopped/i.test(message);},changed:()=>{if(saveTimer)clearTimeout(saveTimer);const mark=generation;saveTimer=setTimeout(()=>{void canvas.saveState().then((viewState:unknown)=>{if(alive&&mark===generation&&viewState)send('saveState',{viewState});}).catch(()=>{});},250);}},workerUrl);
 const controls=mountDiagramControls(document.getElementById('view-controls')!,canvas,{error:(message:string)=>{status.textContent=message.slice(0,1000);},export:(format:string,scope:string)=>send('export',{format,scope}),reveal:()=>send('reveal'),focus:(symbolIds:string[],depth:number,translation:string)=>send('focus',{symbolIds,depth,translation})});
 document.getElementById('refresh')!.onclick=()=>send('refresh');
+document.getElementById('diagram-cancel')!.onclick=()=>{canvas.invalidate('Diagram update cancelled — Refresh to continue');send('cancel');};
 document.getElementById('fit')!.onclick=()=>void canvas.fit();
 document.getElementById('follow')!.onclick=()=>send('follow',{follow:!follow});
 document.getElementById('association')!.onchange=event=>send('association',{association:(event.target as HTMLSelectElement).value});

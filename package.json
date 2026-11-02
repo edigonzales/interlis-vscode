@@ -120,6 +120,10 @@
       {
         "command": "interlisGuru.exportGraph",
         "title": "INTERLIS: Export Graph"
+      },
+      {
+        "command": "interlisGuru.diagram.cancel",
+        "title": "INTERLIS: Cancel Diagram Update"
       }
     ],
     "configuration": {

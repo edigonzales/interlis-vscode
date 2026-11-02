@@ -23,7 +23,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   const snippets=new SnippetInteraction();context.subscriptions.push(snippets);
   context.subscriptions.push(new DocumentationCommands(()=>client,output),new EditorAssistance(()=>client,output));
   const diagrams=new DiagramEditors(context,()=>client,output);
-  context.subscriptions.push(diagrams,vscode.window.registerCustomEditorProvider(DiagramEditors.viewType,diagrams,{webviewOptions:{retainContextWhenHidden:true},supportsMultipleEditorsPerDocument:true}),...(['refresh','settle','resetLayout','export'] as const).map(action=>vscode.commands.registerCommand('interlisGuru.diagram.'+action,()=>diagrams.viewAction(action))),vscode.commands.registerCommand('interlisGuru.diagram.reveal',()=>diagrams.reveal()),vscode.commands.registerCommand('interlisGuru.showDiagram',()=>diagrams.open()));
+  context.subscriptions.push(diagrams,vscode.window.registerCustomEditorProvider(DiagramEditors.viewType,diagrams,{webviewOptions:{retainContextWhenHidden:true},supportsMultipleEditorsPerDocument:true}),...(['refresh','settle','resetLayout','export','cancel'] as const).map(action=>vscode.commands.registerCommand('interlisGuru.diagram.'+action,()=>diagrams.viewAction(action))),vscode.commands.registerCommand('interlisGuru.diagram.reveal',()=>diagrams.reveal()),vscode.commands.registerCommand('interlisGuru.showDiagram',()=>diagrams.open()));
   let queue = Promise.resolve();
   let stateListener: vscode.Disposable | undefined;
   const setStatus = (text: string) => {status.text = `INTERLIS: ${text}`;};
@@ -40,10 +40,17 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     if (client) return;
     setStatus('Starting');
     const settings = vscode.workspace.getConfiguration('interlisGuru');
-    const plan = await resolveLaunchPlan(context.extensionPath, settings.get<string>('server.javaPath', ''), settings.get<string>('server.bundlePath', ''));
+    // Executable overrides belong to the user's workspace host, never to a model repository.
+    const machineSetting = (key: string): string => {
+      const entry = settings.inspect<string>(key), value = entry?.globalValue ?? entry?.defaultValue ?? '';
+      if (typeof value !== 'string') throw new Error('The machine setting ' + key + ' must be a path string.');
+      return value;
+    };
+    const bundleOverride = machineSetting('server.bundlePath');
+    const plan = await resolveLaunchPlan(context.extensionPath, machineSetting('server.javaPath'), bundleOverride);
     const next = new InterlisLanguageClient('interlisGuru', 'INTERLIS', () => {
       const child = spawn(plan.java, plan.args, {shell: false, stdio: 'pipe'});
-      output.appendLine(`Server start pid=${child.pid} core=${plan.coreCommit} bundle=${plan.bundleDigest} runtime=${plan.runtimeDigest || 'explicit'} ${plan.runtimeSource}${settings.get('server.bundlePath') ? ' server override' : ' packaged distribution'}`);
+      output.appendLine(`Server start pid=${child.pid} core=${plan.coreCommit} bundle=${plan.bundleDigest} runtime=${plan.runtimeDigest || 'explicit'} ${plan.runtimeSource}${bundleOverride ? ' server override' : ' packaged distribution'}`);
       child.once('exit', (code, signal) => output.appendLine(`Server exit pid=${child.pid} code=${code} signal=${signal}`));
       return Promise.resolve(child);
     }, {
@@ -57,7 +64,10 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     });
     client = next;
     stateListener = next.onDidChangeState(event => {
-      if (next === client) setStatus(event.newState === State.Running ? 'Ready' : event.newState === State.Starting ? 'Starting' : 'Stopped');
+      if (next === client) {
+        if (event.newState === State.Stopped) diagrams.disconnected();
+        setStatus(event.newState === State.Running ? 'Ready' : event.newState === State.Starting ? 'Starting' : 'Stopped');
+      }
     });
     try {
       await next.start();

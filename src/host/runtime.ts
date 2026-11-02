@@ -13,7 +13,7 @@ function relative(value: unknown): value is string {
 }
 
 /** Includes vendor legal symlinks, but never follows a link outside the runtime. */
-export async function runtimeInventory(root: string): Promise<RuntimeFile[]> {
+export async function runtimeInventory(root: string, executableModes = process.platform !== 'win32'): Promise<RuntimeFile[]> {
   const result: RuntimeFile[] = [];
   const canonical = await fs.realpath(root);
   async function walk(folder: string, prefix: string) {
@@ -25,7 +25,7 @@ export async function runtimeInventory(root: string): Promise<RuntimeFile[]> {
         const link = await fs.readlink(file), resolved = await fs.realpath(file);
         if (path.isAbsolute(link) || !(resolved === canonical || resolved.startsWith(canonical + path.sep))) throw new Error('Runtime symlink escapes its distribution.');
         result.push({path: entry, link});
-      } else if (stat.isFile()) result.push({path: entry, sha256: digest(await fs.readFile(file)), executable: !!(stat.mode & 0o111)});
+      } else if (stat.isFile()) result.push({path: entry, sha256: digest(await fs.readFile(file)), executable: executableModes && !!(stat.mode & 0o111)});
       else throw new Error('Unsupported runtime file type.');
     }
   }

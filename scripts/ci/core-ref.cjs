@@ -1,0 +1,1 @@
+const fs=require('fs'),path=require('path');const root=path.resolve(__dirname,'../..'),lock=JSON.parse(fs.readFileSync(path.join(root,'release/editor-artifacts.lock.json')));if(!/^[a-f0-9]{40}$/.test(lock.coreCommit))throw Error('Invalid locked Core SHA');fs.appendFileSync(process.env.GITHUB_OUTPUT,'sha='+lock.coreCommit+'\n');console.log('Locked Core '+lock.coreCommit);

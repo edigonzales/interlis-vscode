@@ -1,7 +1,10 @@
 # INTERLIS VS Code – aktueller Ausführungsstand
 
 **V0–V4 PASS**, unabhängig und operativ validiert. **V5 ist geöffnet.**
-V5 benötigt echte Runtime-/Plattform-/Remote- und kumulative Abnahme. Kein Push/Release.
+V5 benötigt die macOS-Gesamtprüfung, kurze native Linux-/Windows-CI-Smokes und
+die kumulative unabhängige Abnahme. Der Nutzer hat den Plattformumfang geändert:
+[verbindlicher aktueller Umfang](PLATFORM_TEST_SCOPE.md). Isolierte Testbranches
+und Actions-Läufe sind beauftragt; kein Merge, Tag oder Produktrelease.
 
 | Phase | Stand | Geprüftes Produktpaar / Beleg |
 |---|---|---|
@@ -10,7 +13,7 @@ V5 benötigt echte Runtime-/Plattform-/Remote- und kumulative Abnahme. Kein Push
 | V2 | PASS, alle10 ACs | Core `7026e7f6b5834bf593d91dfee3323efb60688f3d` / Extension `01f353114cc7a19a9ac6dd884cb0b285ac723c9c`; [Originalreview](reviews/V2/attempt-02/review.md), [äussere Prüfung](reviews/V2/attempt-02/outer-audit.json) |
 | V3 | PASS, alle12 ACs | Core `a0272965c4691320ca316d519581d4db4cefc930` / Extension `dd6e4fd342dbe58a43dc648e2b2ad285db6896e2`; [Originalreview](reviews/V3/attempt-01/review.md), [äussere Prüfung](reviews/V3/attempt-01/outer-audit.json) |
 | V4 | PASS, alle9 ACs | Core `6983baf95c47a7e20dbb41a2e50500185f578c37` / Extension `36b87bc798eaa53cbe3f5b9f89ac58b92ea0eafc`; [Originalreview](reviews/V4/attempt-02/review.md), [äussere Prüfung](reviews/V4/attempt-02/outer-audit.json) |
-| V5 | OPEN | Gebündelte Runtimes, reale Plattformen/Remote, kumulative56-AC-Abnahme |
+| V5 | OPEN | Gebündelte Runtimes implementiert; macOS-GUI36–42, native CI-Smokes und kumulative56-AC-Abnahme noch offen |
 
 ## Unveränderliche Gesamtbasis und Arbeitsbäume
 

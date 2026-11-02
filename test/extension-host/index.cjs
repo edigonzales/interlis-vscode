@@ -5,6 +5,7 @@ exports.run=async()=>{
  const uri=vscode.Uri.file(path.resolve(process.env.INTERLIS_HOST_FIXTURE));const doc=await vscode.workspace.openTextDocument(uri);await vscode.window.showTextDocument(doc);
  const wait=async(fn,message)=>{const until=Date.now()+15000;while(Date.now()<until){const value=await fn();if(value)return value;await new Promise(resolve=>setTimeout(resolve,100));}throw new Error(message);};
  const defs=await wait(async()=>{const result=await vscode.commands.executeCommand('vscode.executeDefinitionProvider',uri,new vscode.Position(7,17));return result?.length?result:null;},'No real definition result');assert.equal((defs[0].range||defs[0].targetRange).start.line,4);
- await vscode.commands.executeCommand('interlisGuru.newFromTemplate');const template=vscode.window.activeTextEditor.document;assert.equal(template.isUntitled,true);assert.equal(template.languageId,'interlis');assert.match(template.getText(),/MODEL Example/);
- await vscode.commands.executeCommand('interlisGuru.stopServer');console.log('3 extension-host checks: activation/commands, real definition, unsaved template; stopped server');
+ const edit=new vscode.WorkspaceEdit();edit.insert(uri,new vscode.Position(0,0),'!! unsaved restart sentinel\n');assert.equal(await vscode.workspace.applyEdit(edit),true);const dirty=doc.getText();assert.equal(doc.isDirty,true);
+ await vscode.commands.executeCommand('interlisGuru.restartServer');await wait(async()=>{const result=await vscode.commands.executeCommand('vscode.executeDefinitionProvider',uri,new vscode.Position(8,17));return result?.length?result:null;},'No definition after restart');assert.equal(doc.getText(),dirty);assert.equal(doc.isDirty,true);
+ await vscode.commands.executeCommand('interlisGuru.stopServer');console.log('3 extension-host checks: activation/commands, real definition, dirty-buffer restart; stopped server');
 };

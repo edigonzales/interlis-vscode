@@ -2,6 +2,7 @@ const assert=require('node:assert/strict');const fs=require('node:fs');const pat
 const {VSBrowser,Workbench,TextEditor,ProblemsView,MarkerType,By,Key}=require('vscode-extension-tester');
 const evidence=process.env.INTERLIS_GUI_EVIDENCE;if(!evidence)throw new Error('Missing GUI evidence directory');
 const completed=[];let driver,wb,editor;
+const PRIMARY=process.platform==='darwin'?Key.COMMAND:Key.CONTROL;
 async function capture(name){fs.writeFileSync(path.join(evidence,name+'.png'),await driver.takeScreenshot(),'base64');}
 async function waitFor(fn,message){await driver.wait(async()=>{try{return await fn();}catch{return false;}},20000,message);}
 async function readText(){return await driver.executeScript('return [...document.querySelectorAll(".part.editor .monaco-editor .view-lines .view-line")].sort((a,b)=>parseFloat(a.style.top)-parseFloat(b.style.top)).map(e=>e.textContent.replace(/\\u00a0/g," ").replace(/\\u200b/g,"")).join("\\n")');}
@@ -10,7 +11,7 @@ async function palette(command, raw=false,keepOpen=false){
  const trace=async stage=>fs.appendFileSync(path.join(evidence,'palette-events.jsonl'),JSON.stringify({at:new Date().toISOString(),command,stage,visible:await driver.executeScript('return [...document.querySelectorAll(".quick-input-widget")].some(e=>e.offsetHeight>0)'),active:await driver.executeScript('return document.activeElement?.outerHTML.slice(0,500)')})+'\n');
  await driver.actions().clear();await driver.actions().sendKeys(Key.F1).perform();
  const input=await driver.wait(async()=>{const fields=await driver.findElements(By.css('.quick-input-widget input'));for(const field of fields)if(await field.isDisplayed())return field;return false;},5000,'Palette input not visible');
- await input.sendKeys(Key.chord(Key.COMMAND,'a'),raw?command:'>'+command);
+ await input.sendKeys(Key.chord(PRIMARY,'a'),raw?command:'>'+command);
  await waitFor(async()=>await input.getAttribute('value')===(raw?command:'>'+command),'Palette text mismatch');
  await trace('typed');
  if(!raw){const choice=await driver.wait(async()=>{try{for(const row of await driver.findElements(By.css('.quick-input-widget:not([style*="display: none"]) .quick-input-list .monaco-list-row'))){const label=await row.getAttribute('aria-label');if(label===command||label.startsWith(command+', '))return row;}return false;}catch(error){if(error.name==='StaleElementReferenceError')return false;throw error;}},20000,'Command not offered: '+command);await trace('select');await choice.findElement(By.css('.label-name')).click();await trace('selected');}
@@ -21,13 +22,13 @@ async function palette(command, raw=false,keepOpen=false){
 async function go(line,col){
  await focusEditor();await driver.actions().keyDown(Key.CONTROL).sendKeys('g').keyUp(Key.CONTROL).perform();
  const input=await driver.wait(async()=>{for(const field of await driver.findElements(By.css('.quick-input-widget input')))if(await field.isDisplayed())return field;return false;},5000,'Go to line input not visible');
- await input.sendKeys(Key.chord(Key.COMMAND,'a'),':'+line+','+col);await input.sendKeys(Key.ENTER);
+ await input.sendKeys(Key.chord(PRIMARY,'a'),':'+line+','+col);await input.sendKeys(Key.ENTER);
  await waitFor(async()=>{const p=await editor.getCoordinates();return p[0]===line&&p[1]===col;},'Cursor did not reach target '+line+','+col);
 }
 async function select(line,col,length){await go(line,col);await driver.actions().keyDown(Key.SHIFT).sendKeys(...Array(length).fill(Key.RIGHT)).keyUp(Key.SHIFT).perform();}
 async function replaceText(text){
  const clipboard=(await import('clipboardy')).default;const previous=clipboard.readSync();
- try{clipboard.writeSync(text);await focusEditor();await driver.actions().keyDown(Key.COMMAND).sendKeys('a').keyUp(Key.COMMAND).keyDown(Key.COMMAND).sendKeys('v').keyUp(Key.COMMAND).perform();await waitFor(async()=>await readText()===text.replace(/\r\n/g,'\n'),'Pasted buffer differs from prepared text');}
+ try{clipboard.writeSync(text);await focusEditor();await driver.actions().keyDown(PRIMARY).sendKeys('a').keyUp(PRIMARY).keyDown(PRIMARY).sendKeys('v').keyUp(PRIMARY).perform();await waitFor(async()=>await readText()===text.replace(/\r\n/g,'\n'),'Pasted buffer differs from prepared text');}
  finally{clipboard.writeSync(previous);}
 }
 async function status(text){return !!await wb.getStatusBar().getItem(`INTERLIS: ${text}`);}
@@ -48,11 +49,11 @@ async function openFile(name){
  const file=await driver.wait(async()=>{for(const item of await driver.findElements(By.css('[role="tree"][aria-label="Files Explorer"] [role="treeitem"]')))if((await item.getAttribute('aria-label'))===name)return item;return false;},10000,'Explorer file missing: '+name);
  await driver.actions().doubleClick(file).perform();await waitEditor(name);await focusEditor();return editor;
 }
-module.exports={initialize,openFile,waitEditor,capture,waitFor,readText,focusEditor,palette,go,select,replaceText,status,record};
+module.exports={primaryModifier:PRIMARY,initialize,openFile,waitEditor,capture,waitFor,readText,focusEditor,palette,go,select,replaceText,status,record};
 Object.defineProperties(module.exports,{driver:{get:()=>driver},wb:{get:()=>wb},editor:{get:()=>editor,set:value=>{editor=value;}}});
 module.exports.copyText=async function(){
  const clipboard=(await import('clipboardy')).default,previous=clipboard.readSync();
- try{const sentinel='interlis-copy-'+require('node:crypto').randomUUID();clipboard.writeSync(sentinel);await focusEditor();await driver.actions().keyDown(Key.COMMAND).sendKeys('a').keyUp(Key.COMMAND).keyDown(Key.COMMAND).sendKeys('c').keyUp(Key.COMMAND).perform();await waitFor(async()=>clipboard.readSync()!==sentinel,'Native copy did not finish');return clipboard.readSync();}
+ try{const sentinel='interlis-copy-'+require('node:crypto').randomUUID();clipboard.writeSync(sentinel);await focusEditor();await driver.actions().keyDown(PRIMARY).sendKeys('a').keyUp(PRIMARY).keyDown(PRIMARY).sendKeys('c').keyUp(PRIMARY).perform();await waitFor(async()=>clipboard.readSync()!==sentinel,'Native copy did not finish');return clipboard.readSync();}
  finally{clipboard.writeSync(previous);}
 };
 /** Read the actual current process trace as a readiness oracle; all user actions remain native UI. */
