@@ -16,13 +16,12 @@ export class EditorAssistance implements vscode.Disposable {
   private pendingDocument:vscode.TextDocument|undefined;
   private readonly subscriptions:vscode.Disposable[]=[];
   constructor(private readonly getClient:()=>LanguageClient|undefined,private readonly output:vscode.OutputChannel){
-    this.subscriptions.push(vscode.commands.registerTextEditorCommand('interlisGuru.editor.newline',editor=>{void this.newline(editor).catch(error=>{if(!/cancel|modified|version changed/i.test(String(error)))output.appendLine('Editor assistance: '+String(error));});}),vscode.workspace.onDidChangeTextDocument(event=>{if(event.document===this.pendingDocument)this.pending?.cancel();}),vscode.window.onDidChangeActiveTextEditor(()=>this.pending?.cancel()));
+    this.subscriptions.push(vscode.commands.registerTextEditorCommand('interlisGuru.editor.afterNewline',editor=>{void this.afterNewline(editor).catch(error=>{if(!/cancel|modified|version changed/i.test(String(error)))output.appendLine('Editor assistance: '+String(error));});}),vscode.workspace.onDidChangeTextDocument(event=>{if(event.document===this.pendingDocument)this.pending?.cancel();}),vscode.window.onDidChangeActiveTextEditor(()=>this.pending?.cancel()));
   }
   dispose(){this.pending?.cancel();this.pending?.dispose();for(const disposable of this.subscriptions)disposable.dispose();}
-  private async newline(editor:vscode.TextEditor):Promise<void>{
-    this.pending?.cancel();const document=editor.document,before=document.version;
-    await vscode.commands.executeCommand('type',{text:'\n'});
-    const server=this.getClient();if(document.version===before||!server?.isRunning()||server.initializeResult?.capabilities.experimental?.interlis?.editorAssist!==true||editor!==vscode.window.activeTextEditor)return;
+  private async afterNewline(editor:vscode.TextEditor):Promise<void>{
+    this.pending?.cancel();const document=editor.document;
+    const server=this.getClient();if(!server?.isRunning()||server.initializeResult?.capabilities.experimental?.interlis?.editorAssist!==true||editor!==vscode.window.activeTextEditor)return;
     const version=document.version,position=editor.selection.active,instance=server.initializeResult.capabilities.experimental.interlis.serverInstanceId;
     this.pending?.dispose();const cancellation=new vscode.CancellationTokenSource();this.pending=cancellation;this.pendingDocument=document;
     try {

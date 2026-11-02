@@ -31,3 +31,15 @@ Commit `cf585ec1ea2270bafed4083a8ebfa2e68de05133`; Lizenz unter
 
 Die übrigen Workspace-/HTTP-Fixtures sind neu geschrieben und werden mit der
 Java-Engine beziehungsweise dem installierten Java-LSP geprüft.
+
+## V4 Verhaltensreferenz für Editorhilfen
+
+Completion-/Snippet-/Metaattributverhalten wurde am Referenzstand `f27801bfebf0fdac82a19e016f4c347ae2b6f8fb`
+abgeglichen. Metadatenprofil-/Wertbeispiele: `packages/language-service/src/completion-meta.test.ts`,
+SHA-256 `36feaa80cf7567de06bb6a59bc056de4ed3b9428a148bd25711b0c6ab8a5c77f`. Keine Language-Service-/Scannerimplementierung
+wurde übernommen. `EditorAssistanceService`, `EditorCompletions` und
+`MetaAttributeCatalog` sind neue reine Java-Queries über echte Core-Syntax und
+Bindungsfakten. Die Extension enthält nur native Snippet-/Cursorinteraktion.
+Die Dokumentprojektion/OOXML-/GraphML-Renderer sind ebenfalls neu geschrieben.
+Build und Tests benötigen keinen Referenzcheckout; bestehende Lizenzangaben
+bleiben als historische Provenienz erhalten.

@@ -392,63 +392,148 @@
       },
       {
         "key": "enter",
-        "command": "interlisGuru.snippet.next",
-        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible"
+        "command": "runCommands",
+        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible",
+        "args": {
+          "commands": [
+            "jumpToNextSnippetPlaceholder",
+            "interlisGuru.snippet.advanced"
+          ]
+        }
       },
       {
         "key": "left",
-        "command": "interlisGuru.snippet.cursorLeft",
-        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible"
+        "command": "runCommands",
+        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible",
+        "args": {
+          "commands": [
+            "leaveSnippet",
+            "cursorLeft",
+            "interlisGuru.snippet.clear"
+          ]
+        }
       },
       {
         "key": "right",
-        "command": "interlisGuru.snippet.cursorRight",
-        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible"
+        "command": "runCommands",
+        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible",
+        "args": {
+          "commands": [
+            "leaveSnippet",
+            "cursorRight",
+            "interlisGuru.snippet.clear"
+          ]
+        }
       },
       {
         "key": "up",
-        "command": "interlisGuru.snippet.cursorUp",
-        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible"
+        "command": "runCommands",
+        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible",
+        "args": {
+          "commands": [
+            "leaveSnippet",
+            "cursorUp",
+            "interlisGuru.snippet.clear"
+          ]
+        }
       },
       {
         "key": "down",
-        "command": "interlisGuru.snippet.cursorDown",
-        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible"
+        "command": "runCommands",
+        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible",
+        "args": {
+          "commands": [
+            "leaveSnippet",
+            "cursorDown",
+            "interlisGuru.snippet.clear"
+          ]
+        }
       },
       {
         "key": "home",
-        "command": "interlisGuru.snippet.cursorHome",
-        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible"
+        "command": "runCommands",
+        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible",
+        "args": {
+          "commands": [
+            "leaveSnippet",
+            "cursorHome",
+            "interlisGuru.snippet.clear"
+          ]
+        }
       },
       {
         "key": "end",
-        "command": "interlisGuru.snippet.cursorEnd",
-        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible"
+        "command": "runCommands",
+        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible",
+        "args": {
+          "commands": [
+            "leaveSnippet",
+            "cursorEnd",
+            "interlisGuru.snippet.clear"
+          ]
+        }
       },
       {
         "key": "pageup",
-        "command": "interlisGuru.snippet.cursorPageUp",
-        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible"
+        "command": "runCommands",
+        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible",
+        "args": {
+          "commands": [
+            "leaveSnippet",
+            "cursorPageUp",
+            "interlisGuru.snippet.clear"
+          ]
+        }
       },
       {
         "key": "pagedown",
-        "command": "interlisGuru.snippet.cursorPageDown",
-        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible"
+        "command": "runCommands",
+        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible",
+        "args": {
+          "commands": [
+            "leaveSnippet",
+            "cursorPageDown",
+            "interlisGuru.snippet.clear"
+          ]
+        }
       },
       {
         "key": "tab",
-        "command": "interlisGuru.snippet.next",
-        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible"
+        "command": "runCommands",
+        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && hasNextTabstop && !suggestWidgetVisible",
+        "args": {
+          "commands": [
+            "jumpToNextSnippetPlaceholder",
+            "interlisGuru.snippet.advanced"
+          ]
+        }
       },
       {
         "key": "escape",
-        "command": "interlisGuru.snippet.leave",
-        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && !suggestWidgetVisible"
+        "command": "runCommands",
+        "when": "editorTextFocus && editorLangId == interlis && inSnippetMode && !suggestWidgetVisible",
+        "args": {
+          "commands": [
+            "leaveSnippet",
+            "interlisGuru.snippet.clear"
+          ]
+        }
       },
       {
         "key": "enter",
-        "command": "interlisGuru.editor.newline",
-        "when": "editorTextFocus && editorLangId == interlis && !editorReadonly && !suggestWidgetVisible && !hasNextTabstop"
+        "command": "runCommands",
+        "when": "editorTextFocus && editorLangId == interlis && !editorReadonly && !suggestWidgetVisible && !hasNextTabstop",
+        "args": {
+          "commands": [
+            {
+              "command": "type",
+              "args": {
+                "text": "\n"
+              }
+            },
+            "interlisGuru.editor.afterNewline"
+          ]
+        }
       }
     ]
   },
