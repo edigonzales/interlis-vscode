@@ -6,7 +6,7 @@ import {verifyDiagramAssets} from './host/diagram-assets';
 import {DiagramStateStore} from './host/diagram-state';
 import {decodeDiagramExport} from './host/diagram-export';
 
-interface PanelState {boundUri:string;panel:vscode.WebviewPanel;root:vscode.TextDocument;follow:boolean;generation:number;ready:boolean;disposed:boolean;timer?:NodeJS.Timeout;cancel?:vscode.CancellationTokenSource;response?:DiagramResponse;association:'ENTITY'|'COMPACT_BINARY';channel:string;panelId?:string;symbolIds?:string[];depth?:number;translation?:string;exportRequest?:{id:string;uri:vscode.Uri;format:'SVG'|'PNG';generation:number};}
+interface PanelState {boundUri:string;panel:vscode.WebviewPanel;root:vscode.TextDocument;follow:boolean;generation:number;ready:boolean;fresh:boolean;disposed:boolean;timer?:NodeJS.Timeout;cancel?:vscode.CancellationTokenSource;response?:DiagramResponse;association:'ENTITY'|'COMPACT_BINARY';channel:string;panelId?:string;symbolIds?:string[];depth?:number;translation?:string;exportRequest?:{id:string;uri:vscode.Uri;format:'SVG'|'PNG';generation:number};}
 function editable(doc:vscode.TextDocument|undefined):doc is vscode.TextDocument {return !!doc&&doc.languageId==='interlis'&&['file','untitled'].includes(doc.uri.scheme);}
 function escape(value:string):string {return value.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]!));}
 /** Thin versioned host transport. It never parses names, rewrites sources or computes ranges. */
@@ -36,7 +36,7 @@ export class DiagramEditors implements vscode.CustomTextEditorProvider,vscode.Di
   const document=vscode.window.activeTextEditor?.document;
   if(!editable(document)){void vscode.window.showInformationMessage('Open a local INTERLIS file to show its diagram.');return;}
   if(document.isUntitled){void vscode.window.showInformationMessage('Save the INTERLIS file before opening its diagram.');return;}
-  for(const state of this.panels)if(state.boundUri===document.uri.toString()){state.root=document;state.panel.title=document.uri.path.split('/').pop()+' — UML';state.follow=false;state.response=undefined;this.invalidate(state,'Opening selected source');}
+  for(const state of this.panels)if(state.boundUri===document.uri.toString()){state.root=document;state.symbolIds=undefined;state.depth=undefined;state.translation=undefined;state.panel.title=document.uri.path.split('/').pop()+' — UML';state.follow=false;state.response=undefined;this.invalidate(state,'Opening selected source');}
   await vscode.commands.executeCommand('vscode.openWith',document.uri,DiagramEditors.viewType,{viewColumn:vscode.ViewColumn.Beside,preserveFocus:false});
  }
  async resolveCustomTextEditor(document:vscode.TextDocument,panel:vscode.WebviewPanel,token:vscode.CancellationToken):Promise<void> {
@@ -45,7 +45,7 @@ export class DiagramEditors implements vscode.CustomTextEditorProvider,vscode.Di
   if(closed||token.isCancellationRequested){pending.dispose();return;}
   this.store??=new DiagramStateStore(this.context.workspaceState,this.context.extensionPath);
   const channel=randomUUID(),nonce=randomUUID().replaceAll('-','');
-  const state:PanelState={boundUri:document.uri.toString(),panel,root:document,follow:vscode.workspace.getConfiguration('interlisGuru').get<boolean>('diagram.followEditor',false),generation:0,ready:false,disposed:false,association:'ENTITY',channel};this.panels.add(state);panel.title=document.uri.path.split('/').pop()+' — UML';
+  const state:PanelState={boundUri:document.uri.toString(),panel,root:document,follow:vscode.workspace.getConfiguration('interlisGuru').get<boolean>('diagram.followEditor',false),generation:0,ready:false,fresh:false,disposed:false,association:'ENTITY',channel};this.panels.add(state);panel.title=document.uri.path.split('/').pop()+' — UML';
   let visible=panel.visible;const visibility=panel.onDidChangeViewState(event=>{if(visible===event.webviewPanel.visible)return;visible=event.webviewPanel.visible;this.invalidate(state,visible?'Diagram shown — updating current source':'Diagram hidden — updates paused');});
   panel.webview.options={enableScripts:true,localResourceRoots:[vscode.Uri.joinPath(this.context.extensionUri,'artifacts/diagram-ui'),vscode.Uri.joinPath(this.context.extensionUri,'out')]};
   const resource=(...parts:string[])=>panel.webview.asWebviewUri(vscode.Uri.joinPath(this.context.extensionUri,...parts)).toString();
@@ -55,7 +55,7 @@ export class DiagramEditors implements vscode.CustomTextEditorProvider,vscode.Di
   panel.onDidDispose(()=>{state.disposed=true;this.cancel(state);this.panels.delete(state);listener.dispose();visibility.dispose();});pending.dispose();
  }
  private post(state:PanelState,message:Record<string,unknown>):Thenable<boolean> {return state.panel.webview.postMessage({protocolVersion:1,channel:state.channel,generation:state.generation,...message});}
- private cancel(state:PanelState):void {state.generation++;if(state.timer)clearTimeout(state.timer);state.timer=undefined;state.cancel?.cancel();state.cancel?.dispose();state.cancel=undefined;state.exportRequest=undefined;}
+ private cancel(state:PanelState):void {state.fresh=false;state.generation++;if(state.timer)clearTimeout(state.timer);state.timer=undefined;state.cancel?.cancel();state.cancel?.dispose();state.cancel=undefined;state.exportRequest=undefined;}
  private invalidate(state:PanelState,message:string):void {
   if(state.disposed||this.closed)return;this.cancel(state);void this.post(state,{type:'status',status:'STALE',message});
   if(state.ready&&state.panel.visible)state.timer=setTimeout(()=>void this.refresh(state),120);
@@ -72,7 +72,7 @@ export class DiagramEditors implements vscode.CustomTextEditorProvider,vscode.Di
    const response=await server.sendRequest<DiagramResponse>('interlis/diagram',request,cancellation.token);
    if(state.disposed||generation!==state.generation||server!==this.client()||root!==state.root||version!==root.version)return;
    if(response.protocolVersion!==1||response.requestId!==requestId||response.serverInstanceId!==capability.serverInstanceId||response.rootUri!==root.uri.toString()||response.documentVersion!==version||response.document?.snapshotId!==response.snapshotId)throw Error('Diagram identity mismatch. Refresh or restart the matching server.');
-   state.response=response;await this.post(state,{type:'diagram',response,sessionKey:response.rootUri,follow:state.follow,root:root.uri.toString(),savedState:this.store?.read(this.storageKey(state))??this.store?.read(this.storageKey(state,'latest'))});
+   state.response=response;state.fresh=true;await this.post(state,{type:'diagram',response,sessionKey:response.rootUri,follow:state.follow,root:root.uri.toString(),savedState:this.store?.read(this.storageKey(state))??this.store?.read(this.storageKey(state,'latest'))});
   }catch(error){if(generation!==state.generation||state.disposed||cancellation.token.isCancellationRequested)return;state.response=undefined;this.output.appendLine('Diagram failed: '+String(error));await this.post(state,{type:'status',status:'ERROR',message:String(error)});}
   finally{if(state.cancel===cancellation){state.cancel=undefined;cancellation.dispose();}}
  }
@@ -85,9 +85,9 @@ export class DiagramEditors implements vscode.CustomTextEditorProvider,vscode.Di
    case 'refresh':this.invalidate(state,'Refreshing current source');break;
    case 'follow':if(typeof value.follow==='boolean'){state.follow=value.follow;await this.post(state,{type:'follow',follow:state.follow});const active=vscode.window.activeTextEditor?.document;if(state.follow&&editable(active))state.root=active;this.invalidate(state,state.follow?'Following active source':'Diagram pinned');}break;
    case 'association':if(value.association==='ENTITY'||value.association==='COMPACT_BINARY'){state.association=value.association;this.invalidate(state,'Updating association presentation');}break;
-   case 'saveState':if(value.generation===state.generation&&state.response){const keys=[this.storageKey(state),this.storageKey(state,'latest')];this.storageQueue=this.storageQueue.then(async()=>{await this.store?.write(keys,value.viewState);}).catch(error=>this.output.appendLine('Diagram state rejected: '+String(error)));}break;
+   case 'saveState':if(value.generation===state.generation&&state.fresh&&state.response){const keys=[this.storageKey(state),this.storageKey(state,'latest')];this.storageQueue=this.storageQueue.then(async()=>{await this.store?.write(keys,value.viewState);}).catch(error=>this.output.appendLine('Diagram state rejected: '+String(error)));}break;
    case 'reveal':if(value.generation===state.generation)await this.revealPanel(state);break;
-   case 'focus':if(value.generation===state.generation&&Array.isArray(value.symbolIds)&&value.symbolIds.length<=500&&value.symbolIds.every(id=>typeof id==='string'&&id.length<=2048)&&Number.isInteger(value.depth)&&Number(value.depth)>=0&&Number(value.depth)<=3&&typeof value.translation==='string'){
+   case 'focus':if(state.fresh&&value.generation===state.generation&&Array.isArray(value.symbolIds)&&value.symbolIds.length<=500&&value.symbolIds.every(id=>typeof id==='string'&&id.length<=2048)&&Number.isInteger(value.depth)&&Number(value.depth)>=0&&Number(value.depth)<=3&&typeof value.translation==='string'){
     const doc=state.response?.document,allowed=new Set([...doc?.nodes??[],...doc?.containers??[]].flatMap(n=>n.symbol?[n.symbol.symbol]:[]).concat(doc?.edges.flatMap(e=>e.origin?[e.origin.symbol]:[])??[]));if(!value.symbolIds.every(id=>allowed.has(id)))return;
     if(value.translation&&!doc?.edges.some(e=>e.kind==='TRANSLATION'&&doc.containers.some(c=>c.id===e.source.elementId&&c.symbol?.symbol===value.translation)))return;
     state.symbolIds=value.symbolIds as string[];state.depth=Number(value.depth);state.translation=value.translation;this.invalidate(state,'Updating focus projection');}break;
@@ -98,7 +98,7 @@ export class DiagramEditors implements vscode.CustomTextEditorProvider,vscode.Di
  }
  private async navigate(state:PanelState,elementId:string):Promise<void> {
   const response=state.response,server=this.client(),generation=state.generation,root=state.root;
-  if(!response||!server?.isRunning()||root.version!==response.documentVersion)return;
+  if(!state.fresh||!response||!server?.isRunning()||root.version!==response.documentVersion)return;
   const request:DiagramNavigationParams={protocolVersion:1,serverInstanceId:response.serverInstanceId,diagramId:response.diagramId,snapshotId:response.snapshotId,textDocument:{uri:root.uri.toString(),version:root.version},elementId};
   try {
    const result=await server.sendRequest<DiagramNavigation>('interlis/diagramNavigate',request);
@@ -115,12 +115,12 @@ export class DiagramEditors implements vscode.CustomTextEditorProvider,vscode.Di
  async viewAction(action:'refresh'|'settle'|'resetLayout'|'export'):Promise<void> {const state=[...this.panels].find(s=>s.panel.active)??[...this.panels].find(s=>s.panel.visible);if(!state){void vscode.window.showInformationMessage('Open an INTERLIS diagram first.');return;}if(action==='refresh'){this.invalidate(state,'Refreshing current source');return;}if(action==='export'){const format=await vscode.window.showQuickPick(['SVG','PNG'],{title:'Diagram export format'});if(format!=='SVG'&&format!=='PNG')return;const scope=await vscode.window.showQuickPick(['FULL','VISIBLE'],{title:'Diagram export scope'});if(scope!=='FULL'&&scope!=='VISIBLE')return;await this.beginExport(state,format,scope);return;}await this.post(state,{type:'viewAction',action});}
  async reveal():Promise<void> {await this.revealPanel();}
  private async revealPanel(state?:PanelState):Promise<void> {
-  const editor=vscode.window.activeTextEditor??this.lastSourceEditor;if(!editor)return;const targets=state?[state]:[...this.panels].filter(s=>s.panel.visible);for(const current of targets){const response=current.response,server=this.client(),generation=current.generation,source=editor.document,version=source.version,position=editor.selection.active;if(!response||!server?.isRunning()||current.root.version!==response.documentVersion)continue;
+  const editor=vscode.window.activeTextEditor??this.lastSourceEditor;if(!editor)return;const targets=state?[state]:[...this.panels].filter(s=>s.panel.visible);for(const current of targets){const response=current.response,server=this.client(),generation=current.generation,source=editor.document,version=source.version,position=editor.selection.active;if(!current.fresh||!response||!server?.isRunning()||current.root.version!==response.documentVersion)continue;
    const request:DiagramSelectionParams={protocolVersion:1,serverInstanceId:response.serverInstanceId,diagramId:response.diagramId,snapshotId:response.snapshotId,textDocument:{uri:current.root.uri.toString(),version:current.root.version},sourceDocument:{uri:source.uri.toString(),version},position:{line:position.line,character:position.character}};
    try{const result=await server.sendRequest<DiagramSelectionResult>('interlis/diagramSelect',request);if(current.disposed||generation!==current.generation||response!==current.response||server!==this.client()||source.version!==version||result.protocolVersion!==1||result.serverInstanceId!==response.serverInstanceId||result.diagramId!==response.diagramId||result.snapshotId!==response.snapshotId||result.rootUri!==response.rootUri||result.documentVersion!==response.documentVersion||result.sourceUri!==source.uri.toString()||result.sourceVersion!==version)continue;await this.post(current,{type:'selection',elementIds:result.elementIds});}catch(error){this.output.appendLine('Diagram selection unavailable: '+String(error));}
   }
  }
- private async beginExport(state:PanelState,format:'SVG'|'PNG',scope:'FULL'|'VISIBLE'):Promise<void> {if(!state.response||state.root.version!==state.response.documentVersion)return;const generation=state.generation;const uri=await vscode.window.showSaveDialog({title:'Export current diagram — '+scope.toLowerCase(),defaultUri:vscode.Uri.joinPath(state.root.uri,'..','diagram.'+format.toLowerCase()),filters:{[format]:[format.toLowerCase()]}});if(!uri||state.disposed||generation!==state.generation)return;const id=randomUUID();state.exportRequest={id,uri,format,generation};await this.post(state,{type:'prepareExport',exportId:id,format,scope});}
+ private async beginExport(state:PanelState,format:'SVG'|'PNG',scope:'FULL'|'VISIBLE'):Promise<void> {if(!state.fresh||!state.response||state.root.version!==state.response.documentVersion)return;const generation=state.generation;const uri=await vscode.window.showSaveDialog({title:'Export current diagram — '+scope.toLowerCase(),defaultUri:vscode.Uri.joinPath(state.root.uri,'..','diagram.'+format.toLowerCase()),filters:{[format]:[format.toLowerCase()]}});if(!uri||state.disposed||generation!==state.generation)return;const id=randomUUID();state.exportRequest={id,uri,format,generation};await this.post(state,{type:'prepareExport',exportId:id,format,scope});}
  private async finishExport(state:PanelState,data:unknown):Promise<void> {const request=state.exportRequest;if(!request)return;state.exportRequest=undefined;const temporary=vscode.Uri.joinPath(request.uri,'..','.'+request.uri.path.split('/').pop()+'.'+request.id+'.tmp');try{const bytes=decodeDiagramExport(request.format,data);if(state.disposed||request.generation!==state.generation)return;await vscode.workspace.fs.writeFile(temporary,bytes);if(state.disposed||request.generation!==state.generation)throw Error('Diagram changed during export');await vscode.workspace.fs.rename(temporary,request.uri,{overwrite:true});await this.post(state,{type:'exportDone',message:'Export saved: '+request.uri.path.split('/').pop()});}catch(error){try{await vscode.workspace.fs.delete(temporary);}catch{}this.output.appendLine('Diagram export failed: '+String(error));void vscode.window.showErrorMessage('Diagram export failed: '+String(error));}}
  dispose():void {this.closed=true;this.notification?.dispose();for(const state of [...this.panels]){this.cancel(state);state.panel.dispose();}this.panels.clear();this.subscriptions.forEach(item=>item.dispose());}
 }

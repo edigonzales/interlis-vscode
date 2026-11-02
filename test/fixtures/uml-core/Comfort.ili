@@ -12,3 +12,4 @@ VIEW Overview PROJECTION OF a~A; = ALL OF a; END Overview;
 ASSOCIATION Many=one--{1}A;two--{0..*}B;three--{1}C;note:TEXT*20;END Many;
 ASSOCIATION Self=parent--{0..1}A;children--{*}A;END Self;
 END Data;END Comfort.
+!! <script>alert(1)</script> command:javascript: https://invalid.example/ ‮ inert comment

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "coreCommit": "988dea92462c27421ab470fe61ca8e66d616f240",
+  "coreCommit": "a0272965c4691320ca316d519581d4db4cefc930",
   "protocolVersion": "lsp-3.17-baseline",
   "editorProtocolVersion": 1,
   "diagramDocumentVersion": "1.0",
@@ -63,7 +63,7 @@
     },
     {
       "path": "diagram-ui/build-manifest.json",
-      "sha256": "19916dd30a4f1d5e2282e9f8104f856d2338893e42a52f812d2e5b3936813b03"
+      "sha256": "5cf5a3ce7b1a1502a99c9ea9480ceb94284d68c480ecb8e7b796427f2c573d3a"
     },
     {
       "path": "diagram-ui/contracts/elk.d.ts",
@@ -83,11 +83,11 @@
     },
     {
       "path": "diagram-ui/diagram-ui.css",
-      "sha256": "d37cd5d3ab7b19f62855c9df33f94a5d9c001717b8bf70b6edabc85ead49f2d2"
+      "sha256": "99ee2f0f8f5aab6122dc26b065488578bd10e0e511b062a95a686d8e75dc975b"
     },
     {
       "path": "diagram-ui/diagram-ui.js",
-      "sha256": "80e1fa8e2cd1477affb4755ec8c791aedbda3f8c07f7492141a1e6c77a0ada9c"
+      "sha256": "fa5804193bd9390e6b1b4235379b50c8a19894ce71cc1460da8864df9f9d3b28"
     },
     {
       "path": "diagram-ui/diagram-ui.js.LEGAL.txt",
@@ -107,7 +107,7 @@
     },
     {
       "path": "diagram-ui/geometry.d.ts",
-      "sha256": "1fa7a00bbaaa4d6acc904df90f760f68b235825da5cd2f1cdbf5cd8c24245a15"
+      "sha256": "a967bea7ede97ebb22d5acd4c7ac14c0af3a9e2a694b4bd529c4dec6e3f908db"
     },
     {
       "path": "diagram-ui/identity.d.ts",
@@ -115,7 +115,7 @@
     },
     {
       "path": "diagram-ui/interactive.d.ts",
-      "sha256": "c0c15930d9d5691f71e2d8be18c8d0e7dae399c69049ef4f7aa27241c528f730"
+      "sha256": "7014f0df6e8099364ba02a4c5273a42ce7bb457b1c48d7b36df7342c1f6f668e"
     },
     {
       "path": "diagram-ui/layout.d.ts",
@@ -219,7 +219,7 @@
     },
     {
       "path": "diagram-ui.tgz",
-      "sha256": "de28be7e5d219ff96ec55a05a928f2ce6602927a030e6a1e2f8666ca1b20c27d"
+      "sha256": "2dc6e90f572fde2cf5acb48b3859e0b2cf86255f56a43e279603c652b7c403f7"
     },
     {
       "path": "renderer-provenance.json",
