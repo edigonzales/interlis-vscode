@@ -10,8 +10,8 @@ const output = path.resolve('build/ci/smoke-' + target);
 fs.mkdirSync(output, {recursive: true});
 const hash = file => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 const report = {startedAt: new Date().toISOString(), target, node: process.version, guiTested: false, commands: [], status: 'running'};
-function run(exe, args, env = {}) {
-  const result = cp.spawnSync(exe, args, {encoding: 'utf8', env: {...process.env, ...env}, timeout: 120000, windowsHide: true});
+function run(exe, args, env = {}, nativeOptions = {}) {
+  const result = cp.spawnSync(exe, args, {encoding: 'utf8', env: {...process.env, ...env}, timeout: 120000, windowsHide: true, ...nativeOptions});
   const index = report.commands.length;
   fs.writeFileSync(path.join(output, 'command-' + index + '.log'), (result.stdout || '') + (result.stderr || ''));
   report.commands.push({exe, args, exit: result.status, signal: result.signal, error: result.error?.message});
@@ -43,11 +43,20 @@ function run(exe, args, env = {}) {
   // Exercise VS Code's genuine installation CLI, without starting an Electron GUI.
   const {downloadAndUnzipVSCode} = require('@vscode/test-electron');
   const code = await downloadAndUnzipVSCode({version: '1.140.0'});
-  const cli = process.platform === 'win32' ? path.join(path.dirname(code), 'resources/app/out/cli.js') : path.join(path.dirname(code), 'resources/app/out/cli.js');
+  const cli = path.join(path.dirname(code), 'resources/app/out/cli.js');
+  function runCli(args) {
+    if (process.platform !== 'win32') return run(code, [cli, ...args], {ELECTRON_RUN_AS_NODE: '1'});
+    // Use the vendor's Windows CLI shim, whose entrypoint layout can differ.
+    const shim = require('@vscode/test-electron').resolveCliPathFromVSCodeExecutablePath(code);
+    report.cliShim = {path: shim, sha256: hash(shim), text: fs.readFileSync(shim, 'utf8')};
+    const quote = value => {if (/[&|<>^%!\r\n"\0]/.test(value)) throw Error('Unexpected Windows command metacharacter in generated smoke path'); return '"' + value + '"';};
+    const command = '"' + [shim, ...args].map(quote).join(' ') + '"';
+    return run(process.env.ComSpec || 'C:\\Windows\\System32\\cmd.exe', ['/d', '/s', '/c', command], {}, {windowsVerbatimArguments: true});
+  }
   const extensions = path.join(output, 'Installed Extensions ä');
   const user = path.join(output, 'User profile ä');
-  run(code, [cli, '--user-data-dir', user, '--extensions-dir', extensions, '--install-extension', vsix, '--force'], {ELECTRON_RUN_AS_NODE: '1'});
-  const ids = run(code, [cli, '--user-data-dir', user, '--extensions-dir', extensions, '--list-extensions', '--show-versions'], {ELECTRON_RUN_AS_NODE: '1'});
+  runCli(['--shared-data-dir', path.join(output, 'Shared profile ä'), '--user-data-dir', user, '--extensions-dir', extensions, '--install-extension', vsix, '--force']);
+  const ids = runCli(['--shared-data-dir', path.join(output, 'Shared profile ä'), '--user-data-dir', user, '--extensions-dir', extensions, '--list-extensions', '--show-versions']);
   assert.match(ids, /edigonzales\.interlis-vscode@0\.0\.1/);
   report.cliInstalled = true;
   const missing = path.join(extension, 'artifacts/server', lock.files.find(f => /interlis-lsp.*\.jar$/.test(f.path)).path);

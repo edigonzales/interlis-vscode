@@ -10,7 +10,7 @@ describe('Installed INTERLIS editor smoke',function(){
   await palette('View: Show Explorer');
   const file=await driver.wait(async()=>{const files=await driver.findElements(By.css('[role="tree"][aria-label="Files Explorer"] [role="treeitem"][aria-label="Example.ili"]'));return files[0];},15000,'Fixture missing in Explorer');
   await driver.actions().doubleClick(file).perform();editor=new TextEditor();ui.editor=editor;
-  await waitFor(()=>status(process.env.INTERLIS_GUI_CANARY?'Impossible readiness canary':'Ready'),process.env.INTERLIS_GUI_CANARY?'Negative canary: impossible visible status was not present':'Packaged server did not become ready');
+  await waitFor(()=>status(process.env.INTERLIS_GUI_CANARY==='missing-status'?'Impossible readiness canary':'Ready'),process.env.INTERLIS_GUI_CANARY==='missing-status'?'Negative canary: impossible visible status was not present':'Packaged server did not become ready');
   assert.equal(await wb.getStatusBar().getCurrentLanguage(),'INTERLIS');
   assert.match(await readText(),/MODEL Example/);
   await capture('GUI-01-ready');

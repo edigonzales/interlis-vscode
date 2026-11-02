@@ -1,14 +1,15 @@
 # INTERLIS
 
 Desktop VS Code extension `edigonzales.interlis-vscode` using the Java INTERLIS
-language server. The initial development package supports the installed editor
-path on macOS arm64. Java25 must be configured explicitly. The development package includes Java repository resolution/cache, readable
-diagnostics, root compilation and an interactive UML custom editor. Independent
-phase acceptance is tracked in STATUS. Bundled runtimes remain later work.
+language server. Target-specific VSIX packages contain a pinned, verified Java25
+runtime, repository resolution/cache, readable diagnostics, root compilation and
+an interactive UML custom editor. V0–V4 have independent acceptance; V5 is under
+qualification. Current platform evidence and the exact accepted product pair are
+tracked in [STATUS](docs/implementation/vscode-extension/STATUS.md).
 
 Install the local VSIX through **Extensions → Install from VSIX**. Set
-`interlisGuru.server.javaPath` in user settings to the absolute Java25 executable
-(e.g. `/path/to/jdk25/bin/java`). Open a trusted workspace and an `.ili`/`.ILI`
+`interlisGuru.server.javaPath` empty to use bundled Java25. An optional absolute
+Java25 path is a user-level development override. Open a trusted workspace and an `.ili`/`.ILI`
 file. The status bar shows Starting/Ready/Stopped/Error. **INTERLIS: Show Language
 Server Output**, **Stop Language Server**, **Restart Language Server** and
 **New Model from Template** are available in the palette. Templates create an
@@ -46,6 +47,11 @@ entity/compact binary modes are available. Partial/stale/error states are explic
 new source/server generations reject old layouts and navigation anchors. Each
 panel keeps its own arrangement. Filters, pins, Settle/Reset, view Undo/Redo,
 routing choices and full/visible SVG/PNG export are available.
+**Cancel** stops a pending analysis/layout update and leaves the view stale;
+**Refresh** resumes it. A crashed/stopped server also leaves visible diagrams stale.
+Executable and server-bundle overrides are read only from user settings, never
+from a model repository's workspace configuration. Multiple local workspace
+folders share one model space; duplicate model identities are not silently chosen.
 
 ## Development and verification
 
@@ -55,14 +61,15 @@ Node22.13.0/npm10.9.2 and Temurin25.0.3 were used. Dependencies are pinned in
 
 ```sh
 npm ci
-npm run build
 JAVA_HOME=/absolute/jdk25 npm run stage:core -- --core-dir /absolute/interlis-java
-INTERLIS_JAVA=/absolute/jdk25/bin/java npm run test:protocol
+npm run stage:runtime -- --target all
+npm run build
+npm run test:protocol
 npm run test:unit
 npm run verify:no-legacy-dependencies
-INTERLIS_JAVA=/absolute/jdk25/bin/java npm run package:vsix -- --target darwin-arm64
-INTERLIS_JAVA=/absolute/jdk25/bin/java npm run test:gui -- --suite smoke
-INTERLIS_JAVA=/absolute/jdk25/bin/java npm run test:gui -- --suite editor
+npm run package:vsix -- --target darwin-arm64
+npm run test:gui -- --suite smoke
+npm run test:gui -- --suite editor
 ```
 
 `stage:core` calls the Core Gradle `editorBundle` task on the
@@ -70,13 +77,23 @@ explicit clean Core checkout, copies the complete runtime libraries and records
 their identities, neutral renderer, worker, schemas and host DTOs. It rejects a changing Core HEAD. Use the exact locked Core
 commit when reproducing a candidate. No separate compiler build is introduced.
 VSIX output: `build/packages/interlis-vscode-darwin-arm64.vsix`.
+Use `linux-x64` or `win32-x64` for the other target packages. Each archive contains
+only its own runtime. Source URLs, vendor archive SHA256s and extracted file hashes
+are locked under `release/`; unexpected, missing or changed files prevent startup.
+Cross-packaging is not a native platform test. Linux/Windows qualification uses
+short native GitHub Actions smokes; their GUI and Remote GUI remain untested under
+the [user-adjusted scope](docs/implementation/vscode-extension/PLATFORM_TEST_SCOPE.md).
+For local F5 development, stage the locked Core and host runtime first; the
+provided launch configuration builds and opens an isolated Extension Development Host.
 
 The GUI runner downloads VSCode1.140.0 and matching ChromeDriver into an isolated
 test directory, installs the VSIX and uses ExTester8.28.1/Selenium. Optional
 `--cache /absolute/cache` reuses downloaded zip archives. Each run has fresh
 user-data, extensions, workspace and evidence. `--vsix /absolute/file.vsix`
 chooses an explicit archive. `--canary missing-status` deliberately expects an
-impossible visible state and **must exit nonzero**. Unknown suites/arguments fail.
+impossible visible state; `--canary missing-server` removes the LSP JAR in a
+separate installed test copy, restoring its original bytes afterwards. Both
+**must exit nonzero**. Unknown suites/arguments fail.
 No `--passWithNoTests` or hidden product commands are used. Workbench keyboard and
 mouse actions implement GUI-01–03 in smoke and GUI-01–11 in editor, GUI-01–18 in uml and focused GUI-12–18 in diagram; screenshots,
 case results and a manifest live under `build/reports/gui/<suite>/<run>/`. The
@@ -85,13 +102,12 @@ and records request counts for offline assertions. A declared suite with missing
 cases fails. This differs from API integration tests.
 
 ```sh
-INTERLIS_JAVA=/absolute/jdk25/bin/java \
 INTERLIS_TEST_CODE='/absolute/isolated/Visual Studio Code.app/Contents/MacOS/Code' \
 npm run test:extension-host
 ```
 
 This additional isolated Extension-Host run checks activation, the real definition
-provider and the unsaved template through VSCode APIs. It is not GUI evidence.
+provider and dirty-buffer restart through VSCode APIs. It is not GUI evidence.
 On macOS use the Core `tools/verification/without-python.cjs` wrapper for the
 review and qualification processes, setting the Extension CWD inside the guard.
 See the [execution plan](docs/implementation/vscode-extension/EXECUTION_PLAN.md)
@@ -141,4 +157,10 @@ size and timeout are bounded. Templates become unsaved text and are never execut
 
 The `authoring` GUI suite exercises GUI29–35 in an isolated fixture workspace;
 `authoring-probe` retains the focused native Enter/caret regression with installed
-editor smoke. V4 qualification and independent acceptance remain in progress.
+editor smoke. V4 has independent acceptance. The `resilience` suite covers native
+Trust, crash/start/protocol errors, local Multi-root, Cancel and twenty panel cycles.
+The offline `distribution` suite is launched through
+`node scripts/gui-offline-run.cjs /absolute/pre-acquired/gui-cache`; its single
+macOS sandbox denies interpreter execution, external IP traffic and source reads,
+while its Code launcher has an empty PATH. Acquire VS Code/ChromeDriver in a normal
+GUI run first. See [architecture and test contracts](docs/development.md).

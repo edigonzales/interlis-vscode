@@ -39,5 +39,5 @@ try {
     if (-not $passed) { throw 'Windows smoke or process audit failed' }
 } finally {
     Unregister-Event -SourceIdentifier $source -ErrorAction SilentlyContinue
-    Remove-Job -Id $subscription.Id -Force -ErrorAction SilentlyContinue
+    if ($null -ne $subscription.Id) { Remove-Job -Id $subscription.Id -Force -ErrorAction SilentlyContinue }
 }
