@@ -17,7 +17,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   context.subscriptions.push(output, status, watcher);
   let client: LanguageClient | undefined;
   const diagrams=new DiagramEditors(context,()=>client,output);
-  context.subscriptions.push(diagrams,vscode.window.registerCustomEditorProvider(DiagramEditors.viewType,diagrams,{webviewOptions:{retainContextWhenHidden:true},supportsMultipleEditorsPerDocument:true}),vscode.commands.registerCommand('interlisGuru.showDiagram',()=>diagrams.open()));
+  context.subscriptions.push(diagrams,vscode.window.registerCustomEditorProvider(DiagramEditors.viewType,diagrams,{webviewOptions:{retainContextWhenHidden:true},supportsMultipleEditorsPerDocument:true}),...(['refresh','settle','resetLayout','export'] as const).map(action=>vscode.commands.registerCommand('interlisGuru.diagram.'+action,()=>diagrams.viewAction(action))),vscode.commands.registerCommand('interlisGuru.diagram.reveal',()=>diagrams.reveal()),vscode.commands.registerCommand('interlisGuru.showDiagram',()=>diagrams.open()));
   let queue = Promise.resolve();
   let stateListener: vscode.Disposable | undefined;
   const setStatus = (text: string) => {status.text = `INTERLIS: ${text}`;};

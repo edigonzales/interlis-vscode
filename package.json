@@ -84,6 +84,26 @@
       {
         "command": "interlisGuru.showDiagram",
         "title": "INTERLIS: Show Diagram for This File"
+      },
+      {
+        "command": "interlisGuru.diagram.reveal",
+        "title": "INTERLIS: Reveal Source Selection in Diagram"
+      },
+      {
+        "command": "interlisGuru.diagram.refresh",
+        "title": "INTERLIS: Refresh Diagram"
+      },
+      {
+        "command": "interlisGuru.diagram.settle",
+        "title": "INTERLIS: Settle Diagram Layout"
+      },
+      {
+        "command": "interlisGuru.diagram.resetLayout",
+        "title": "INTERLIS: Reset Diagram Layout"
+      },
+      {
+        "command": "interlisGuru.diagram.export",
+        "title": "INTERLIS: Export Current Diagram"
       }
     ],
     "configuration": {
@@ -199,6 +219,91 @@
           "default": "",
           "scope": "window",
           "description": "Optional versioned resolution-lock XML from the Java compiler; an empty string disables replay."
+        },
+        "interlisGuru.diagram.autoOpenBeside": {
+          "type": "boolean",
+          "default": false,
+          "scope": "window",
+          "description": "Automatically open beside an INTERLIS source while preserving editor focus."
+        },
+        "interlisGuru.diagram.followEditor": {
+          "type": "boolean",
+          "default": false,
+          "scope": "window",
+          "description": "Initial explicit follow-active-source mode."
+        },
+        "interlisGuru.diagram.showAssociationNames": {
+          "type": "boolean",
+          "default": true,
+          "scope": "window",
+          "description": "Initial local diagram presentation setting."
+        },
+        "interlisGuru.diagram.showRoleCardinalities": {
+          "type": "boolean",
+          "default": true,
+          "scope": "window",
+          "description": "Initial local diagram presentation setting."
+        },
+        "interlisGuru.diagram.showLocalEnumerationValues": {
+          "type": "boolean",
+          "default": true,
+          "scope": "window",
+          "description": "Initial local diagram presentation setting."
+        },
+        "interlisGuru.diagram.attributeMode": {
+          "type": "string",
+          "enum": [
+            "OWN",
+            "OWN_AND_INHERITED",
+            "NONE"
+          ],
+          "default": "OWN",
+          "scope": "window",
+          "description": "Initial local diagram presentation setting; each panel has independent controls."
+        },
+        "interlisGuru.diagram.edgeRouting": {
+          "type": "string",
+          "enum": [
+            "ORTHOGONAL",
+            "POLYLINE",
+            "SPLINES"
+          ],
+          "default": "ORTHOGONAL",
+          "scope": "window",
+          "description": "Initial local diagram presentation setting; each panel has independent controls."
+        },
+        "interlisGuru.diagram.nodePlacement": {
+          "type": "string",
+          "enum": [
+            "BRANDES_KOEPF",
+            "SIMPLE",
+            "INTERACTIVE",
+            "LINEAR_SEGMENTS",
+            "NETWORK_SIMPLEX"
+          ],
+          "default": "BRANDES_KOEPF",
+          "scope": "window",
+          "description": "Initial local diagram presentation setting; each panel has independent controls."
+        },
+        "interlisGuru.diagram.rendering.target": {
+          "type": "string",
+          "enum": [
+            "STANDARD",
+            "INKSCAPE"
+          ],
+          "default": "STANDARD",
+          "scope": "window",
+          "description": "Initial local diagram presentation setting; each panel has independent controls."
+        },
+        "interlisGuru.diagram.edgeCrossings": {
+          "type": "string",
+          "enum": [
+            "GAPS",
+            "PLAIN"
+          ],
+          "default": "GAPS",
+          "scope": "window",
+          "description": "Initial local diagram presentation setting; each panel has independent controls."
         }
       }
     },
@@ -231,6 +336,7 @@
     "review": "node scripts/review.cjs"
   },
   "dependencies": {
+    "sax": "1.6.1",
     "vscode-languageclient": "9.0.1"
   },
   "devDependencies": {
@@ -238,10 +344,10 @@
     "@types/vscode": "1.100.0",
     "@vscode/test-electron": "2.5.2",
     "@vscode/vsce": "4.1.0",
+    "clipboardy": "5.3.2",
     "esbuild": "0.25.12",
     "typescript": "5.9.3",
-    "vscode-extension-tester": "8.28.1",
-    "clipboardy": "5.3.2"
+    "vscode-extension-tester": "8.28.1"
   },
   "overrides": {
     "vscode-languageclient": {

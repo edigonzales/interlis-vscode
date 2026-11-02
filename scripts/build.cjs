@@ -8,3 +8,5 @@ fs.mkdirSync('licenses',{recursive:true});fs.writeFileSync('licenses/bundled-nod
 
 require('esbuild').buildSync({entryPoints:['src/diagram-webview.ts'],outfile:'out/diagram-webview.js',bundle:true,platform:'browser',target:'es2022',format:'esm'});
 require('esbuild').buildSync({entryPoints:['src/host/diagram-assets.ts'],outfile:'build/diagram-assets.cjs',bundle:true,platform:'node',format:'cjs'});
+require('esbuild').buildSync({entryPoints:['src/host/diagram-export.ts'],outfile:'build/diagram-export.cjs',bundle:true,platform:'node',format:'cjs'});
+require('esbuild').buildSync({entryPoints:['src/host/diagram-state.ts'],outfile:'build/diagram-state.cjs',bundle:true,platform:'node',format:'cjs'});

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "coreCommit": "7026e7f6b5834bf593d91dfee3323efb60688f3d",
+  "coreCommit": "988dea92462c27421ab470fe61ca8e66d616f240",
   "protocolVersion": "lsp-3.17-baseline",
   "editorProtocolVersion": 1,
   "diagramDocumentVersion": "1.0",
@@ -25,7 +25,7 @@
     },
     {
       "path": "lib/interlis-lsp-0.2.0-SNAPSHOT.jar",
-      "sha256": "11dba44845b691080daa7308090515e103fad16d618d91ffff61f1f90caf3998"
+      "sha256": "812fd1bb7e37cb6120f3a43356d55ac6911a4ee183ea9c5589947bd4614d4a1d"
     },
     {
       "path": "lib/interlis-model-0.2.0-SNAPSHOT.jar",
@@ -33,7 +33,7 @@
     },
     {
       "path": "lib/interlis-projection-0.2.0-SNAPSHOT.jar",
-      "sha256": "e8ab8b968c67acd764ee90e2f9b3a5b7f7720717bf3cca45fbb3d9f43d3f692e"
+      "sha256": "693179f2984bb800933cbfb06e9dfee66aa891768516e2fbe21ac1ff4062d579"
     },
     {
       "path": "lib/interlis-repository-0.2.0-SNAPSHOT.jar",
@@ -55,15 +55,15 @@
   "rendererFiles": [
     {
       "path": "diagram-ui/adapter.cjs",
-      "sha256": "dd6f59e5021f3668c6ce2782e70b16a3ae3b62789dcdd4b2a977c938c48b72d7"
+      "sha256": "b1e8ac3aa344bcb9355fe5ca4c1f3247505a6160932023f3c23471387ef3c5f5"
     },
     {
       "path": "diagram-ui/adapter.d.ts",
-      "sha256": "d617253c54ded2ca62628fdc0d8925608d2870410f1ffcd0c4aa500b964bbb55"
+      "sha256": "613723fbf870dc68277fcaea66c5f373dc597848a78e5e16accc1316713ef9d2"
     },
     {
       "path": "diagram-ui/build-manifest.json",
-      "sha256": "500d509e1d4843300ec2d772d92548851e40248929ed51c0fa33e8c6bc82a01b"
+      "sha256": "19916dd30a4f1d5e2282e9f8104f856d2338893e42a52f812d2e5b3936813b03"
     },
     {
       "path": "diagram-ui/contracts/elk.d.ts",
@@ -74,16 +74,20 @@
       "sha256": "85f2c7a7721e2cd8f6a61a296e9238d4199bf3f361bcfd49d2d7c19119c90cb7"
     },
     {
+      "path": "diagram-ui/controls.d.ts",
+      "sha256": "f1609e1cb2b5a06229af7a966865e29bbc8728231f66d36bb0ebfd528b746bfd"
+    },
+    {
       "path": "diagram-ui/diagram-layout-worker.js",
       "sha256": "c0dc844ac1739a1e1e4f64d08a9ec4594818d5aa7e0cb26e5096b6d34b864e2b"
     },
     {
       "path": "diagram-ui/diagram-ui.css",
-      "sha256": "418fa860e308fcbe146320b8cd3f94fee0b1e700d1bbeee18ef8ac017303dad0"
+      "sha256": "d37cd5d3ab7b19f62855c9df33f94a5d9c001717b8bf70b6edabc85ead49f2d2"
     },
     {
       "path": "diagram-ui/diagram-ui.js",
-      "sha256": "ea3b031f61e6bd36c9ea6d95f9c93f7064878322f7c43b0f7403c81b00a51c1b"
+      "sha256": "80e1fa8e2cd1477affb4755ec8c791aedbda3f8c07f7492141a1e6c77a0ada9c"
     },
     {
       "path": "diagram-ui/diagram-ui.js.LEGAL.txt",
@@ -94,16 +98,28 @@
       "sha256": "f87c01ded4e7bf977cad235cba47cfc455fe228f145ef5f7bc2442da195defc9"
     },
     {
+      "path": "diagram-ui/export.d.ts",
+      "sha256": "88920e85ee536130e4387f681748e1254a24c30ec55a9c54c5c7ab28d94dc7d8"
+    },
+    {
+      "path": "diagram-ui/filters.d.ts",
+      "sha256": "7c770ae2b686e0ce43256bbb3549e54dd035260d31097191bfed6f4424a0d661"
+    },
+    {
+      "path": "diagram-ui/geometry.d.ts",
+      "sha256": "1fa7a00bbaaa4d6acc904df90f760f68b235825da5cd2f1cdbf5cd8c24245a15"
+    },
+    {
       "path": "diagram-ui/identity.d.ts",
-      "sha256": "93cce8ae165f8ecc45aa6b6545fd03bc538eecae43af9444a825add2b9e60ed0"
+      "sha256": "ef42378b2b6576bf64f0045dfeedfe56e98e31c734fce1e6decb72e30065fe6e"
     },
     {
       "path": "diagram-ui/interactive.d.ts",
-      "sha256": "0a00b04aab1b5240ab2be6118255a04d506bade1f6772bdc7b85f378f9966200"
+      "sha256": "c0c15930d9d5691f71e2d8be18c8d0e7dae399c69049ef4f7aa27241c528f730"
     },
     {
       "path": "diagram-ui/layout.d.ts",
-      "sha256": "744bef40c30e18eb622a4d57bb62549881d65d79bad9514e07f6afcc8f4a08ef"
+      "sha256": "2861414d3b7dd2329ca656309321fac624ae0cacc1e9f4fae0c2936122f323e0"
     },
     {
       "path": "diagram-ui/libavoid-router.d.ts",
@@ -198,8 +214,12 @@
       "sha256": "ae25650add1e8730c1472187c7127d214b51b712f83d802d5b7a6c116946ccff"
     },
     {
+      "path": "diagram-ui/view-state.d.ts",
+      "sha256": "d3e88c246a4aee844ab02f81f10228c01da934e32a641ecbd33663dd920caf44"
+    },
+    {
       "path": "diagram-ui.tgz",
-      "sha256": "11d10fae90cba4ab374499e2cf83c68861111f334b2421092a5a0b481a3e33f9"
+      "sha256": "de28be7e5d219ff96ec55a05a928f2ce6602927a030e6a1e2f8666ca1b20c27d"
     },
     {
       "path": "renderer-provenance.json",
@@ -219,7 +239,7 @@
     },
     {
       "path": "types/editor-protocol.ts",
-      "sha256": "bb32ee0b88b2c2996cdd753a26b010594174875ce5eb669efcc177c5d00a090a"
+      "sha256": "c93dfcb7d73d75136c999c342061512715a7bdce8aa5d5eef956c6fba516ba8d"
     }
   ]
 }

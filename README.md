@@ -101,3 +101,13 @@ Source resource origins and license hashes are in
 [provenance](docs/provenance/source-adoptions.md). Bundled Node notices are
 regenerated from esbuild's actual input graph. Java third-party notices remain
 inside the unchanged distribution JARs, alongside the Core license.
+
+V3 local diagram controls include visibility filters, pins, Settle/Reset, view
+Undo/Redo, routing and layout choices, and full/visible SVG/PNG export of the
+current arranged view. Initial settings use `interlisGuru.diagram.*`; automatic
+opening and follow-active-editor default to false. `INTERLIS: Reveal Source
+Selection in Diagram` uses the Java symbol query. Save uses the native dialog;
+Cancel creates no file. View storage keeps bounded hashed presentation identities,
+geometry and filters, independently for each workspace/root/panel. It stores no
+source text. The `comfort` GUI suite runs cumulative GUI01–28; its qualification
+is still pending. See the current V3 implementation report for actual evidence.

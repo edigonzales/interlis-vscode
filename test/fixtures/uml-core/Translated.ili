@@ -1,0 +1,9 @@
+INTERLIS 2.4;
+MODEL English(en) AT "x" VERSION "1" =
+DOMAIN Identifier=TEXT*10;
+TOPIC Data=CLASS Road=name:Identifier;END Road;END Data;
+END English.
+MODEL French(fr) AT "x" VERSION "1" TRANSLATION OF English["1"] =
+DOMAIN Identifiant=TEXT*10;
+TOPIC Donnees=CLASS Route=nom:Identifiant;END Route;END Donnees;
+END French.

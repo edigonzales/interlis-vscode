@@ -1,0 +1,5 @@
+INTERLIS 2.4;
+MODEL V3Base AT "x" VERSION "1" =
+DOMAIN Deep=TEXT*12;
+TOPIC BaseData=CLASS DeepObject=value:Deep;END DeepObject;END BaseData;
+END V3Base.
