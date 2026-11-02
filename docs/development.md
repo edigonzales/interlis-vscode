@@ -38,6 +38,30 @@ already acquired tools, but denies Core and extension `src` data reads and exter
 network connections. Its tested Code descendants have an empty PATH. Boundary
 negative probes are recorded before assertions run.
 
+macOS denies executing its privileged `ps` utility inside the inherited sandbox.
+`gui-resilience-run.cjs` therefore starts a separate fixed read-only Node observer
+before launching the guarded GUI. The observer accepts only authenticated GETs
+for metrics of its own preallocated profile; it accepts no command, PID or path.
+It records actual own Electron/Java process RSS and IDs. UI and product descendants
+remain protected by the original execution guard. CDP worker targets and native
+panel cycles are observed by the guarded test. This boundary is explicit in the
+resource evidence; it is not described as an in-sandbox `ps` execution.
+
+For the complete macOS qualification, first commit the candidate and then run:
+
+```sh
+node scripts/qualify-macos.cjs \
+  --core-dir /absolute/locked-interlis-java \
+  --evidence /absolute/interlis-vscode-evidence/qualification/V5-final-run \
+  --cache /absolute/pre-acquired/gui-cache \
+  --java-home /absolute/jdk25
+```
+
+It requires clean tracked trees, keeps the full commit pair fixed, copies each
+completed guard/JUnit report, checks all42 GUI IDs and preserves the exact VSIX.
+The independent final review separately validates these raw results and designs
+its own counterprobes. It is not started by this qualification command.
+
 GitHub Actions builds exact locked Core/extension inputs and short native Linux
 and Windows smokes inspect actual VSIX bytes, use bundled Java over real stdio,
 install with VS Code's real CLI from Unicode/space paths and reject a removed JAR.

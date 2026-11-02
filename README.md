@@ -84,12 +84,15 @@ Cross-packaging is not a native platform test. Linux/Windows qualification uses
 short native GitHub Actions smokes; their GUI and Remote GUI remain untested under
 the [user-adjusted scope](docs/implementation/vscode-extension/PLATFORM_TEST_SCOPE.md).
 For local F5 development, stage the locked Core and host runtime first; the
-provided launch configuration builds and opens an isolated Extension Development Host.
+provided launch configuration builds and opens an Extension Development Host.
 
 The GUI runner downloads VSCode1.140.0 and matching ChromeDriver into an isolated
 test directory, installs the VSIX and uses ExTester8.28.1/Selenium. Optional
-`--cache /absolute/cache` reuses downloaded zip archives. Each run has fresh
-user-data, extensions, workspace and evidence. `--vsix /absolute/file.vsix`
+`--cache /absolute/cache` reuses an already unpacked, pinned macOS VS Code and
+ChromeDriver through directory links; it does not copy the applications per run.
+Each run has fresh user-data, shared-data, extensions, workspace and evidence.
+Temporary installations are removed after process exit; logs, screenshots and
+qualified VSIX artifacts remain. `--vsix /absolute/file.vsix`
 chooses an explicit archive. `--canary missing-status` deliberately expects an
 impossible visible state; `--canary missing-server` removes the LSP JAR in a
 separate installed test copy, restoring its original bytes afterwards. Both

@@ -1,0 +1,9 @@
+{
+  "name": "conflict-fixture",
+  "publisher": "interlis-test",
+  "displayName": "Passive INTERLIS conflict test fixture",
+  "version": "0.0.0",
+  "license": "MIT",
+  "engines": {"vscode": "^1.100.0"},
+  "contributes": {"languages": [{"id": "interlis", "aliases": ["INTERLIS conflict fixture"]}]}
+}

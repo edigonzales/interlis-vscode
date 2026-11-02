@@ -20,6 +20,14 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   const watcher = vscode.workspace.createFileSystemWatcher('**/*.{ili,ILI}');
   context.subscriptions.push(output, status, watcher);
   let client: LanguageClient | undefined;
+  let deactivating = false;
+  let warnedConflicts = '';
+  function warnConflicts(): void {
+    if (!vscode.workspace.isTrusted || deactivating) return;
+    const ids = vscode.extensions.all.filter(ext => ext.id !== context.extension.id && ext.packageJSON.contributes?.languages?.some((language: {id: string}) => language.id === 'interlis')).map(ext => ext.id).sort().join(',');
+    if (ids && ids !== warnedConflicts) void vscode.window.showWarningMessage('Other INTERLIS extensions are enabled. Multiple language servers can produce duplicate results. Manage them explicitly in Extensions.');
+    warnedConflicts = ids;
+  }
   const snippets=new SnippetInteraction();context.subscriptions.push(snippets);
   context.subscriptions.push(new DocumentationCommands(()=>client,output),new EditorAssistance(()=>client,output));
   const diagrams=new DiagramEditors(context,()=>client,output);
@@ -51,7 +59,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     const next = new InterlisLanguageClient('interlisGuru', 'INTERLIS', () => {
       const child = spawn(plan.java, plan.args, {shell: false, stdio: 'pipe'});
       output.appendLine(`Server start pid=${child.pid} core=${plan.coreCommit} bundle=${plan.bundleDigest} runtime=${plan.runtimeDigest || 'explicit'} ${plan.runtimeSource}${bundleOverride ? ' server override' : ' packaged distribution'}`);
-      child.once('exit', (code, signal) => output.appendLine(`Server exit pid=${child.pid} code=${code} signal=${signal}`));
+      child.once('exit', (code, signal) => {if (!deactivating) output.appendLine(`Server exit pid=${child.pid} code=${code} signal=${signal}`);});
       return Promise.resolve(child);
     }, {
       documentSelector: [{language: 'interlis', scheme: 'file'}, {language: 'interlis', scheme: 'untitled'}, {language: 'interlis', scheme: 'interlis-source'}],
@@ -83,6 +91,9 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   }
   function perform(operation: () => Promise<void>): Promise<void> {
     queue = queue.then(operation).catch(error => {
+      // VS Code may close its output channel before awaiting extension deactivation.
+      // Stop still runs its client-disposal finally block; do not log into a closed UI.
+      if (deactivating) return;
       const message = error instanceof Error ? error.message : String(error);
       output.appendLine(`Host error: ${message}`);
       setStatus('Error');
@@ -137,7 +148,8 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     vscode.commands.registerCommand('interlisGuru.stopServer', () => perform(stop)),
     vscode.commands.registerCommand('interlisGuru.showOutput', () => output.show(true)),
     vscode.commands.registerCommand('interlisGuru.newFromTemplate', () => newFromTemplate(context).catch(error=>{void vscode.window.showErrorMessage(`INTERLIS: ${error instanceof Error?error.message:String(error)}`);})),
-    vscode.workspace.onDidGrantWorkspaceTrust(() => void perform(start)),
+    vscode.workspace.onDidGrantWorkspaceTrust(() => {warnConflicts(); void perform(start);}),
+    vscode.extensions.onDidChange(warnConflicts),
     vscode.workspace.onDidChangeWorkspaceFolders(() => void perform(async () => {await stop(); await start();})),
     vscode.workspace.onDidChangeConfiguration(event => {
       if (event.affectsConfiguration('interlisGuru.server')) void perform(async () => {await stop(); await start();});
@@ -146,9 +158,8 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       });
     })
   );
-  const conflicts = vscode.extensions.all.filter(ext => ext.id !== context.extension.id && ext.packageJSON.contributes?.languages?.some((language: {id: string}) => language.id === 'interlis'));
-  if (conflicts.length) void vscode.window.showWarningMessage('Other INTERLIS extensions are enabled. Multiple language servers can produce duplicate results. Manage them explicitly in Extensions.');
-  stopExtension = () => perform(stop);
+  warnConflicts();
+  stopExtension = () => {deactivating = true; return perform(stop);};
   await perform(start);
 }
 export async function deactivate(): Promise<void> {await stopExtension?.(); stopExtension = undefined;}
