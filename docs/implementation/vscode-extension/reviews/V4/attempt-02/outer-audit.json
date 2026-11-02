@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-11-02T13:35:55.207Z",
+  "phase": "V4",
+  "candidate": {
+    "coreSha": "6983baf95c47a7e20dbb41a2e50500185f578c37",
+    "extensionSha": "36b87bc798eaa53cbe3f5b9f89ac58b92ea0eafc"
+  },
+  "accepted": true,
+  "verdict": "PASS",
+  "process": {
+    "status": "completed",
+    "exitCode": 0,
+    "finishedAt": "2026-11-02T13:32:21.001Z",
+    "guardStatus": "passed",
+    "guardExitCode": 0
+  },
+  "trees": {
+    "core": {
+      "head": "6983baf95c47a7e20dbb41a2e50500185f578c37",
+      "branch": "HEAD",
+      "trackedDirty": ""
+    },
+    "extension": {
+      "head": "36b87bc798eaa53cbe3f5b9f89ac58b92ea0eafc",
+      "branch": "HEAD",
+      "trackedDirty": ""
+    }
+  },
+  "sessionId": "ses_e63a2ec9affeVA8TQxv3YCZJlO",
+  "modelIdentity": "outer-model-identity.json",
+  "criteria": {
+    "fulfilled": 9,
+    "violated": 0,
+    "unverified": 0
+  },
+  "openMandatoryFindings": [],
+  "missingRequiredChecks": [],
+  "imageAudit": {
+    "file": "outer-image-read-audit.json",
+    "actualReads": 23,
+    "declaredViewed": 23,
+    "allAccepted": true
+  },
+  "checks": "outer-review-checks.json",
+  "originals": {
+    "reviewSha256": "d2b355d00b0f578137f9973133aea9a50aff41e76255f9709b89c6b525fd572b",
+    "verdictSha256": "69b8d464175d5bce45f69a5836b9ad9f5eaa483d6d3446b076bcb11a09f23ac4",
+    "requestSha256": "86a215fc38f98349f62d870d7ab44bf62b9dfefb543669331916acba6c202dc9"
+  },
+  "limits": [
+    "Reviewer logs/python-free.log reference is wrong; successful actual independent tool execution at raw JSONL row561 is preserved and verified, rather than fabricating that log.",
+    "OpenCode image-read downsizes source screenshots; original source hashes, actual image content/dimensions and declared exact path or explicit identical alias are separately verified.",
+    "CP2-CONFIG-RACE compares normalized clipboard text, not raw-byte identity; GUI09 independently checks exact controlled LF fixtures, fresh readonly handles, current analysis and zero offline HTTP.",
+    "Three failed reviewer counterprobe harness iterations retained and excluded from PASS counts; final native counterprobe 4/4.",
+    "Optional narrow HTML layout/partial authoring UML/exit-log observations remain optional; V5 platform/runtime/remote scope has not begun."
+  ],
+  "nextPermittedPhase": "V5"
+}

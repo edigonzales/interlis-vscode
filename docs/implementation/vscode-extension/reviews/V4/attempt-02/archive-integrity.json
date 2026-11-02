@@ -1,0 +1,102 @@
+{
+  "copiedAt": "2026-11-02T13:37:07.350Z",
+  "externalRoot": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r2",
+  "originalsUnchanged": true,
+  "files": [
+    {
+      "original": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r2/evidence/review.md",
+      "file": "review.md",
+      "sha256": "d2b355d00b0f578137f9973133aea9a50aff41e76255f9709b89c6b525fd572b"
+    },
+    {
+      "original": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r2/evidence/verdict.json",
+      "file": "verdict.json",
+      "sha256": "69b8d464175d5bce45f69a5836b9ad9f5eaa483d6d3446b076bcb11a09f23ac4"
+    },
+    {
+      "original": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r2/evidence/transport.json",
+      "file": "transport.json",
+      "sha256": "21da1db04b1b35a6e9985eab8bb937f44c9d5a22491515a5dc67b0ba03417905"
+    },
+    {
+      "original": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r2/evidence/guard.json",
+      "file": "guard.json",
+      "sha256": "d482cde77c1396827598c1a96387911e2bd04c9654e3bd59f8517561f344c153"
+    },
+    {
+      "original": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r2/evidence/image-read-inventory.json",
+      "file": "image-read-inventory.json",
+      "sha256": "9c59c1db27ef782ad5d81d80d87b5307c47a16472b26bc8aaaa1ccbd9cc065fc"
+    },
+    {
+      "original": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r2/evidence/outer-image-read-audit.json",
+      "file": "outer-image-read-audit.json",
+      "sha256": "3766e13f2de2164cc3c9c03698a56a094754c6a4484b88ef1de3e1f6d7f83477"
+    },
+    {
+      "original": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r2/evidence/outer-model-identity.json",
+      "file": "outer-model-identity.json",
+      "sha256": "c3a9cea472543585ad6d964bfd5a96a52b30997637a5a77ae5d08f7dda1e3d3b"
+    },
+    {
+      "original": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r2/evidence/outer-review-checks.json",
+      "file": "outer-review-checks.json",
+      "sha256": "96b3f0a3dd6ffd2d4e532d0efce181b23281be6168f00ea93bd377dc8167b634"
+    },
+    {
+      "original": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r2/evidence/outer-audit.json",
+      "file": "outer-audit.json",
+      "sha256": "05eab05e8c2ccd0215bfeaa934c89452454b29479d00ebf9a5cbc07936d7aeea"
+    },
+    {
+      "original": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r2/evidence/outer-payload-comparison.json",
+      "file": "outer-payload-comparison.json",
+      "sha256": "0a5f8da5d1b87cbc879d20dad69c3a73f4b899fecefb100f19f2cae6afd159f9"
+    },
+    {
+      "original": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r2/evidence/outer-java-counts.json",
+      "file": "outer-java-counts.json",
+      "sha256": "207b24aa174e90aa5bb7f966ba51cbd88f4a040a7527666570a6e475c68f7a4f"
+    },
+    {
+      "original": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r2/evidence/outer-python-free-tool-result.json",
+      "file": "outer-python-free-tool-result.json",
+      "sha256": "a3107c7fc5f001433c3c0e6bca6ea4ae4df5dffc44966c10b8640fb3518c9193"
+    },
+    {
+      "original": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r2/evidence/outer-candidate-artifact-retention.json",
+      "file": "outer-candidate-artifact-retention.json",
+      "sha256": "b73fc3662d47a2ad1ef9a7fb58d57da223485cecdf5a60e83519867689012ec5"
+    },
+    {
+      "original": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r2/request.json",
+      "file": "request.json",
+      "sha256": "86a215fc38f98349f62d870d7ab44bf62b9dfefb543669331916acba6c202dc9"
+    },
+    {
+      "original": "/Users/stefan/sources/interlis-vscode-evidence/phases/V4/review-r2-preflight/model-preflight.json",
+      "file": "model-preflight.json",
+      "sha256": "ea828591ea07d887e68023880ff1226226245a3bad8c10eaca903338b3f771d8"
+    },
+    {
+      "original": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r2/evidence/own/artifact-verification.json",
+      "file": "artifact-verification.json",
+      "sha256": "ea6420d1b7d6daf16bdca675cb33f8a43f14afad1f4817c7103e0388e9d023e2"
+    },
+    {
+      "original": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r2/evidence/own/artifact-inspection-authoring.json",
+      "file": "artifact-inspection-authoring.json",
+      "sha256": "38b50de9cd87dd8f3d6c66ca382a227c96bda48a63f2a82c8e337550e8ba89e8"
+    },
+    {
+      "original": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r2/evidence/own/counterprobe-artifact-inspection.json",
+      "file": "counterprobe-artifact-inspection.json",
+      "sha256": "93b01d4ff6bbcedb897235560c01339ec9d1e1e57313aa4abccca06a071b0442"
+    },
+    {
+      "original": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r2/evidence/own/cp2-wire-race.json",
+      "file": "cp2-wire-race.json",
+      "sha256": "e9abc7ba45a7d44eea2ead45ed84896d1f2643da8645d4fd5a34956f73262842"
+    }
+  ]
+}

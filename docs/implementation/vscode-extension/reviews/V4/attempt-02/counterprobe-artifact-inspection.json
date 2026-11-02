@@ -1,0 +1,23 @@
+{
+  "generatedAt": "2026-11-02T13:23:25.756Z",
+  "catalogue": {
+    "markdownSha": "45e6b6f5f121c990fd2368d75a3ab68e17550e8cd5202f00c5dd852985280b3c",
+    "htmlSha": "7f03f8503ef41ec05292e0a54177d171c45beb31b5c43fc169c8a45dc8abfbdd",
+    "markdownBytes": 2535,
+    "hasDirtyGamma": true,
+    "hasStaleC": false,
+    "hasRecursiveNode": true,
+    "hasEmoji": true,
+    "bounded": true,
+    "htmlInert": true,
+    "htmlEscapesTag": true
+  },
+  "inheritance": {
+    "mermaid": "classDiagram\n  class N1[\"Node\"] {\n    child : BAG &#123;0..*&#125; OF Node\n  }\n  class N2[\"A\"] {\n    note : TEXT\n  }\n  class N3[\"B\"] {\n    note : TEXT &#123;inherited&#125;\n    extra : TEXT\n  }\n  class N4[\"C\"] {\n    note : TEXT &#123;inherited&#125;\n    extra : TEXT &#123;inherited&#125;\n    leaf : TEXT\n    tree : Node\n  }\n  N1 --> N1 : child\n  N3 --|> N2\n  N4 --> N1 : tree\n  N4 --|> N3\n",
+    "plantUml": "@startuml\nclass \"Node\" as N1 {\n  child : BAG {0..*} OF Node\n}\nclass \"A\" as N2 {\n  note : TEXT\n}\nclass \"B\" as N3 {\n  note : TEXT {inherited}\n  extra : TEXT\n}\nclass \"C\" as N4 {\n  note : TEXT {inherited}\n  extra : TEXT {inherited}\n  leaf : TEXT\n  tree : Node\n}\nN1 --> N1 : child\nN2 <|-- N3\nN4 --> N1 : tree\nN3 <|-- N4\n@enduml\n",
+    "graphmlXml": {
+      "balanced": true
+    },
+    "graphmlSha": "52c4ad62b4eaa2b48f8a144cea07921698a4c83406a0ee961508cf25e95504df"
+  }
+}

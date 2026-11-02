@@ -1,0 +1,339 @@
+{
+  "schemaVersion": 1,
+  "phase": "V4",
+  "assignmentBase": {
+    "coreSha": "20b0029d824b3602d9a304320bf0feae4c35c1f9",
+    "extensionSha": "73badd9807f407aea048d397af5549fe907a1501"
+  },
+  "phaseBase": {
+    "coreSha": "a0272965c4691320ca316d519581d4db4cefc930",
+    "extensionSha": "26743af31198ea0945093318742b8c83c741ce16"
+  },
+  "candidate": {
+    "coreSha": "6983baf95c47a7e20dbb41a2e50500185f578c37",
+    "extensionSha": "36b87bc798eaa53cbe3f5b9f89ac58b92ea0eafc"
+  },
+  "actualHeads": {
+    "coreSha": "6983baf95c47a7e20dbb41a2e50500185f578c37",
+    "extensionSha": "36b87bc798eaa53cbe3f5b9f89ac58b92ea0eafc",
+    "coreTrackedClean": true,
+    "extensionTrackedClean": true,
+    "extensionUntrackedReviewHarnessFile": "opencode.json (review runner configuration, not a product file)"
+  },
+  "verdict": "PASS",
+  "reviewer": {
+    "openCodeVersion": "2.0.28",
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "apiHost": "https://api.deepseek.com",
+    "modelMappingEvidence": "This fresh session's model catalog returned provider deepseek / deepseek/deepseek-flash with display name 'DeepSeek V4.1 Flash 1017'; phases/V4/review-r2-preflight/model-preflight.json records the same mapping, the direct host and the official pricing-page SHA-256 579412351262de19f1b067420542d042dc9433f389be6d252d0f4c41b82f515b; session opencode.json sets baseURL https://api.deepseek.com. No proxy/OpenRouter/Go/Zen fallback; no credential file read or printed."
+  },
+  "criteria": [
+    {
+      "id": "V4-01",
+      "status": "fulfilled",
+      "evidence": [
+        "logs/java-tests.log: 66 compiler tests incl. EditorCompletionTest (context/versioned slots, qualified replacement, inert comments/strings, END slot) and EditorTemplateContractTest, 0 failures/skips",
+        "own/gui-authoring manifests/cases: GUI-29 passed on installed VSIX 5fb846de…",
+        "core/interlis-compiler/src/main/java/guru/interlis/compiler/query/EditorCompletions.java and MetaAttributeCatalog.java are Java-owned; src/ contains no ILI parser/symbol table"
+      ],
+      "finding": null
+    },
+    {
+      "id": "V4-02",
+      "status": "fulfilled",
+      "evidence": [
+        "own/gui-authoring: GUI-29 and GUI-30 passed 7/7 suite",
+        "logs/java-tests.log: EditorAssistProtocolTest exact caret (3,2) and stale-version rejection; unnegotiated client keeps standard on-type and cannot call custom path",
+        "own/cp2-run: CP2-AUTOCLOSE multiline ABSTRACT with comment+emoji -> exactly one END Wide;, caret Ln 7 Col 7, comment negative case no END, disk unchanged",
+        "own/images: CP2-AUTOCLOSE-abstract.png, CP2-AUTOCLOSE-comment-negative.png, GUI-30-Auto.png"
+      ],
+      "finding": null
+    },
+    {
+      "id": "V4-03",
+      "status": "fulfilled",
+      "evidence": [
+        "own/gui-authoring: GUI-31 applied END-name, semicolon and unused-import fixes, one Undo each",
+        "logs/java-tests.log: EditorAssistanceTest and EditorCompletionTest reject END rewrite on incomplete syntax and unused-import deletion unless all bindings are complete and all coverage entries present",
+        "logs/java-tests.log: LSP codeAction returns versioned documentChanges only (EditorAssistProtocolTest/DocumentationProtocolTest)"
+      ],
+      "finding": null
+    },
+    {
+      "id": "V4-04",
+      "status": "fulfilled",
+      "evidence": [
+        "logs/java-tests.log: interlis-documentation 8/8 (types, origins, DE/FR/IT/EN, three inheritance modes, constraints, recursive references, budgets, escaping)",
+        "own/cp2-run: CP2-CATALOGUE from dirty buffer contains Deep.Data.Gamma, no Deep.Data.C, recursive BAG {0..*} OF Deep.Data.Node, emoji comment, 2535 bytes; buffer and disk hashes unchanged",
+        "core/interlis-documentation/src/main/java/.../DocumentationProjector.java consumes only CompiledSchema"
+      ],
+      "finding": null
+    },
+    {
+      "id": "V4-05",
+      "status": "fulfilled",
+      "evidence": [
+        "own/gui-authoring: GUI-33/GUI-34 passed; 8 saved MD/HTML files in DE/EN/FR/IT with header override, ABSTRACT and escaped script text",
+        "own/artifact-inspection-authoring.json: DOCX has 5 well-formed XML parts, 4 tables, Child/Base/Detail, recursive reference, constraint; no DOCTYPE/script",
+        "own/gui-authoring: GUI-33-html-tables.png and GUI-34-saved.png visually inspected"
+      ],
+      "finding": null
+    },
+    {
+      "id": "V4-06",
+      "status": "fulfilled",
+      "evidence": [
+        "own/gui-authoring: GUI-35 passed; fresh GUI-35-graph.mmd has N5 --|> N4 (Child->Base), .puml has N4 <|-- N5, GraphML INHERITANCE source=Child target=Base",
+        "own/cp2-run: three-level CP2-INHERITANCE confirms B--|>A and C--|>B in Mermaid, A<|--B and B<|--C in PlantUML, C->B and B->A in GraphML",
+        "logs/java-tests.log: DiagramProjectionTest direction assertion and CLI diagramExportUsesCheckedSchema passed; no second Mermaid renderer found"
+      ],
+      "finding": null
+    },
+    {
+      "id": "V4-07",
+      "status": "fulfilled",
+      "evidence": [
+        "own/gui-authoring manifest: status passed, exit 0, 7/7 GUI-29..35, one real Java start, none remaining",
+        "own/gui-comfort manifest: status passed, exit 0, 28/28 GUI-01..28, six real Java starts, none remaining; GUI-09 did three offline restarts with exact readonly bytes and zero additional HTTP",
+        "own/gui-canary manifest: expected exit 1 at impossible visible status (GUI-01), two other smoke cases passed",
+        "own/cp2-run: 4/4 independent native GUI counterprobes passed"
+      ],
+      "finding": null
+    },
+    {
+      "id": "V4-08",
+      "status": "fulfilled",
+      "evidence": [
+        "logs/java-tests.log: 196 fresh tests (66 compiler + 8 documentation + 75 LSP + 24 bridge + 22 projection + 1 CLI), 0 failures, 0 errors, 0 skips, exit 0",
+        "logs/build.log, deps.log, unit.log, protocol.log: build, dependency inventory, 10 unit tests and one real packaged stdio process all exit 0",
+        "logs/python-free.log: PYTHON_FREE_SOURCE_PASS 1685 inputs",
+        "Diff scan: no new @Disabled/XFAIL and no Python files; parser/binder/norm sources unchanged"
+      ],
+      "finding": null
+    },
+    {
+      "id": "V4-09",
+      "status": "fulfilled",
+      "evidence": [
+        "Independent code/target/artifact review documented in review.md",
+        "own/cp2-wire-race.json: real Java stdio, identical configuration notifications during held repository index, analysisReady + navigation + current compile",
+        "own/cp2-run: four new native GUI counterprobes with exact before/after artifacts and source immutability",
+        "image-read-inventory.json: 19 images actually opened in this session with SHA-256 and visual observations"
+      ],
+      "finding": null
+    }
+  ],
+  "executedChecks": [
+    {
+      "id": "exact-detached-pair-build-artifact-inventory",
+      "cwd": "extension",
+      "command": "npm ci --ignore-scripts; npm run build; node scripts/stage-core.cjs --core-dir /Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r2/core (scratch); npm run package:vsix -- --target darwin-arm64; ./gradlew editorBundle (core)",
+      "exit": 0,
+      "result": "Fresh editorBundle 59/59 byte-identical to staged artifacts; scratch stage from exact detached Core produced an identical lock and identical 59-file artifacts tree; lock 12 server + 47 renderer identical; request 60/60 artifact SHA-256 valid; independently packaged VSIX 75/75 entries content-identical to preserved candidate 69c3819f…; runtime audit 0 vulnerabilities",
+      "evidence": [
+        "logs/npm-ci.log",
+        "logs/build.log",
+        "logs/editorBundle.log",
+        "logs/package.log",
+        "own/artifact-verification.json",
+        "own/artifact-inspection-authoring.json",
+        "logs/stage-scratch.log"
+      ]
+    },
+    {
+      "id": "pure-java-editor-catalogue-and-transport",
+      "cwd": "core",
+      "command": "./gradlew :interlis-compiler:test --tests guru.interlis.compiler.EditorAssistanceTest --tests guru.interlis.compiler.EditorCompletionTest --tests guru.interlis.compiler.EditorTemplateContractTest --tests guru.interlis.compiler.EditorPartialStateContractTest --tests guru.interlis.compiler.QueryOwnershipTest --tests guru.interlis.compiler.SnapshotOwnershipTest --tests guru.interlis.compiler.P3CompletionScopeContractTest --tests guru.interlis.compiler.RenameSafetyTest --tests guru.interlis.compiler.FormatterContractTest --tests guru.interlis.compiler.P3FormatterPolicyContractTest --tests guru.interlis.compiler.LexicalRecoveryContractTest --tests guru.interlis.compiler.VersionScopeTest --tests guru.interlis.compiler.SyntaxContractTest --tests guru.interlis.compiler.AssociationRulesContractTest --tests guru.interlis.compiler.TopicDependencyContractTest --tests guru.interlis.compiler.UnitTypeContractTest --tests guru.interlis.compiler.ViewContractTest --tests guru.interlis.compiler.DomainRestrictionContractTest :interlis-documentation:test :interlis-lsp:test :interlis-wasm-bridge:test --rerun-tasks :interlis-projection:test :interlis-compiler-cli:test --tests guru.interlis.cli.CliApplicationTest.diagramExportUsesCheckedSchema --no-daemon",
+      "exit": 0,
+      "result": "66 compiler, 8 documentation, 75 LSP, 24 bridge, 22 projection, 1 CLI tests; 0 failures, 0 errors, 0 skips",
+      "evidence": [
+        "logs/java-tests.log",
+        "core/*/build/test-results/test/*.xml"
+      ]
+    },
+    {
+      "id": "extension-transport",
+      "cwd": "extension",
+      "command": "npm run build; npm run verify:no-legacy-dependencies; npm run test:unit; npm run test:protocol",
+      "exit": 0,
+      "result": "10/10 unit tests; 1/1 real packaged Java stdio test (core 6983baf9…, bundle b6aef600…, pid 21497 exit 0); dependency lock/graph/bundle clean",
+      "evidence": [
+        "logs/build.log",
+        "logs/deps.log",
+        "logs/unit.log",
+        "logs/protocol.log"
+      ]
+    },
+    {
+      "id": "installed-authoring-gui-artifacts",
+      "cwd": "extension",
+      "command": "node scripts/gui.cjs --suite authoring --cache /Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage",
+      "exit": 0,
+      "result": "7/7 GUI-29..35 passed; installed ID/version/hashes checked; one real Java start, none remaining; actual MD/HTML/DOCX/Mermaid/PlantUML/GraphML files inspected",
+      "evidence": [
+        "own/gui-authoring/manifest.json",
+        "own/gui-authoring/cases.json",
+        "own/artifact-inspection-authoring.json"
+      ]
+    },
+    {
+      "id": "native-regression-and-negative-control",
+      "cwd": "extension",
+      "command": "node scripts/gui.cjs --suite comfort --cache …; node scripts/gui.cjs --suite smoke --cache … --canary missing-status",
+      "exit": 0,
+      "result": "Comfort 28/28 passed (6 real Java starts, 0 remaining; GUI-09 with three offline restarts); canary exited 1 as required at the impossible visible status, GUI-02/03 passed",
+      "evidence": [
+        "own/gui-comfort/manifest.json",
+        "own/gui-comfort/cases.json",
+        "own/gui-canary/manifest.json"
+      ]
+    },
+    {
+      "id": "python-free-contract",
+      "cwd": "core",
+      "command": "./gradlew pythonFreeCheck --no-daemon",
+      "exit": 0,
+      "result": "PYTHON_FREE_SOURCE_PASS 1685 inputs",
+      "evidence": [
+        "logs/python-free.log"
+      ]
+    }
+  ],
+  "guiEvidence": [
+    {
+      "case": "GUI-01..28 (comfort)",
+      "status": "passed",
+      "run": "own/gui-comfort (2026-11-02T13-10-08-926Z)",
+      "screenshots": [
+        "GUI-04-german.png",
+        "GUI-07-declaration.png",
+        "GUI-09-offline-repeat-2.png",
+        "GUI-12-current.png",
+        "GUI-13-before.png",
+        "GUI-13-node-moved.png",
+        "GUI-14-handle-before.png",
+        "GUI-14-route-after.png",
+        "GUI-17-held.png",
+        "GUI-17-current.png",
+        "GUI-26-files-saved.png"
+      ]
+    },
+    {
+      "case": "GUI-29..35 (authoring)",
+      "status": "passed",
+      "run": "own/gui-authoring (2026-11-02T13-07-34-252Z)",
+      "screenshots": [
+        "GUI-29-model.png",
+        "GUI-30-Auto.png",
+        "GUI-31-import-fixed.png",
+        "GUI-33-html-tables.png",
+        "GUI-34-saved.png",
+        "GUI-35-central-uml.png"
+      ]
+    },
+    {
+      "case": "negative canary",
+      "status": "failed as expected",
+      "run": "own/gui-canary (2026-11-02T13-13-51-428Z)",
+      "screenshots": []
+    },
+    {
+      "case": "CP2-AUTOCLOSE / CP2-INHERITANCE / CP2-CATALOGUE / CP2-CONFIG-RACE",
+      "status": "passed",
+      "run": "own/cp2-run",
+      "screenshots": [
+        "CP2-AUTOCLOSE-abstract.png",
+        "CP2-AUTOCLOSE-comment-negative.png",
+        "CP2-CATALOGUE-dirty.png",
+        "CP2-CONFIG-RACE.png",
+        "CP2-INHERITANCE.png"
+      ]
+    }
+  ],
+  "counterprobes": [
+    {
+      "id": "CP2-AUTOCLOSE",
+      "hypothesis": "A multiline ABSTRACT header with comment and emoji is closed exactly once by native Enter with the Java-planned body caret; a comment-only line and an existing END produce no false block end.",
+      "result": "PASS; exactly one END Wide;, caret Ln 7 Col 7, emoji preserved, comment negative case no END, disk unchanged",
+      "evidence": [
+        "own/cp2-run/cases.json",
+        "own/cp2-run/CP2-AUTOCLOSE-abstract.png",
+        "own/cp2-run/CP2-AUTOCLOSE-comment-negative.png"
+      ]
+    },
+    {
+      "id": "CP2-INHERITANCE",
+      "hypothesis": "A three-level A<-B<-C hierarchy is directionally consistent in Mermaid, PlantUML and GraphML.",
+      "result": "PASS; Mermaid B--|>A and C--|>B, PlantUML A<|--B and B<|--C, GraphML C->B and B->A",
+      "evidence": [
+        "own/cp2-run/CP2-inheritance.mmd",
+        "own/cp2-run/CP2-inheritance.puml",
+        "own/cp2-run/CP2-inheritance.graphml",
+        "own/cp2-run/CP2-inheritance-inspection.json"
+      ]
+    },
+    {
+      "id": "CP2-CATALOGUE",
+      "hypothesis": "An unsaved class rename and a recursive structure are exported from the current dirty snapshot into bounded Markdown/HTML without stale disk symbols and without mutating buffer or disk.",
+      "result": "PASS; Deep.Data.Gamma present, Deep.Data.C absent, recursive Node present, emoji preserved, 2535-byte markdown, buffer and disk unchanged",
+      "evidence": [
+        "own/cp2-run/CP2-catalogue.md",
+        "own/cp2-run/CP2-catalogue.html",
+        "own/cp2-run/CP2-catalogue-inspection.json",
+        "own/counterprobe-artifact-inspection.json"
+      ]
+    },
+    {
+      "id": "CP2-CONFIG-RACE",
+      "hypothesis": "Repeated real settings saves do not leave import navigation or analysis stale.",
+      "result": "PASS; three settings saves (de/en/de), each following F12 opened exact Dep.ili bytes and current analysis was accepted",
+      "evidence": [
+        "own/cp2-run/cases.json",
+        "own/cp2-run/CP2-CONFIG-RACE.png",
+        "own/cp2-run/settings-after.json"
+      ]
+    },
+    {
+      "id": "CP2-WIRE-RACE",
+      "hypothesis": "Two identical didChangeConfiguration notifications during an intentionally held repository-index fetch do not cancel the only running analysis.",
+      "result": "PASS; real stdio server returned analysisReady for document version 1, definition into Dep.ili and a successful current compile",
+      "evidence": [
+        "own/cp2-wire-race.json"
+      ]
+    }
+  ],
+  "openMandatoryFindings": [],
+  "missingRequiredChecks": [],
+  "optionalObservations": [
+    "Two of six comfort Java starts ended during window/harness teardown without a Server exit log line; remaining=[] and the harness process check proved nothing remained. No V4 criterion depends on this log line; keep observing it in V5 restart/leak checks.",
+    "GUI-04 German diagnostic frame contains some English rule prose; this is the documented V1 prose boundary, not a V4 regression.",
+    "HTML catalogue tables wrap very narrowly in the side panel; readable without horizontal clipping.",
+    "GUI-35 central UML view is honestly PARTIAL and fit-scaled small; the exported catalogue/graph files themselves come from a successful complete CompileCurrent projection.",
+    "npm audit --omit=dev reports 0 runtime vulnerabilities; the 7 moderate npm ci notices are dev/test-only.",
+    "Three early counterprobe iterations failed only on my own harness assertions (emoji column arithmetic, Markdown escaping, trailing newline); failed runs are retained under own/cp2-fail-1..3 and the final run is 4/4 PASS."
+  ],
+  "reuse": {
+    "historical": "The archived V4 attempt-01 review/verdict and Codex qualification logs were read as context and identity inputs only; none of their PASS/FAIL results was reused as this session's fresh evidence.",
+    "fresh": "All executedChecks, GUI runs and counterprobes above were run in this session against candidate Core 6983baf9… / Extension 36b87bc7… and the independently packaged VSIX 5fb846de… (content-identical to preserved 69c3819f…)."
+  },
+  "outerProcessNote": "This verdict reports only the state visible inside this review session. Completion of the outer OpenCode/Guard transport, its exit status, manifest and artifact identity must be verified by Codex after process end.",
+  "report": "review.md",
+  "artifactIdentity": {
+    "coreCommit": "6983baf95c47a7e20dbb41a2e50500185f578c37",
+    "editorBundleFiles": 59,
+    "serverFiles": 12,
+    "rendererSchemaTypeFiles": 47,
+    "requestArtifactsVerified": 60,
+    "independentlyPackagedVsixSha256": "5fb846de1879c09edcad5513af31b422519b8c7cdf928d9461be2af81e7e034e",
+    "preservedCandidateVsixSha256": "69c3819ffbc01d321a5a78ab6168be17a795f73456a10498bb8e05544ea6a1ee",
+    "vsixContentEntries": 75,
+    "vsixContentDifferences": 0,
+    "installedBundleSha256": "f631446e9cb7bf3bce987d36509eb7d560ed7a022b81a8431c5fe9937a1110e9",
+    "interlisLspJarSha256": "c143012d70ca0530d3181554fd3db75872653065a21b55ddd3965c2237ba1d8d",
+    "interlisDocumentationJarSha256": "1e4d4c4d0fbdb6df6c7592f77939f5e618449cc058f4a0d7e8271d74728d19fa",
+    "diagramDocumentSchemaSha256": "105e7eeb24f6ef682e04695ecbbc127a51805178c6ee1a4310cb7ca1426fc779",
+    "diagramUiTgzSha256": "2dc6e90f572fde2cf5acb48b3859e0b2cf86255f56a43e279603c652b7c403f7",
+    "evidence": "own/artifact-verification.json"
+  }
+}

@@ -1,0 +1,128 @@
+{
+  "checkedAt": "2026-11-02T13:35:55.207Z",
+  "java": {
+    "checkedAt": "2026-11-02T13:08:34.776Z",
+    "source": "Independent reviewer fresh JUnit XML, read by outer auditor",
+    "modules": [
+      {
+        "name": "interlis-compiler",
+        "files": 18,
+        "tests": 66,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "interlis-documentation",
+        "files": 1,
+        "tests": 8,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "interlis-lsp",
+        "files": 15,
+        "tests": 75,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "interlis-wasm-bridge",
+        "files": 7,
+        "tests": 24,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "interlis-projection",
+        "files": 6,
+        "tests": 22,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      {
+        "name": "interlis-compiler-cli",
+        "files": 1,
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    ]
+  },
+  "gui": [
+    {
+      "name": "gui-authoring",
+      "cases": 7,
+      "exit": 0,
+      "status": "passed",
+      "manifest": "own/gui-authoring/manifest.json",
+      "started": [
+        22186
+      ],
+      "remaining": [],
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili-gui-R6EGm6"
+    },
+    {
+      "name": "gui-comfort",
+      "cases": 28,
+      "exit": 0,
+      "status": "passed",
+      "manifest": "own/gui-comfort/manifest.json",
+      "started": [
+        23224,
+        23250,
+        23467,
+        23541,
+        23564,
+        24270
+      ],
+      "remaining": [],
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili-gui-DS0Wwf"
+    },
+    {
+      "name": "gui-canary",
+      "cases": 2,
+      "exit": 1,
+      "status": "failed",
+      "manifest": "own/gui-canary/manifest.json",
+      "started": [
+        24656,
+        24685
+      ],
+      "remaining": [],
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili-gui-li1Qu3"
+    },
+    {
+      "name": "cp2-run",
+      "cases": 4,
+      "exit": 0,
+      "status": "passed",
+      "manifest": "own/cp2-run/manifest.json",
+      "started": [
+        26020
+      ],
+      "remaining": [],
+      "storage": "/var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili-cp2-78yQcv"
+    }
+  ],
+  "wire": {
+    "path": "own/cp2-wire-race.json",
+    "accepted": true
+  },
+  "pythonFree": {
+    "actualIndependentRawTool": "opencode.jsonl",
+    "row": 561,
+    "extracted": "outer-python-free-tool-result.json",
+    "sourceInputs": 1685,
+    "referenceCorrection": "Original reviewer reference logs/python-free.log is absent; actual independent successful tool output is preserved in raw JSONL and the outer extraction. This is a report-path error, not an unexecuted check."
+  },
+  "artifacts": 60,
+  "allOriginalRunHashesMatch": true,
+  "payloadEntries": 75,
+  "activeGui": []
+}

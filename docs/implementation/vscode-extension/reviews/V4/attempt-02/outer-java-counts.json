@@ -1,0 +1,54 @@
+{
+  "checkedAt": "2026-11-02T13:08:34.776Z",
+  "source": "Independent reviewer fresh JUnit XML, read by outer auditor",
+  "modules": [
+    {
+      "name": "interlis-compiler",
+      "files": 18,
+      "tests": 66,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "interlis-documentation",
+      "files": 1,
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "interlis-lsp",
+      "files": 15,
+      "tests": 75,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "interlis-wasm-bridge",
+      "files": 7,
+      "tests": 24,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "interlis-projection",
+      "files": 6,
+      "tests": 22,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "name": "interlis-compiler-cli",
+      "files": 1,
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ]
+}

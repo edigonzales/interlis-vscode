@@ -1,0 +1,28 @@
+{
+  "sessionId": "ses_e63a2ec9affeVA8TQxv3YCZJlO",
+  "sessionCreated": "2026-11-02T13:05:08.280Z",
+  "sessionModel": {
+    "id": "deepseek-flash",
+    "providerID": "deepseek",
+    "variant": "default"
+  },
+  "sessionOutcome": "succeeded",
+  "configDirectBaseURL": "https://api.deepseek.com",
+  "officialMapping": {
+    "checkedAt": "2026-11-02T13:04:48.007Z",
+    "openCodeVersion": "opencode v2.0.28",
+    "cli": "/Users/stefan/.opencode/bin/opencode",
+    "runHelp": "/Users/stefan/sources/interlis-vscode-evidence/phases/V4/review-r2-preflight/opencode-run-help.txt",
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "officialVersion": "DeepSeek-V4.1-Flash-1017",
+    "apiHost": "https://api.deepseek.com",
+    "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+    "officialHtmlSha256": "579412351262de19f1b067420542d042dc9433f389be6d252d0f4c41b82f515b",
+    "credentialInspection": false,
+    "proxyFallback": false,
+    "note": "Official alias mapping is confirmed; actual fresh review session/provider/baseURL must still be checked after transport completion."
+  },
+  "sessionExportSha256": "f71959068ec4a013fd91e55801511f3e1cd937f5065b87a5fba842752bb1abf4",
+  "note": "No credential read. Session succeeded means transport completion, not the independent verdict."
+}

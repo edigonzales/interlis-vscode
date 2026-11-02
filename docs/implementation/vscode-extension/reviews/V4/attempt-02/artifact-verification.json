@@ -1,0 +1,21 @@
+{
+  "checkedAt": "2026-11-02T13:27:24.779Z",
+  "coreSha": "6983baf95c47a7e20dbb41a2e50500185f578c37",
+  "requestArtifacts": {
+    "count": 60,
+    "mismatches": []
+  },
+  "freshBundle": {
+    "files": 59,
+    "mismatches": [],
+    "lockCore": "6983baf95c47a7e20dbb41a2e50500185f578c37",
+    "lockEntries": 59,
+    "lockMismatches": []
+  },
+  "vsix": {
+    "independentlyPackagedSha": "5fb846de1879c09edcad5513af31b422519b8c7cdf928d9461be2af81e7e034e",
+    "preservedCandidateSha": "69c3819ffbc01d321a5a78ab6168be17a795f73456a10498bb8e05544ea6a1ee",
+    "contentEntries": 75,
+    "contentDifferences": 0
+  }
+}

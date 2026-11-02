@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-11-02T13:04:48.007Z",
+  "openCodeVersion": "opencode v2.0.28",
+  "cli": "/Users/stefan/.opencode/bin/opencode",
+  "runHelp": "/Users/stefan/sources/interlis-vscode-evidence/phases/V4/review-r2-preflight/opencode-run-help.txt",
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "officialVersion": "DeepSeek-V4.1-Flash-1017",
+  "apiHost": "https://api.deepseek.com",
+  "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+  "officialHtmlSha256": "579412351262de19f1b067420542d042dc9433f389be6d252d0f4c41b82f515b",
+  "credentialInspection": false,
+  "proxyFallback": false,
+  "note": "Official alias mapping is confirmed; actual fresh review session/provider/baseURL must still be checked after transport completion."
+}

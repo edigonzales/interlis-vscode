@@ -1,0 +1,54 @@
+{
+  "verdict": "PASS",
+  "coreSha": "6983baf95c47a7e20dbb41a2e50500185f578c37",
+  "extensionSha": "36b87bc798eaa53cbe3f5b9f89ac58b92ea0eafc",
+  "serverInstanceId": "52d1d71b-f5b5-4300-ac03-470dbd693bf4",
+  "analysisReady": {
+    "protocolVersion": 1,
+    "serverInstanceId": "52d1d71b-f5b5-4300-ac03-470dbd693bf4",
+    "workspaceRevision": "2",
+    "snapshotId": "snap-a3294e4eb1488ddd3536642cbf9165d1c73104a48acf4de222ba06eacac7a0e6",
+    "documentVersions": {
+      "file:///var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili-cp2-ws-Wg6Pqi/Root.ili": 1
+    }
+  },
+  "documentVersions": {
+    "file:///var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili-cp2-ws-Wg6Pqi/Root.ili": 1
+  },
+  "definition": [
+    {
+      "uri": "interlis-source:/b16fe18d-16be-4565-9119-754833e0652b/b7feb2a4-b4c9-4893-94c9-1b746c0be246/Dep.ili?1",
+      "range": {
+        "start": {
+          "line": 2,
+          "character": 7
+        },
+        "end": {
+          "line": 2,
+          "character": 12
+        }
+      }
+    }
+  ],
+  "compileOutcome": "succeeded",
+  "requests": [
+    {
+      "path": "/ilimodels.xml",
+      "at": 1793625012697
+    },
+    {
+      "path": "/Dep.ili",
+      "at": 1793625014934
+    },
+    {
+      "path": "/ilimodels.xml",
+      "at": 1793625014946
+    },
+    {
+      "path": "/Dep.ili",
+      "at": 1793625017151
+    }
+  ],
+  "indexDelayMs": 2200,
+  "note": "Two identical didChangeConfiguration notifications were sent while /ilimodels.xml was held; analysis still became current and navigation/compile succeeded."
+}

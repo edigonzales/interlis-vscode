@@ -1,7 +1,7 @@
 # INTERLIS VS Code – aktueller Ausführungsstand
 
-**V0–V3 PASS**, unabhängig und operativ validiert. **V4 ist geöffnet.**
-V5 bleibt bis zum unabhängigen V4-PASS gesperrt. Kein Push/Release.
+**V0–V4 PASS**, unabhängig und operativ validiert. **V5 ist geöffnet.**
+V5 benötigt echte Runtime-/Plattform-/Remote- und kumulative Abnahme. Kein Push/Release.
 
 | Phase | Stand | Geprüftes Produktpaar / Beleg |
 |---|---|---|
@@ -9,8 +9,8 @@ V5 bleibt bis zum unabhängigen V4-PASS gesperrt. Kein Push/Release.
 | V1 | PASS, alle10 ACs | Core `3b60e6c1309a4897ad6d0e99f6d8dfd137520ca9` / Extension `d237d92fbe22f6fb41d7d6f3f0965c0d080e30e9`; [Originalreview](reviews/V1/attempt-01/review.md), [Verdict](reviews/V1/attempt-01/verdict.json), [äussere Prüfung](reviews/V1/attempt-01/outer-audit.json) |
 | V2 | PASS, alle10 ACs | Core `7026e7f6b5834bf593d91dfee3323efb60688f3d` / Extension `01f353114cc7a19a9ac6dd884cb0b285ac723c9c`; [Originalreview](reviews/V2/attempt-02/review.md), [äussere Prüfung](reviews/V2/attempt-02/outer-audit.json) |
 | V3 | PASS, alle12 ACs | Core `a0272965c4691320ca316d519581d4db4cefc930` / Extension `dd6e4fd342dbe58a43dc648e2b2ad285db6896e2`; [Originalreview](reviews/V3/attempt-01/review.md), [äussere Prüfung](reviews/V3/attempt-01/outer-audit.json) |
-| V4 | READY_FOR_REVIEW nach Nacharbeit | Beide Ursachen korrigiert; frische Authoring7/Comfort28/Canary qualifiziert. Neuer unabhängiger Review ausstehend. [Originalreview](reviews/V4/attempt-01/review.md), [Bericht](implementation/V4.md) |
-| V5 | PLANNED | Gebündelte Runtimes, reale Plattformen/Remote, kumulative56-AC-Abnahme |
+| V4 | PASS, alle9 ACs | Core `6983baf95c47a7e20dbb41a2e50500185f578c37` / Extension `36b87bc798eaa53cbe3f5b9f89ac58b92ea0eafc`; [Originalreview](reviews/V4/attempt-02/review.md), [äussere Prüfung](reviews/V4/attempt-02/outer-audit.json) |
+| V5 | OPEN | Gebündelte Runtimes, reale Plattformen/Remote, kumulative56-AC-Abnahme |
 
 ## Unveränderliche Gesamtbasis und Arbeitsbäume
 
@@ -113,3 +113,10 @@ Gegenfälle3, gezielte UML2 und V3-Subset10 sowie Java/Build waren grün; das
 ersetzt kein PASS. Originale unverändert archiviert; V4-PhaseBase unverändert,
 V5 gesperrt. Temporäre Reviewer-Profile wurden bei dessen Speicherbereinigung
 entfernt; persistente Logs/Bilder/Artefakte und Original-VSIX bleiben erhalten.
+
+V4 attempt02: vollständig validiertes PASS auf obigem Paar; frische Session
+`ses_e63a2ec9affeVA8TQxv3YCZJlO`, Prozess/Guard0 beendet, Java196/Unit10/stdio1,
+native GUI7+28 sowie neue Gegenproben4 und Wire-Race grün, richtige Negativcanary.
+Alle75 VSIXeinträge bytegleich,23 tatsächliche Bildreads verifiziert. Originale
+unter reviews/V4/attempt-02; Bericht erklärt Fehlversuche und aufgelösten falschen
+PythonFree-Logverweis. Beide Pflichtbefunde geschlossen. V5 darf jetzt beginnen.

@@ -1,0 +1,110 @@
+{
+  "generatedAt": "2026-11-02T13:11:15.177Z",
+  "files": {
+    "GUI-33-DE.md": {
+      "bytes": 3830,
+      "sha": "f630e8dc50c53f1e57c2b80ad071b8c29b3563de9de59d768bdd85250d60c2fa",
+      "lines": 112
+    },
+    "GUI-33-DE.html": {
+      "bytes": 5805,
+      "sha": "5cef3a1198a24f68402036b06bbc11042d0a9afeaf1e256653bddf894b799661",
+      "lines": 3,
+      "xml": {
+        "elements": 184,
+        "balanced": true
+      }
+    },
+    "GUI-33-EN.md": {
+      "bytes": 3700,
+      "sha": "f55c3475ba4dfca68841d7f52c222b1d7440959d3e38988f1c0d661122d50d1e",
+      "lines": 107
+    },
+    "GUI-33-FR.md": {
+      "bytes": 3716,
+      "sha": "689f575d1de8c150127b682c43ee5f22e0a5d2ad44c3b0bcc06b1bd65178bf68",
+      "lines": 107
+    },
+    "GUI-33-IT.md": {
+      "bytes": 3718,
+      "sha": "c42db8821472747b39f9bef2372113bbb0cca87ac3afe48b315cf87d35573ba1",
+      "lines": 107
+    },
+    "GUI-35-graph.mmd": {
+      "bytes": 919,
+      "sha": "3fcd211ca56e1efcb217ca9b1ba4dcbcb0d103f71ec9b28534be4b934f7fecf4",
+      "lines": 45
+    },
+    "GUI-35-graph.puml": {
+      "bytes": 794,
+      "sha": "9788671d4d45bd1997e409652615e9c6de89c653ff5f67e521f64c0442d58027",
+      "lines": 46
+    },
+    "GUI-35-graph.graphml": {
+      "bytes": 16025,
+      "sha": "92653c545735219337278f3740a2011626c898fc3072559a5bd89cc37f868e57",
+      "lines": 13,
+      "xml": {
+        "elements": 159,
+        "balanced": true
+      }
+    }
+  },
+  "markdown": {
+    "hasDE": true,
+    "hasFR": false,
+    "hasIT": true,
+    "hasAbstract": true,
+    "hasSnapshot": true,
+    "hasRecursive": false,
+    "escapedScript": true
+  },
+  "graphml": {
+    "hasGraphml": true,
+    "hasRoles": true,
+    "hasCards": true,
+    "hasInheritance": true
+  },
+  "inheritance": {
+    "mermaidChildToBase": true,
+    "mermaidReversed": false,
+    "plantBaseToChild": true
+  },
+  "docx": {
+    "parts": {
+      "[Content_Types].xml": true,
+      "_rels/.rels": true,
+      "word/document.xml": true,
+      "word/_rels/document.xml.rels": true,
+      "word/styles.xml": true
+    },
+    "parsed": {
+      "[Content_Types].xml": {
+        "elements": 5,
+        "balanced": true
+      },
+      "_rels/.rels": {
+        "elements": 2,
+        "balanced": true
+      },
+      "word/document.xml": {
+        "elements": 1035,
+        "balanced": true
+      },
+      "word/_rels/document.xml.rels": {
+        "elements": 2,
+        "balanced": true
+      },
+      "word/styles.xml": {
+        "elements": 35,
+        "balanced": true
+      }
+    },
+    "tables": 4,
+    "bytes": 3016,
+    "hasChild": true,
+    "hasRecursive": true,
+    "hasAbstract": true,
+    "hasConstraint": true
+  }
+}
