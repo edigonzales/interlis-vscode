@@ -44,8 +44,8 @@ endpoints unchanged. Double click a node, member or association to navigate to i
 current source, including readonly imports. **Refresh**, **Fit** and association
 entity/compact binary modes are available. Partial/stale/error states are explicit;
 new source/server generations reject old layouts and navigation anchors. Each
-panel keeps its own arrangement. Full filtering, layout controls and exports remain
-subsequent planned work.
+panel keeps its own arrangement. Filters, pins, Settle/Reset, view Undo/Redo,
+routing choices and full/visible SVG/PNG export are available.
 
 ## Development and verification
 
@@ -110,4 +110,35 @@ Selection in Diagram` uses the Java symbol query. Save uses the native dialog;
 Cancel creates no file. View storage keeps bounded hashed presentation identities,
 geometry and filters, independently for each workspace/root/panel. It stores no
 source text. The `comfort` GUI suite runs cumulative GUI01–28; its qualification
-is still pending. See the current V3 implementation report for actual evidence.
+has passed its independent V3 review. See STATUS and the archived review for
+the exact accepted product pair and evidence.
+
+## Editor assistance and catalogues
+
+Java supplies contextual completion and block templates. MODEL names are mirrored
+after END; Tab/Enter advance native placeholders, and Enter in the final body
+inserts a normal newline. Manual cursor navigation leaves the active snippet.
+Enter after a complete block header asks Java for an exact edit and body caret;
+comments, value assignments and existing END are excluded. Standard on-type
+formatting and this negotiated assistance path are mutually exclusive. Safe
+Quick Fixes cover END names, missing semicolons and proven unused imports; incomplete
+binding suppresses the import fix. Use normal native Undo for source edits.
+
+**INTERLIS: Preview Documentation**, **Export Documentation**, **Documentation
+Options** and **Export Graph** operate on the current checked Java root schema.
+Catalogues support Markdown, inert local HTML and real DOCX tables; graph formats
+are Mermaid, PlantUML and GraphML. Save uses the native dialog; Cancel writes
+nothing. Invalid models are rejected instead of producing a complete-looking
+catalogue. Recursive structures use bounded references. DE/FR/IT/EN translate
+labels only. `interlisGuru.documentation.*` selects language, inherited-member
+presentation and header overrides. Graph text formats do not preserve manual
+Sprotty geometry; export the current diagram as SVG/PNG for that view.
+
+**New Model from Template** always offers the built-in offline template. Optional
+`interlisGuru.templates.file` and `templates.url` are explicit choices in a trusted
+workspace. Network templates use HTTPS, with HTTP limited to loopback test servers;
+size and timeout are bounded. Templates become unsaved text and are never executed.
+
+The `authoring` GUI suite exercises GUI29–35 in an isolated fixture workspace;
+`authoring-probe` retains the focused native Enter/caret regression with installed
+editor smoke. V4 qualification and independent acceptance remain in progress.

@@ -1,0 +1,4 @@
+INTERLIS 2.4;
+MODEL Spare AT "https://example.org" VERSION "1" =
+  DOMAIN SpareCode = TEXT;
+END Spare.

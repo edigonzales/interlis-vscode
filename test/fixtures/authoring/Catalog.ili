@@ -1,0 +1,29 @@
+INTERLIS 2.4;
+MODEL Catalog AT "https://example.org" VERSION "1" =
+  DOMAIN Code = TEXT*17;
+    Position = COORD 0.00..100.00,0.00..100.00;
+  TOPIC Data = OID AS INTERLIS.UUIDOID;
+    STRUCTURE Detail =
+      note: TEXT;
+      children: BAG {0..*} OF Detail;
+    END Detail;
+    CLASS Base (ABSTRACT) =
+      /** Keep <script>alert(1)</script> & | [link](https://evil.invalid). */
+      flag: BOOLEAN;
+    END Base;
+    CLASS Child EXTENDS Base =
+      code: Code;
+      items: BAG {0..3} OF Detail;
+      state: (red, group(blue));
+      position: Position;
+      recorded: DATE;
+      MANDATORY CONSTRAINT flag;
+    END Child;
+    CLASS Other = END Other;
+    ASSOCIATION Link =
+      fromRole -- {1} Child;
+      toRole -- {0..*} Other;
+      viaRole -- {0..1} Child;
+    END Link;
+  END Data;
+END Catalog.
