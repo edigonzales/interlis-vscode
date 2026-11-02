@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-11-02T12:29:09.629Z",
+  "sessionId": "ses_e640b461fffeZwqfvTMJupDca4",
+  "sessionOutcome": "succeeded",
+  "sessionModel": {
+    "id": "deepseek-flash",
+    "providerID": "deepseek",
+    "variant": "default"
+  },
+  "created": 1793617869534,
+  "transportStartedAt": "2026-11-02T11:11:08.441Z",
+  "directBaseURL": "https://api.deepseek.com",
+  "credentialInspection": false
+}

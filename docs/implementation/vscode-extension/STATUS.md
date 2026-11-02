@@ -9,7 +9,7 @@ V5 bleibt bis zum unabhängigen V4-PASS gesperrt. Kein Push/Release.
 | V1 | PASS, alle10 ACs | Core `3b60e6c1309a4897ad6d0e99f6d8dfd137520ca9` / Extension `d237d92fbe22f6fb41d7d6f3f0965c0d080e30e9`; [Originalreview](reviews/V1/attempt-01/review.md), [Verdict](reviews/V1/attempt-01/verdict.json), [äussere Prüfung](reviews/V1/attempt-01/outer-audit.json) |
 | V2 | PASS, alle10 ACs | Core `7026e7f6b5834bf593d91dfee3323efb60688f3d` / Extension `01f353114cc7a19a9ac6dd884cb0b285ac723c9c`; [Originalreview](reviews/V2/attempt-02/review.md), [äussere Prüfung](reviews/V2/attempt-02/outer-audit.json) |
 | V3 | PASS, alle12 ACs | Core `a0272965c4691320ca316d519581d4db4cefc930` / Extension `dd6e4fd342dbe58a43dc648e2b2ad285db6896e2`; [Originalreview](reviews/V3/attempt-01/review.md), [äussere Prüfung](reviews/V3/attempt-01/outer-audit.json) |
-| V4 | READY_FOR_REVIEW | Eigene Qualifikation abgeschlossen; unabhängige Abnahme offen. [Bericht](implementation/V4.md) |
+| V4 | REWORK nach unabhängigem FAIL | Mermaid-Vererbungsrichtung und GUI09-Neustartdiagnose offen. [Originalreview](reviews/V4/attempt-01/review.md), [Bericht](implementation/V4.md) |
 | V5 | PLANNED | Gebündelte Runtimes, reale Plattformen/Remote, kumulative56-AC-Abnahme |
 
 ## Unveränderliche Gesamtbasis und Arbeitsbäume
@@ -103,3 +103,13 @@ drei Graphtextformaten. Eigene native GUI29–35 7/7 und frische GUI01–28 28/2
 erwartete Negativcanary, keine verbleibenden Java-PIDs. Java-/Transport-/Artefakt-
 nachweise und genaue Wiederverwendung stehen im [V4-Bericht](implementation/V4.md).
 Das ist kein unabhängiger V4-PASS. V5 darf weiterhin nicht beginnen.
+
+V4 attempt01: Original-FAIL auf Core `668caa9a975ffac41a56880c9349a70ee3fdc788` /
+Extension `e38cfb73e781952ad8ae0b597d2e6ea5504ae717`. Frische Session
+`ses_e640b461fffeZwqfvTMJupDca4`, Modell deepseek-flash direkt, Prozess/Guard0.
+Pflichtbefunde: umgekehrte Mermaid-Vererbung und zweimal nicht-grüner voller
+Comfort-Lauf wegen GUI09 nach Offline-Neustart. Native Authoring7, neue
+Gegenfälle3, gezielte UML2 und V3-Subset10 sowie Java/Build waren grün; das
+ersetzt kein PASS. Originale unverändert archiviert; V4-PhaseBase unverändert,
+V5 gesperrt. Temporäre Reviewer-Profile wurden bei dessen Speicherbereinigung
+entfernt; persistente Logs/Bilder/Artefakte und Original-VSIX bleiben erhalten.

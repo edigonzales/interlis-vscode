@@ -1,0 +1,81 @@
+{
+  "checkedAt": "2026-11-02T12:29:09.632Z",
+  "phase": "V4",
+  "candidate": {
+    "coreSha": "668caa9a975ffac41a56880c9349a70ee3fdc788",
+    "extensionSha": "e38cfb73e781952ad8ae0b597d2e6ea5504ae717"
+  },
+  "accepted": false,
+  "verdict": "FAIL",
+  "transport": {
+    "status": "completed",
+    "exitCode": 0,
+    "finishedAt": "2026-11-02T12:26:46.821Z"
+  },
+  "guard": {
+    "status": "passed",
+    "exitCode": 0
+  },
+  "trees": {
+    "core": {
+      "head": "668caa9a975ffac41a56880c9349a70ee3fdc788",
+      "trackedDirty": ""
+    },
+    "extension": {
+      "head": "e38cfb73e781952ad8ae0b597d2e6ea5504ae717",
+      "trackedDirty": ""
+    }
+  },
+  "model": {
+    "checkedAt": "2026-11-02T12:29:09.629Z",
+    "sessionId": "ses_e640b461fffeZwqfvTMJupDca4",
+    "sessionOutcome": "succeeded",
+    "sessionModel": {
+      "id": "deepseek-flash",
+      "providerID": "deepseek",
+      "variant": "default"
+    },
+    "created": 1793617869534,
+    "transportStartedAt": "2026-11-02T11:11:08.441Z",
+    "directBaseURL": "https://api.deepseek.com",
+    "credentialInspection": false
+  },
+  "openMandatoryFindings": [
+    {
+      "id": "V4-MERMAID-INHERITANCE",
+      "ac": "V4-06",
+      "severity": "mandatory",
+      "source": "core/interlis-projection/src/main/java/guru/interlis/projection/MermaidRenderer.java:40",
+      "reproduction": "Open the installed GUI-35 export from authoring/2026-11-02T11-13-42-875Z; compare GUI-35-graph.mmd and GUI-35-graph.puml. Mermaid has 'N5 <|-- N4' (Child <|-- Base); PlantUML has 'N4 <|-- N5' (Base <|-- Child); GraphML INHERITANCE edge is source=Child target=Base.",
+      "expected": "Mermaid must render Base as parent and Child as derived, e.g. 'N4 <|-- N5' or 'N5 --|> N4'.",
+      "observed": "Mermaid renders inheritance reversed because it emits source <|-- target.",
+      "requiredFix": "Reverse the Mermaid inheritance arrow and add a direction assertion to DiagramProjectionTest and GUI-35; rerun affected projection/export tests and installed GUI.",
+      "evidence": "reviewer-artifact-checks.json; authoring GUI-35-graph.mmd/.puml/.graphml"
+    },
+    {
+      "id": "V4-REGRESSION-GUI09",
+      "ac": "required regression check (not one of V4-01..09)",
+      "severity": "mandatory verification gap",
+      "source": "test/gui/editor.cjs GUI-09; scripts/gui.cjs comfort suite",
+      "reproduction": "Run the comfort suite twice with the exact VSIX; both attempts stop after 8/28 with 'Current server has not accepted analysis containing this real editor'. Server log shows didOpen for External.ili at 13:01:56 but no interlis/analysisReady in the following 20s; no Java process remains.",
+      "expected": "All 28 cumulative cases complete fresh, or a bounded product diagnosis explains the missing analysisReady.",
+      "observed": "Two independent attempts both failed at GUI-09 after an offline restart; the required V4 cases themselves were run separately and passed.",
+      "requiredFix": "Investigate whether analysisReady is late/withheld after offline restart or the harness wait is too short; rerun the full comfort suite on the fixed candidate.",
+      "evidence": "extension/build/reports/gui/comfort/2026-11-02T11-58-00-034Z; .../12-00-35-629Z; logs/gui-comfort.log; logs/gui-comfort-retry.log"
+    }
+  ],
+  "missingRequiredChecks": [
+    {
+      "id": "installed-comfort-full",
+      "reason": "Required comfort suite is not green: two fresh attempts stopped at 8/28 with GUI-09 analysisReady timeout after offline restart. The required V4 GUI cases 04/07/12/17/26 were executed separately, but the full required check remains open."
+    }
+  ],
+  "nextPermittedAction": "Repair V4 findings, then a new independent review; V5 remains locked.",
+  "originals": {
+    "review.md": "fd84279dafed19eb82ecd481f42c57fc0c25890f2f174b1ad83f046ba2f01fc9",
+    "verdict.json": "eb95c5f04b3787484c95bb9e24aa40ae305d043f5c84c6989f016d1fda54a14f",
+    "guard.json": "5d8587fa779f5a60cbed6aa0f83c413bb3c00197ac8c87824751042257c5dbe9",
+    "transport.json": "0410a85a97d5b089da5348a9924a04f17af50f9e05ee367b27d04bdf8e1a856f"
+  },
+  "note": "FAIL is preserved unchanged. No semantic PASS or phase advance. Reviewer temporary-profile cleanup is recorded separately; retained persistent artifacts remain the proof basis."
+}

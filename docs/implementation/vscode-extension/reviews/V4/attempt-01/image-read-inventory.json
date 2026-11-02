@@ -1,0 +1,114 @@
+{
+  "at": "2026-11-02T12:19:00.735Z",
+  "note": "Only paths actually opened with the image-read tool in this review session are listed. Earlier failure screenshots from superseded counterprobe runs were opened but their run directories were replaced and are not counted. No image was inferred from a filename.",
+  "images": [
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r1/extension/build/reports/gui/authoring/2026-11-02T11-13-42-875Z/GUI-29-model.png",
+      "sha256": "004dd00324c38dff1304168437959dcf115894f848d9008bd81728af13e55bbf",
+      "viewed": true,
+      "observations": "MODEL Demo (fr) header, VERSION, mirrored END Demo, body caret line 7; no clipping"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r1/extension/build/reports/gui/authoring/2026-11-02T11-13-42-875Z/GUI-30-Auto.png",
+      "sha256": "d135917344ba43920744498308b0cb0701238f88a5fdcaf032492725e2980981",
+      "viewed": true,
+      "observations": "CLASS Auto (ABSTRACT) with separate body and END Auto; caret line 5 col 3"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r1/extension/build/reports/gui/authoring/2026-11-02T11-13-42-875Z/GUI-31-import-fixed.png",
+      "sha256": "7a71c7d572dede62b52f8e978dc120c839b6b17ee5be2f1802bd37350b94e5b5",
+      "viewed": true,
+      "observations": "IMPORTS Spare removed; remaining source intact; no import line 3"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r1/extension/build/reports/gui/authoring/2026-11-02T11-13-42-875Z/GUI-33-html-tables.png",
+      "sha256": "f8c1a1951e56221607391674fbeddb4bdb4d88ecaabc91128e054101aa37275e",
+      "viewed": true,
+      "observations": "Italian catalogue preview: cramped but wrapped table, escaped script text as text, abstract marker; no horizontal clip"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r1/extension/build/reports/gui/authoring/2026-11-02T11-13-42-875Z/GUI-34-saved.png",
+      "sha256": "ac042882b39b3099023570f1b12b49b3f9b372b69905354008a4ed2e70ce2f00",
+      "viewed": true,
+      "observations": "DOCX saved toast; source editor unchanged; multiple template tabs still open"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r1/extension/build/reports/gui/authoring/2026-11-02T11-13-42-875Z/GUI-35-central-uml.png",
+      "sha256": "cb64ae0fafc6ce8dd6a7c6fb21c4a69adabd6d79d0ecac1c202cd308019728c9",
+      "viewed": true,
+      "observations": "Central UML preview shows honest Partial diagram — check Problems and tiny fit-scaled nodes; not a full valid UML state"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r1/evidence/build/counterprobe-run/CP-SNIPPET-left.png",
+      "sha256": "0820f71513775e4ac7a6f271ddc43a5fca7340af566fb17562e7b0539e9bb5b5",
+      "viewed": true,
+      "observations": "MODEL CursorProbe (de) with one END; native single cursor at Ln 2 Col 22 after leaving snippet"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r1/evidence/build/counterprobe-run/CP-QUICKFIX-negative.png",
+      "sha256": "8e38d2b2cefa67dbca1f2dfad3a59d5c4dec93e80159ae665411896e02a64a96",
+      "viewed": true,
+      "observations": "Boundary.ili at IMPORTS Spare shows No code actions available while Problems lists two real errors"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r1/evidence/build/counterprobe-run/CP-DOCS-dirty.png",
+      "sha256": "fce1ec59549f6e5b13dd114c6af72a2a5e8e3d177453cf2f51d201a32071a9b9",
+      "viewed": true,
+      "observations": "Live.ili dirty with CLASS RenamedAlpha and saved MARKDOWN toast; source remains visibly unsaved"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r1/extension/build/reports/gui/comfort/2026-11-02T11-58-00-034Z/GUI-04-german.png",
+      "sha256": "4e601f19dee22cbdabd0f2eccc30f94dc1c29f8219bce9f9c4cda7e7ba8056cf",
+      "viewed": true,
+      "observations": "German conflict diagnostic with code/range and related declaration visible; mixed German/English prose; no ANSI dump"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r1/extension/build/reports/gui/comfort/2026-11-02T11-58-00-034Z/GUI-07-declaration.png",
+      "sha256": "514e45c41ee565ce9cf59f903c36b5805b4ddd0ed27f6a9ebfbac05b0fdab40d",
+      "viewed": true,
+      "observations": "Base.ili shows RenamedBuilding declaration and END after rename; qualified use changed; Problems empty"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r1/evidence/build/subset-uml/failure-GUI-13.png",
+      "sha256": "5e10f51713cd5d6b0fae22c39172bf2291c271064b51a7935718b22cf67f9d7c",
+      "viewed": true,
+      "observations": "Source editor text visible; suite stopped later at clipboard source oracle, not at drag action"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r1/evidence/build/subset-uml/GUI-13-node-moved.png",
+      "sha256": "0730c73911127301d842d9617acfcaa14e88b79d09b60a16a25a68b6ac8f7030",
+      "viewed": true,
+      "observations": "Node A visibly moved in real Sprotty webview after native pointer drag"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r1/evidence/build/subset-custom-uml/CP-GUI12-diagram.png",
+      "sha256": "24dcb815dc853ab2a2e36fa2b93095aea864382f11a725c50e69dc3078f3d557",
+      "viewed": true,
+      "observations": "Real Sprotty custom editor with MODEL/TOPIC/CLASS/STRUCTURE/DOMAIN/VIEW/ASSOCIATION categories and real edges; Pinned"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r1/evidence/build/subset-custom-uml/CP-GUI13-moved.png",
+      "sha256": "e153432aebe07f2b74946435a0fb9e23a9d94aa575133430bed728e9bfe631be",
+      "viewed": true,
+      "observations": "Node A visibly moved; source editor text unchanged; same real webview"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r1/evidence/build/subset-custom-uml/CP-GUI17-held.png",
+      "sha256": "25c15d4ff6f4b0e9ee49c73a1d9fc46bf6276d58d4d254ce02bc4a33b796f48c",
+      "viewed": true,
+      "observations": "Held real layout: status Updating diagram..., old view remains, not republished as current"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r1/evidence/build/subset-custom-uml/CP-GUI17-current.png",
+      "sha256": "298fce85c6e686f500b8c244405559d3a97a459ac09673043008ac99d9e9f1ed",
+      "viewed": true,
+      "observations": "Current attribute newAttribute appears in source and diagram; stable node geometry retained; filter panel open"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r1/evidence/build/subset-comfort-v3/GUI-26-files-saved.png",
+      "sha256": "020c575937e7f6cd5eda37094302cd1f1498107e6b2cd1448e4583ce217a697d",
+      "viewed": true,
+      "observations": "GUI-26 after native saves: Export saved GUI-26-PNG-VISIBLE.png, filter VIEW unchecked, current diagram visible"
+    }
+  ]
+}

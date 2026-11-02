@@ -1,0 +1,351 @@
+{
+  "schemaVersion": 1,
+  "phase": "V4",
+  "assignmentBase": {
+    "coreSha": "20b0029d824b3602d9a304320bf0feae4c35c1f9",
+    "extensionSha": "73badd9807f407aea048d397af5549fe907a1501"
+  },
+  "phaseBase": {
+    "coreSha": "a0272965c4691320ca316d519581d4db4cefc930",
+    "extensionSha": "26743af31198ea0945093318742b8c83c741ce16"
+  },
+  "candidate": {
+    "coreSha": "668caa9a975ffac41a56880c9349a70ee3fdc788",
+    "extensionSha": "e38cfb73e781952ad8ae0b597d2e6ea5504ae717"
+  },
+  "actualHeads": {
+    "coreSha": "668caa9a975ffac41a56880c9349a70ee3fdc788",
+    "extensionSha": "e38cfb73e781952ad8ae0b597d2e6ea5504ae717",
+    "coreTrackedClean": true,
+    "extensionTrackedClean": true,
+    "extensionUntrackedReviewHarnessFile": "opencode.json (review runner configuration, not a product file)"
+  },
+  "verdict": "FAIL",
+  "reviewer": {
+    "openCodeVersion": "2.0.28",
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "apiHost": "https://api.deepseek.com",
+    "modelMappingEvidence": "Current session model catalog maps provider deepseek / model deepseek-flash to the display name DeepSeek V4.1 Flash 1017; phases/V4/model-preflight.json records the same mapping and official pricing-source hash 579412351262de19f1b067420542d042dc9433f389be6d252d0f4c41b82f515b; session opencode.json sets baseURL https://api.deepseek.com. No proxy/OpenRouter/Go/Zen fallback and no credential inspection. See reviewer-model-identity.json."
+  },
+  "criteria": [
+    {
+      "id": "V4-01",
+      "status": "fulfilled",
+      "evidence": [
+        "logs/java-tests.log: 66 compiler tests incl. EditorCompletionTest/EditorTemplateContractTest, 0 failures/skips",
+        "evidence/build/counterprobe-run/cases.json CP-SNIPPET automatic quickSuggestions with MODEL block",
+        "extension/build/reports/gui/authoring/2026-11-02T11-13-42-875Z GUI-29 (7/7 suite) and source CORE/EditorCompletions.java"
+      ],
+      "finding": null
+    },
+    {
+      "id": "V4-02",
+      "status": "fulfilled",
+      "evidence": [
+        "Authoring GUI-29/30 passed in installed VS Code with real Java LSP",
+        "Independent CP-SNIPPET: automatic suggestion, mirrored MODEL name, Tab to de stop, Right leaves snippet, Tab performs normal indentation, one END, source on disk unchanged",
+        "logs/java-tests.log EditorTemplateContractTest/EditorAssistanceTest"
+      ],
+      "finding": null
+    },
+    {
+      "id": "V4-03",
+      "status": "fulfilled",
+      "evidence": [
+        "Authoring GUI-31 applied END name, missing semicolon and unused import fixes each with Undo",
+        "Independent CP-QUICKFIX: real END-name control action exists, but incomplete Boundary.ili offers no unsafe unused-import removal; Problems shows 2 real errors",
+        "logs/java-tests.log EditorAssistanceTest"
+      ],
+      "finding": null
+    },
+    {
+      "id": "V4-04",
+      "status": "fulfilled",
+      "evidence": [
+        "logs/java-tests.log: 8 interlis-documentation tests, 0 failures",
+        "Documentation artifacts contain inherited origin, recursive structure reference, exact types BAG {0..*} OF Catalog.Data.Detail, INTERLIS.XMLDate and constraints",
+        "reviewer-artifact-checks.json checks md/html/docx/graphml content"
+      ],
+      "finding": null
+    },
+    {
+      "id": "V4-05",
+      "status": "fulfilled",
+      "evidence": [
+        "Authoring GUI-33/34 passed; eight MD/HTML files, inert HTML preview, real OOXML",
+        "Own artifact checks: 5 OOXML parts well-formed, real tables/styles/relationships, bounded 22981-byte document.xml, no active scripts/external hrefs",
+        "DE/FR/IT/EN labels and header override verified"
+      ],
+      "finding": null
+    },
+    {
+      "id": "V4-06",
+      "status": "violated",
+      "evidence": [
+        "authoring GUI-35 passed only its presence oracle",
+        "reviewer-artifact-checks.json mermaid-inheritance-direction=false",
+        "GUI-35-graph.mmd: N5 <|-- N4 (Child <|-- Base); GUI-35-graph.puml: N4 <|-- N5 (Base <|-- Child); GraphML INHERITANCE source=Child target=Base"
+      ],
+      "finding": "V4-MERMAID-INHERITANCE: Mermaid export renders inheritance in the reverse direction. The Mermaid text is user-visible and silently wrong; the current GUI-35 test does not assert direction."
+    },
+    {
+      "id": "V4-07",
+      "status": "fulfilled",
+      "evidence": [
+        "Installed authoring suite 7/7 (GUI-29..35), exit 0, one Java server, no remaining Java PIDs",
+        "Required regressions: GUI-04/07 passed in the fresh comfort run before its later GUI-09 timeout; GUI-12/13 and GUI-17 passed in independent custom UML probes; GUI-26 passed in the fresh V3 subset 10/10",
+        "Visual review of 18 actual images, inventory hashes in image-read-inventory.json"
+      ],
+      "finding": "The GUI-35 pass is real but its oracle is incomplete for inheritance direction; this is captured as the V4-06 mandatory finding."
+    },
+    {
+      "id": "V4-08",
+      "status": "fulfilled",
+      "evidence": [
+        "Fresh Java run at exact candidate: 66 compiler + 8 documentation + 74 LSP + 24 bridge, no failures/skips",
+        "Fresh extension build, dependency inventory, 10 unit and 1 real stdio protocol test",
+        "Fresh installed authoring 7/7, comfort V3 subset 10/10, custom UML 2/2, three counterprobes 3/3, expected negative canary exit 1",
+        "No new @Disabled/XFAIL/assumptions in the core diff"
+      ],
+      "finding": "The export regression set lacks a Mermaid inheritance-direction assertion; root cause is recorded under V4-06."
+    },
+    {
+      "id": "V4-09",
+      "status": "violated",
+      "evidence": [
+        "Independent review performed with own build/stage/VSIX comparison, fresh tests, GUI cases and new counterprobes",
+        "Mandatory V4-MERMAID-INHERITANCE finding means the required independent PASS cannot be issued",
+        "Full comfort regression did not finish green in two fresh attempts (GUI-09 timeout)"
+      ],
+      "finding": "Reviewer process was executed, but V4-09 requires a valid independent PASS; the product defect and the non-green required regression prevent it."
+    }
+  ],
+  "executedChecks": [
+    {
+      "id": "exact-detached-pair-build-artifact-inventory",
+      "cwd": "extension",
+      "command": "npm ci --ignore-scripts; node scripts/stage-core.cjs --core-dir <detached core>; npm run package:vsix -- --target darwin-arm64",
+      "exit": 0,
+      "result": "generated lock identical; 12 server + 47 renderer hashes match; 60/60 request artifacts present with correct SHA-256; independent VSIX 75/75 entries byte-identical to preserved candidate",
+      "evidence": "reviewer-build-verification.json; logs/npm-ci.log; logs/stage-scratch.log; logs/package-scratch2.log"
+    },
+    {
+      "id": "pure-java-editor-catalogue-and-transport",
+      "cwd": "core",
+      "command": "./gradlew :interlis-compiler:test <selected tests> :interlis-documentation:test :interlis-lsp:test :interlis-wasm-bridge:test --rerun-tasks",
+      "exit": 0,
+      "result": "66/8/74/24 tests, 0 failures, 0 skipped",
+      "evidence": "logs/java-tests.log; build/test-results XML"
+    },
+    {
+      "id": "extension-transport",
+      "cwd": "extension",
+      "command": "npm run build; npm run verify:no-legacy-dependencies; npm run test:unit; npm run test:protocol",
+      "exit": 0,
+      "result": "build OK; dependency inventory OK; 10/10 unit; 1/1 real packaged Java stdio",
+      "evidence": "logs/ext-checks.log"
+    },
+    {
+      "id": "installed-authoring-gui-artifacts",
+      "cwd": "extension",
+      "command": "node scripts/gui.cjs --suite authoring --vsix <independent scratch VSIX> --cache <pinned cache>",
+      "exit": 0,
+      "result": "7/7 GUI-29..35, actual MD/HTML/DOCX/GraphML/Mermaid/PlantUML files, no remaining Java",
+      "evidence": "extension/build/reports/gui/authoring/2026-11-02T11-13-42-875Z"
+    },
+    {
+      "id": "native-regression-and-negative-control",
+      "cwd": "extension",
+      "command": "node scripts/gui.cjs --suite comfort ... (twice); node scripts/gui.cjs --suite smoke --canary missing-status ...",
+      "exit": "comfort 1; canary 1 expected",
+      "result": "comfort 8/28 twice, GUI-09 analysisReady timeout after offline restart, no remaining Java; canary failed exactly at impossible status with 2/3 cases, as required",
+      "evidence": "extension/build/reports/gui/comfort/2026-11-02T11-58-00-034Z; .../12-00-35-629Z; extension/build/reports/gui/smoke/2026-11-02T12-16-55-526Z"
+    },
+    {
+      "id": "installed-comfort-v3-subset",
+      "cwd": "extension",
+      "command": "custom subset runner with INTERLIS_GUI_V3_ONLY=1; product test/gui/comfort.cjs",
+      "exit": 0,
+      "result": "10/10 GUI-19..28, including GUI-26 SVG/PNG full/visible and Cancel",
+      "evidence": "evidence/build/subset-comfort-v3"
+    },
+    {
+      "id": "installed-custom-uml",
+      "cwd": "extension",
+      "command": "custom subset runner; evidence/build/custom-uml.cjs",
+      "exit": 0,
+      "result": "2/2: real Sprotty categories/edges and native node drag with unchanged source; held real layout response cannot replace current generation",
+      "evidence": "evidence/build/subset-custom-uml"
+    },
+    {
+      "id": "reviewer-counterprobes",
+      "cwd": "extension",
+      "command": "node evidence/build/counterprobe-runner.cjs",
+      "exit": 0,
+      "result": "3/3: automatic MODEL suggestions/leave placeholder, unsafe-import negative, dirty-buffer catalogue export",
+      "evidence": "evidence/build/counterprobe-run"
+    },
+    {
+      "id": "artifact-semantics",
+      "cwd": "extension",
+      "command": "node evidence/build/verify-artifacts.cjs",
+      "exit": 0,
+      "result": "29 artifact checks; only Mermaid inheritance direction failed",
+      "evidence": "reviewer-artifact-checks.json"
+    }
+  ],
+  "guiEvidence": [
+    {
+      "case": "GUI-04",
+      "status": "passed",
+      "run": "extension/build/reports/gui/comfort/2026-11-02T11-58-00-034Z",
+      "screenshots": [
+        "GUI-04-german.png",
+        "GUI-04-english.png",
+        "GUI-04-related.png"
+      ]
+    },
+    {
+      "case": "GUI-07",
+      "status": "passed",
+      "run": "extension/build/reports/gui/comfort/2026-11-02T11-58-00-034Z",
+      "screenshots": [
+        "GUI-07-reference.png",
+        "GUI-07-declaration.png",
+        "GUI-07-undone.png"
+      ]
+    },
+    {
+      "case": "GUI-12",
+      "status": "passed",
+      "run": "evidence/build/subset-custom-uml; evidence/build/subset-uml",
+      "screenshots": [
+        "CP-GUI12-diagram.png",
+        "GUI-12-current.png"
+      ]
+    },
+    {
+      "case": "GUI-13",
+      "status": "passed",
+      "run": "evidence/build/subset-custom-uml",
+      "screenshots": [
+        "CP-GUI13-moved.png"
+      ],
+      "note": "source buffer/disk hash unchanged"
+    },
+    {
+      "case": "GUI-17",
+      "status": "passed",
+      "run": "evidence/build/subset-custom-uml",
+      "screenshots": [
+        "CP-GUI17-held.png",
+        "CP-GUI17-current.png",
+        "CP-GUI17-restored.png"
+      ],
+      "note": "real ELK worker response held and released"
+    },
+    {
+      "case": "GUI-26",
+      "status": "passed",
+      "run": "evidence/build/subset-comfort-v3",
+      "screenshots": [
+        "GUI-26-export-view.png",
+        "GUI-26-files-saved.png"
+      ],
+      "note": "SVG/PNG full/visible pixel equality and Cancel"
+    },
+    {
+      "case": "GUI-29..35",
+      "status": "passed",
+      "run": "extension/build/reports/gui/authoring/2026-11-02T11-13-42-875Z",
+      "screenshots": [
+        "GUI-29-model.png",
+        "GUI-30-Auto.png",
+        "GUI-31-import-fixed.png",
+        "GUI-33-html-tables.png",
+        "GUI-34-saved.png",
+        "GUI-35-central-uml.png"
+      ]
+    },
+    {
+      "case": "negative-canary",
+      "status": "expected-failure confirmed",
+      "run": "extension/build/reports/gui/smoke/2026-11-02T12-16-55-526Z",
+      "note": "impossible visible status failed GUI-01; 2/3 cases recorded"
+    }
+  ],
+  "counterprobes": [
+    {
+      "id": "CP-SNIPPET",
+      "hypothesis": "Automatic quickSuggestions (not explicit Trigger Suggest) accepts a MODEL snippet, native Right leaves the linked de placeholder, and Tab then performs normal indentation rather than jumping to a placeholder.",
+      "result": "PASS; status (Ln 2, Col 22 (2 selected)) -> (Ln 2, Col 22) -> (Ln 2, Col 25), one END, disk unchanged",
+      "evidence": "evidence/build/counterprobe-run; CP-SNIPPET-left.png"
+    },
+    {
+      "id": "CP-QUICKFIX",
+      "hypothesis": "An incomplete model with a real unresolved type must not offer removal of an otherwise-unused import; a normal END-name quick fix control must still be available.",
+      "result": "PASS; control action Correct END name to C present; actionsAtImports=[]; Problems shows 2 errors; No code actions available at IMPORTS Spare",
+      "evidence": "evidence/build/counterprobe-run; CP-QUICKFIX-negative.png"
+    },
+    {
+      "id": "CP-DOCS",
+      "hypothesis": "A dirty class rename is exported from the current buffer, not the stale disk copy, while buffer and disk remain unchanged.",
+      "result": "PASS; saved CP-DOCS-dirty.md contains Live.Data.RenamedAlpha, not Live.Data.Alpha; Snapshot/Sources present; buffer and disk unchanged",
+      "evidence": "evidence/build/counterprobe-run/CP-DOCS-dirty.md"
+    },
+    {
+      "id": "CP-GUI12-13",
+      "hypothesis": "A native node drag in the installed Sprotty webview changes geometry but not source text or disk bytes.",
+      "result": "PASS; real kinds/edges, transform changed, active buffer and disk hash unchanged",
+      "evidence": "evidence/build/subset-custom-uml; CP-GUI12-diagram.png; CP-GUI13-moved.png"
+    },
+    {
+      "id": "CP-GUI17",
+      "hypothesis": "A held real ELK response must not replace a newer accepted generation or lose a manually moved stable node.",
+      "result": "PASS; held state Updating diagram..., current newAttribute appears, stable node transform retained after release, source restored explicitly",
+      "evidence": "evidence/build/subset-custom-uml; CP-GUI17-held.png; CP-GUI17-current.png"
+    },
+    {
+      "id": "CP-ARTIFACTS",
+      "hypothesis": "All V4 exported artifacts are well-formed and semantically consistent across formats.",
+      "result": "FAIL on Mermaid inheritance direction only; 28/29 other checks pass",
+      "evidence": "reviewer-artifact-checks.json"
+    }
+  ],
+  "openMandatoryFindings": [
+    {
+      "id": "V4-MERMAID-INHERITANCE",
+      "ac": "V4-06",
+      "severity": "mandatory",
+      "source": "core/interlis-projection/src/main/java/guru/interlis/projection/MermaidRenderer.java:40",
+      "reproduction": "Open the installed GUI-35 export from authoring/2026-11-02T11-13-42-875Z; compare GUI-35-graph.mmd and GUI-35-graph.puml. Mermaid has 'N5 <|-- N4' (Child <|-- Base); PlantUML has 'N4 <|-- N5' (Base <|-- Child); GraphML INHERITANCE edge is source=Child target=Base.",
+      "expected": "Mermaid must render Base as parent and Child as derived, e.g. 'N4 <|-- N5' or 'N5 --|> N4'.",
+      "observed": "Mermaid renders inheritance reversed because it emits source <|-- target.",
+      "requiredFix": "Reverse the Mermaid inheritance arrow and add a direction assertion to DiagramProjectionTest and GUI-35; rerun affected projection/export tests and installed GUI.",
+      "evidence": "reviewer-artifact-checks.json; authoring GUI-35-graph.mmd/.puml/.graphml"
+    },
+    {
+      "id": "V4-REGRESSION-GUI09",
+      "ac": "required regression check (not one of V4-01..09)",
+      "severity": "mandatory verification gap",
+      "source": "test/gui/editor.cjs GUI-09; scripts/gui.cjs comfort suite",
+      "reproduction": "Run the comfort suite twice with the exact VSIX; both attempts stop after 8/28 with 'Current server has not accepted analysis containing this real editor'. Server log shows didOpen for External.ili at 13:01:56 but no interlis/analysisReady in the following 20s; no Java process remains.",
+      "expected": "All 28 cumulative cases complete fresh, or a bounded product diagnosis explains the missing analysisReady.",
+      "observed": "Two independent attempts both failed at GUI-09 after an offline restart; the required V4 cases themselves were run separately and passed.",
+      "requiredFix": "Investigate whether analysisReady is late/withheld after offline restart or the harness wait is too short; rerun the full comfort suite on the fixed candidate.",
+      "evidence": "extension/build/reports/gui/comfort/2026-11-02T11-58-00-034Z; .../12-00-35-629Z; logs/gui-comfort.log; logs/gui-comfort-retry.log"
+    }
+  ],
+  "missingRequiredChecks": [
+    {
+      "id": "installed-comfort-full",
+      "reason": "Required comfort suite is not green: two fresh attempts stopped at 8/28 with GUI-09 analysisReady timeout after offline restart. The required V4 GUI cases 04/07/12/17/26 were executed separately, but the full required check remains open."
+    }
+  ],
+  "reuse": {
+    "historical": "Own authoring7 and comfort28 raw evidence at Core 668caa9 / Extension d9fa1c9 / VSIX deca8f9 was inspected for context (manifest, cases, selected images); its reported 28/28 and 74-entry VSIX equality are not counted as this reviewer's fresh run.",
+    "fresh": "All checks listed in executedChecks are this session's runs. The independent VSIX content equality is the basis for using the same installed artifact in the fresh GUI runs."
+  },
+  "report": "review.md"
+}

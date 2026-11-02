@@ -1,0 +1,168 @@
+{
+  "run": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r1/extension/build/reports/gui/authoring/2026-11-02T11-13-42-875Z",
+  "at": "2026-11-02T11:58:55.716Z",
+  "checks": [
+    {
+      "id": "md-DE",
+      "ok": true,
+      "detail": "label=Beschreibung"
+    },
+    {
+      "id": "html-DE",
+      "ok": true,
+      "detail": "label=Beschreibung"
+    },
+    {
+      "id": "html-inert-DE",
+      "ok": true,
+      "detail": "CSP and escaped script text"
+    },
+    {
+      "id": "md-EN",
+      "ok": true,
+      "detail": "label=Description"
+    },
+    {
+      "id": "html-EN",
+      "ok": true,
+      "detail": "label=Description"
+    },
+    {
+      "id": "html-inert-EN",
+      "ok": true,
+      "detail": "CSP and escaped script text"
+    },
+    {
+      "id": "md-FR",
+      "ok": true,
+      "detail": "label=Description"
+    },
+    {
+      "id": "html-FR",
+      "ok": true,
+      "detail": "label=Description"
+    },
+    {
+      "id": "html-inert-FR",
+      "ok": true,
+      "detail": "CSP and escaped script text"
+    },
+    {
+      "id": "md-IT",
+      "ok": true,
+      "detail": "label=Descrizione"
+    },
+    {
+      "id": "html-IT",
+      "ok": true,
+      "detail": "label=Descrizione"
+    },
+    {
+      "id": "html-inert-IT",
+      "ok": true,
+      "detail": "CSP and escaped script text"
+    },
+    {
+      "id": "html-no-active-external",
+      "ok": true,
+      "detail": "no active external src/href or javascript URL"
+    },
+    {
+      "id": "html-abstract-constraints",
+      "ok": true,
+      "detail": "abstract marker, type, constraint"
+    },
+    {
+      "id": "docx-part-[Content_Types].xml",
+      "ok": true,
+      "detail": "[Content_Types].xml well-formed"
+    },
+    {
+      "id": "docx-part-_rels/.rels",
+      "ok": true,
+      "detail": "_rels/.rels well-formed"
+    },
+    {
+      "id": "docx-part-word/document.xml",
+      "ok": true,
+      "detail": "word/document.xml well-formed"
+    },
+    {
+      "id": "docx-part-word/_rels/document.xml.rels",
+      "ok": true,
+      "detail": "word/_rels/document.xml.rels well-formed"
+    },
+    {
+      "id": "docx-part-word/styles.xml",
+      "ok": true,
+      "detail": "word/styles.xml well-formed"
+    },
+    {
+      "id": "docx-content",
+      "ok": true,
+      "detail": "types/tables/recursive structure"
+    },
+    {
+      "id": "docx-bounded",
+      "ok": true,
+      "detail": "document.xml bytes=22981"
+    },
+    {
+      "id": "graphml-wellformed",
+      "ok": true,
+      "detail": "xmllint"
+    },
+    {
+      "id": "graphml-ids-unique",
+      "ok": true,
+      "detail": "nodes=11 edges=9"
+    },
+    {
+      "id": "graphml-edges-resolve",
+      "ok": true,
+      "detail": "all endpoints exist"
+    },
+    {
+      "id": "graphml-inheritance",
+      "ok": true,
+      "detail": "source=Child target=Base"
+    },
+    {
+      "id": "graph-text-roles",
+      "ok": true,
+      "detail": "roles and multiplicities"
+    },
+    {
+      "id": "graph-text-no-network",
+      "ok": true,
+      "detail": "no remote renderer/include"
+    },
+    {
+      "id": "mermaid-inheritance-direction",
+      "ok": false,
+      "detail": "Mermaid [\"N5\",\"N4\"] vs PlantUML [\"N4\",\"N5\"]; GraphML Child->Base"
+    },
+    {
+      "id": "single-server-no-glsp",
+      "ok": true,
+      "detail": "serverStartMarkers=1"
+    }
+  ],
+  "findings": [
+    {
+      "id": "V4-MERMAID-INHERITANCE",
+      "severity": "mandatory",
+      "ac": "V4-06",
+      "detail": "Mermaid emits child <|-- parent while PlantUML/GraphML emit parent <|-- child; Mermaid therefore renders the inheritance reversed. Source: CORE/interlis-projection/src/main/java/guru/interlis/projection/MermaidRenderer.java:40. GUI-35 only asserts presence, not direction. Official Mermaid syntax reference: Animal <|-- Duck means Duck inherits Animal (https://mermaid.js.org/syntax/classDiagram.html)."
+    }
+  ],
+  "mermaidInheritance": [
+    "N5",
+    "N4"
+  ],
+  "plantInheritance": [
+    "N4",
+    "N5"
+  ],
+  "mainLogStartCount": 1
+}

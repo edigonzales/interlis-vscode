@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "candidate": {
+    "coreSha": "668caa9a975ffac41a56880c9349a70ee3fdc788",
+    "extensionSha": "e38cfb73e781952ad8ae0b597d2e6ea5504ae717"
+  },
+  "method": "Exact detached worktrees exported/staged independently; dependencies installed with npm ci; Core editorBundle rebuilt with JDK25; scratch VSIX unpacked and compared file-by-file with the preserved candidate VSIX.",
+  "coreEditorBundle": {
+    "stagedFrom": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r1/core",
+    "log": "logs/stage-scratch.log",
+    "generatedLockEqualsCandidateLock": true,
+    "serverFilesChecked": 12,
+    "rendererFilesChecked": 47,
+    "hashMismatches": 0
+  },
+  "requestArtifacts": {
+    "count": 60,
+    "present": 60,
+    "sha256Mismatches": 0
+  },
+  "vsix": {
+    "independent": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V4-r1/evidence/build/ext-scratch/build/packages/interlis-vscode-darwin-arm64.vsix",
+    "independentSha256": "7dd056b987c97f4feec52d1e94223a60578e4c251fa6d2d8c18351b5466985c0",
+    "preservedCandidate": "/Users/stefan/sources/interlis-vscode-evidence/phases/V4/artifacts/interlis-vscode-darwin-arm64-deca8f9bba2c923b01bd30e4da1d5a5cffd76db22b360a4378edc222ff5fe584.vsix",
+    "preservedCandidateSha256": "deca8f9bba2c923b01bd30e4da1d5a5cffd76db22b360a4378edc222ff5fe584",
+    "entriesIndependent": 75,
+    "entriesCandidate": 75,
+    "entriesOnlyIndependent": [],
+    "entriesOnlyCandidate": [],
+    "entryHashMismatches": [],
+    "containerHashNote": "VSIX container hashes differ only because ZIP timestamps are not reproducible; all 75 unpacked entry hashes are byte-identical.",
+    "installedBundleSha256": "f631446e9cb7bf3bce987d36509eb7d560ed7a022b81a8431c5fe9937a1110e9",
+    "installedBundleMatchesWorktreeBuild": true,
+    "rawComparison": "vsix-entry-comparison.json"
+  },
+  "freshChecks": [
+    {
+      "id": "java-selected",
+      "result": "PASS",
+      "counts": {
+        "compiler": 66,
+        "documentation": 8,
+        "lsp": 74,
+        "wasmBridge": 24
+      },
+      "failures": 0,
+      "skipped": 0,
+      "log": "logs/java-tests.log"
+    },
+    {
+      "id": "extension-build",
+      "result": "PASS",
+      "log": "logs/ext-checks.log"
+    },
+    {
+      "id": "verify-no-legacy-dependencies",
+      "result": "PASS",
+      "log": "logs/ext-checks.log"
+    },
+    {
+      "id": "extension-unit",
+      "result": "PASS",
+      "passed": 10,
+      "failed": 0,
+      "log": "logs/ext-checks.log"
+    },
+    {
+      "id": "extension-protocol",
+      "result": "PASS",
+      "passed": 1,
+      "failed": 0,
+      "log": "logs/ext-checks.log"
+    },
+    {
+      "id": "installed-authoring",
+      "result": "PASS",
+      "passed": 7,
+      "failed": 0,
+      "run": "extension/build/reports/gui/authoring/2026-11-02T11-13-42-875Z"
+    },
+    {
+      "id": "installed-comfort-v3-subset",
+      "result": "PASS",
+      "passed": 10,
+      "failed": 0,
+      "run": "evidence/build/subset-comfort-v3"
+    },
+    {
+      "id": "installed-custom-uml",
+      "result": "PASS",
+      "passed": 2,
+      "failed": 0,
+      "run": "evidence/build/subset-custom-uml"
+    },
+    {
+      "id": "installed-comfort-full",
+      "result": "FAIL",
+      "passed": 8,
+      "expected": 28,
+      "failed": 1,
+      "reason": "GUI-09 timed out waiting for analysisReady after offline restart; two attempts same point",
+      "runs": [
+        "extension/build/reports/gui/comfort/2026-11-02T11-58-00-034Z",
+        "extension/build/reports/gui/comfort/2026-11-02T12-00-35-629Z"
+      ]
+    },
+    {
+      "id": "negative-canary",
+      "result": "EXPECTED_FAIL",
+      "exit": 1,
+      "reason": "Impossible visible status; GUI-01 failed, 2/3 cases recorded",
+      "run": "extension/build/reports/gui/smoke/2026-11-02T12-16-55-526Z"
+    },
+    {
+      "id": "reviewer-counterprobes",
+      "result": "PASS",
+      "passed": 3,
+      "failed": 0,
+      "run": "evidence/build/counterprobe-run"
+    }
+  ]
+}

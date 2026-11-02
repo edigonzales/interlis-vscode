@@ -1,0 +1,28 @@
+{
+  "at": "2026-11-02T11:44:43.562Z",
+  "event": {
+    "timestamp": 1793619790467,
+    "toolId": "call_00_yZUywDKk8fglPJkSeuCg0052",
+    "command": "rm -rf /var/folders/rp/xw19bm096bv14zzhq2ybnttm0000gn/T/ili-gui-*; echo cleaned; df -h /System/Volumes/Data | tail -1"
+  },
+  "results": [
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/authoring/2026-11-02T10-56-25-507Z/manifest.json",
+      "exists": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/comfort/2026-11-02T11-02-58-863Z/manifest.json",
+      "exists": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V4/artifacts/interlis-vscode-darwin-arm64-deca8f9bba2c923b01bd30e4da1d5a5cffd76db22b360a4378edc222ff5fe584.vsix",
+      "exists": true
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V3/artifacts/interlis-vscode-darwin-arm64-03022a1dd760824ee0273ddbd8c6e402167cf5a4e7f2cfa18ab86d57218e60f9.vsix",
+      "exists": true
+    }
+  ],
+  "limit": "Reviewer removed task temporary GUI storages broadly; original temporary profiles/installed files cannot be claimed as retained. Persistent copied raw logs, screenshots, workspace artifacts, source trees, archives and retained VSIX files are the remaining proof basis; inspect them independently.",
+  "retainedCache": true
+}
