@@ -1,6 +1,6 @@
 # INTERLIS VS Code – aktueller Ausführungsstand
 
-**V0, V1 und V2 PASS**, unabhängig und operativ validiert. **V3 beginnt jetzt.**
+**V0, V1 und V2 PASS**, unabhängig und operativ validiert. **V3 ist implementiert und zur unabhängigen Prüfung bereit.**
 V4–V5 bleiben bis zu ihren jeweiligen unabhängigen Gates gesperrt. Kein Push/Release.
 
 | Phase | Stand | Geprüftes Produktpaar / Beleg |
@@ -8,7 +8,7 @@ V4–V5 bleiben bis zu ihren jeweiligen unabhängigen Gates gesperrt. Kein Push/
 | V0 | PASS, alle7 ACs | Core `76df3815973597280845a9bb575fa399e9773ccc` / Extension `d8f8adeb89e26f8a979744b81299d51da45cf0fe`; [Originalreview](reviews/V0/attempt-02/review.md), [äussere Prüfung](reviews/V0/attempt-02/outer-audit.json) |
 | V1 | PASS, alle10 ACs | Core `3b60e6c1309a4897ad6d0e99f6d8dfd137520ca9` / Extension `d237d92fbe22f6fb41d7d6f3f0965c0d080e30e9`; [Originalreview](reviews/V1/attempt-01/review.md), [Verdict](reviews/V1/attempt-01/verdict.json), [äussere Prüfung](reviews/V1/attempt-01/outer-audit.json) |
 | V2 | PASS, alle10 ACs | Core `7026e7f6b5834bf593d91dfee3323efb60688f3d` / Extension `01f353114cc7a19a9ac6dd884cb0b285ac723c9c`; [Originalreview](reviews/V2/attempt-02/review.md), [äussere Prüfung](reviews/V2/attempt-02/outer-audit.json) |
-| V3 | IN_PROGRESS | Vollständige UMLbedienung und aktuelle SVG-/PNG-Exporte |
+| V3 | REVIEW_PENDING | Eigene GUI01–28 bestanden; [Implementierung und Rohbelege](implementation/V3.md). Noch kein unabhängiger V3-PASS |
 | V4 | PLANNED | Editorhilfen und Dokumentations-/Textformate |
 | V5 | PLANNED | Gebündelte Runtimes, reale Plattformen/Remote, kumulative56-AC-Abnahme |
 
@@ -62,8 +62,7 @@ hinterlassen. Die äussere Prüfung hält kleine Prosa-/Beleggrenzen transparent
 V2 liefert echte Node-/Container-/Routeinteraktion und aktuelle Navigation aus
 einer gemeinsamen neutralen Sprotty-/ELK-Quelle. Details, unveränderte PhaseBase,
 Rohbelege, Fehlversuche und Testwiederverwendung stehen im [V2-Bericht](implementation/V2.md).
-V2 ist unabhängig abgenommen; die ursprünglichen Entwicklungsbelege bleiben erhalten. Volle UMLbedienung, Editorhilfen und
-Exporte bleiben ihren gesperrten Folgephasen zugeordnet. Keine zweite Sprachengine oder
+V2 ist unabhängig abgenommen; die ursprünglichen Entwicklungsbelege bleiben erhalten. V3 ergänzt volle UMLbedienung und aktuelle Exporte; ihre unabhängige Abnahme ist noch offen. Editorhilfen bleiben V4 zugeordnet. Keine zweite Sprachengine oder
 Altprojektabhängigkeit. Linux/Windows/Remote und Runtimebündelung sind V5-Pflicht;
 ein sauberer kumulativer Portablelauf ebenfalls. Kein pauschaler sachfremder
 Korpus-/Benchmark-/Safari-/releaseCheckP3-Lauf.
