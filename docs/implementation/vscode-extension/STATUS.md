@@ -10,7 +10,8 @@ ausdrücklich ungeprüft. [Originalreview](reviews/V5/attempt-01/review.md),
 [Verdict](reviews/V5/attempt-01/verdict.json),
 [äussere Abschlussprüfung](reviews/V5/attempt-01/outer-audit.json).
 Dieser reine Archiv-Dokuabschluss verändert die geprüften Produktartefakte nicht.
-Kein Merge, Tag oder Marketplace-/npm-/Open-VSX-Release wurde durchgeführt.
+Die ursprüngliche V5-Abnahme erfolgte vor dem Merge; kein Tag oder
+Marketplace-/npm-/Open-VSX-Release wurde durchgeführt.
 
 | Phase | Stand | Geprüftes Produktpaar / Beleg |
 |---|---|---|
@@ -158,3 +159,20 @@ ordnen alle Rohbelege und Einschränkungen zu. VS Code/ChromeDriver werden aus d
 Cache wiederverwendet; temporäre Installationen nach Prozessende entfernt.
 16 eigene ältere Kopien (rund32GB laut du) und das heruntergeladene Windows-ISO
 wurden entfernt; Logs, Bilder und qualifizierte VSIX-Dateien bleiben erhalten.
+
+## Anschliessende Zusammenführung nach main
+
+Auf ausdrücklichen Nutzerauftrag wurden die geprüften Änderungen inklusive des
+Archiv-Dokucommits30b9d2c nach main übernommen. Im Core enthält main inzwischen
+weitere Cache-/HTTP-Arbeiten; die Integration erfolgte als Merge
+`1952a84d7d95505facaabda2e2fb877adcb88480` mit beiden Elternständen
+`7698c42a535d1733125b87115d51ae26fd98029c` und dem geprüften Core6983baf.
+Die neueren Cacheverträge bleiben erhalten; LSP-FetchPolicy und Weitergabe von
+CacheRequest/MD5 wurden angepasst. Gezielte Integrationstests: Repository112,
+CLI141, LSP76 grün ohne Fehler/Skips.
+[Core-Mergebericht und Rohbelege](https://github.com/edigonzales/interlis-java/blob/1952a84d7d95505facaabda2e2fb877adcb88480/docs/implementation/vscode-main-merge/REPORT.md).
+
+Die V5-Abnahme bleibt an Core6983baf/Extension3a88850 gebunden. Die Extension
+verwendet weiterhin genau dieses geprüfte Core-Artefaktlock; vorhandene VSIXe
+wurden nicht verändert. Für den neuen kombinierten Core-Mergebaum wird kein
+neuer kumulativer unabhängiger V5-PASS behauptet.
