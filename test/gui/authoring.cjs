@@ -1,5 +1,5 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
-const {By,Key,ProblemsView,MarkerType}=require('vscode-extension-tester'),ui=require('./workbench.cjs');
+const {By,Key,ProblemsView,MarkerType,TextEditor}=require('vscode-extension-tester'),ui=require('./workbench.cjs');
 const evidence=process.env.INTERLIS_GUI_EVIDENCE;
 const catalog=fs.readFileSync(path.join(__dirname,'../fixtures/authoring/Catalog.ili'),'utf8').trimEnd();
 const simple='INTERLIS 2.4;\nMODEL Demo AT "x" VERSION "1" =\n\nEND Demo.';
@@ -51,7 +51,7 @@ describe('Installed templates and genuine documentation artifacts',function(){
  this.timeout(150000);this.bail(true);
  afterEach(async function(){await ui.driver.switchTo().defaultContent();if(this.currentTest.state==='failed'){await ui.capture('failure-'+this.currentTest.title.slice(0,6));fs.writeFileSync(path.join(evidence,'failure-dom.html'),await ui.driver.getPageSource());fs.writeFileSync(path.join(evidence,'failure-error.json'),JSON.stringify({message:this.currentTest.err?.message,stack:this.currentTest.err?.stack},null,2));}});
  it('GUI-32 opens built-in local and selected remote templates and handles failure size and Cancel',async()=>{
-  const fixture=JSON.parse(fs.readFileSync(path.join(evidence,'template-fixtures.json')));await ui.palette('INTERLIS: New Model from Template',false,true);await pick('Built-in INTERLIS model');await ui.waitFor(async()=>(await ui.readText()).includes('MODEL Example'),'Built-in template absent');assert.ok((await ui.editor.getFileUri()).startsWith('untitled:'));await ui.capture('GUI-32-built-in');
+  const fixture=JSON.parse(fs.readFileSync(path.join(evidence,'template-fixtures.json')));await ui.palette('INTERLIS: New Model from Template',false,true);await pick('Built-in INTERLIS model');await ui.waitFor(async()=>(await ui.readText()).includes('MODEL Example'),'Built-in template absent');ui.editor=new TextEditor();assert.ok((await ui.editor.getFileUri()).startsWith('untitled:'));await ui.capture('GUI-32-built-in');
   await ui.palette('INTERLIS: New Model from Template',false,true);await pick('Configured local template');await ui.waitFor(async()=>(await ui.readText()).includes('MODEL Spare'),'Local template absent');await ui.capture('GUI-32-local');
   await ui.palette('INTERLIS: New Model from Template',false,true);await pick('Configured remote template');await ui.waitFor(async()=>(await ui.readText()).includes('MODEL RemoteTemplate'),'Remote template absent');assert.ok((await ui.readText()).includes('<script>globalThis.mustNotRun'));await ui.capture('GUI-32-remote');
   for(const [route,message]of [['/failure','HTTP 503'],['/large','Template exceeds 1 MB']]){await settings({'interlisGuru.templates.url':fixture.base+route});await ui.palette('INTERLIS: New Model from Template',false,true);await pick('Configured remote template');await ui.waitFor(async()=>{for(const toast of await ui.driver.findElements(By.css('.notification-toast')))if((await toast.getText()).includes(message))return true;return false;},'Controlled template error not visible: '+message);await ui.capture('GUI-32-'+route.slice(1));}
