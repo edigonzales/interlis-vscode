@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "coreCommit": "668caa9a975ffac41a56880c9349a70ee3fdc788",
+  "coreCommit": "6983baf95c47a7e20dbb41a2e50500185f578c37",
   "protocolVersion": "lsp-3.17-baseline",
   "editorProtocolVersion": 1,
   "diagramDocumentVersion": "1.0",
@@ -29,7 +29,7 @@
     },
     {
       "path": "lib/interlis-lsp-0.2.0-SNAPSHOT.jar",
-      "sha256": "39d34e798e68b669e9dab66fac84dd85903e66b31d56db74351fc7c76fb6e961"
+      "sha256": "c143012d70ca0530d3181554fd3db75872653065a21b55ddd3965c2237ba1d8d"
     },
     {
       "path": "lib/interlis-model-0.2.0-SNAPSHOT.jar",
@@ -37,7 +37,7 @@
     },
     {
       "path": "lib/interlis-projection-0.2.0-SNAPSHOT.jar",
-      "sha256": "693179f2984bb800933cbfb06e9dfee66aa891768516e2fbe21ac1ff4062d579"
+      "sha256": "5cd9ad4e233cb01f5237fd94dcb371093c3a26e66999da2617d86475d417dd56"
     },
     {
       "path": "lib/interlis-repository-0.2.0-SNAPSHOT.jar",

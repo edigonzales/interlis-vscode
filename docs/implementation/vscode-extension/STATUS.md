@@ -9,7 +9,7 @@ V5 bleibt bis zum unabhängigen V4-PASS gesperrt. Kein Push/Release.
 | V1 | PASS, alle10 ACs | Core `3b60e6c1309a4897ad6d0e99f6d8dfd137520ca9` / Extension `d237d92fbe22f6fb41d7d6f3f0965c0d080e30e9`; [Originalreview](reviews/V1/attempt-01/review.md), [Verdict](reviews/V1/attempt-01/verdict.json), [äussere Prüfung](reviews/V1/attempt-01/outer-audit.json) |
 | V2 | PASS, alle10 ACs | Core `7026e7f6b5834bf593d91dfee3323efb60688f3d` / Extension `01f353114cc7a19a9ac6dd884cb0b285ac723c9c`; [Originalreview](reviews/V2/attempt-02/review.md), [äussere Prüfung](reviews/V2/attempt-02/outer-audit.json) |
 | V3 | PASS, alle12 ACs | Core `a0272965c4691320ca316d519581d4db4cefc930` / Extension `dd6e4fd342dbe58a43dc648e2b2ad285db6896e2`; [Originalreview](reviews/V3/attempt-01/review.md), [äussere Prüfung](reviews/V3/attempt-01/outer-audit.json) |
-| V4 | REWORK nach unabhängigem FAIL | Mermaid-Vererbungsrichtung und GUI09-Neustartdiagnose offen. [Originalreview](reviews/V4/attempt-01/review.md), [Bericht](implementation/V4.md) |
+| V4 | REWORK nach unabhängigem FAIL | Beide Ursachen korrigiert; neue Paket-/GUIqualifikation und unabhängiger Review ausstehend. [Originalreview](reviews/V4/attempt-01/review.md), [Bericht](implementation/V4.md) |
 | V5 | PLANNED | Gebündelte Runtimes, reale Plattformen/Remote, kumulative56-AC-Abnahme |
 
 ## Unveränderliche Gesamtbasis und Arbeitsbäume
