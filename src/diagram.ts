@@ -1,10 +1,11 @@
 import * as vscode from 'vscode';
 import {randomUUID} from 'node:crypto';
 import type {LanguageClient} from 'vscode-languageclient/node';
-import type {AnalysisReady,DiagramRequest,DiagramResponse,DiagramNavigation,DiagramNavigationParams,DiagramOptionsDto,DiagramSelectionParams,DiagramSelectionResult} from '../artifacts/types/editor-protocol';
+import type {AnalysisReady,DiagramRequest,DiagramResponse,DiagramNavigation,DiagramNavigationParams,DiagramSelectionParams,DiagramSelectionResult} from '../artifacts/types/editor-protocol';
 import {verifyDiagramAssets} from './host/diagram-assets';
 import {DiagramStateStore} from './host/diagram-state';
 import {decodeDiagramExport} from './host/diagram-export';
+import {diagramProjectionRequest} from './host/diagram-options';
 
 interface PanelState {boundUri:string;panel:vscode.WebviewPanel;root:vscode.TextDocument;follow:boolean;generation:number;ready:boolean;fresh:boolean;disposed:boolean;timer?:NodeJS.Timeout;cancel?:vscode.CancellationTokenSource;response?:DiagramResponse;association:'ENTITY'|'COMPACT_BINARY';channel:string;panelId?:string;symbolIds?:string[];depth?:number;translation?:string;exportRequest?:{id:string;uri:vscode.Uri;format:'SVG'|'PNG';generation:number};}
 function editable(doc:vscode.TextDocument|undefined):doc is vscode.TextDocument {return !!doc&&doc.languageId==='interlis'&&['file','untitled'].includes(doc.uri.scheme);}
@@ -21,7 +22,7 @@ export class DiagramEditors implements vscode.CustomTextEditorProvider,vscode.Di
  private storageQueue:Promise<void>=Promise.resolve();
  constructor(private readonly context:vscode.ExtensionContext,private readonly client:()=>LanguageClient|undefined,private readonly output:vscode.OutputChannel) {
   this.lastSourceEditor=vscode.window.activeTextEditor;
-  this.subscriptions.push(vscode.window.onDidChangeTextEditorSelection(event=>{if(event.textEditor.document.languageId==='interlis')this.lastSourceEditor=event.textEditor;}),vscode.workspace.onDidChangeTextDocument(event=>{for(const state of this.panels)if(state.root===event.document)this.invalidate(state,'Source changed — updating diagram');}),
+  this.subscriptions.push(vscode.window.onDidChangeTextEditorSelection(event=>{if(event.textEditor.document.languageId==='interlis')this.lastSourceEditor=event.textEditor;}),vscode.workspace.onDidChangeTextDocument(event=>{for(const state of this.panels)if(state.root===event.document){state.symbolIds=undefined;state.depth=undefined;state.translation=undefined;this.invalidate(state,'Source changed — updating diagram');}}),
    vscode.window.onDidChangeActiveTextEditor(editor=>{if(!editable(editor?.document))return;this.lastSourceEditor=editor;void this.autoOpen(editor!.document);for(const state of this.panels)if(state.follow&&state.root!==editor!.document){state.root=editor!.document;state.symbolIds=undefined;state.depth=undefined;state.translation=undefined;state.panel.title=state.root.uri.path.split('/').pop()+' — UML';state.response=undefined;this.invalidate(state,'Following active INTERLIS source');}}));
  }
  connected():void {
@@ -65,8 +66,7 @@ export class DiagramEditors implements vscode.CustomTextEditorProvider,vscode.Di
   const capability=server?.initializeResult?.capabilities.experimental?.interlis;
   if(!server?.isRunning()||capability?.diagramProtocolVersion!==1||capability?.diagramDocumentVersion!=='1.0'||typeof capability?.serverInstanceId!=='string'){await this.post(state,{type:'status',status:'ERROR',message:'A matching running diagram protocol 1 server is required.'});return;}
   const cancellation=new vscode.CancellationTokenSource();state.cancel=cancellation;const requestId=randomUUID();
-  const options:DiagramOptionsDto={schemaVersion:'1.0',scope:state.symbolIds?.length?(state.depth?'NEIGHBOURHOOD':'SELECTED'):'WITH_DEPENDENCIES',...(state.depth?{neighbourhoodDepth:state.depth}:{}),associationPresentation:state.association,showConstraints:true,inheritedMembers:'SHOW_WITH_ORIGIN',...(state.translation?{labelPolicy:'TRANSLATED',translationModel:{snapshot:state.response?.snapshotId??'',symbol:state.translation}}:{})};
-  const request:DiagramRequest={protocolVersion:1,requestId,textDocument:{uri:root.uri.toString(),version},options,...(state.symbolIds?.length?{symbolIds:state.symbolIds}:{})};
+  const request:DiagramRequest={protocolVersion:1,requestId,textDocument:{uri:root.uri.toString(),version},...diagramProjectionRequest({association:state.association,symbolIds:state.symbolIds,depth:state.depth,translation:state.translation,snapshotId:state.response?.snapshotId})};
   await this.post(state,{type:'status',status:'LOADING',message:'Projecting current source…'});
   try {
    const response=await server.sendRequest<DiagramResponse>('interlis/diagram',request,cancellation.token);
@@ -83,7 +83,7 @@ export class DiagramEditors implements vscode.CustomTextEditorProvider,vscode.Di
   switch(value.type){
    case 'ready':if(typeof value.panelId!=='string'||! /^[a-f0-9-]{36}$/.test(value.panelId))return;state.panelId=value.panelId;state.ready=true;await this.post(state,{type:'settings',settings:this.initialSettings()});this.invalidate(state,'Loading current source');break;
    case 'refresh':this.invalidate(state,'Refreshing current source');break;
-   case 'follow':if(typeof value.follow==='boolean'){state.follow=value.follow;await this.post(state,{type:'follow',follow:state.follow});const active=vscode.window.activeTextEditor?.document;if(state.follow&&editable(active))state.root=active;this.invalidate(state,state.follow?'Following active source':'Diagram pinned');}break;
+   case 'follow':if(typeof value.follow==='boolean'){state.follow=value.follow;await this.post(state,{type:'follow',follow:state.follow});const active=vscode.window.activeTextEditor?.document;if(state.follow&&editable(active)&&state.root!==active){state.root=active;state.symbolIds=undefined;state.depth=undefined;state.translation=undefined;state.response=undefined;state.panel.title=active.uri.path.split('/').pop()+' — UML';}this.invalidate(state,state.follow?'Following active source':'Diagram pinned');}break;
    case 'association':if(value.association==='ENTITY'||value.association==='COMPACT_BINARY'){state.association=value.association;this.invalidate(state,'Updating association presentation');}break;
    case 'saveState':if(value.generation===state.generation&&state.fresh&&state.response){const keys=[this.storageKey(state),this.storageKey(state,'latest')];this.storageQueue=this.storageQueue.then(async()=>{await this.store?.write(keys,value.viewState);}).catch(error=>this.output.appendLine('Diagram state rejected: '+String(error)));}break;
    case 'reveal':if(value.generation===state.generation)await this.revealPanel(state);break;
