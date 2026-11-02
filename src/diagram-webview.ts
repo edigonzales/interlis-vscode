@@ -37,7 +37,7 @@ window.addEventListener('message',event=>{
  else if(value.type==='diagram'){
   const response=value.response as DiagramResponse;const root=document.getElementById('root')!;root.textContent=decodeURIComponent(new URL(value.root).pathname.split('/').pop()||value.root);root.title=value.root;updateFollow(value.follow===true);
   currentRoot=value.root;const mark=generation,rootKey=currentRoot;
-  void canvas.accept(response.document,value.sessionKey,canvas.getSettings()).then(async(accepted:boolean)=>{if(!accepted||mark!==generation||rootKey!==currentRoot)return;if(restoredRoot!==rootKey){restoredRoot=rootKey;if(value.savedState)await canvas.restoreState(value.savedState);}controls.refresh();}).catch((error:unknown)=>{status.textContent=String(error).slice(0,1000);element.dataset.status='ERROR';});
+  void canvas.accept(response.document,value.sessionKey,canvas.getSettings()).then(async(accepted:boolean)=>{if(!accepted||mark!==generation||rootKey!==currentRoot)return;element.dataset.diagramId=response.diagramId;element.dataset.snapshotId=response.snapshotId;if(restoredRoot!==rootKey){restoredRoot=rootKey;if(value.savedState)await canvas.restoreState(value.savedState);}controls.refresh();}).catch((error:unknown)=>{status.textContent=String(error).slice(0,1000);element.dataset.status='ERROR';});
  }
 });
 window.addEventListener('pagehide',()=>{alive=false;if(saveTimer)clearTimeout(saveTimer);controls.dispose();canvas.dispose();URL.revokeObjectURL(workerUrl);},{once:true});
