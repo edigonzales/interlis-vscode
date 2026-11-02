@@ -61,7 +61,7 @@ module.exports.waitCurrentAnalysis=async function(){
  const walk=folder=>fs.existsSync(folder)?fs.readdirSync(folder,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(folder,e.name)):[path.join(folder,e.name)]):[];
  await waitFor(async()=>{
   const logs=walk(path.join(manifest.storage,'settings/logs')).filter(p=>p.endsWith('INTERLIS Language Server.log'));
-  for(const log of logs){const all=fs.readFileSync(log,'utf8'),current=all.slice(all.lastIndexOf('Server start pid='));for(const match of current.matchAll(/Received notification 'interlis\/analysisReady'\.\r?\nParams: (\{[\s\S]*?\r?\n\})/g)){try{const value=JSON.parse(match[1]);if(Object.keys(value.documentVersions||{}).some(key=>decodeURIComponent(key)===decodeURIComponent(uri)))return true;}catch{}}}
+  for(const log of logs){const all=fs.readFileSync(log,'utf8'),current=all.slice(all.lastIndexOf('Server start pid='));let version;for(const sent of current.matchAll(/Sending notification 'textDocument\/(?:didOpen|didChange)'\.\r?\nParams: (\{[\s\S]*?\r?\n\})/g)){try{const value=JSON.parse(sent[1]).textDocument;if(decodeURIComponent(value.uri)===decodeURIComponent(uri))version=value.version;}catch{}}if(version===undefined)continue;for(const match of current.matchAll(/Received notification 'interlis\/analysisReady'\.\r?\nParams: (\{[\s\S]*?\r?\n\})/g)){try{const value=JSON.parse(match[1]);if(Object.entries(value.documentVersions||{}).some(([key,accepted])=>decodeURIComponent(key)===decodeURIComponent(uri)&&accepted===version))return true;}catch{}}}
   return false;
  },'Current server has not accepted analysis containing this real editor');
 };
