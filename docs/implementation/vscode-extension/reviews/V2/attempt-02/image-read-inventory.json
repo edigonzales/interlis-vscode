@@ -1,0 +1,244 @@
+{
+  "schemaVersion": 1,
+  "phase": "V2",
+  "candidate": {
+    "coreSha": "7026e7f6b5834bf593d91dfee3323efb60688f3d",
+    "extensionSha": "01f353114cc7a19a9ac6dd884cb0b285ac723c9c"
+  },
+  "viewedImages": [
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-01-two-scopes.png",
+      "sha256": "d59b33b40ad99cc44fd8e3fee5ab318ea52b1de13afed1b7ea01400f6fcff45f",
+      "bytes": 305467,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-02-nary-compact.png",
+      "sha256": "50d1e792680adce990111f575c028c5c1726273ecd7dd65feab267b479e8dac2",
+      "bytes": 300965,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-03-west-only-moved.png",
+      "sha256": "224dfb961ceb64b6edf12225d5f343e3a6e320f6ffa2dee93d9e94828c826c88",
+      "bytes": 305784,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-04-west-range.png",
+      "sha256": "b7cbd42ea3081901eba9fe6c629ad7a84e5b3ee6554d4d5307e28cbe8bfe5222",
+      "bytes": 311837,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-05-east-range.png",
+      "sha256": "7aee8fd901ec8f1dacdb4fa3c56eed66e3704b130d8320dbb188b70a46f60aa3",
+      "bytes": 323569,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-06-route-before.png",
+      "sha256": "10796510214a89ed2068eaba5fd48683c7b7ddfd88210a95d4a84b12fc44f512",
+      "bytes": 323903,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-07-route-after.png",
+      "sha256": "fab11ebb577bf1dfe86eea6e17abb9d4df009c83e965e9de29b8b26570465fc4",
+      "bytes": 315685,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-08-stale-visible.png",
+      "sha256": "99efcc6cbac7af0c77e7e28c4d6789535e02335cc3bcf2998f96507059815ae4",
+      "bytes": 314821,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-09-stale-click-rejected.png",
+      "sha256": "45a564c6a0ace18cd660d994169fb688b1fd7311c140d8a203611f29c22e28ad",
+      "bytes": 315429,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-10-restarted-fresh-session.png",
+      "sha256": "46e48036bcf24d69d4533f1bf856364dcdca178f39854b80fda23a260224ddc2",
+      "bytes": 310044,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-13-before.png",
+      "sha256": "b989c43e5b7cff3c9483451a8b49a774989733c656ba10f7ec22128fc7e76223",
+      "bytes": 318504,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-13-node-moved.png",
+      "sha256": "94e8c2cf9eae8df3f6b187a9b960e398717dd830e3c0373ee8383e47cf075403",
+      "bytes": 318417,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-13-container-moved.png",
+      "sha256": "b8f29310d83489035b0cb3810665d9dcb48d39edacc213e4aa596d20da328327",
+      "bytes": 317827,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-14-handle-before.png",
+      "sha256": "e82cb8277c8d52da200e79e33d27394251f2f6296a7a0d19a8ab0e8abf0d21d0",
+      "bytes": 317640,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-14-route-after.png",
+      "sha256": "10b41e7e51176e2c39007b346b8786269fef2937eeb95fdd3404648e2542e6e1",
+      "bytes": 318163,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-16-entity.png",
+      "sha256": "5a3e08ca55e8f61d822f03c8105a07f8b84c7ede01977dcc778f3e6ae515d199",
+      "bytes": 325859,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-16-compact-self.png",
+      "sha256": "0a6c966ca52352a8af3738dd9d541b07f08dc07869922b5a84c27dd00cc740b7",
+      "bytes": 322015,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-17-partial.png",
+      "sha256": "f3cbfd4a00f2757e68ff9c87ffa54316925f86c80256f10692e73e3ece4afede",
+      "bytes": 341564,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-17-current.png",
+      "sha256": "9d42c7bfed7e7cb51b6fd1dd0c54a7b41634ba6bdb4168f1b4b9ad32a860fbaa",
+      "bytes": 330853,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-18-parallel.png",
+      "sha256": "f1cafd59a8e87aaadbfc25e0af02fbae2f3c8494ff41242a2664e4dd3cefdc57",
+      "bytes": 321568,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/extension/build/reports/gui/uml/2026-11-01T22-06-31-870Z/GUI-12-current.png",
+      "sha256": "567b8dd70f5b911095f541046a963c934b48fc8835a4516be40b53673d3d358e",
+      "bytes": 353381,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/extension/build/reports/gui/uml/2026-11-01T22-06-31-870Z/GUI-15-number.png",
+      "sha256": "3ea0feab989204fae6d7d7b9a9cf9af21b64cce7dbbd497767465f0ff8658658",
+      "bytes": 366167,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/extension/build/reports/gui/uml/2026-11-01T22-06-31-870Z/GUI-16-compact-self.png",
+      "sha256": "84abe79a3a74999f05a4a586ac97c78fc6711550a390afc0e021a5213632c899",
+      "bytes": 353659,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/extension/build/reports/gui/uml/2026-11-01T22-06-31-870Z/GUI-18-other-retained.png",
+      "sha256": "eebb010e14721046ca8b496d4ed060588dfe1fae9d2d59b002aef6a9873329af",
+      "bytes": 208968,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V2/final-shared-evidence/chromium-compact-self.png",
+      "sha256": "8773aef79e72812c4bb8e5e35ce502155cecd84a45eb85108a11d47ec958b60f",
+      "bytes": 11920,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V2/final-shared-evidence/chromium-compact-self-polyline.png",
+      "sha256": "dcd49155896cb877dbc68aa35b7df3e2bb6dc4042de9715e30dd11f9c1d50e75",
+      "bytes": 12644,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V2/final-shared-evidence/webkit-compact-self.png",
+      "sha256": "a7e614850ba9e3de61f4370985e6497e072d5af80142f4bca7ae84fd992f06b9",
+      "bytes": 26665,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V2/final-shared-evidence/webkit-compact-self-polyline.png",
+      "sha256": "daf714f74929c25d06fda2b665d7e2b0faa9ead976a2d0320e242b092a3fe30d",
+      "bytes": 27219,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V2/final-shared-evidence/interactive/route-moved.png",
+      "sha256": "573e7ea1f961740885714ade3d3c1b6da51ab49211d9040f70d8cd0c18d0c874",
+      "bytes": 74466,
+      "tool": "read",
+      "toolResult": "Image read successfully",
+      "completion": "verified in this fresh V2-r2 session"
+    }
+  ],
+  "aliases": [],
+  "note": "Only files that were actually opened with the image-read tool in this session are listed. Existence alone is not claimed as visual inspection."
+}

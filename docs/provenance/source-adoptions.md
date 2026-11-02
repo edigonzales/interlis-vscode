@@ -9,7 +9,14 @@ Ursprung: `edigonzales/interlis-language-tools`, Commit `f27801bfebf0fdac82a19e0
 
 Snippets und Modellvorlage sind neu geschrieben. Keine alte Extension-/Compiler-/AST-/LanguageServicequelle übernommen.
 
-Für V2 geplant, noch nicht ausgeführt: bestehende Core-Vendor-Diagrammquellen mit ihrem vorhandenen Herkunftsmanifest nach `CORE/frontend/diagram-ui` überführen und erst nach Entfernung fremder Typen übernehmen. Beide Consumer wechseln auf eine Quelle. ELK0.11.0 und Sprotty-Protokoll1.4.0 sind tatsächliche vorhandene Corepins; echter Sprotty1.4.0 wird vor V2 anhand seiner APIs geprüft. Noch kein Diagrammclient installiert oder als fertig bezeichnet. Dokumentationsprojektion in V4 neu in Java.
+In V2 ausgeführt: kontrollierte Übernahme der vorhandenen Core-Diagrammquellen
+nach `CORE/frontend/diagram-ui`, mit Originalcommit/-pfaden/-hashes in dessen
+`provenance.json` und unveränderten MIT-/EPL-Texten. Fremde Compiler-/AST-/Language-
+Service-Typen sind entfernt. Beide Consumer verwenden dieselbe eigene neutrale
+Quelle mit echtem Sprotty1.4.0, Sprotty-Protokoll1.4.0 und ELK0.11.0. Das Core-
+Editorbundle enthält die vollständigen gebündelten Dependencylizenzen. Die
+Extension besitzt nur geprüfte Artefakte, keine zweite Rendererquellkopie.
+Dokumentationsprojektion bleibt V4-Arbeit.
 
 ## V1-Testeingaben aus dem gemeinsamen Core
 

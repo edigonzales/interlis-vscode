@@ -1,0 +1,326 @@
+{
+  "schemaVersion": 1,
+  "phase": "V2",
+  "candidate": {
+    "coreSha": "7026e7f6b5834bf593d91dfee3323efb60688f3d",
+    "extensionSha": "01f353114cc7a19a9ac6dd884cb0b285ac723c9c"
+  },
+  "validatedAt": "2026-11-02T00:14:35.559Z",
+  "validIndependentPass": true,
+  "reviewerSession": "ses_e66e3c1e2ffe2ZNMLbIxlmGHmm",
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "apiHost": "api.deepseek.com",
+  "processExit": 0,
+  "guardStatus": "passed",
+  "guardExit": 0,
+  "criteria": [
+    {
+      "id": "V2-01",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V2-02",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V2-03",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V2-04",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V2-05",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V2-06",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V2-07",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V2-08",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V2-09",
+      "status": "fulfilled"
+    },
+    {
+      "id": "V2-10",
+      "status": "fulfilled"
+    }
+  ],
+  "trees": {
+    "core": {
+      "head": "7026e7f6b5834bf593d91dfee3323efb60688f3d",
+      "branch": "HEAD",
+      "dirty": ""
+    },
+    "extension": {
+      "head": "01f353114cc7a19a9ac6dd884cb0b285ac723c9c",
+      "branch": "HEAD",
+      "dirty": ""
+    }
+  },
+  "testCounts": {
+    "interlis-lsp": {
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "interlis-projection": {
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "gui": {
+    "cases": 18,
+    "server": {
+      "started": [
+        45561,
+        45602,
+        46224
+      ],
+      "remaining": [],
+      "exits": [
+        {
+          "pid": 45561,
+          "code": "0",
+          "signal": "null"
+        },
+        {
+          "pid": 45602,
+          "code": "0",
+          "signal": "null"
+        }
+      ]
+    },
+    "manifest": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/extension/build/reports/gui/uml/2026-11-01T22-06-31-870Z/manifest.json"
+  },
+  "counter": {
+    "cases": 1,
+    "server": {
+      "started": [
+        48370,
+        48424
+      ],
+      "remaining": [],
+      "exits": [
+        {
+          "pid": 48370,
+          "code": "0",
+          "signal": "null"
+        }
+      ]
+    },
+    "manifest": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/counterprobe-manifest.json"
+  },
+  "imageAttributions": [
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-01-two-scopes.png",
+      "sha256": "d59b33b40ad99cc44fd8e3fee5ab318ea52b1de13afed1b7ea01400f6fcff45f",
+      "lastRead": 1793571185207,
+      "lastWrite": 1793571085078.2703
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-02-nary-compact.png",
+      "sha256": "50d1e792680adce990111f575c028c5c1726273ecd7dd65feab267b479e8dac2",
+      "lastRead": 1793571099785,
+      "lastWrite": 1793571085709.4133
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-03-west-only-moved.png",
+      "sha256": "224dfb961ceb64b6edf12225d5f343e3a6e320f6ffa2dee93d9e94828c826c88",
+      "lastRead": 1793571100102,
+      "lastWrite": 1793571087096.6975
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-04-west-range.png",
+      "sha256": "b7cbd42ea3081901eba9fe6c629ad7a84e5b3ee6554d4d5307e28cbe8bfe5222",
+      "lastRead": 1793571100448,
+      "lastWrite": 1793571087541.2183
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-05-east-range.png",
+      "sha256": "7aee8fd901ec8f1dacdb4fa3c56eed66e3704b130d8320dbb188b70a46f60aa3",
+      "lastRead": 1793571100782,
+      "lastWrite": 1793571087948.532
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-06-route-before.png",
+      "sha256": "10796510214a89ed2068eaba5fd48683c7b7ddfd88210a95d4a84b12fc44f512",
+      "lastRead": 1793571105333,
+      "lastWrite": 1793571088322.0537
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-07-route-after.png",
+      "sha256": "fab11ebb577bf1dfe86eea6e17abb9d4df009c83e965e9de29b8b26570465fc4",
+      "lastRead": 1793571105665,
+      "lastWrite": 1793571089228.2114
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-08-stale-visible.png",
+      "sha256": "99efcc6cbac7af0c77e7e28c4d6789535e02335cc3bcf2998f96507059815ae4",
+      "lastRead": 1793571105014,
+      "lastWrite": 1793571091047.898
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-09-stale-click-rejected.png",
+      "sha256": "45a564c6a0ace18cd660d994169fb688b1fd7311c140d8a203611f29c22e28ad",
+      "lastRead": 1793571106339,
+      "lastWrite": 1793571093542.8003
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-10-restarted-fresh-session.png",
+      "sha256": "46e48036bcf24d69d4533f1bf856364dcdca178f39854b80fda23a260224ddc2",
+      "lastRead": 1793571105995,
+      "lastWrite": 1793571095099.9436
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-13-before.png",
+      "sha256": "b989c43e5b7cff3c9483451a8b49a774989733c656ba10f7ec22128fc7e76223",
+      "lastRead": 1793570770002,
+      "lastWrite": 1793568191318.9893
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-13-node-moved.png",
+      "sha256": "94e8c2cf9eae8df3f6b187a9b960e398717dd830e3c0373ee8383e47cf075403",
+      "lastRead": 1793570770644,
+      "lastWrite": 1793568192114.904
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-13-container-moved.png",
+      "sha256": "b8f29310d83489035b0cb3810665d9dcb48d39edacc213e4aa596d20da328327",
+      "lastRead": 1793570770321,
+      "lastWrite": 1793568192914.4014
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-14-handle-before.png",
+      "sha256": "e82cb8277c8d52da200e79e33d27394251f2f6296a7a0d19a8ab0e8abf0d21d0",
+      "lastRead": 1793570771014,
+      "lastWrite": 1793568195291.1726
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-14-route-after.png",
+      "sha256": "10b41e7e51176e2c39007b346b8786269fef2937eeb95fdd3404648e2542e6e1",
+      "lastRead": 1793570771346,
+      "lastWrite": 1793568196062.2153
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-16-entity.png",
+      "sha256": "5a3e08ca55e8f61d822f03c8105a07f8b84c7ede01977dcc778f3e6ae515d199",
+      "lastRead": 1793570775937,
+      "lastWrite": 1793568204499.8
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-16-compact-self.png",
+      "sha256": "0a6c966ca52352a8af3738dd9d541b07f08dc07869922b5a84c27dd00cc740b7",
+      "lastRead": 1793570776265,
+      "lastWrite": 1793568205084.8572
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-17-partial.png",
+      "sha256": "f3cbfd4a00f2757e68ff9c87ffa54316925f86c80256f10692e73e3ece4afede",
+      "lastRead": 1793570776584,
+      "lastWrite": 1793568209719.3213
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-17-current.png",
+      "sha256": "9d42c7bfed7e7cb51b6fd1dd0c54a7b41634ba6bdb4168f1b4b9ad32a860fbaa",
+      "lastRead": 1793570776904,
+      "lastWrite": 1793568211921.6516
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/GUI-18-parallel.png",
+      "sha256": "f1cafd59a8e87aaadbfc25e0af02fbae2f3c8494ff41242a2664e4dd3cefdc57",
+      "lastRead": 1793570777257,
+      "lastWrite": 1793568222403.721
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/extension/build/reports/gui/uml/2026-11-01T22-06-31-870Z/GUI-12-current.png",
+      "sha256": "567b8dd70f5b911095f541046a963c934b48fc8835a4516be40b53673d3d358e",
+      "lastRead": 1793570929393,
+      "lastWrite": 1793570886584.1584
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/extension/build/reports/gui/uml/2026-11-01T22-06-31-870Z/GUI-15-number.png",
+      "sha256": "3ea0feab989204fae6d7d7b9a9cf9af21b64cce7dbbd497767465f0ff8658658",
+      "lastRead": 1793570929077,
+      "lastWrite": 1793570894195.763
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/extension/build/reports/gui/uml/2026-11-01T22-06-31-870Z/GUI-16-compact-self.png",
+      "sha256": "84abe79a3a74999f05a4a586ac97c78fc6711550a390afc0e021a5213632c899",
+      "lastRead": 1793570929752,
+      "lastWrite": 1793570900329.0679
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/extension/build/reports/gui/uml/2026-11-01T22-06-31-870Z/GUI-18-other-retained.png",
+      "sha256": "eebb010e14721046ca8b496d4ed060588dfe1fae9d2d59b002aef6a9873329af",
+      "lastRead": 1793570928762,
+      "lastWrite": 1793570919923.1562
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V2/final-shared-evidence/chromium-compact-self.png",
+      "sha256": "8773aef79e72812c4bb8e5e35ce502155cecd84a45eb85108a11d47ec958b60f",
+      "lastRead": 1793570781384,
+      "lastWrite": 1793568348625.1553
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V2/final-shared-evidence/chromium-compact-self-polyline.png",
+      "sha256": "dcd49155896cb877dbc68aa35b7df3e2bb6dc4042de9715e30dd11f9c1d50e75",
+      "lastRead": 1793570781395,
+      "lastWrite": 1793568348624.602
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V2/final-shared-evidence/webkit-compact-self.png",
+      "sha256": "a7e614850ba9e3de61f4370985e6497e072d5af80142f4bca7ae84fd992f06b9",
+      "lastRead": 1793570781389,
+      "lastWrite": 1793568348627.3774
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V2/final-shared-evidence/webkit-compact-self-polyline.png",
+      "sha256": "daf714f74929c25d06fda2b665d7e2b0faa9ead976a2d0320e242b092a3fe30d",
+      "lastRead": 1793570781400,
+      "lastWrite": 1793568348626.9502
+    },
+    {
+      "path": "/Users/stefan/sources/interlis-vscode-evidence/phases/V2/final-shared-evidence/interactive/route-moved.png",
+      "sha256": "573e7ea1f961740885714ade3d3c1b6da51ab49211d9040f70d8cd0c18d0c874",
+      "lastRead": 1793570781410,
+      "lastWrite": 1793568348684.746
+    }
+  ],
+  "vsix": {
+    "requestSha256": "61d73edf2768f2d6f6cfdc3e7f23cba46af6c52079a99b392b5b47ed88a21776",
+    "rebuiltSha256": "82ac537fb65c469da1049c5e1de1a8a23e13d4c0bb256c96967a0f80225c4484",
+    "identicalPayloadFiles": 69
+  },
+  "limits": [
+    "Section6 uses the imprecise qualifier fresh for GUI13/14 in one visual-quality sentence. Their actually viewed images are explicitly the older final run in the29-item inventory, with identical renderer/server/client bytes. Current fresh GUI13/14 executed with geometry/source assertions; current own counterprobe node/route images and fresh GUI12/15/16/18 were actually read. No acceptance relies on fresh GUI13/14 being visually opened.",
+    "Small fitted labels and manual node overlaps are visible; full zoom/filter/scrollbar/label comfort remains V3. No blanket pixel-quality claim is relied on.",
+    "ERROR presentation and full hide/close/reload persistence are V3 visual scenarios; V2 error/cancel/dispose paths code/contract/unit inspected and actual GUI17/18 passed.",
+    "Rejected attempt01 originals retained. This separate fresh session has its own new installed counterprobe, current-pair GUI18,29 proven current-file image reads and independent code/criteria analysis."
+  ],
+  "sha256": {
+    "review.md": "cee362f19fe626f3a3e13b350fbd96a59ba35a530e9d16641ca74a9000a512b0",
+    "verdict.json": "287a14495401b76f81db111bea9dc0a804c4910fb537f41c260fd0a5ce9c1637",
+    "request.json": "3c543e3eb9ee5ec60104a4c0a1af6a40dcb42ae0becf47b848e1299ec1088d73",
+    "transport.json": "d7af05f24a45fe5a10ea8ebdd5299a191bc77782f75f7e992133ed982b3fda03",
+    "guard.json": "7da6b8318c6a3bdb8485332def02a51b40a9c1d73b75d2fc5f98348dc733cce9",
+    "session-export.json": "075419f9852f61c4a18ee262a31022004b14bcb6e8204a1c0a13cb21c872bbc0",
+    "opencode.jsonl": "5c778fa4479d36f21d5331855b60c333735fa9f3cc24ec95155c6b3cfb5e6926",
+    "image-read-inventory.json": "230bc0f5dece953e72783ff4362a0a84422f5b42b443cc5bddd7b4a2b977288f",
+    "review-checks.json": "9ccc848074f1e25f6b1dfd48caf873fea50708552f036e5886a9494be61da1a4",
+    "counterprobe-manifest.json": "855c001dd5651e484bad27382231d630f4eff030ac9ad569609495da87611283"
+  }
+}

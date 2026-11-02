@@ -1,0 +1,390 @@
+{
+  "schemaVersion": 1,
+  "phase": "V2",
+  "assignmentBase": {
+    "coreSha": "20b0029d824b3602d9a304320bf0feae4c35c1f9",
+    "extensionSha": "73badd9807f407aea048d397af5549fe907a1501"
+  },
+  "phaseBase": {
+    "coreSha": "3b60e6c1309a4897ad6d0e99f6d8dfd137520ca9",
+    "extensionSha": "e576a30e4adcf6e36bfe662b402ca87034450dab"
+  },
+  "candidate": {
+    "coreSha": "7026e7f6b5834bf593d91dfee3323efb60688f3d",
+    "extensionSha": "01f353114cc7a19a9ac6dd884cb0b285ac723c9c"
+  },
+  "actualHeads": {
+    "coreSha": "7026e7f6b5834bf593d91dfee3323efb60688f3d",
+    "extensionSha": "01f353114cc7a19a9ac6dd884cb0b285ac723c9c"
+  },
+  "trackedState": {
+    "coreBefore": "",
+    "coreAfter": "",
+    "extensionBefore": "?? opencode.json",
+    "extensionAfter": "?? opencode.json",
+    "note": "Only the untracked OpenCode runtime configuration remains in the extension worktree. No tracked product, test, build, lock or AC file changed."
+  },
+  "verdict": "PASS",
+  "reviewer": {
+    "openCodeVersion": "opencode v2.0.28",
+    "provider": "deepseek",
+    "model": "deepseek-flash",
+    "apiHost": "api.deepseek.com",
+    "baseURL": "https://api.deepseek.com",
+    "modelMappingEvidence": {
+      "claimedModel": "DeepSeek-V4.1-Flash-1017",
+      "source": "https://api-docs.deepseek.com/quick_start/pricing/",
+      "fetchedInThisSession": true,
+      "finding": "Official page maps model name deepseek-flash to model version DeepSeek-V4.1-Flash-1017 and base URL https://api.deepseek.com.",
+      "proxyCheck": "No HTTP_PROXY, HTTPS_PROXY, ALL_PROXY, OPENAI_BASE_URL or DEEPSEEK_BASE_URL was set; the effective provider configuration uses https://api.deepseek.com."
+    }
+  },
+  "criteria": [
+    {
+      "id": "V2-01",
+      "status": "fulfilled",
+      "evidence": [
+        "core/frontend/diagram-ui/provenance.json",
+        "core/frontend/diagram-ui/LICENSE",
+        "core/frontend/diagram-ui/UPSTREAM-LICENSE",
+        "core/frontend/diagram-ui/ELK-LICENSE.md",
+        "core/interlis-wasm-teavm/src/main/typescript/diagram-adapter.ts",
+        "extension/scripts/verify-dependencies.cjs",
+        "review-checks.json#neutral-renderer-provenance",
+        "review-checks.json#dependencies-and-assets"
+      ],
+      "finding": ""
+    },
+    {
+      "id": "V2-02",
+      "status": "fulfilled",
+      "evidence": [
+        "core/interlis-lsp/build/test-results/test/TEST-guru.interlis.lsp.DiagramProtocolTest.xml",
+        "core/interlis-lsp/build/test-results/test/TEST-guru.interlis.lsp.LspProcessTest.xml",
+        "core/interlis-lsp/src/main/java/guru/interlis/lsp/DiagramWireAdapter.java",
+        "extension/test/protocol.test.cjs",
+        "review-checks.json#java-typed-wire-and-projection-required"
+      ],
+      "finding": ""
+    },
+    {
+      "id": "V2-03",
+      "status": "fulfilled",
+      "evidence": [
+        "extension/build/reports/gui/uml/2026-11-01T22-06-31-870Z/GUI-12-current.png",
+        "evidence/probe-01-two-scopes.png",
+        "evidence/probe-03-west-only-moved.png",
+        "evidence/probe-04-west-range.png",
+        "evidence/probe-05-east-range.png",
+        "review-checks.json#java-projection-full"
+      ],
+      "finding": ""
+    },
+    {
+      "id": "V2-04",
+      "status": "fulfilled",
+      "evidence": [
+        "extension/build/reports/gui/uml/2026-11-01T22-06-31-870Z/GUI-16-compact-self.png",
+        "evidence/probe-02-nary-compact.png",
+        "evidence/probe-06-route-before.png",
+        "evidence/probe-07-route-after.png",
+        "core/interlis-projection/build/test-results/test/TEST-guru.interlis.projection.CompactAssociationProjectionTest.xml",
+        "phases/V2/final-shared-evidence/chromium-compact-self.png",
+        "phases/V2/final-shared-evidence/webkit-compact-self.png"
+      ],
+      "finding": ""
+    },
+    {
+      "id": "V2-05",
+      "status": "fulfilled",
+      "evidence": [
+        "extension/build/reports/gui/uml/2026-11-01T22-06-31-870Z/GUI-13-before.png",
+        "extension/build/reports/gui/uml/2026-11-01T22-06-31-870Z/GUI-13-node-moved.png",
+        "extension/build/reports/gui/uml/2026-11-01T22-06-31-870Z/GUI-13-container-moved.png",
+        "extension/build/reports/gui/uml/2026-11-01T22-06-31-870Z/GUI-14-handle-before.png",
+        "extension/build/reports/gui/uml/2026-11-01T22-06-31-870Z/GUI-14-route-after.png",
+        "evidence/probe-03-west-only-moved.png",
+        "evidence/probe-07-route-after.png",
+        "evidence/probe-geometry.json",
+        "review-checks.json#native-ui"
+      ],
+      "finding": ""
+    },
+    {
+      "id": "V2-06",
+      "status": "fulfilled",
+      "evidence": [
+        "extension/build/reports/gui/uml/2026-11-01T22-06-31-870Z/GUI-15-number.png",
+        "evidence/probe-04-west-range.png",
+        "evidence/probe-05-east-range.png",
+        "evidence/probe-09-stale-click-rejected.png",
+        "core/interlis-lsp/build/test-results/test/TEST-guru.interlis.lsp.DiagramProtocolTest.xml",
+        "core/interlis-lsp/src/main/java/guru/interlis/lsp/LspDiagramService.java"
+      ],
+      "finding": ""
+    },
+    {
+      "id": "V2-07",
+      "status": "fulfilled",
+      "evidence": [
+        "extension/build/reports/gui/uml/2026-11-01T22-06-31-870Z/GUI-17-partial.png",
+        "extension/build/reports/gui/uml/2026-11-01T22-06-31-870Z/GUI-17-current.png",
+        "extension/build/reports/gui/uml/2026-11-01T22-06-31-870Z/GUI-18-parallel.png",
+        "extension/build/reports/gui/uml/2026-11-01T22-06-31-870Z/GUI-18-other-retained.png",
+        "evidence/probe-08-stale-visible.png",
+        "evidence/probe-09-stale-click-rejected.png",
+        "evidence/probe-10-restarted-fresh-session.png",
+        "evidence/counterprobe-manifest.json"
+      ],
+      "finding": ""
+    },
+    {
+      "id": "V2-08",
+      "status": "fulfilled",
+      "evidence": [
+        "evidence/fresh-gui/manifest.json",
+        "evidence/fresh-gui/cases.json",
+        "evidence/counterprobe-manifest.json",
+        "evidence/review-checks.json#installed-gui-cumulative",
+        "evidence/review-checks.json#installed-gui-independent-counterprobe"
+      ],
+      "finding": ""
+    },
+    {
+      "id": "V2-09",
+      "status": "fulfilled",
+      "evidence": [
+        "evidence/review-checks.json#java-projection-full",
+        "evidence/review-checks.json#java-typed-wire-and-projection-required",
+        "evidence/review-checks.json#shared-consumer-regression",
+        "evidence/review-checks.json#native-ui",
+        "evidence/review-checks.json#extension-build-and-contracts",
+        "core/interlis-wasm-teavm/src/main/typescript/diagram-adapter.ts",
+        "core/frontend/diagram-ui/build-manifest.json"
+      ],
+      "finding": ""
+    },
+    {
+      "id": "V2-10",
+      "status": "fulfilled",
+      "evidence": [
+        "evidence/counterprobe-manifest.json",
+        "evidence/probe-01-two-scopes.png",
+        "evidence/probe-02-nary-compact.png",
+        "evidence/probe-07-route-after.png",
+        "evidence/probe-09-stale-click-rejected.png",
+        "evidence/image-read-inventory.json",
+        "evidence/canary-r2.log"
+      ],
+      "finding": ""
+    }
+  ],
+  "executedChecks": [
+    {
+      "id": "dependencies-and-assets",
+      "cwd": "extension",
+      "command": "npm ci --ignore-scripts",
+      "exit": 0,
+      "result": "318 packages installed."
+    },
+    {
+      "id": "stage-exact-core",
+      "cwd": "extension",
+      "command": "npm run stage:core -- --core-dir <core worktree>",
+      "exit": 0,
+      "result": "Server 11 JARs and shared renderer staged from 7026e7f6b5834bf593d91dfee3323efb60688f3d; tracked lock unchanged."
+    },
+    {
+      "id": "artifact-hashes",
+      "cwd": "evidence",
+      "command": "Node SHA-256 verification of request.json artifacts",
+      "exit": 0,
+      "result": "54/54 artifacts present and hash-identical."
+    },
+    {
+      "id": "neutral-renderer-provenance",
+      "cwd": "core",
+      "command": "node frontend/diagram-ui/prepare.cjs",
+      "exit": 0,
+      "result": "Generated validator/dist; tracked Core tree remained clean."
+    },
+    {
+      "id": "java-typed-wire-and-projection-required",
+      "cwd": "core",
+      "command": "./gradlew :interlis-lsp:test --tests '*DiagramProtocolTest' --tests '*LspProcessTest' :interlis-projection:test --tests '*CompactAssociationProjectionTest' --no-daemon",
+      "exit": 0,
+      "result": "LSP 7 tests, 0 failures, 0 skips; targeted projection class passed."
+    },
+    {
+      "id": "java-projection-full",
+      "cwd": "core",
+      "command": "./gradlew :interlis-projection:test --rerun-tasks --no-daemon",
+      "exit": 0,
+      "result": "21 tests, 0 failures, 0 skips."
+    },
+    {
+      "id": "shared-consumer-regression",
+      "cwd": "core",
+      "command": "./gradlew :interlis-wasm-teavm:diagramAdapterTest :interlis-wasm-teavm:uiProjectionTest -PnodeExecutable=<node24> --no-daemon",
+      "exit": 0,
+      "result": "Adapter 6/6; Chromium/Firefox/WebKit UI projection 3/3. Required npm ci --ignore-scripts in interlis-wasm-teavm for the existing buildBrowserTools task."
+    },
+    {
+      "id": "native-ui",
+      "cwd": "core",
+      "command": "node --test frontend/diagram-ui/test/interactive.test.cjs",
+      "exit": 0,
+      "result": "1/1 pass: native node/container/route drag, source/endpoint invariants, history barrier, session replacement."
+    },
+    {
+      "id": "extension-build-and-contracts",
+      "cwd": "extension",
+      "command": "npm run build; npm run test:unit; npm run test:protocol; npm run verify:no-legacy-dependencies",
+      "exit": 0,
+      "result": "Build OK; unit 7/7; real packaged stdio 1/1; dependency lock/installed graph/bundle clean."
+    },
+    {
+      "id": "package-vsix",
+      "cwd": "extension",
+      "command": "npm run package:vsix -- --target darwin-arm64",
+      "exit": 0,
+      "result": "69 files; wrapper 82ac537fb65c469da1049c5e1de1a8a23e13d4c0bb256c96967a0f80225c4484; all 69 payload files byte-identical to request artifact 61d73edf..."
+    },
+    {
+      "id": "installed-gui-cumulative",
+      "cwd": "extension",
+      "command": "npm run test:gui -- --suite uml --cache <gui cache>",
+      "exit": 0,
+      "result": "18/18 cases on candidate pair; 3 real Java starts, 2 clean exits, 0 remaining; installed bundle 03b70c51..."
+    },
+    {
+      "id": "installed-gui-independent-counterprobe",
+      "cwd": "extension",
+      "command": "COUNTERPROBE_EVIDENCE=<evidence> node build/reviewer-counterprobe/run.cjs",
+      "exit": 0,
+      "result": "1/1 pass on own fixture: same-label topics, ternary/attributed association in both presentations, native drag, route handle, exact ranges, stale suppression, restart, source unchanged."
+    },
+    {
+      "id": "negative-canary",
+      "cwd": "extension",
+      "command": "npm run test:gui -- --suite smoke --cache <gui cache> --canary missing-status",
+      "exit": 1,
+      "expectedExit": 1,
+      "result": "2 real smoke cases passed; intentionally impossible visible status failed as required."
+    }
+  ],
+  "guiEvidence": {
+    "freshCumulative": {
+      "manifest": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/extension/build/reports/gui/uml/2026-11-01T22-06-31-870Z/manifest.json",
+      "cases": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/extension/build/reports/gui/uml/2026-11-01T22-06-31-870Z/cases.json",
+      "runDirectory": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/extension/build/reports/gui/uml/2026-11-01T22-06-31-870Z",
+      "caseCount": 18,
+      "status": "passed",
+      "exit": 0,
+      "installedExtensionId": "edigonzales.interlis-vscode",
+      "installedBundleSha256": "03b70c5113c3bb12225da227f28db4765995658b788f4d23719015fcfb7a62f6"
+    },
+    "independentCounterprobe": {
+      "manifest": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/counterprobe-manifest.json",
+      "cases": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/cases.json",
+      "geometry": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-geometry.json",
+      "images": [
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-01-two-scopes.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-02-nary-compact.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-03-west-only-moved.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-04-west-range.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-05-east-range.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-06-route-before.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-07-route-after.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-08-stale-visible.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-09-stale-click-rejected.png",
+        "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/probe-10-restarted-fresh-session.png"
+      ],
+      "caseCount": 1,
+      "status": "passed",
+      "exit": 0
+    },
+    "negativeCanary": {
+      "log": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/canary-r2.log",
+      "exit": 1,
+      "expectedExit": 1,
+      "passingRealCases": 2,
+      "intentionalFailure": "GUI-01 impossible visible status"
+    },
+    "viewedImageInventory": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/image-read-inventory.json",
+    "viewedImageCount": 29
+  },
+  "counterprobes": [
+    {
+      "id": "own-installed-gui-scope-nary-stale",
+      "kind": "new installed VS Code GUI counterprobe",
+      "fixture": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence/workspace/ReviewProbe.ili",
+      "fixtureSha256": "d9e9ab758078483340303eaa6ff58d8a45a32cd32eae3a2d81cb813bb9dfbb96",
+      "hypothesis": "Same-label classes in different topics could be confused; ternary attributed associations could be reduced in compact presentation; a stale graph could still navigate.",
+      "expected": "Distinct IDs/geometry and exact per-topic ranges; ternary roles and attribute retained in both presentations; stale click does not move the source; restart obtains a fresh session; source bytes/dirty unchanged.",
+      "actual": "All assertions passed; source buffer and disk hash unchanged; exit 0.",
+      "evidence": [
+        "evidence/probe-01-two-scopes.png",
+        "evidence/probe-02-nary-compact.png",
+        "evidence/probe-03-west-only-moved.png",
+        "evidence/probe-04-west-range.png",
+        "evidence/probe-05-east-range.png",
+        "evidence/probe-06-route-before.png",
+        "evidence/probe-07-route-after.png",
+        "evidence/probe-08-stale-visible.png",
+        "evidence/probe-09-stale-click-rejected.png",
+        "evidence/probe-10-restarted-fresh-session.png",
+        "evidence/probe-geometry.json"
+      ]
+    },
+    {
+      "id": "negative-canary",
+      "kind": "intentional harness failure",
+      "hypothesis": "A harness that cannot fail would accept an impossible visible status.",
+      "expected": "Exit 1 with exactly the impossible GUI-01 assertion failing.",
+      "actual": "Exit 1; GUI-02 and GUI-03 real smoke cases passed; GUI-01 failed on the impossible status.",
+      "evidence": [
+        "evidence/canary-r2.log"
+      ]
+    },
+    {
+      "id": "artifact-content-identity",
+      "kind": "package identity countercheck",
+      "hypothesis": "A wrapper hash difference might hide changed runtime payload.",
+      "expected": "All VSIX payload files identical to the request artifact when runtime source is unchanged.",
+      "actual": "69/69 payload files byte-identical; only ZIP wrapper metadata differs.",
+      "evidence": [
+        "evidence/review-checks.json#package-vsix"
+      ]
+    }
+  ],
+  "openMandatoryFindings": [],
+  "optionalObservations": [
+    {
+      "id": "stale-source-adoption-note",
+      "severity": "info",
+      "path": "extension/docs/provenance/source-adoptions.md",
+      "observation": "Still says the V2 renderer adoption is planned/not executed, while provenance.json and staged artifacts prove it was executed.",
+      "impact": "Documentation-only; no AC or product behavior violation."
+    },
+    {
+      "id": "v3-visual-state-boundary",
+      "severity": "info",
+      "observation": "ERROR and panel hide/close/reload visual states are not separate V2 GUI scenarios; their explicit checks are V3-10/V3-07. V2 code paths and the STALE/PARTIAL paths are present and exercised.",
+      "impact": "None for V2 acceptance; not represented as V2-complete."
+    }
+  ],
+  "missingRequiredChecks": [],
+  "report": "review.md",
+  "reviewEvidence": [
+    "review.md",
+    "review-checks.json",
+    "image-read-inventory.json",
+    "counterprobe-manifest.json",
+    "probe-geometry.json",
+    "cases.json",
+    "canary-r2.log",
+    "fresh-gui/manifest.json",
+    "fresh-gui/cases.json"
+  ]
+}

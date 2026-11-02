@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "phase": "V2",
+  "candidate": {
+    "coreSha": "7026e7f6b5834bf593d91dfee3323efb60688f3d",
+    "extensionSha": "01f353114cc7a19a9ac6dd884cb0b285ac723c9c"
+  },
+  "executedByThisReviewer": [
+    {
+      "id": "dependencies-and-assets",
+      "cwd": "extension",
+      "command": "npm ci --ignore-scripts",
+      "exit": 0,
+      "result": "318 packages installed"
+    },
+    {
+      "id": "stage-exact-core",
+      "cwd": "extension",
+      "command": "INTERLIS_NODE=<core node> npm run stage:core -- --core-dir <core worktree>",
+      "exit": 0,
+      "result": "editorBundle from 7026e7f6b5834bf593d91dfee3323efb60688f3d; tracked lock unchanged"
+    },
+    {
+      "id": "artifact-hashes",
+      "cwd": "evidence",
+      "command": "Node SHA-256 verification of all request.json artifacts",
+      "exit": 0,
+      "result": "54/54 artifacts present and hash-identical"
+    },
+    {
+      "id": "neutral-renderer-provenance",
+      "cwd": "core",
+      "command": "node frontend/diagram-ui/prepare.cjs",
+      "exit": 0,
+      "result": "24 packages; generated schema validator and dist build; tracked tree clean"
+    },
+    {
+      "id": "java-typed-wire-and-projection-required",
+      "cwd": "core",
+      "command": "./gradlew :interlis-lsp:test --tests '*DiagramProtocolTest' --tests '*LspProcessTest' :interlis-projection:test --tests '*CompactAssociationProjectionTest' --no-daemon",
+      "exit": 0,
+      "result": "LSP 7 tests (0 failures, 0 skips); projection targeted class passed"
+    },
+    {
+      "id": "java-projection-full",
+      "cwd": "core",
+      "command": "./gradlew :interlis-projection:test --rerun-tasks --no-daemon",
+      "exit": 0,
+      "result": "21 tests, 0 failures, 0 skips"
+    },
+    {
+      "id": "shared-consumer-regression",
+      "cwd": "core",
+      "command": "./gradlew :interlis-wasm-teavm:diagramAdapterTest :interlis-wasm-teavm:uiProjectionTest -PnodeExecutable=<node 24> --no-daemon",
+      "environmentNote": "Fresh worktree needed `npm ci --ignore-scripts` in interlis-wasm-teavm (14 packages) for the existing buildBrowserTools task.",
+      "exit": 0,
+      "result": "adapter 6/6 pass; Chromium/Firefox/WebKit UI projection 3/3 pass"
+    },
+    {
+      "id": "native-ui",
+      "cwd": "core",
+      "command": "node --test frontend/diagram-ui/test/interactive.test.cjs",
+      "exit": 0,
+      "result": "1/1 pass: native Sprotty node/container/route drag, endpoints/source unchanged, history barrier, session replacement"
+    },
+    {
+      "id": "extension-build-and-contracts",
+      "cwd": "extension",
+      "command": "npm run build; npm run test:unit; npm run test:protocol; npm run verify:no-legacy-dependencies",
+      "exit": 0,
+      "result": "build OK; unit 7/7; real packaged stdio 1/1; dependency graph/bundle clean"
+    },
+    {
+      "id": "package-vsix",
+      "cwd": "extension",
+      "command": "INTERLIS_JAVA=<java 25 executable> npm run package:vsix -- --target darwin-arm64",
+      "exit": 0,
+      "result": "69 files; wrapper sha256 82ac537fb65c469da1049c5e1de1a8a23e13d4c0bb256c96967a0f80225c4484; all 69 payload files byte-identical to request artifact 61d73edf..."
+    },
+    {
+      "id": "installed-gui-cumulative",
+      "cwd": "extension",
+      "command": "INTERLIS_JAVA=<java 25 executable> npm run test:gui -- --suite uml --cache <gui cache>",
+      "exit": 0,
+      "result": "18/18 cases pass (GUI-01..18) on candidate pair; 3 real Java starts, 2 clean exits, 0 remaining; installed bundle 03b70c51..."
+    },
+    {
+      "id": "installed-gui-independent-counterprobe",
+      "cwd": "extension",
+      "command": "COUNTERPROBE_EVIDENCE=<evidence> node build/reviewer-counterprobe/run.cjs",
+      "exit": 0,
+      "result": "1/1 pass on own CRLF/emoji fixture: two same-label classes, ternary/attributed association in both presentations, native node drag, interior route handle, exact UTF-16 member ranges, stale-click suppression, clean restart; source buffer/dirty/disk hash unchanged"
+    },
+    {
+      "id": "negative-canary",
+      "cwd": "extension",
+      "command": "INTERLIS_JAVA=<java 25 executable> npm run test:gui -- --suite smoke --cache <gui cache> --canary missing-status",
+      "exit": 1,
+      "expectedExit": 1,
+      "result": "2 real smoke cases passed; intentionally impossible visible status failed as required"
+    }
+  ],
+  "reusedAfterExactIdentityVerification": [
+    {
+      "id": "prior-cumulative-gui-18",
+      "reason": "Fresh GUI-18/18 was executed this session on the exact candidate pair, so the prior run is not the sole basis."
+    },
+    {
+      "id": "extension-host-3",
+      "reason": "Extension src/package/test bytes are unchanged from the previously verified V2-final-r1 run; this review executed unit, real packaged stdio and dependency checks fresh. No product source differs between bae7f3d and candidate."
+    }
+  ],
+  "notRequired": [
+    {
+      "id": "full-compiler-corpus-benchmark-release",
+      "reason": "No parser/binder/norm change in the V2 diff; projection changes were exercised by full projection, real LSP stdio and three real browser consumers."
+    },
+    {
+      "id": "all-safari-unrelated-benchmarks",
+      "reason": "The shared renderer consumers in Chromium, Firefox and WebKit were freshly exercised; no Safari-specific consumer source changed."
+    },
+    {
+      "id": "cross-platform-runtime-remote",
+      "reason": "Explicit V5 scope, not claimed in V2."
+    }
+  ]
+}

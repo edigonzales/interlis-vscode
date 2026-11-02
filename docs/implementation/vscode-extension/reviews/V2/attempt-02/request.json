@@ -1,0 +1,484 @@
+{
+  "schemaVersion": 1,
+  "phase": "V2",
+  "assignmentBase": {
+    "coreSha": "20b0029d824b3602d9a304320bf0feae4c35c1f9",
+    "extensionSha": "73badd9807f407aea048d397af5549fe907a1501"
+  },
+  "phaseBase": {
+    "coreSha": "3b60e6c1309a4897ad6d0e99f6d8dfd137520ca9",
+    "extensionSha": "e576a30e4adcf6e36bfe662b402ca87034450dab"
+  },
+  "candidate": {
+    "coreSha": "7026e7f6b5834bf593d91dfee3323efb60688f3d",
+    "extensionSha": "01f353114cc7a19a9ac6dd884cb0b285ac723c9c"
+  },
+  "worktrees": {
+    "core": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/core",
+    "extension": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/extension"
+  },
+  "evidenceDirectory": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r2/evidence",
+  "plan": "docs/implementation/vscode-extension/EXECUTION_PLAN.md",
+  "implementationReport": "docs/implementation/vscode-extension/implementation/V2.md",
+  "criteria": [
+    "V2-01",
+    "V2-02",
+    "V2-03",
+    "V2-04",
+    "V2-05",
+    "V2-06",
+    "V2-07",
+    "V2-08",
+    "V2-09",
+    "V2-10"
+  ],
+  "requiredGuiCases": [
+    "GUI-02",
+    "GUI-05",
+    "GUI-07",
+    "GUI-12",
+    "GUI-13",
+    "GUI-14",
+    "GUI-15",
+    "GUI-16",
+    "GUI-17",
+    "GUI-18"
+  ],
+  "implementationEvidence": "/Users/stefan/sources/interlis-vscode/build",
+  "supplementalEvidence": [
+    "/Users/stefan/sources/interlis-vscode-evidence/phases/V2",
+    "/Users/stefan/sources/interlis-vscode-evidence/qualification",
+    "/Users/stefan/sources/interlis-vscode/artifacts",
+    "/Users/stefan/.sdkman/candidates/java/25.0.3-tem",
+    "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1"
+  ],
+  "guiTools": {
+    "cache": "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage",
+    "vscodeExecutable": "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage/Visual Studio Code.app/Contents/MacOS/Code",
+    "javaHome": "/Users/stefan/.sdkman/candidates/java/25.0.3-tem",
+    "vscode": "1.140.0",
+    "extester": "8.28.1",
+    "chromedriver": "150.0.7871.250"
+  },
+  "requiredChecks": [
+    {
+      "id": "dependencies-and-assets",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "ci",
+        "--ignore-scripts"
+      ],
+      "reason": "Fresh pinned dependencies; stage exact Core via scripts/stage-core.cjs, verify unchanged artifact lock and all renderer/worker/schema/JAR hashes; unchanged source may reuse independently verified raw V2-r1 checks after exact hash/diff verification"
+    },
+    {
+      "id": "neutral-renderer-provenance",
+      "cwd": "core",
+      "argv": [
+        "node",
+        "frontend/diagram-ui/prepare.cjs"
+      ],
+      "reason": "Inspect actual shared source, bundle input graph, original license provenance and every bundled dependency. No @ilic/old LanguageService/compiler AST/type imports; unchanged source may reuse independently verified raw V2-r1 checks after exact hash/diff verification"
+    },
+    {
+      "id": "java-typed-wire-and-projection",
+      "cwd": "core",
+      "argv": [
+        "./gradlew",
+        ":interlis-lsp:test",
+        "--tests",
+        "*DiagramProtocolTest",
+        "--tests",
+        "*LspProcessTest",
+        ":interlis-projection:test",
+        "--tests",
+        "*CompactAssociationProjectionTest",
+        "--no-daemon"
+      ],
+      "reason": "Targeted independent real stdio/partial/version/readonly/UTF16 and new projection counterchecks; verify actual existing test class names before invocation; unchanged source may reuse independently verified raw V2-r1 checks after exact hash/diff verification"
+    },
+    {
+      "id": "shared-consumer-regression",
+      "cwd": "core",
+      "argv": [
+        "./gradlew",
+        ":interlis-wasm-teavm:diagramAdapterTest",
+        ":interlis-wasm-teavm:uiProjectionTest",
+        "-PnodeExecutable=/Users/stefan/.cache/interlis-java/runtime/node-v24.22.0-darwin-arm64/bin/node",
+        "--no-daemon"
+      ],
+      "reason": "Verify original successful raw portable6/browser3/self loops in both route modes and own targeted variant; no obligation to repeat all unchanged successful cases; unchanged source may reuse independently verified raw V2-r1 checks after exact hash/diff verification"
+    },
+    {
+      "id": "native-ui",
+      "cwd": "core",
+      "argv": [
+        "node",
+        "--test",
+        "frontend/diagram-ui/test/interactive.test.cjs"
+      ],
+      "reason": "Native Sprotty move/container/interior handles, no endpoint/source mutation, history barrier and session replacement; unchanged source may reuse independently verified raw V2-r1 checks after exact hash/diff verification"
+    },
+    {
+      "id": "extension-contracts",
+      "cwd": "extension",
+      "argv": [
+        "npm",
+        "run",
+        "test:unit"
+      ],
+      "reason": "Verify successful raw Unit7, actual stdio1, extension-host3, dependencies from V2-final-r1 and unchanged relevant source/artifact bytes; independently exercise changed high-risk paths; unchanged source may reuse independently verified raw V2-r1 checks after exact hash/diff verification"
+    },
+    {
+      "id": "installed-gui",
+      "cwd": "extension",
+      "argv": [
+        "node",
+        "scripts/gui.cjs",
+        "--suite",
+        "uml",
+        "--cache",
+        "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage"
+      ],
+      "reason": "Required GUI02/05/07/12–18; verify current native-self-modes GUI7 + prior cumulative18 unchanged editor11 and own new real installed mouse/route/stale counterprobe. Entire cumulative rerun is permitted only when a concrete open question justifies it; unchanged source may reuse independently verified raw V2-r1 checks after exact hash/diff verification"
+    },
+    {
+      "id": "negative-canary",
+      "cwd": "extension",
+      "argv": [
+        "node",
+        "scripts/gui.cjs",
+        "--suite",
+        "smoke",
+        "--cache",
+        "/Users/stefan/sources/interlis-vscode-evidence/gui-preflight/storage",
+        "--canary",
+        "missing-status"
+      ],
+      "expectedExit": 1,
+      "reason": "Inspect V2-final-r2 raw intentional failure with2 real succeeding smoke cases, actual Java exits and unchanged harness; no routine duplication needed; unchanged source may reuse independently verified raw V2-r1 checks after exact hash/diff verification"
+    }
+  ],
+  "notRequiredChecks": [
+    {
+      "id": "full-compiler-corpus-benchmark-release",
+      "reason": "No parser/binder/norm change. Projection changes tested on Java and portable JavaScript/WasmGC and existing Chromium/Firefox/WebKit consumers. No automatic full corpus/benchmark/releaseCheckP3 duplication."
+    },
+    {
+      "id": "all-unrelated-browser-and-safari-benchmarks",
+      "reason": "All three directly changed shared-browser consumers freshly tested. Static HTTP CSS MIME changes do not change unrelated full corpus/Safari performance semantics."
+    },
+    {
+      "id": "cross-platform-runtime-remote",
+      "reason": "Explicit mandatory V5, not claimed now."
+    }
+  ],
+  "artifacts": [
+    {
+      "kind": "vsix",
+      "path": "/Users/stefan/sources/interlis-vscode/build/packages/interlis-vscode-darwin-arm64.vsix",
+      "sha256": "61d73edf2768f2d6f6cfdc3e7f23cba46af6c52079a99b392b5b47ed88a21776"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/antlr4-runtime-4.13.2.jar",
+      "sha256": "dd3e8a13a2d669bf84fb8d834de35ce4875f27157698d206241ec8488aadcaf7"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/error_prone_annotations-2.48.0.jar",
+      "sha256": "b49c5c958316ed67a09c699dda9aa749caf434d51d863dea599ef36a49b9c855"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/gson-2.14.0.jar",
+      "sha256": "2cbd119bf1961c28788310963dc80ba65f58cdeec1dd139c8bdb1240faa2c36f"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/interlis-compiler-0.2.0-SNAPSHOT.jar",
+      "sha256": "86460db600ab375a07bccd2c1996d7dbe21942e6ac0ddbffd57707ab1dec2c4c"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/interlis-lsp-0.2.0-SNAPSHOT.jar",
+      "sha256": "11dba44845b691080daa7308090515e103fad16d618d91ffff61f1f90caf3998"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/interlis-model-0.2.0-SNAPSHOT.jar",
+      "sha256": "c28c22fc522b2411032a35fee5e6c2b59ff435332fc52d7634aaa6f44b8d3848"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/interlis-projection-0.2.0-SNAPSHOT.jar",
+      "sha256": "e8ab8b968c67acd764ee90e2f9b3a5b7f7720717bf3cca45fbb3d9f43d3f692e"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/interlis-repository-0.2.0-SNAPSHOT.jar",
+      "sha256": "7f8b20e0dc60e4f0291f55c26c22dd3e951486f6109b52dd83d2fe3d8536130d"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/interlis-workspace-0.2.0-SNAPSHOT.jar",
+      "sha256": "e9efee37214c38e1292fd26d3f802c2ada1e25bf0abdb7a77b015ef8724085ad"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/org.eclipse.lsp4j-0.23.1.jar",
+      "sha256": "b16bbc6232a3946e03d537bb9be74e18489dbc6a8b8c5ab6cb7980854df8440f"
+    },
+    {
+      "kind": "server",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/server/lib/org.eclipse.lsp4j.jsonrpc-0.23.1.jar",
+      "sha256": "4e1aa77474de1791d96dc55932fb46efdf53233548f38f62ba7376f8b0bc6650"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/adapter.cjs",
+      "sha256": "dd6f59e5021f3668c6ce2782e70b16a3ae3b62789dcdd4b2a977c938c48b72d7"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/adapter.d.ts",
+      "sha256": "d617253c54ded2ca62628fdc0d8925608d2870410f1ffcd0c4aa500b964bbb55"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/build-manifest.json",
+      "sha256": "500d509e1d4843300ec2d772d92548851e40248929ed51c0fa33e8c6bc82a01b"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/contracts/elk.d.ts",
+      "sha256": "2e992211afcd079a0cd0a5df424086388b4ffcb0bd8d9ff3741940ad52006d4a"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/contracts/libavoid-js.d.ts",
+      "sha256": "85f2c7a7721e2cd8f6a61a296e9238d4199bf3f361bcfd49d2d7c19119c90cb7"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/diagram-layout-worker.js",
+      "sha256": "c0dc844ac1739a1e1e4f64d08a9ec4594818d5aa7e0cb26e5096b6d34b864e2b"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/diagram-ui.css",
+      "sha256": "418fa860e308fcbe146320b8cd3f94fee0b1e700d1bbeee18ef8ac017303dad0"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/diagram-ui.js",
+      "sha256": "ea3b031f61e6bd36c9ea6d95f9c93f7064878322f7c43b0f7403c81b00a51c1b"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/diagram-ui.js.LEGAL.txt",
+      "sha256": "d7d178cf2029faf34c444be41614e205af12d50a04c22175f65046160c03c3a5"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/elk-layout-service.d.ts",
+      "sha256": "f87c01ded4e7bf977cad235cba47cfc455fe228f145ef5f7bc2442da195defc9"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/identity.d.ts",
+      "sha256": "93cce8ae165f8ecc45aa6b6545fd03bc538eecae43af9444a825add2b9e60ed0"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/interactive.d.ts",
+      "sha256": "0a00b04aab1b5240ab2be6118255a04d506bade1f6772bdc7b85f378f9966200"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/layout.d.ts",
+      "sha256": "744bef40c30e18eb622a4d57bb62549881d65d79bad9514e07f6afcc8f4a08ef"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/libavoid-router.d.ts",
+      "sha256": "163ace9f66b994881256862ca06ac347687f106b3431ea46035a360f4151fb93"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/libavoid-router.js",
+      "sha256": "bd491f90a73f5b38789ffd1f6793ba91d93c6e19c1436b279646dca7dc516056"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/licenses/@inversifyjs-common-LICENSE",
+      "sha256": "e7f118bca6d3c2ea16a30302f1e0062b6c7ba63bb1718a0602f969062b67ecbd"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/licenses/@inversifyjs-core-LICENSE",
+      "sha256": "e7f118bca6d3c2ea16a30302f1e0062b6c7ba63bb1718a0602f969062b67ecbd"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/licenses/@inversifyjs-reflect-metadata-utils-LICENSE",
+      "sha256": "e7f118bca6d3c2ea16a30302f1e0062b6c7ba63bb1718a0602f969062b67ecbd"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/licenses/adopted-renderer-MIT.txt",
+      "sha256": "91904e7f7a936e2f873b6c7d893b34ecc43fa9f2beffe96a9d8e24c9ad449798"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/licenses/ajv-LICENSE",
+      "sha256": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/licenses/autocompleter-MIT.txt",
+      "sha256": "9d548e9bd6dee30719b95fae5e5fefdf8ac36f3a61cff5f8766ad6f5e33b16b9"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/licenses/autocompleter-readme.md",
+      "sha256": "765cea95206473d6337fd481de82bc4f63c7732702aa1e9033112c2fb9e45838"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/licenses/elkjs-LICENSE.md",
+      "sha256": "89591d4578fb1ebd91501312a3d25f021bd865a2e436641c1cf7b1bc7e3c1617"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/licenses/file-saver-LICENSE.md",
+      "sha256": "2d1d7a93b46e4274355ac2904428707c4ee47ee8c6029fa394ebf405648d3f63"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/licenses/interlis-diagram-ui-MIT.txt",
+      "sha256": "91904e7f7a936e2f873b6c7d893b34ecc43fa9f2beffe96a9d8e24c9ad449798"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/licenses/inventory.json",
+      "sha256": "0309b6d9173f76fc5563625e459e65dacbadb8f13cd86e2f5a2f1dc342ca4c40"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/licenses/inversify-LICENSE",
+      "sha256": "bcb17487689c15a9124a3c11995c95a74150f5c1a3350aa86ec4753510bb4795"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/licenses/libavoid-js-LICENSE",
+      "sha256": "6da7ddf40cfea6f568961825b14478e879875f6ad033fad57889ae5bd52103f4"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/licenses/reflect-metadata-LICENSE",
+      "sha256": "c5217b0544ea9c91d010863582d6f6b35ec50e4146c34dee085ddcec5dd92def"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/licenses/snabbdom-LICENSE",
+      "sha256": "40b17e30359787ee415582223f3d10440f8bab87c5967e03406ea59120c59311"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/licenses/sprotty-LICENSE",
+      "sha256": "0becf16567beb77fa252b7664631dd177c8f9a1889e48995b45379c7130e5303"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/licenses/sprotty-protocol-LICENSE",
+      "sha256": "0becf16567beb77fa252b7664631dd177c8f9a1889e48995b45379c7130e5303"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/licenses/tinyqueue-LICENSE",
+      "sha256": "780453e05abdc22307ee01c706a2e73f508d3e484fc4c804485ebf6fe0964694"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/presentation.d.ts",
+      "sha256": "9b774ebad0132ae126349e6dcd4f28c22a5a4538f8c33d5dc4bfd3bbb38f6a70"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/render-types.d.ts",
+      "sha256": "e209e030962bda020a5734cad041102fadcfe10766f79f610661a4584c68c2b6"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui/types.d.ts",
+      "sha256": "ae25650add1e8730c1472187c7127d214b51b712f83d802d5b7a6c116946ccff"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/diagram-ui.tgz",
+      "sha256": "11d10fae90cba4ab374499e2cf83c68861111f334b2421092a5a0b481a3e33f9"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/renderer-provenance.json",
+      "sha256": "bad89aaa9fb9ddc3f9ad86b4ac4fad0aa68bfbc45d781bc43d0ca1b2c728e016"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/schemas/diagram-document-1.0.schema.json",
+      "sha256": "105e7eeb24f6ef682e04695ecbbc127a51805178c6ee1a4310cb7ca1426fc779"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/schemas/diagram-options-1.0.schema.json",
+      "sha256": "825c35756a4c00f743bdbacc0700def78b871d75f2b7c74c06a1daabbfd87b91"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/types/diagram-document.ts",
+      "sha256": "2f3b7bb797320aa526b50800947e8c9a8c51f494c4727833d95bdf2d17d900d3"
+    },
+    {
+      "kind": "renderer-schema-types",
+      "path": "/Users/stefan/sources/interlis-vscode/artifacts/types/editor-protocol.ts",
+      "sha256": "bb32ee0b88b2c2996cdd753a26b010594174875ce5eb669efcc177c5d00a090a"
+    }
+  ],
+  "implementationRuns": {
+    "shared": "/Users/stefan/sources/interlis-vscode-evidence/phases/V2/self-paint-qualified-consumers.json",
+    "sharedGuard": "/Users/stefan/sources/interlis-vscode-evidence/phases/V2/self-paint.guard.json",
+    "finalGuiManifest": "/Users/stefan/sources/interlis-vscode/build/reports/gui/diagram/2026-11-01T21-22-27-104Z/manifest.json",
+    "finalGuiGuard": "/Users/stefan/sources/interlis-vscode-evidence/phases/V2/native-self-modes.guard.json",
+    "cumulative": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V2-final-r2/qualification.json",
+    "cumulativeGuard": "/Users/stefan/sources/interlis-vscode-evidence/phases/V2/cumulative-v2-r2.guard.json",
+    "unitProtocolHost": "/Users/stefan/sources/interlis-vscode-evidence/qualification/V2-final-r1/qualification.json",
+    "javaProjection": "/Users/stefan/sources/interlis-vscode-evidence/phases/V2/compact-core-wire-results",
+    "javaFinalMalformedParams": "/Users/stefan/sources/interlis-vscode-evidence/phases/V2/diagram-identity-negative-params.log",
+    "portable6": "/Users/stefan/sources/interlis-vscode-evidence/phases/V2/cumulative-v2-portable-shared-consumers.log"
+  },
+  "allowedReuse": {
+    "rule": "Core SHA is exactly unchanged. Extension changed ONLY ignored-for-VSIX review archive/status documentation after bae7f3d; runtime, tests, lock, README and all69 VSIX payload files unchanged. Verify this yourself. The complete original V2-r1 raw tests are available: LSP7, projection14, client18+adapter6, browser3, nativeUI1, unit7, stdio1, host3, cumulativeGUI18, negativeCanary expected1 and independent counterprobe1. Reuse their actual original exits/manifests/images/hashes if verified. Do NOT routinely repeat successful full suites; run new targeted checks that resolve actual remaining risks, plus YOUR OWN NEW GENUINE INSTALLED GUI COUNTERPROBE. The prior verdict is invalid as a phase gate and cannot replace your own code/criteria analysis."
+  },
+  "counterprobeRequirement": "Design and execute your own new targeted installed VS Code GUI counterprobe on the current pair. You may reuse the preceding reviewer's now-working runner/spec as a read-only harness reference to avoid rebuilding infrastructure, but choose a new meaningful fixture/variant/assertion. Real Java projection, native mouse drag and route handle, source/dirty/endpoints and stale behavior; verify exact source ranges. No fake success or controller-state geometry edits. Actually open the new relevant before/after images. Earlier proven test suites may be independently checked and reused by content identity.",
+  "scopeNotes": [
+    "No prescribed verdict. All V2-01..10 must be assessed from full phase diff and requirements, not from supplied green commands alone.",
+    "User pushed repository/cache changes cf585ec are already adopted; preserve foreign original Core docs and untracked .DS_Store.",
+    "V3 remains locked. Full filters/pins/settle/reset/splines/exports/source-to-diagram comfort are explicitly still due in V3. Inline enumeration presentation control is also V3; domain enum values and inherited enum source anchors already project in V2.",
+    "The implementer rejected a nominally passing cumulative run after viewing a folded self-edge image; native-self-modes is the corrected fresh actual rendering and geometry oracle. All failed runs remain available.",
+    "Reviewer worktrees must remain tracked-clean. External request contains the exact final candidate pair; phaseBase stays unchanged across repairs.",
+    "Second fresh independent review. No product fix was needed for the first invalid report; only its original evidence/outer rejection was archived. All phaseBase values remain immutable.",
+    "The prior GUI focus flake is an acknowledged observation; assess it independently against raw correct ranges and clean18/18 rerun. No presupposed result.",
+    "Your final judgment may PASS/FAIL/BLOCKED. Never infer PASS from the preceding invalid content verdict. Prefer concise accurate attribution to exhaustive unsupported image claims."
+  ],
+  "previousInvalidReview": {
+    "root": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence",
+    "outerAudit": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/outer-audit.json",
+    "imageAttributionCheck": "/Users/stefan/sources/interlis-vscode-evidence/reviews/V2-r1/evidence/image-attribution-check.json",
+    "reason": "Six explicit actually-viewed image claims were unsupported by successful read tools or identical image hashes. All real tests and original report retained. This was NOT a valid phase PASS. Do not adopt its judgment."
+  },
+  "imageAttributionRules": {
+    "mandatory": "Before writing review.md/verdict.json, create image-read-inventory.json ONLY from paths that you successfully opened with the image-read tool in THIS fresh session. For each, record actual path and successful tool result. Only attribute actual visual observations to those files; a list of existing evidence images is an INVENTORY, not proof you viewed them. Do not claim to have viewed all images from a run unless you actually read all. Byte-identical aliases must be explicitly mapped with hashes. A small honest viewed subset covering before/after node/route and your new stale countercase is sufficient; no need to open every screenshot.",
+    "previousFailure": "Prior report section6 explicitly called many unviewed images actually viewed; machine verdict marked visuallyInspected true for six unmatched files. The outer audit rejected that PASS despite passing tests. Avoid this exact reporting error. Do not repair/modify original prior evidence."
+  }
+}
