@@ -1,6 +1,6 @@
 INTERLIS 2.4;
 MODEL V3Middle AT "x" VERSION "1" =
 IMPORTS V3Base;
-DOMAIN Link=V3Base.Deep;
+DOMAIN Link EXTENDS V3Base.Deep=TEXT*12;
 TOPIC MiddleData=CLASS Imported=value:Link;END Imported;END MiddleData;
 END V3Middle.

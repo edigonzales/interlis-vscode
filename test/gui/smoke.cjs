@@ -23,7 +23,7 @@ describe('Installed INTERLIS editor smoke',function(){
   await waitFor(async()=>(await problems.getAllVisibleMarkers(MarkerType.Error)).length>0,'Missing live type diagnostic');
   const errors=await problems.getAllVisibleMarkers(MarkerType.Error);const labels=await Promise.all(errors.map(x=>x.getText()));
   fs.writeFileSync(path.join(evidence,'GUI-02-problems.json'),JSON.stringify(labels,null,2));
-  await capture('GUI-02-error');await driver.actions().doubleClick(errors[0]).perform();
+  await capture('GUI-02-error');const missing=errors[labels.findIndex(label=>label.includes('MissingHeight'))];assert.ok(missing,'Expected MissingHeight diagnostic row');await driver.actions().doubleClick(missing).perform();
   const coordinates=await editor.getCoordinates();assert.equal(coordinates[0],8);
   const errorToken=await driver.findElement(By.xpath('//div[contains(@class,"view-lines")]//span[text()="MissingHeight"]'));await driver.actions().doubleClick(errorToken).sendKeys('Height').perform();
   await waitFor(async()=>(await problems.getAllVisibleMarkers(MarkerType.Error)).length===0,'Corrected document still has errors');
