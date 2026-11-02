@@ -43,7 +43,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
     const plan = await resolveLaunchPlan(context.extensionPath, settings.get<string>('server.javaPath', ''), settings.get<string>('server.bundlePath', ''));
     const next = new InterlisLanguageClient('interlisGuru', 'INTERLIS', () => {
       const child = spawn(plan.java, plan.args, {shell: false, stdio: 'pipe'});
-      output.appendLine(`Server start pid=${child.pid} core=${plan.coreCommit} bundle=${plan.bundleDigest}${settings.get('server.bundlePath') ? ' developer override' : ' packaged distribution'}`);
+      output.appendLine(`Server start pid=${child.pid} core=${plan.coreCommit} bundle=${plan.bundleDigest} runtime=${plan.runtimeDigest || 'explicit'} ${plan.runtimeSource}${settings.get('server.bundlePath') ? ' server override' : ' packaged distribution'}`);
       child.once('exit', (code, signal) => output.appendLine(`Server exit pid=${child.pid} code=${code} signal=${signal}`));
       return Promise.resolve(child);
     }, {

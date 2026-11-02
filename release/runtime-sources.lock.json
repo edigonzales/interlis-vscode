@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "javaMajor": 25,
+  "targets": {
+    "darwin-arm64": {
+      "vendor": "Eclipse Adoptium Temurin",
+      "version": "25.0.5+8-LTS",
+      "release": "jdk-25.0.5+8",
+      "os": "mac",
+      "architecture": "aarch64",
+      "imageType": "jre",
+      "archive": {
+        "url": "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/OpenJDK25U-jre_aarch64_mac_hotspot_25.0.5_8.tar.gz",
+        "sha256": "72ebd76b502c849e88dea39afae51baf5f82f2b5b1b6389c28ea707b20451bce",
+        "size": 56298727,
+        "name": "OpenJDK25U-jre_aarch64_mac_hotspot_25.0.5_8.tar.gz"
+      },
+      "checksumUrl": "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/OpenJDK25U-jre_aarch64_mac_hotspot_25.0.5_8.tar.gz.sha256.txt",
+      "metadataUrl": "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/OpenJDK25U-jre_aarch64_mac_hotspot_25.0.5_8.tar.gz.json",
+      "releaseUrl": "https://github.com/adoptium/temurin25-binaries/releases/tag/jdk-25.0.5%2B8",
+      "scmRef": "jdk-25.0.5+8_adopt",
+      "java": "bin/java"
+    },
+    "linux-x64": {
+      "vendor": "Eclipse Adoptium Temurin",
+      "version": "25.0.5+8-LTS",
+      "release": "jdk-25.0.5+8",
+      "os": "linux",
+      "architecture": "x64",
+      "imageType": "jre",
+      "archive": {
+        "url": "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/OpenJDK25U-jre_x64_linux_hotspot_25.0.5_8.tar.gz",
+        "sha256": "6fac98f0c8202efc3135a9e9e42aa61963ec42d1c5cbb40caf231e7b14a24ef6",
+        "size": 61736206,
+        "name": "OpenJDK25U-jre_x64_linux_hotspot_25.0.5_8.tar.gz"
+      },
+      "checksumUrl": "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/OpenJDK25U-jre_x64_linux_hotspot_25.0.5_8.tar.gz.sha256.txt",
+      "metadataUrl": "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/OpenJDK25U-jre_x64_linux_hotspot_25.0.5_8.tar.gz.json",
+      "releaseUrl": "https://github.com/adoptium/temurin25-binaries/releases/tag/jdk-25.0.5%2B8",
+      "scmRef": "jdk-25.0.5+8_adopt",
+      "java": "bin/java"
+    },
+    "win32-x64": {
+      "vendor": "Eclipse Adoptium Temurin",
+      "version": "25.0.5+8-LTS",
+      "release": "jdk-25.0.5+8",
+      "os": "windows",
+      "architecture": "x64",
+      "imageType": "jre",
+      "archive": {
+        "url": "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/OpenJDK25U-jre_x64_windows_hotspot_25.0.5_8.zip",
+        "sha256": "da78d54a2fcdbba1e92d5e3f07dd30236f96297891c4a21a781c3f38f5c0beae",
+        "size": 58589419,
+        "name": "OpenJDK25U-jre_x64_windows_hotspot_25.0.5_8.zip"
+      },
+      "checksumUrl": "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/OpenJDK25U-jre_x64_windows_hotspot_25.0.5_8.zip.sha256.txt",
+      "metadataUrl": "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/OpenJDK25U-jre_x64_windows_hotspot_25.0.5_8.zip.json",
+      "releaseUrl": "https://github.com/adoptium/temurin25-binaries/releases/tag/jdk-25.0.5%2B8",
+      "scmRef": "jdk-25.0.5+8_adopt",
+      "java": "bin/java.exe"
+    }
+  }
+}

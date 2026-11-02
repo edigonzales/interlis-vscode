@@ -129,7 +129,7 @@
           "type": "string",
           "default": "",
           "scope": "machine",
-          "description": "Explicit Java 25 executable. Required by the initial development distribution."
+          "description": "Optional explicit Java 25 executable for development. Empty uses the verified bundled runtime on the workspace host."
         },
         "interlisGuru.server.bundlePath": {
           "type": "string",
@@ -540,6 +540,7 @@
   "scripts": {
     "build": "node scripts/build.cjs",
     "stage:core": "node scripts/stage-core.cjs",
+    "stage:runtime": "node scripts/stage-runtime.cjs",
     "test:unit": "node --test test/unit/*.test.cjs",
     "test:protocol": "node --test test/protocol.test.cjs",
     "test:gui": "node scripts/gui.cjs",
@@ -561,7 +562,8 @@
     "clipboardy": "5.3.2",
     "esbuild": "0.25.12",
     "typescript": "5.9.3",
-    "vscode-extension-tester": "8.28.1"
+    "vscode-extension-tester": "8.28.1",
+    "yauzl": "3.4.0"
   },
   "overrides": {
     "vscode-languageclient": {

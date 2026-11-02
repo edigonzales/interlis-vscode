@@ -5,5 +5,8 @@
 !out/**
 !resources/**
 !release/editor-artifacts.lock.json
+!release/runtime-artifacts.lock.json
+!release/runtime-sources.lock.json
+!release/distribution.json
 !licenses/**
 !artifacts/**
