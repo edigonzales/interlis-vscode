@@ -1,5 +1,7 @@
 # Release lock identities must be byte-identical across native CI checkouts.
 release/*.json text eol=lf
+# Build-generated notices use LF and must not dirty a Windows checkout.
+licenses/*.txt text eol=lf
 
 # Exact CRLF and supplementary Unicode source used by the installed diagram tests.
 test/fixtures/uml-core/Interactive.ili -text whitespace=cr-at-eol
