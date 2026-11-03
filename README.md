@@ -1,11 +1,18 @@
-# INTERLIS
+# INTERLIS Editor
 
-Desktop VS Code extension `edigonzales.interlis-vscode` using the Java INTERLIS
+Desktop VS Code extension `edigonzales.interlis-editor` using the Java INTERLIS
 language server. Target-specific VSIX packages contain a pinned, verified Java25
 runtime, repository resolution/cache, readable diagnostics, root compilation and
 an interactive UML custom editor. V0–V5 have independent cumulative acceptance under the
 user-adjusted platform scope. Current platform evidence and the exact accepted product pair are
 tracked in [STATUS](docs/implementation/vscode-extension/STATUS.md).
+
+The extension uses the existing Open VSX identity `edigonzales.interlis-editor`
+(display name **INTERLIS Editor**, publisher **edigonzales**). Local builds use
+`0.1.0`; GitHub Actions packages use `0.1.<GITHUB_RUN_NUMBER>`, for example
+`0.1.42`. Reruns keep the same version. Stamping changes only the prepared VSIX
+manifest; source manifests and locks remain unchanged. No registry publication is
+automatic. Historical V0–V5 reviews refer to the identities and bytes tested then.
 
 Install the local VSIX through **Extensions → Install from VSIX**. Set
 `interlisGuru.server.javaPath` empty to use bundled Java25. An optional absolute
@@ -76,7 +83,7 @@ npm run test:gui -- --suite editor
 explicit clean Core checkout, copies the complete runtime libraries and records
 their identities, neutral renderer, worker, schemas and host DTOs. It rejects a changing Core HEAD. Use the exact locked Core
 commit when reproducing a candidate. No separate compiler build is introduced.
-VSIX output: `build/packages/interlis-vscode-darwin-arm64.vsix`.
+VSIX output: `build/packages/interlis-editor-darwin-arm64.vsix`.
 Use `linux-x64` or `win32-x64` for the other target packages. Each archive contains
 only its own runtime. Source URLs, vendor archive SHA256s and extracted file hashes
 are locked under `release/`; unexpected, missing or changed files prevent startup.

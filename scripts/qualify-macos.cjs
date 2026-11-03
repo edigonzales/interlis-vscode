@@ -29,7 +29,7 @@ function job(name,cwd,exe,args,{guard=true,negative=false}={}){
 }
 try{
  job('package',root,process.execPath,['scripts/package.cjs','--target','darwin-arm64']);
- const vsix=path.join(root,'build/packages/interlis-vscode-darwin-arm64.vsix');report.vsixSha256=hash(vsix);report.vsix=path.join(output,'interlis-vscode-darwin-arm64-'+report.vsixSha256+'.vsix');fs.copyFileSync(vsix,report.vsix);save();
+ const vsix=path.join(root,'build/packages/interlis-editor-darwin-arm64.vsix');report.vsixSha256=hash(vsix);report.vsix=path.join(output,'interlis-editor-darwin-arm64-'+report.vsixSha256+'.vsix');fs.copyFileSync(vsix,report.vsix);save();
  job('extension-unit-and-stdio',root,process.execPath,['--test',...fs.readdirSync(path.join(root,'test/unit')).filter(n=>n.endsWith('.test.cjs')).map(n=>'test/unit/'+n),'test/protocol.test.cjs']);
  job('dependencies',root,process.execPath,['scripts/verify-dependencies.cjs']);
  job('protocol-negative-fixture',root,process.execPath,['scripts/prepare-test-fixtures.cjs','--java-home',javaHome]);

@@ -1,8 +1,8 @@
 {
-  "name": "interlis-vscode",
-  "displayName": "INTERLIS",
+  "name": "interlis-editor",
+  "displayName": "INTERLIS Editor",
   "description": "INTERLIS 2.3/2.4 editing with the Java INTERLIS language server",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "publisher": "edigonzales",
   "license": "MIT",
   "repository": {

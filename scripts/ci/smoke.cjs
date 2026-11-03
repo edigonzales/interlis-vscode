@@ -20,7 +20,7 @@ function run(exe, args, env = {}, nativeOptions = {}) {
 }
 (async () => {
   assert.ok(['linux-x64', 'win32-x64'].includes(target));
-  const vsix = path.resolve('build/packages/interlis-vscode-' + target + '.vsix');
+  const vsix = path.resolve('build/packages/interlis-editor-' + target + '.vsix');
   const inventory = JSON.parse(fs.readFileSync(vsix.replace(/\.vsix$/, '.inventory.json')));
   const provenance = JSON.parse(fs.readFileSync('build/packages/build-provenance.json'));
   const extensionSha = cp.execFileSync('git', ['rev-parse', 'HEAD'], {encoding: 'utf8'}).trim();
@@ -30,6 +30,15 @@ function run(exe, args, env = {}, nativeOptions = {}) {
   const unpack = path.join(output, 'Unicode Modelle ä');
   await require('../vsix.cjs').extractVSIX(vsix, unpack);
   const extension = path.join(unpack, 'extension');
+  const manifest = JSON.parse(fs.readFileSync(path.join(extension, 'package.json')));
+  const expected = require('../distribution-metadata.cjs').distributionManifest(require('../../package.json'));
+  for (const key of ['name', 'publisher', 'displayName', 'version']) assert.equal(manifest[key], expected[key]);
+  const extensionId = manifest.publisher + '.' + manifest.name;
+  assert.equal(inventory.extensionId, extensionId);
+  assert.equal(inventory.version, manifest.version);
+  assert.equal(provenance.extensionId, extensionId);
+  assert.equal(provenance.version, manifest.version);
+  Object.assign(report, {extensionId, version: manifest.version});
   const lock = JSON.parse(fs.readFileSync(path.join(extension, 'release/editor-artifacts.lock.json')));
   assert.equal(lock.coreCommit, provenance.coreSha);
   // Build test adapters using the exact assets extracted from the actual VSIX.
@@ -57,7 +66,7 @@ function run(exe, args, env = {}, nativeOptions = {}) {
   const user = path.join(output, 'User profile ä');
   runCli(['--shared-data-dir', path.join(output, 'Shared profile ä'), '--user-data-dir', user, '--extensions-dir', extensions, '--install-extension', vsix, '--force']);
   const ids = runCli(['--shared-data-dir', path.join(output, 'Shared profile ä'), '--user-data-dir', user, '--extensions-dir', extensions, '--list-extensions', '--show-versions']);
-  assert.match(ids, /edigonzales\.interlis-vscode@0\.0\.1/);
+  assert.ok(ids.split(/\r?\n/).map(line => line.trim()).includes(extensionId + '@' + manifest.version), 'Installed CLI identity/version differs');
   report.cliInstalled = true;
   const missing = path.join(extension, 'artifacts/server', lock.files.find(f => /interlis-lsp.*\.jar$/.test(f.path)).path);
   const backup = fs.readFileSync(missing);

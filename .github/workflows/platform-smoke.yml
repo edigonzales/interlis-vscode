@@ -1,7 +1,7 @@
 name: Short platform smoke
 on:
   push:
-    branches: [codex/vscode-extension]
+    branches: [main, codex/vscode-extension]
   workflow_dispatch:
 permissions:
   contents: read

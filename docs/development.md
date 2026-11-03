@@ -78,3 +78,23 @@ Flash1017 review runs on clean detached Core/extension worktrees. Final acceptan
 requires all cumulative criteria under the explicit adjusted platform scope,
 fresh native counterprobes, actual image reads, exact artifact identities and a
 completed review/guard process. An implementation test pass is not that acceptance.
+
+## Extension identity and build versions
+
+The current extension is **INTERLIS Editor**, ID `edigonzales.interlis-editor`.
+The Git repository remains `interlis-vscode`; command and setting namespaces
+remain `interlisGuru`. The historical V0–V5 reports and qualified VSIX bytes are
+immutable records of their original product pairs, not reviews of this identity change.
+
+The source manifest and npm lock use `0.1.0`. Packaging stamps only its prepared
+manifest with `0.1.` plus `GITHUB_RUN_NUMBER` when supplied. GitHub Actions
+requires that number; malformed or missing CI numbers fail before packaging.
+`GITHUB_RUN_ID` and `GITHUB_RUN_ATTEMPT` do not affect the version. Use one
+workflow for all platform packages so every target and rerun shares the version.
+
+Outputs are `build/packages/interlis-editor-<target>.vsix` with matching
+`.inventory.json` files carrying ID, version and SHA256. Packaging checks both
+actual VSIX JSON and XML metadata. GUI tests compare the installed manifest with
+the selected VSIX; native CI smokes additionally check the run-derived expected
+version and Code CLI's actual installed listing. The platform workflow runs on
+main, the existing test branch and manual dispatch. There is no registry publish step.
