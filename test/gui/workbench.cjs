@@ -6,6 +6,20 @@ const completed=[];let driver,wb,editor;
 const PRIMARY=process.platform==='darwin'?Key.COMMAND:Key.CONTROL;
 async function capture(name){fs.writeFileSync(path.join(evidence,name+'.png'),await driver.takeScreenshot(),'base64');}
 async function waitFor(fn,message){await driver.wait(async()=>{try{return await fn();}catch{return false;}},20000,message);}
+async function finishSaveDialog(input,target,cancel=false){
+ // A visible picker can still be initializing its directory. Typing/accepting
+ // before it settles can validate the previous folder instead of the new file.
+ const idle=async()=>{const bars=await driver.findElements(By.css('.quick-input-widget .monaco-progress-container'));return bars.length>0&&(await bars[0].getAttribute('class')).split(' ').includes('done');};
+ let stable=0;await waitFor(async()=>{stable=await idle()?stable+1:0;return stable>=2;},'Save dialog directory did not finish loading');
+ await driver.actions().clear();await input.sendKeys(Key.chord(PRIMARY,'a'),target);
+ stable=0;await waitFor(async()=>{stable=(await input.getAttribute('value'))===target&&await idle()?stable+1:0;return stable>=2;},'Save dialog did not resolve the requested filename');
+ if(cancel)await input.sendKeys(Key.ESCAPE);
+ else{
+  const accept=await driver.wait(async()=>{for(const button of await driver.findElements(By.css('.quick-input-widget .quick-input-action .monaco-button'))){if(await button.isDisplayed()&&['OK','Save'].includes((await button.getText()).trim())&&await button.getAttribute('aria-disabled')!=='true')return button;}return false;},10000,'Native Save action missing');
+  await accept.click();
+ }
+ await waitFor(async()=>{try{return !await input.isDisplayed();}catch(error){if(error.name==='StaleElementReferenceError')return true;throw error;}},'Save dialog did not close');
+}
 async function readText(){return await driver.executeScript('return [...document.querySelectorAll(".part.editor .monaco-editor .view-lines .view-line")].sort((a,b)=>parseFloat(a.style.top)-parseFloat(b.style.top)).map(e=>e.textContent.replace(/\\u00a0/g," ").replace(/\\u200b/g,"")).join("\\n")');}
 async function focusEditor(){await driver.actions().clear();await driver.wait(async()=>{try{for(const span of await driver.findElements(By.css('.part.editor .monaco-editor .view-lines .view-line span span')))if((await span.getText()).trim()&&await span.isDisplayed()){try{await span.click();return true;}catch(error){if(error.name==='ElementClickInterceptedError')continue;throw error;}}return false;}catch(error){if(error.name==='StaleElementReferenceError')return false;throw error;}},5000,'No stable visible editor text to focus');await waitFor(async()=>await driver.executeScript("return !!document.activeElement.closest('.part.editor .monaco-editor') && document.activeElement.getAttribute('role')==='textbox'"),'Editor text input did not receive focus');}
 async function palette(command, raw=false,keepOpen=false){
@@ -50,7 +64,7 @@ async function openFile(name){
  const file=await driver.wait(async()=>{for(const item of await driver.findElements(By.css('[role="tree"][aria-label="Files Explorer"] [role="treeitem"]')))if((await item.getAttribute('aria-label'))===name)return item;return false;},10000,'Explorer file missing: '+name);
  await driver.actions().doubleClick(file).perform();await waitEditor(name);await focusEditor();return editor;
 }
-module.exports={primaryModifier:PRIMARY,initialize,openFile,waitEditor,capture,waitFor,readText,focusEditor,palette,go,select,replaceText,status,record};
+module.exports={primaryModifier:PRIMARY,initialize,openFile,waitEditor,capture,waitFor,finishSaveDialog,readText,focusEditor,palette,go,select,replaceText,status,record};
 Object.defineProperties(module.exports,{driver:{get:()=>driver},wb:{get:()=>wb},editor:{get:()=>editor,set:value=>{editor=value;}}});
 module.exports.copyText=async function(){
  const clipboard=(await import('clipboardy')).default,previous=clipboard.readSync();
