@@ -3,7 +3,10 @@ const root = path.resolve(__dirname, '../..'); process.chdir(root);
 const target = process.platform + '-' + process.arch;
 const input = path.resolve('build/common'), output = path.resolve('build/packages');
 const git = args => cp.execFileSync('git', args, {encoding: 'utf8'}).trim();
-function clean() {if (git(['status', '--porcelain', '--untracked-files=no'])) throw Error('CI changed tracked product files');}
+function clean() {
+  const dirty = git(['status', '--porcelain', '--untracked-files=no']);
+  if (dirty) throw Error('CI changed tracked product files:\n' + dirty + '\n' + git(['diff', '--stat']) + '\n' + git(['diff', '--numstat']));
+}
 function run(script, env = {}) {cp.execFileSync(process.execPath, [script], {stdio: 'inherit', env: {...process.env, JAVA_TOOL_OPTIONS: '', JDK_JAVA_OPTIONS: '', _JAVA_OPTIONS: '', ...env}});}
 (async () => {
   if (!['darwin-arm64', 'linux-x64', 'win32-x64'].includes(target) || (process.env.INTERLIS_CI_TARGET && process.env.INTERLIS_CI_TARGET !== target)) throw Error('Wrong native runner architecture: ' + target);
