@@ -5,7 +5,7 @@ for(const [name,p] of Object.entries(lock.packages)) {
  assert.ok(!p.link,`Linked package ${name}`);
  if(p.resolved) assert.match(p.resolved,/^https:\/\/registry\.npmjs\.org\//,`Unexpected dependency source ${name}`);
 }
-const tree=cp.execFileSync('npm',['ls','--all','--json'],{encoding:'utf8',maxBuffer:20e6});
+const tree=cp.execFileSync(process.platform==='win32'?'npm.cmd':'npm',['ls','--all','--json'],{encoding:'utf8',maxBuffer:20e6,shell:process.platform==='win32'});
 assert.doesNotMatch(tree,/@ilic\/|interlis-language-tools/);
 for(const file of ['out/extension.cjs']) assert.doesNotMatch(fs.readFileSync(file,'utf8'),/@ilic\/|interlis-language-tools|ilic\.wasm/);
 console.log('Dependency lock, installed full graph and product bundle checked');
