@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "additionalModules": ["jdk.charsets", "jdk.crypto.ec", "jdk.localedata", "jdk.unsupported"],
+  "moduleReasons": {
+    "jdk.charsets": "Preserve extended charset support.",
+    "jdk.crypto.ec": "HTTPS ECDHE/ECDSA providers are loaded dynamically.",
+    "jdk.localedata": "Preserve all locale data, including German, French, Italian and English.",
+    "jdk.unsupported": "Gson reflectively uses sun.misc.Unsafe to deserialize LSP4J Either3 in editorAssist; jdeps does not detect this dependency."
+  },
+  "options": ["--strip-debug", "--no-header-files", "--no-man-pages", "--compress=2"]
+}

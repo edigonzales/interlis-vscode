@@ -8,5 +8,7 @@
 !release/runtime-artifacts.lock.json
 !release/runtime-sources.lock.json
 !release/distribution.json
+!release/runtime-build.json
+!release/runtime-link.json
 !licenses/**
 !artifacts/**

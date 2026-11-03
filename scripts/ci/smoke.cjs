@@ -6,7 +6,10 @@ const assert = require('node:assert/strict');
 const root = path.resolve(__dirname, '../..');
 process.chdir(root);
 const target = process.platform + '-' + process.arch;
-const output = path.resolve('build/ci/smoke-' + target);
+const label = process.env.INTERLIS_SMOKE_LABEL || 'selected';
+if (!/^[a-z-]+$/.test(label)) throw Error('Invalid smoke label');
+const output = path.resolve('build/ci/smoke-' + target + '-' + label);
+const packages = path.resolve(process.env.INTERLIS_SMOKE_PACKAGES || 'build/packages');
 fs.mkdirSync(output, {recursive: true});
 const hash = file => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 const report = {startedAt: new Date().toISOString(), target, node: process.version, guiTested: false, commands: [], status: 'running'};
@@ -19,15 +22,16 @@ function run(exe, args, env = {}, nativeOptions = {}) {
   return result.stdout;
 }
 (async () => {
-  assert.ok(['linux-x64', 'win32-x64'].includes(target));
-  const vsix = path.resolve('build/packages/interlis-editor-' + target + '.vsix');
+  assert.ok(['darwin-arm64', 'linux-x64', 'win32-x64'].includes(target));
+  const vsix = path.join(packages, 'interlis-editor-' + target + '.vsix');
   const inventory = JSON.parse(fs.readFileSync(vsix.replace(/\.vsix$/, '.inventory.json')));
-  const provenance = JSON.parse(fs.readFileSync('build/packages/build-provenance.json'));
+  const provenance = JSON.parse(fs.readFileSync(path.join(packages, 'build-provenance.json')));
   const extensionSha = cp.execFileSync('git', ['rev-parse', 'HEAD'], {encoding: 'utf8'}).trim();
   assert.equal(provenance.extensionSha, extensionSha);
   assert.equal(hash(vsix), inventory.vsixSha256);
   Object.assign(report, {extensionSha, coreSha: provenance.coreSha, vsixSha256: hash(vsix)});
   const unpack = path.join(output, 'Unicode Modelle ä');
+  fs.rmSync(unpack, {recursive: true, force: true});
   await require('../vsix.cjs').extractVSIX(vsix, unpack);
   const extension = path.join(unpack, 'extension');
   const manifest = JSON.parse(fs.readFileSync(path.join(extension, 'package.json')));
@@ -42,17 +46,29 @@ function run(exe, args, env = {}, nativeOptions = {}) {
   const lock = JSON.parse(fs.readFileSync(path.join(extension, 'release/editor-artifacts.lock.json')));
   assert.equal(lock.coreCommit, provenance.coreSha);
   // Build test adapters using the exact assets extracted from the actual VSIX.
-  fs.cpSync(path.join(extension, 'artifacts'), path.resolve('artifacts'), {recursive: true});
+  for (const name of fs.readdirSync(path.join(extension, 'artifacts'))) {
+    if (name === 'runtime') continue;
+    fs.rmSync(path.resolve('artifacts', name), {recursive: true, force: true});
+    fs.cpSync(path.join(extension, 'artifacts', name), path.resolve('artifacts', name), {recursive: true});
+  }
   run(process.execPath, ['scripts/build.cjs']);
   const {resolveLaunchPlan} = require('../../build/launch.cjs');
   const plan = await resolveLaunchPlan(extension);
   assert.ok(plan.java.startsWith(extension + path.sep));
   report.launch = {java: plan.java, coreCommit: plan.coreCommit, bundleDigest: plan.bundleDigest, runtimeDigest: plan.runtimeDigest, runtimeSource: plan.runtimeSource};
   run(process.execPath, ['--test', 'test/protocol.test.cjs'], {INTERLIS_JAVA: '', INTERLIS_TEST_EXTENSION_ROOT: extension});
+  run(process.execPath, ['--test', 'test/unit/runtime.test.cjs'], {INTERLIS_TEST_EXTENSION_ROOT: extension});
+  report.https = await require('./https-smoke.cjs').check(plan.java, output, run, extension);
   // Exercise VS Code's genuine installation CLI, without starting an Electron GUI.
   const {downloadAndUnzipVSCode} = require('@vscode/test-electron');
-  const code = await downloadAndUnzipVSCode({version: '1.140.0'});
-  const cli = path.join(path.dirname(code), 'resources/app/out/cli.js');
+  let code = await downloadAndUnzipVSCode({version: '1.140.0'});
+  if (process.platform === 'darwin' && !fs.existsSync(code)) {
+    const plist = path.resolve(path.dirname(code), '../Info.plist');
+    const executable = cp.execFileSync('/usr/libexec/PlistBuddy', ['-c', 'Print :CFBundleExecutable', plist], {encoding: 'utf8'}).trim();
+    if (!/^[\w -]+$/.test(executable)) throw Error('Invalid VS Code bundle executable');
+    code = path.join(path.dirname(code), executable);
+  }
+  const cli = process.platform === 'darwin' ? path.resolve(path.dirname(code), '../Resources/app/out/cli.js') : path.join(path.dirname(code), 'resources/app/out/cli.js');
   function runCli(args) {
     if (process.platform !== 'win32') return run(code, [cli, ...args], {ELECTRON_RUN_AS_NODE: '1'});
     // Use the vendor's Windows CLI shim, whose entrypoint layout can differ.
@@ -68,6 +84,8 @@ function run(exe, args, env = {}, nativeOptions = {}) {
   const ids = runCli(['--shared-data-dir', path.join(output, 'Shared profile ä'), '--user-data-dir', user, '--extensions-dir', extensions, '--list-extensions', '--show-versions']);
   assert.ok(ids.split(/\r?\n/).map(line => line.trim()).includes(extensionId + '@' + manifest.version), 'Installed CLI identity/version differs');
   report.cliInstalled = true;
+  report.extensionRoot = extension;
+  report.code = code;
   const missing = path.join(extension, 'artifacts/server', lock.files.find(f => /interlis-lsp.*\.jar$/.test(f.path)).path);
   const backup = fs.readFileSync(missing);
   fs.unlinkSync(missing);

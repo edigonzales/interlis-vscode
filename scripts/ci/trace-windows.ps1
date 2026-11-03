@@ -6,7 +6,7 @@ $rows = [System.Collections.Generic.List[object]]::new()
 $subscription = Register-CimIndicationEvent -Query 'SELECT * FROM Win32_ProcessStartTrace' -SourceIdentifier $source
 try {
     Start-Sleep -Milliseconds 500
-    $child = Start-Process -FilePath (Get-Command node).Source -ArgumentList 'scripts/ci/smoke.cjs' -NoNewWindow -PassThru
+    $child = Start-Process -FilePath (Get-Command node).Source -ArgumentList 'scripts/ci/build-candidates.cjs' -NoNewWindow -PassThru
     do {
         foreach ($event in @(Get-Event -SourceIdentifier $source -ErrorAction SilentlyContinue)) {
             $data = $event.SourceEventArgs.NewEvent

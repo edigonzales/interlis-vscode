@@ -90,6 +90,31 @@ are locked under `release/`; unexpected, missing or changed files prevent startu
 Cross-packaging is not a native platform test. Linux/Windows qualification uses
 short native GitHub Actions smokes; their GUI and Remote GUI remain untested under
 the [user-adjusted scope](docs/implementation/vscode-extension/PLATFORM_TEST_SCOPE.md).
+
+GitHub Actions builds the locked server/renderer once, then builds and tests both
+a full Temurin JRE and a custom `jlink` runtime on each native target runner.
+The final VSIX uses `jlink` only when its compressed download is at least 10%
+smaller. A failed candidate test fails the workflow; only insufficient size savings
+select the full JRE. The job summary and `*.selection.json` record the comparison.
+All three native jobs, including the full macOS qualification of the selected
+VSIX, must pass before `platform-packages` is uploaded. Comparison artifacts are
+kept for three days; no Marketplace publication is performed.
+
+Runtime JRE/JDK sources are pinned in `release/runtime-sources.lock.json`;
+`release/runtime-link.json` documents link options and dynamic module dependencies.
+Generated inventories, provenance and notices live under `build/runtimes/` in CI,
+leaving committed locks unchanged. To build a native candidate locally:
+
+```sh
+node scripts/stage-runtime.cjs --target darwin-arm64 --variant jlink --output "$PWD/build/local-runtime"
+node scripts/package.cjs --target darwin-arm64 --runtime-root "$PWD/build/local-runtime" --output "$PWD/build/local-packages"
+```
+
+`--input /absolute/common-root` selects a staged Core bundle for either command.
+Java stays inside the VSIX, with no first-run download or system-Java fallback.
+HTTPS checks use an isolated test truststore and an EC certificate fixture; the
+packaged vendor truststore is never modified.
+
 For local development, open this repository in Codium or VS Code and press **F5**
 (configuration **INTERLIS Editor: Build LSP + Extension**). It installs missing
 npm dependencies, builds the sibling `../interlis-java` LSP and shared diagram UI,

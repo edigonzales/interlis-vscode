@@ -28,7 +28,13 @@ function job(name,cwd,exe,args,{guard=true,negative=false}={}){
  console.log(JSON.stringify({job:name,status:negative?'expected failure':'passed',exit:result.status}));
 }
 try{
- job('package',root,process.execPath,['scripts/package.cjs','--target','darwin-arm64']);
+ if(options['--vsix']){
+  const supplied=path.resolve(options['--vsix']),standard=path.join(root,'build/packages/interlis-editor-darwin-arm64.vsix');
+  if(supplied!==standard)fs.copyFileSync(supplied,standard);
+  const smoke=JSON.parse(fs.readFileSync(path.join(root,'build/ci/smoke-darwin-arm64-selected/result.json')));
+  assert.equal(smoke.status,'passed');assert.equal(smoke.vsixSha256,hash(standard));
+  env.INTERLIS_TEST_EXTENSION_ROOT=smoke.extensionRoot;
+ }else job('package',root,process.execPath,['scripts/package.cjs','--target','darwin-arm64']);
  const vsix=path.join(root,'build/packages/interlis-editor-darwin-arm64.vsix');report.vsixSha256=hash(vsix);report.vsix=path.join(output,'interlis-editor-darwin-arm64-'+report.vsixSha256+'.vsix');fs.copyFileSync(vsix,report.vsix);save();
  job('extension-unit-and-stdio',root,process.execPath,['--test',...fs.readdirSync(path.join(root,'test/unit')).filter(n=>n.endsWith('.test.cjs')).map(n=>'test/unit/'+n),'test/protocol.test.cjs']);
  job('dependencies',root,process.execPath,['scripts/verify-dependencies.cjs']);

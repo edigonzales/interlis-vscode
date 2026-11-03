@@ -1,4 +1,4 @@
-name: Short platform smoke
+name: Native runtime packages
 on:
   push:
     branches: [main, codex/vscode-extension]
@@ -9,9 +9,11 @@ concurrency:
   group: platform-smoke-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  packages:
+  common:
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 25
+    outputs:
+      core-sha: ${{ steps.core.outputs.sha }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
@@ -34,61 +36,151 @@ jobs:
         working-directory: extension
       - name: Check native process tracing
         run: command -v strace || sudo apt-get install --yes --no-install-recommends strace
-      - name: Build locked packages with complete descendant exec tracing
+      - name: Build the locked common server and renderer
         run: node scripts/ci/trace-linux.cjs node scripts/ci/build-smokes.cjs
         working-directory: extension
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: platform-packages
+          name: common-bundle
           if-no-files-found: error
-          retention-days: 14
-          path: |
-            extension/build/packages/*.vsix
-            extension/build/packages/*.inventory.json
-            extension/build/ci/build-provenance.json
+          retention-days: 3
+          path: extension/build/common.tar.gz
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
-          name: package-process-audit
+          name: common-process-audit
           path: extension/build/ci/process-audit/
-  smoke:
-    needs: packages
+  native:
+    needs: common
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-24.04, windows-2025]
+        include:
+          - os: ubuntu-24.04
+            target: linux-x64
+          - os: windows-2025
+            target: win32-x64
+          - os: macos-14
+            target: darwin-arm64
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
+    timeout-minutes: 90
+    env:
+      INTERLIS_CI_TARGET: ${{ matrix.target }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          path: extension
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        if: runner.os == 'macOS'
+        with:
+          repository: edigonzales/interlis-java
+          ref: ${{ needs.common.outputs.core-sha }}
+          path: core
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: 22.13.0
+      # Test-only javac/keytool and macOS qualification. jlink itself uses the
+      # separate JDK archive verified against runtime-sources.lock.json.
+      - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
+        with:
+          distribution: temurin
+          java-version: 25.0.3
       - run: npm ci --ignore-scripts
+        working-directory: extension
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
-          name: platform-packages
-          path: build/download
-      - name: Prepare package inputs
+          name: common-bundle
+          path: extension/build
+      - name: Extract common inputs
         shell: bash
+        working-directory: extension
         run: |
-          mkdir -p build/packages
-          cp build/download/packages/* build/packages/
-          cp build/download/ci/build-provenance.json build/packages/
-      - name: Native runtime, stdio, Unicode CLI installation and rejection smoke
+          mkdir -p build/common
+          tar -xzf build/common.tar.gz -C build/common
+      - uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684
+        with:
+          path: extension/build/runtime-downloads
+          key: runtime-${{ matrix.target }}-${{ hashFiles('extension/release/runtime-sources.lock.json', 'extension/release/editor-artifacts.lock.json', 'extension/release/runtime-link.json', 'extension/scripts/stage-runtime.cjs') }}
+      - name: Check native process tracing
         if: runner.os == 'Linux'
-        run: node scripts/ci/trace-linux.cjs node scripts/ci/smoke.cjs
-      - name: Native Windows smoke with actual descendant process events
+        run: command -v strace || sudo apt-get install --yes --no-install-recommends strace
+      - name: Build, test and compare both Linux candidates
+        if: runner.os == 'Linux'
+        run: node scripts/ci/trace-linux.cjs node scripts/ci/build-candidates.cjs
+        working-directory: extension
+      - name: Build, test and compare both Windows candidates with process audit
         if: runner.os == 'Windows'
         shell: pwsh
         run: ./scripts/ci/trace-windows.ps1
+        working-directory: extension
+      - name: Build, test and compare both macOS candidates under interpreter guard
+        if: runner.os == 'macOS'
+        run: node ../core/tools/verification/without-python.cjs /bin/sh -c 'cd "$1" && exec "$2" scripts/ci/build-candidates.cjs' native "$PWD" "$(command -v node)"
+        working-directory: extension
+      - name: Acquire GUI tools before offline qualification
+        if: runner.os == 'macOS'
+        run: node scripts/ci/prepare-gui.cjs
+        working-directory: extension
+      - name: Prepare shared diagram UI qualification dependencies
+        if: runner.os == 'macOS'
+        run: |
+          npm ci --ignore-scripts
+          npx --no-install playwright install chromium
+        working-directory: core/frontend/diagram-ui
+      - name: Qualify the selected macOS VSIX
+        if: runner.os == 'macOS'
+        shell: bash
+        working-directory: extension
+        run: >-
+          node scripts/qualify-macos.cjs
+          --core-dir "$GITHUB_WORKSPACE/core"
+          --evidence "$PWD/build/qualification"
+          --cache "$PWD/build/gui-cache"
+          --java-home "$JAVA_HOME"
+          --vsix "$PWD/build/packages/interlis-editor-darwin-arm64.vsix"
+      - name: Require unchanged tracked sources
+        shell: bash
+        working-directory: extension
+        run: test -z "$(git status --porcelain --untracked-files=no)"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: validated-${{ matrix.target }}
+          if-no-files-found: error
+          retention-days: 3
+          path: extension/build/packages/
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
-          name: smoke-${{ matrix.os }}
+          name: evidence-${{ matrix.target }}
+          retention-days: 7
+          path: |
+            extension/build/ci/smoke-*/result.json
+            extension/build/ci/smoke-*/command-*.log
+            extension/build/ci/smoke-*/https-*.log
+            extension/build/ci/process-audit/
+            extension/build/qualification/*.json
+            extension/build/qualification/*.log
+            extension/build/qualification/java-results/
+            extension/build/reports/
+            extension/build/runtimes/*/*/release/
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: comparison-${{ matrix.target }}
+          retention-days: 3
+          path: extension/build/comparison/
+  packages:
+    needs: native
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          pattern: validated-*
+          path: packages
+          merge-multiple: false
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: platform-packages
           if-no-files-found: error
           retention-days: 14
-          path: |
-            build/ci/smoke-*/result.json
-            build/ci/smoke-*/command-*.log
-            build/ci/process-audit/
+          path: packages/
