@@ -90,8 +90,21 @@ are locked under `release/`; unexpected, missing or changed files prevent startu
 Cross-packaging is not a native platform test. Linux/Windows qualification uses
 short native GitHub Actions smokes; their GUI and Remote GUI remain untested under
 the [user-adjusted scope](docs/implementation/vscode-extension/PLATFORM_TEST_SCOPE.md).
-For local F5 development, stage the locked Core and host runtime first; the
-provided launch configuration builds and opens an Extension Development Host.
+For local development, open this repository in Codium or VS Code and press **F5**
+(configuration **INTERLIS Editor: Build LSP + Extension**). It installs missing
+npm dependencies, builds the sibling `../interlis-java` LSP and shared diagram UI,
+builds the extension and opens a new Development Host using the **same editor**.
+On the first opening, trust the sample workspace if asked and open `Example.ili`.
+
+Development output lives under `build/`; the existing editor application and
+profile are reused. Personal settings and installed extensions are not modified. No VSIX installation or runtime download is required.
+Local Core edits are supported, and tracked release locks stay unchanged.
+Stop the debug session and press F5 again after changes to rebuild and restart.
+For preparation without launching an editor, use `npm run dev:prepare`.
+Set `INTERLIS_CORE_DIR` for a different Core checkout and
+`INTERLIS_DEV_JAVA_HOME` for an explicit JDK25. Otherwise it discovers Java25
+from JAVA_HOME, macOS registrations, SDKMAN or PATH. Node22+ and a JDK25 must
+already be installed.
 
 The GUI runner downloads VSCode1.140.0 and matching ChromeDriver into an isolated
 test directory, installs the VSIX and uses ExTester8.28.1/Selenium. Optional

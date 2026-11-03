@@ -552,7 +552,8 @@
     "verify:no-legacy-dependencies": "node scripts/verify-dependencies.cjs",
     "test:extension-host": "node scripts/extension-host.cjs",
     "test:installed": "node scripts/gui.cjs --suite smoke",
-    "review": "node scripts/review.cjs"
+    "review": "node scripts/review.cjs",
+    "dev:prepare": "node scripts/prepare-dev.cjs"
   },
   "dependencies": {
     "sax": "1.6.1",

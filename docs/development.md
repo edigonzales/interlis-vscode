@@ -98,3 +98,29 @@ actual VSIX JSON and XML metadata. GUI tests compare the installed manifest with
 the selected VSIX; native CI smokes additionally check the run-derived expected
 version and Code CLI's actual installed listing. The platform workflow runs on
 main, the existing test branch and manual dispatch. There is no registry publish step.
+
+## F5 development loop
+
+Open the extension repository as a folder in Codium or VS Code. The default
+extensionHost launch uses `runtimeExecutable: ${execPath}` and a prelaunch task
+`npm run dev:prepare`. It opens a separate Development Host in the same editor,
+with the sample INTERLIS workspace. The normal editor installation/profile is
+reused. The first workspace-trust question is handled normally.
+
+The task installs extension dependencies when absent or their lock changes, runs
+the sibling Core's incremental `editorBundle` task, verifies the emitted hashes,
+and builds copied extension sources against that bundle's protocol types.
+The Core task builds its shared UI and dependencies as needed. Java25 is discovered
+locally; `INTERLIS_DEV_JAVA_HOME` selects an explicit JDK. `INTERLIS_CORE_DIR`
+(or `npm run dev:prepare -- --core-dir /absolute/core`) selects another checkout.
+
+The private `build/dev-extension` has its own artifact lock; dirty Core sources
+are permitted only on this development path and recorded in
+`build/dev-preparation.json`. Release staging still requires clean Core sources.
+The debugger reads `build/dev.env` to pass the detected JDK to this development
+host. The extension accepts that environment fallback only in Development mode;
+an explicit user Java setting retains priority. Normal installed extensions
+ignore the fallback. No bundled runtime, VSIX install, editor download, personal
+settings change or release-lock rewrite is needed. Outputs are reused on subsequent
+F5 runs. Stop debugging before rebuilding; another F5 rebuilds and starts a fresh
+language server.

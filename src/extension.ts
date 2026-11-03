@@ -55,7 +55,9 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       return value;
     };
     const bundleOverride = machineSetting('server.bundlePath');
-    const plan = await resolveLaunchPlan(context.extensionPath, machineSetting('server.javaPath'), bundleOverride);
+    const developmentJava = context.extensionMode === vscode.ExtensionMode.Development
+      ? process.env.INTERLIS_DEV_JAVA || '' : '';
+    const plan = await resolveLaunchPlan(context.extensionPath, machineSetting('server.javaPath') || developmentJava, bundleOverride);
     const next = new InterlisLanguageClient('interlisGuru', 'INTERLIS', () => {
       const child = spawn(plan.java, plan.args, {shell: false, stdio: 'pipe'});
       output.appendLine(`Server start pid=${child.pid} core=${plan.coreCommit} bundle=${plan.bundleDigest} runtime=${plan.runtimeDigest || 'explicit'} ${plan.runtimeSource}${bundleOverride ? ' server override' : ' packaged distribution'}`);
