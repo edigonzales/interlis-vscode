@@ -6,7 +6,30 @@ const fixture=JSON.parse(fs.readFileSync(path.join(v.evidence,'resilience-fixtur
 const workspace=path.join(v.evidence,'Unicode Modelle');
 async function button(text){return ui.driver.wait(async()=>{for(const e of await ui.driver.findElements(By.css('button,.monaco-button'))){if(await e.isDisplayed()&&(await e.getText()).trim()===text)return e;}return false;},15000,'Native button missing: '+text);}
 async function absolute(file){await v.back();await ui.palette(file,true);await ui.waitEditor(path.basename(file));await ui.focusEditor();}
-async function addFolder(expectTrust=false){await v.back();await ui.palette('Workspaces: Add Folder to Workspace...',false,true);await v.quickInput(fixture.secondRoot+path.sep);await ui.driver.actions().sendKeys(Key.ENTER).perform();if(expectTrust)await (await button('Yes')).click();await ui.waitFor(async()=>(await ui.driver.findElement(By.css('body')).getText()).includes(path.basename(fixture.secondRoot)),'Added workspace folder not visible');}
+async function addFolder(expectTrust=false){
+ await v.back();await ui.palette('Workspaces: Add Folder to Workspace...',false,true);
+ const input=await ui.driver.wait(async()=>{for(const e of await ui.driver.findElements(By.css('.quick-input-widget input')))if(await e.isDisplayed())return e;return false;},10000,'Native folder picker missing');
+ await input.sendKeys(Key.chord(ui.primaryModifier,'a'),fixture.secondRoot+path.sep);
+ // The first acceptance can navigate into the directory. Wait for the native
+ // picker to settle before accepting again; never race two Enter key events.
+ let adds=0,stable=0,trustConfirmed=false;
+ await ui.driver.wait(async()=>{
+  for(const dialog of await ui.driver.findElements(By.css('.monaco-dialog-box'))){
+   if(await dialog.isDisplayed()&&(await dialog.getText()).includes('Do you trust the authors of the files in this folder?')){
+    assert.equal(expectTrust,true,'Unexpected trust prompt when re-adding a trusted folder');
+    await (await button('Yes')).click();trustConfirmed=true;return true;
+   }
+  }
+  if(!await input.isDisplayed())return !expectTrust;
+  const bars=await ui.driver.findElements(By.css('.quick-input-widget .monaco-progress-container'));
+  const ready=(await input.getAttribute('value'))===fixture.secondRoot+path.sep&&bars.length>0&&(await bars[0].getAttribute('class')).split(' ').includes('done');
+  stable=ready?stable+1:0;
+  if(stable>=2&&adds<2){await (await button('Add')).click();adds++;stable=0;}
+  return false;
+ },20000,'Native folder picker did not add the requested directory and confirm trust');
+ if(expectTrust)assert.equal(trustConfirmed,true,'The real workspace trust prompt was not confirmed');
+ await ui.waitFor(async()=>(await ui.driver.findElement(By.css('body')).getText()).includes(path.basename(fixture.secondRoot)),'Added workspace folder not visible');
+}
 async function resources(){if(!process.env.INTERLIS_GUI_METRICS_URL)throw Error('Use scripts/gui-resilience-run.cjs for actual RSS observation outside the macOS ps/setuid restriction');const response=await fetch(process.env.INTERLIS_GUI_METRICS_URL,{headers:{Authorization:'Bearer '+process.env.INTERLIS_GUI_METRICS_TOKEN}});assert.equal(response.status,200);const javaStarted=v.pids(),javaAlive=javaStarted.filter(pid=>{try{process.kill(pid,0);return true;}catch{return false;}});assert.equal(javaAlive.length,1,'Expected exactly one own live Java server');return {...await response.json(),javaStarted,javaAlive};}
 async function targets(){const response=await ui.driver.sendAndGetDevToolsCommand('Target.getTargets',{});return response.targetInfos.map(t=>({id:t.targetId,type:t.type,url:t.url}));}
 describe('Installed macOS trust and resilience',function(){
@@ -20,7 +43,7 @@ describe('Installed macOS trust and resilience',function(){
  });
  it('GUI-38 recovers from crash invalid Java and actual protocol mismatch without losing dirty text',async()=>{
   await v.source('Example.ili');const original=await ui.copyText(),dirty=original.replace('MODEL Example','!! dirty crash sentinel\nMODEL Example');await ui.replaceText(dirty);await ui.waitCurrentAnalysis();await ui.palette('INTERLIS: Show Diagram for This File');await v.enter();await v.fresh();const before=await (await ui.driver.findElement(By.id('canvas'))).getAttribute('data-snapshot-id');await v.back();
-  const pid=v.pids().at(-1);assert.ok(pid);fs.writeFileSync(path.join(v.evidence,'intentional-server-exits.json'),JSON.stringify([{pid,signal:'SIGKILL',reason:'GUI-38 deliberate own Java crash'}]));process.kill(pid,'SIGKILL');await ui.waitFor(()=>ui.status('Stopped'),'Crash status did not stop');await v.enter();await ui.waitFor(async()=>await (await ui.driver.findElement(By.id('canvas'))).getAttribute('data-status')==='STALE','Crash left a falsely fresh diagram');await ui.capture('GUI-38-crashed');await v.back();await ui.palette('INTERLIS: Restart Language Server');await ui.waitFor(()=>ui.status('Ready'),'Crash restart failed');assert.notEqual(v.pids().at(-1),pid);await v.source('Example.ili');assert.equal(await ui.copyText(),dirty);assert.equal(await ui.editor.isDirty(),true);await ui.waitCurrentAnalysis();await ui.palette('INTERLIS: Show Diagram for This File');await v.enter();await v.fresh();assert.notEqual(await (await ui.driver.findElement(By.id('canvas'))).getAttribute('data-snapshot-id'),before);await ui.capture('GUI-38-restarted');await v.back();
+  const pid=v.pids().at(-1);assert.ok(pid);fs.writeFileSync(path.join(v.evidence,'intentional-server-exits.json'),JSON.stringify([{pid,signal:'SIGKILL',reason:'GUI-38 deliberate own Java crash'}]));process.kill(pid,'SIGKILL');await ui.waitFor(()=>ui.status('Stopped'),'Crash status did not stop');await v.enter();await ui.waitFor(async()=>await (await ui.driver.findElement(By.id('canvas'))).getAttribute('data-status')==='STALE','Crash left a falsely fresh diagram');await ui.capture('GUI-38-crashed');await v.back();await ui.focusEditor();await ui.palette('INTERLIS: Restart Language Server');await ui.waitFor(()=>ui.status('Ready'),'Crash restart failed');assert.notEqual(v.pids().at(-1),pid);await v.source('Example.ili');assert.equal(await ui.copyText(),dirty);assert.equal(await ui.editor.isDirty(),true);await ui.waitCurrentAnalysis();await ui.palette('INTERLIS: Show Diagram for This File');await v.enter();await v.fresh();assert.notEqual(await (await ui.driver.findElement(By.id('canvas'))).getAttribute('data-snapshot-id'),before);await ui.capture('GUI-38-restarted');await v.back();await ui.focusEditor();
   await v.userSettings({'interlisGuru.server.javaPath':path.join(v.evidence,'missing Java ä')});await ui.palette('INTERLIS: Restart Language Server');await ui.waitFor(()=>ui.status('Error'),'Invalid runtime did not produce visible Error');assert.match(v.serverLog(),/Cannot run Java 25 executable/);await ui.capture('GUI-38-runtime-error');await v.userSettings({'interlisGuru.server.javaPath':''});await ui.palette('INTERLIS: Restart Language Server');await ui.waitFor(()=>ui.status('Ready'),'Restored bundled runtime did not restart');await ui.palette('INTERLIS: Stop Language Server');await ui.waitFor(()=>ui.status('Stopped'),'Stop before isolated negative swap failed');
   const installed=v.manifest().installed.path,locked=path.join(installed,'release/editor-artifacts.lock.json'),lockBytes=fs.readFileSync(locked),lock=JSON.parse(lockBytes),entry=lock.files.find(f=>/interlis-lsp.*\.jar$/.test(f.path)),jar=path.join(installed,'artifacts/server',entry.path),jarBytes=fs.readFileSync(jar),negative=path.resolve('build/test-fixtures/protocol-mismatch');
   try{fs.copyFileSync(path.join(negative,'interlis-lsp-incompatible.jar'),jar);fs.copyFileSync(path.join(negative,'editor-artifacts.lock.json'),locked);fs.copyFileSync(path.join(negative,'manifest.json'),path.join(v.evidence,'GUI-38-negative-fixture.json'));await ui.palette('INTERLIS: Restart Language Server');await ui.waitFor(()=>ui.status('Error'),'Protocol999 was not visibly rejected');assert.match(v.serverLog(),/does not support editor protocol version 1/);await ui.capture('GUI-38-protocol-error');}
