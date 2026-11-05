@@ -1,18 +1,8 @@
-Eclipse Adoptium Temurin Java 25: vendor binaries unmodified; vendor legal-file links materialized for portable VSIX extraction.
-Full vendor licenses and notices are retained under artifacts/runtime/<target>/legal.
+Eclipse Adoptium Temurin Java 25 (25.0.5+8-LTS), darwin-arm64.
+Custom runtime generated from the vendor JDK using jlink; see release/runtime-build.json for modules and options.
+Vendor licenses and notices retained under artifacts/runtime/darwin-arm64/legal.
 OpenJDK is GPLv2 with the Classpath Exception, with component-specific notices.
-Corresponding vendor source/build metadata and exact release assets:
-darwin-arm64 25.0.5+8-LTS
-https://github.com/adoptium/temurin25-binaries/releases/tag/jdk-25.0.5%2B8
-Archive SHA256 72ebd76b502c849e88dea39afae51baf5f82f2b5b1b6389c28ea707b20451bce
-SCM "jdk-25.0.5+8_adopt"
-
-linux-x64 25.0.5+8-LTS
-https://github.com/adoptium/temurin25-binaries/releases/tag/jdk-25.0.5%2B8
-Archive SHA256 6fac98f0c8202efc3135a9e9e42aa61963ec42d1c5cbb40caf231e7b14a24ef6
-SCM "jdk-25.0.5+8_adopt"
-
-win32-x64 25.0.5+8-LTS
-https://github.com/adoptium/temurin25-binaries/releases/tag/jdk-25.0.5%2B8
-Archive SHA256 da78d54a2fcdbba1e92d5e3f07dd30236f96297891c4a21a781c3f38f5c0beae
-SCM "jdk-25.0.5+8_adopt"
+Vendor source/build metadata: https://github.com/adoptium/temurin25-binaries/releases/tag/jdk-25.0.5%2B8
+SCM: jdk-25.0.5+8_adopt
+Archive: https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/OpenJDK25U-jdk_aarch64_mac_hotspot_25.0.5_8.tar.gz
+SHA256: 36dc14d797aaff6d89aab302cd053fdba6207dfdcf772052fa7b023a94b0e857

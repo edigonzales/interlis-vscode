@@ -37,11 +37,11 @@ function findJavaHome(env = process.env) {
 function prepareDev({root = path.resolve(__dirname, '..'), coreDirectory, env = process.env} = {}) {
   if (Number(process.versions.node.split('.')[0]) < 22) throw Error('Development builds require Node 22 or newer');
   const core = path.resolve(coreDirectory || env.INTERLIS_CORE_DIR || path.join(root, '../interlis-java'));
-  if (!fs.existsSync(path.join(core, 'settings.gradle'))) {
+  if (!fs.existsSync(path.join(core, 'build/InterlisJvmBuild.java'))) {
     throw Error('Core checkout not found at ' + core + '. Set INTERLIS_CORE_DIR or pass --core-dir.');
   }
   const javaHome = findJavaHome(env);
-  const buildEnv = {...env, JAVA_HOME: javaHome, INTERLIS_NODE: process.execPath,
+  const buildEnv = {...env, JAVA_HOME: javaHome, INTERLIS_NODE: env.INTERLIS_NODE || process.execPath,
     PATH: [path.dirname(process.execPath), path.join(javaHome, 'bin'), env.PATH || ''].join(path.delimiter)};
   const run = (command, args, cwd) => cp.execFileSync(command, args, {
     cwd, env: buildEnv, stdio: 'inherit', shell: process.platform === 'win32',
@@ -81,6 +81,8 @@ function prepareDev({root = path.resolve(__dirname, '..'), coreDirectory, env = 
   return record;
 }
 
+module.exports = {prepareDev, findJavaHome};
+
 if (require.main === module) {
   try {
     const args = process.argv.slice(2);
@@ -88,4 +90,3 @@ if (require.main === module) {
     prepareDev({coreDirectory: args[1]});
   } catch (error) { console.error(error.message); process.exitCode = 1; }
 }
-module.exports = {prepareDev, findJavaHome};

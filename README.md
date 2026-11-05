@@ -79,10 +79,18 @@ npm run test:gui -- --suite smoke
 npm run test:gui -- --suite editor
 ```
 
-`stage:core` calls the Core Gradle `editorBundle` task on the
+`stage:core` calls `java build/InterlisJvmBuild.java editor-bundle` on the
 explicit clean Core checkout, copies the complete runtime libraries and records
-their identities, neutral renderer, worker, schemas and host DTOs. It rejects a changing Core HEAD. Use the exact locked Core
+their identities, neutral renderer, worker, schemas and host DTOs. Select the Core Node pin with an absolute `INTERLIS_NODE` (currently 24.22.0); the Extension Node engine remains >=22. It rejects a changing Core HEAD. Use the exact locked Core
 commit when reproducing a candidate. No separate compiler build is introduced.
+A prebuilt bundle can be imported without a Core checkout or process start:
+
+```sh
+node scripts/stage-core.cjs --bundle-dir /absolute/bundle --core-commit PRODUCER_SHA --manifest-sha256 PRODUCER_MANIFEST_SHA256
+```
+
+Both identities must come from the selected producer result. Dirty Core bundles are accepted only by the separate development preparation path.
+
 VSIX output: `build/packages/interlis-editor-darwin-arm64.vsix`.
 Use `linux-x64` or `win32-x64` for the other target packages. Each archive contains
 only its own runtime. Source URLs, vendor archive SHA256s and extracted file hashes
@@ -212,3 +220,7 @@ The offline `distribution` suite is launched through
 macOS sandbox denies interpreter execution, external IP traffic and source reads,
 while its Code launcher has an empty PATH. Acquire VS Code/ChromeDriver in a normal
 GUI run first. See [architecture and test contracts](docs/development.md).
+
+The Jenesis migration B uses the single Core Java 25 entry point for server and renderer staging. The committed artifact lock uses schema 2 with the fixed `guru.interlis.lsp/guru.interlis.lsp.Main` module launch; Core bundles use schema 3. `resolveLaunchPlan` returns a frozen, verified module plan. The LSP protocol and renderer schemas keep their existing versions. Unknown modules, extra launch flags, automatic own modules, changed JARs and damaged bundled runtimes fail verification.
+
+The existing pinned full-JRE/jlink pipeline remains the runtime owner. Its analysis combines actual module descriptors, jdeps and documented dynamic providers; application JARs stay outside the JDK-only image. On the local macOS arm64 migration gate both actual VSIX variants were inspected; jlink saved 35.6% and passed HTTP/HTTPS protocol, isolated extension-host navigation/restart, and corruption probes. Windows/Linux workflow definitions were updated but not executed for this local migration. Full release/platform qualification remains a separate gate. Original migration receipts and the final independent candidate-pair review are retained outside both repositories in `interlis-java-jenesis-b-evidence`.

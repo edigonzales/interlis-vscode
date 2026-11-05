@@ -42,6 +42,20 @@ async function extract(source, archive, temporary, runtimeInventory) {
   return home;
 }
 
+// Inventory validates every link against the source root before any link is followed.
+async function materializeRuntime(source, destination, runtimeInventory) {
+  const entries = await runtimeInventory(source);
+  for (const entry of entries) {
+    const from = path.join(source, entry.path), to = path.join(destination, entry.path);
+    if (source === destination && !entry.link) continue;
+    const real = fs.realpathSync(from), mode = fs.statSync(real).mode;
+    fs.mkdirSync(path.dirname(to), {recursive: true});
+    const temporary = to + '.materializing-' + crypto.randomUUID();
+    fs.copyFileSync(real, temporary); fs.chmodSync(temporary, mode);
+    fs.renameSync(temporary, to);
+  }
+}
+
 async function stageRuntime({target, variant = 'full-jre', output = process.cwd(), input = process.cwd(), cache = path.resolve('build/runtime-downloads')}) {
   const sources = json('release/runtime-sources.lock.json');
   const source = variant === 'jlink' ? sources.targets[target]?.jdk : sources.targets[target];
@@ -62,7 +76,7 @@ async function stageRuntime({target, variant = 'full-jre', output = process.cwd(
     const home = await extract(source, archive, temporary, runtimeInventory);
     fs.mkdirSync(path.dirname(destination), {recursive: true});
     fs.rmSync(destination, {recursive: true, force: true});
-    if (variant === 'full-jre') fs.cpSync(home, destination, {recursive: true, dereference: true});
+    if (variant === 'full-jre') await materializeRuntime(home, destination, runtimeInventory);
     else {
       const suffix = process.platform === 'win32' ? '.exe' : '';
       const run = (tool, args) => cp.execFileSync(path.join(home, 'bin', tool + suffix), args, {encoding: 'utf8', maxBuffer: 16 * 1024 * 1024});
@@ -74,21 +88,29 @@ async function stageRuntime({target, variant = 'full-jre', output = process.cwd(
       });
       const actual = fs.readdirSync(path.join(input, 'artifacts/server/lib')).sort();
       if (JSON.stringify(actual) !== JSON.stringify(server.files.map(file => path.basename(file.path)).sort())) throw Error('Unexpected server libraries');
-      const analysis = run('jdeps', ['--multi-release', '25', '--print-module-deps', '--class-path', jars.join(path.delimiter), ...jars]);
+      if(server.schemaVersion!==2||server.launch?.kind!=='module'||server.launch.moduleName!=='guru.interlis.lsp')throw Error('Modular server lock required for jlink analysis');
+      const analysis = run('jdeps', ['--multi-release', '25', '--print-module-deps', '--recursive', '--add-modules', 'java.logging,java.sql,com.google.errorprone.annotations', '--module-path', jars.join(path.delimiter), '--module', server.launch.moduleName]);
       const lines = analysis.trim().split(/\r?\n/);
       const detected = lines.at(-1);
       if (!/^[a-zA-Z][\w.]*(?:,[a-zA-Z][\w.]*)*$/.test(detected)) throw Error('Invalid jdeps module result: ' + analysis);
       const config = json('release/runtime-link.json');
-      const modules = [...new Set([...detected.split(','), ...config.additionalModules])].sort();
+      const systemModules = new Set(run('java', ['--list-modules']).trim().split(/\r?\n/).map(line => line.split('@')[0]));
+      // Application/automatic modules remain unchanged external JARs, never jlink inputs.
+      const jdkDependencies = detected.split(',').filter(name => systemModules.has(name));
+      const descriptorJdkRoots = new Set();
+      const descriptorOutputs = {};
+      for (const module of Object.values(server.moduleInventory)) {
+        const description = run('java', ['--module-path', jars.join(path.delimiter), '--describe-module', module.name]);
+        descriptorOutputs[module.name] = description.replaceAll(input, '<common>');
+        for (const match of description.matchAll(/^requires ([\w.]+)/gm)) if (systemModules.has(match[1])) descriptorJdkRoots.add(match[1]);
+      }
+      const modules = [...new Set([...jdkDependencies, ...descriptorJdkRoots, 'java.logging', 'java.sql', ...config.additionalModules])].sort();
       const args = ['--module-path', path.join(home, 'jmods'), '--add-modules', modules.join(','), ...config.options, '--output', destination];
       run('jlink', args);
       // Materialize legal-file links consistently with the full-JRE package.
-      await runtimeInventory(destination);
-      const materialized = destination + '.materialized';
-      fs.cpSync(destination, materialized, {recursive: true, dereference: true});
-      fs.rmSync(destination, {recursive: true}); fs.renameSync(materialized, destination);
+      await materializeRuntime(destination, destination, runtimeInventory);
       if (hash(path.join(destination, 'lib/security/cacerts')) !== hash(path.join(home, 'lib/security/cacerts'))) throw Error('jlink changed vendor trust anchors');
-      Object.assign(provenance, {modules, moduleReasons: config.moduleReasons, linkerOptions: config.options, linkConfigurationSha256: hash('release/runtime-link.json'), jdepsOutput: analysis.replaceAll(input, '<common>'), linkedModules: runImage(destination, ['--list-modules'])});
+      Object.assign(provenance, {modules, descriptorOutputs, analysisRoots: ['java.logging', 'java.sql', 'com.google.errorprone.annotations'], externalModules: detected.split(',').filter(name => !systemModules.has(name)), moduleReasons: config.moduleReasons, linkerOptions: config.options, linkConfigurationSha256: hash('release/runtime-link.json'), jdepsOutput: analysis.replaceAll(input, '<common>'), linkedModules: runImage(destination, ['--list-modules'])});
     }
     const record = {version: source.version, archiveSha256: source.archive.sha256, java: source.java, files: await runtimeInventory(destination, target !== 'win32-x64')};
     const lockFile = path.join(output, 'release/runtime-artifacts.lock.json');

@@ -1,11 +1,23 @@
 {
   "schemaVersion": 1,
-  "additionalModules": ["jdk.charsets", "jdk.crypto.ec", "jdk.localedata", "jdk.unsupported"],
+  "additionalModules": [
+    "jdk.charsets",
+    "jdk.crypto.ec",
+    "jdk.localedata",
+    "jdk.unsupported"
+  ],
   "moduleReasons": {
     "jdk.charsets": "Preserve extended charset support.",
     "jdk.crypto.ec": "HTTPS ECDHE/ECDSA providers are loaded dynamically.",
     "jdk.localedata": "Preserve all locale data, including German, French, Italian and English.",
-    "jdk.unsupported": "Gson reflectively uses sun.misc.Unsafe to deserialize LSP4J Either3 in editorAssist; jdeps does not detect this dependency."
+    "jdk.unsupported": "Gson reflectively uses sun.misc.Unsafe to deserialize LSP4J Either3 in editorAssist; jdeps does not detect this dependency.",
+    "java.logging": "Automatic LSP4J JSON-RPC module uses java.util.logging.",
+    "java.sql": "Gson optional SQL adapters are part of the locked runtime closure."
   },
-  "options": ["--strip-debug", "--no-header-files", "--no-man-pages", "--compress=2"]
+  "options": [
+    "--strip-debug",
+    "--no-header-files",
+    "--no-man-pages",
+    "--compress=2"
+  ]
 }

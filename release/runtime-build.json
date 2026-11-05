@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "target": "darwin-arm64",
+  "variant": "jlink",
+  "version": "25.0.5+8-LTS",
+  "archiveSha256": "36dc14d797aaff6d89aab302cd053fdba6207dfdcf772052fa7b023a94b0e857",
+  "archiveUrl": "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/OpenJDK25U-jdk_aarch64_mac_hotspot_25.0.5_8.tar.gz",
+  "coreCommit": "92cb361927ffed80dcc963ae5b7e943abbfff314",
+  "serverLockSha256": "421c8744bbdbff29069ddc61b6c5ef071399fa3038d75bfc855a525efd799129",
+  "serverFiles": [
+    {
+      "path": "lib/antlr4-runtime-4.13.2.jar",
+      "sha256": "dd3e8a13a2d669bf84fb8d834de35ce4875f27157698d206241ec8488aadcaf7"
+    },
+    {
+      "path": "lib/error_prone_annotations-2.48.0.jar",
+      "sha256": "b49c5c958316ed67a09c699dda9aa749caf434d51d863dea599ef36a49b9c855"
+    },
+    {
+      "path": "lib/gson-2.14.0.jar",
+      "sha256": "2cbd119bf1961c28788310963dc80ba65f58cdeec1dd139c8bdb1240faa2c36f"
+    },
+    {
+      "path": "lib/interlis-compiler-0.2.0-SNAPSHOT.jar",
+      "sha256": "12dd0c9f7735914a8bf05ed6c28a5fa4805b94b5db63866b34d451006138e70b"
+    },
+    {
+      "path": "lib/interlis-documentation-0.2.0-SNAPSHOT.jar",
+      "sha256": "ae89b2b1a9b0ae86f73afe0af06e93ae564b5b24422918639afcacec03fc54d2"
+    },
+    {
+      "path": "lib/interlis-lsp-0.2.0-SNAPSHOT.jar",
+      "sha256": "454b6eb982564cd444ffe0d15f299f0d1f552129b9e228f95ff799f8a93dfc98"
+    },
+    {
+      "path": "lib/interlis-model-0.2.0-SNAPSHOT.jar",
+      "sha256": "416d2bf8ac0467af63052408506e07598beb6849255ef812a19ccf5144411e28"
+    },
+    {
+      "path": "lib/interlis-projection-0.2.0-SNAPSHOT.jar",
+      "sha256": "66c87d74a06c76621a544e4a173d806f667222e349472f3eaee50038e3bb67ea"
+    },
+    {
+      "path": "lib/interlis-repository-0.2.0-SNAPSHOT.jar",
+      "sha256": "18ec44be3139f8f3b6cd5f873469614f88b2fc2b2e3e4f8149d029c1295c13de"
+    },
+    {
+      "path": "lib/interlis-workspace-0.2.0-SNAPSHOT.jar",
+      "sha256": "87c00c3559856f361ad95613ecd302e92202126e9a7869372135d2555686397a"
+    },
+    {
+      "path": "lib/org.eclipse.lsp4j-0.23.1.jar",
+      "sha256": "b16bbc6232a3946e03d537bb9be74e18489dbc6a8b8c5ab6cb7980854df8440f"
+    },
+    {
+      "path": "lib/org.eclipse.lsp4j.jsonrpc-0.23.1.jar",
+      "sha256": "4e1aa77474de1791d96dc55932fb46efdf53233548f38f62ba7376f8b0bc6650"
+    }
+  ],
+  "modules": [
+    "java.base",
+    "java.compiler",
+    "java.logging",
+    "java.net.http",
+    "java.sql",
+    "java.transaction.xa",
+    "java.xml",
+    "jdk.charsets",
+    "jdk.crypto.ec",
+    "jdk.localedata",
+    "jdk.unsupported"
+  ],
+  "linkerOptions": [
+    "--strip-debug",
+    "--no-header-files",
+    "--no-man-pages",
+    "--compress=2"
+  ],
+  "descriptorOutputs": {
+    "org.antlr.antlr4.runtime": "org.antlr.antlr4.runtime@4.13.2 file://<common>/artifacts/server/lib/antlr4-runtime-4.13.2.jar automatic\nrequires java.base mandated\ncontains org.antlr.v4.runtime\ncontains org.antlr.v4.runtime.atn\ncontains org.antlr.v4.runtime.dfa\ncontains org.antlr.v4.runtime.misc\ncontains org.antlr.v4.runtime.tree\ncontains org.antlr.v4.runtime.tree.pattern\ncontains org.antlr.v4.runtime.tree.xpath\n",
+    "com.google.errorprone.annotations": "com.google.errorprone.annotations@2.48.0 file://<common>/artifacts/server/lib/error_prone_annotations-2.48.0.jar open\nexports com.google.errorprone.annotations\nexports com.google.errorprone.annotations.concurrent\nrequires java.compiler\nrequires java.base mandated\n",
+    "com.google.gson": "com.google.gson@2.14.0 file://<common>/artifacts/server/lib/gson-2.14.0.jar\nexports com.google.gson\nexports com.google.gson.annotations\nexports com.google.gson.reflect\nexports com.google.gson.stream\nrequires jdk.unsupported static\nrequires java.base mandated\nrequires com.google.errorprone.annotations static\nrequires java.sql static\ncontains com.google.gson.internal\ncontains com.google.gson.internal.bind\ncontains com.google.gson.internal.bind.util\ncontains com.google.gson.internal.reflect\ncontains com.google.gson.internal.sql\n",
+    "guru.interlis.compiler": "guru.interlis.compiler@0.2.0-SNAPSHOT file://<common>/artifacts/server/lib/interlis-compiler-0.2.0-SNAPSHOT.jar\nexports guru.interlis.compiler\nexports guru.interlis.compiler.query\nexports guru.interlis.format\nexports guru.interlis.syntax\nrequires org.antlr.antlr4.runtime automatic\nrequires guru.interlis.model transitive\nrequires java.base mandated\ncontains guru.interlis.compiler.internal\ncontains guru.interlis.compiler.internal.antlr\n",
+    "guru.interlis.documentation": "guru.interlis.documentation@0.2.0-SNAPSHOT file://<common>/artifacts/server/lib/interlis-documentation-0.2.0-SNAPSHOT.jar\nexports guru.interlis.documentation\nrequires guru.interlis.model transitive\nrequires java.base mandated\nrequires guru.interlis.projection transitive\n",
+    "guru.interlis.lsp": "guru.interlis.lsp@0.2.0-SNAPSHOT file://<common>/artifacts/server/lib/interlis-lsp-0.2.0-SNAPSHOT.jar\nexports guru.interlis.lsp\nrequires guru.interlis.workspace transitive\nrequires guru.interlis.projection transitive\nrequires guru.interlis.model transitive\nrequires jdk.unsupported\nrequires org.eclipse.lsp4j transitive automatic\nrequires guru.interlis.documentation\nrequires org.eclipse.lsp4j.jsonrpc automatic\nrequires com.google.gson transitive\nrequires java.base mandated\nrequires guru.interlis.repository\nrequires guru.interlis.compiler transitive\nqualified opens guru.interlis.lsp to com.google.gson\n",
+    "guru.interlis.model": "guru.interlis.model@0.2.0-SNAPSHOT file://<common>/artifacts/server/lib/interlis-model-0.2.0-SNAPSHOT.jar\nexports guru.interlis.diagnostics\nexports guru.interlis.execution\nexports guru.interlis.model\nexports guru.interlis.model.query\nexports guru.interlis.source\nrequires java.base mandated\nqualified exports guru.interlis.model.internal to guru.interlis.compiler\n",
+    "guru.interlis.projection": "guru.interlis.projection@0.2.0-SNAPSHOT file://<common>/artifacts/server/lib/interlis-projection-0.2.0-SNAPSHOT.jar\nexports guru.interlis.projection\nrequires guru.interlis.compiler transitive\nrequires java.base mandated\nrequires guru.interlis.model transitive\n",
+    "guru.interlis.repository": "guru.interlis.repository@0.2.0-SNAPSHOT file://<common>/artifacts/server/lib/interlis-repository-0.2.0-SNAPSHOT.jar\nexports guru.interlis.repository\nrequires guru.interlis.model transitive\nrequires java.xml\nrequires java.net.http\nrequires guru.interlis.workspace transitive\nrequires java.base mandated\n",
+    "guru.interlis.workspace": "guru.interlis.workspace@0.2.0-SNAPSHOT file://<common>/artifacts/server/lib/interlis-workspace-0.2.0-SNAPSHOT.jar\nexports guru.interlis.workspace\nexports guru.interlis.workspace.resolution\nrequires java.base mandated\nrequires guru.interlis.model transitive\nrequires guru.interlis.compiler transitive\n",
+    "org.eclipse.lsp4j": "org.eclipse.lsp4j@0.23.1 file://<common>/artifacts/server/lib/org.eclipse.lsp4j-0.23.1.jar automatic\nrequires java.base mandated\ncontains org.eclipse.lsp4j\ncontains org.eclipse.lsp4j.adapters\ncontains org.eclipse.lsp4j.launch\ncontains org.eclipse.lsp4j.services\ncontains org.eclipse.lsp4j.util\n",
+    "org.eclipse.lsp4j.jsonrpc": "org.eclipse.lsp4j.jsonrpc@0.23.1 file://<common>/artifacts/server/lib/org.eclipse.lsp4j.jsonrpc-0.23.1.jar automatic\nrequires java.base mandated\ncontains org.eclipse.lsp4j.jsonrpc\ncontains org.eclipse.lsp4j.jsonrpc.json\ncontains org.eclipse.lsp4j.jsonrpc.json.adapters\ncontains org.eclipse.lsp4j.jsonrpc.messages\ncontains org.eclipse.lsp4j.jsonrpc.services\ncontains org.eclipse.lsp4j.jsonrpc.util\ncontains org.eclipse.lsp4j.jsonrpc.validation\n"
+  },
+  "analysisRoots": [
+    "java.logging",
+    "java.sql",
+    "com.google.errorprone.annotations"
+  ],
+  "externalModules": [
+    "com.google.gson",
+    "guru.interlis.documentation",
+    "guru.interlis.repository",
+    "org.eclipse.lsp4j",
+    "org.eclipse.lsp4j.jsonrpc"
+  ],
+  "moduleReasons": {
+    "jdk.charsets": "Preserve extended charset support.",
+    "jdk.crypto.ec": "HTTPS ECDHE/ECDSA providers are loaded dynamically.",
+    "jdk.localedata": "Preserve all locale data, including German, French, Italian and English.",
+    "jdk.unsupported": "Gson reflectively uses sun.misc.Unsafe to deserialize LSP4J Either3 in editorAssist; jdeps does not detect this dependency.",
+    "java.logging": "Automatic LSP4J JSON-RPC module uses java.util.logging.",
+    "java.sql": "Gson optional SQL adapters are part of the locked runtime closure."
+  },
+  "linkConfigurationSha256": "207004c6f3f58368b275c678b8894afbc7217a311689eaa22e35e7acec070c7b",
+  "jdepsOutput": "com.google.gson,guru.interlis.documentation,guru.interlis.repository,java.base,java.transaction.xa,java.xml,org.eclipse.lsp4j,org.eclipse.lsp4j.jsonrpc\n",
+  "linkedModules": "java.base@25.0.5\njava.compiler@25.0.5\njava.logging@25.0.5\njava.net.http@25.0.5\njava.sql@25.0.5\njava.transaction.xa@25.0.5\njava.xml@25.0.5\njdk.charsets@25.0.5\njdk.crypto.ec@25.0.5\njdk.localedata@25.0.5\njdk.unsupported@25.0.5\n"
+}
