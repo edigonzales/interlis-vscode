@@ -1,7 +1,7 @@
 name: Native runtime packages
 on:
   push:
-    branches: [main, codex/vscode-extension]
+    branches: [main, codex/vscode-extension, codex/jenesis-migration-b]
   workflow_dispatch:
 permissions:
   contents: read
