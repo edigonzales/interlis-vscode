@@ -1,7 +1,7 @@
 const fs = require('node:fs'), cp = require('node:child_process'), path = require('node:path'), crypto = require('node:crypto');
 const hash = file => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 const json = file => JSON.parse(fs.readFileSync(file));
-async function packageVSIX({target, input = process.cwd(), runtimeRoot = input, output = path.resolve('build/packages'), build = true}) {
+async function packageVSIX({target, input = process.cwd(), runtimeRoot = input, output = path.resolve('build/packages'), build = true, preRelease = false}) {
   if (!['darwin-arm64', 'linux-x64', 'win32-x64'].includes(target)) throw Error('Unsupported VSIX target');
   for (const dir of [input, runtimeRoot, output]) if (!path.isAbsolute(dir)) throw Error('Package input/runtime/output must be absolute');
   if (build) cp.execFileSync(process.execPath, [path.resolve('scripts/build.cjs')], {stdio: 'inherit'});
@@ -36,13 +36,17 @@ async function packageVSIX({target, input = process.cwd(), runtimeRoot = input, 
     if (native) await resolveLaunchPlan(stage);
     fs.mkdirSync(output, {recursive: true});
     const vsix = path.join(output, 'interlis-editor-' + target + '.vsix');
-    await require('@vscode/vsce').createVSIX({cwd: stage, packagePath: vsix, target, dependencies: false});
+    await require('@vscode/vsce').createVSIX({cwd: stage, packagePath: vsix, target, dependencies: false, preRelease});
     inspected = fs.mkdtempSync(path.resolve('build/vsix-inspect-'));
     const archive = await require('./vsix.cjs').extractVSIX(vsix, inspected), installed = path.join(inspected, 'extension');
     const packagedManifest = json(path.join(installed, 'package.json'));
     for (const key of ['name', 'publisher', 'displayName', 'version']) if (packagedManifest[key] !== manifest[key]) throw Error('VSIX manifest differs: ' + key);
+    for (const key of ['homepage', 'bugs', 'repository']) {
+      if (JSON.stringify(packagedManifest[key]) !== JSON.stringify(manifest[key])) throw Error('VSIX project link differs: ' + key);
+    }
     const xml = fs.readFileSync(path.join(inspected, 'extension.vsixmanifest'), 'utf8');
     for (const attribute of [`Version="${manifest.version}"`, `Publisher="${manifest.publisher}"`, `Id="${manifest.name}"`, `TargetPlatform="${target}"`]) if (!xml.includes(attribute)) throw Error('VSIX XML identity/version/target differs: ' + attribute);
+    if (xml.includes('Id="Microsoft.VisualStudio.Code.PreRelease" Value="true"') !== preRelease) throw Error('VSIX pre-release metadata differs');
     if (hash(path.join(installed, 'release/runtime-artifacts.lock.json')) !== runtimeLockSha256) throw Error('VSIX lost its runtime inventory');
     const actual = await runtimeInventory(path.join(installed, 'artifacts/runtime', target), target !== 'win32-x64');
     if (JSON.stringify(actual) !== JSON.stringify(record.files)) throw Error('Packaged runtime bytes or modes differ');

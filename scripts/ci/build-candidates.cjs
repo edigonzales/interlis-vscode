@@ -13,22 +13,27 @@ function run(script, env = {}) {cp.execFileSync(process.execPath, [script], {std
   clean();
   const provenance = JSON.parse(fs.readFileSync(path.join(input, 'build-provenance.json')));
   if (provenance.extensionSha !== git(['rev-parse', 'HEAD'])) throw Error('Foreign common build');
-  const lock = fs.readFileSync('release/editor-artifacts.lock.json');
-  if (!lock.equals(fs.readFileSync(path.join(input, 'release/editor-artifacts.lock.json'))) || JSON.parse(lock).coreCommit !== provenance.coreSha) throw Error('Foreign Core artifact lock');
+  const lock = JSON.parse(fs.readFileSync('release/editor-artifacts.lock.json'));
+  const stagedLock = JSON.parse(fs.readFileSync(path.join(input, 'release/editor-artifacts.lock.json')));
+  if (lock.coreCommit !== provenance.coreSha) throw Error('Foreign Core commit');
+  require('node:assert/strict').deepEqual(stagedLock, {...lock, bundleManifestSha256: provenance.bundleManifestSha256},
+    'Foreign Core artifact lock');
   // TypeScript builds consume the exact common renderer declarations.
   fs.rmSync('artifacts', {recursive: true, force: true});
   fs.cpSync(path.join(input, 'artifacts'), 'artifacts', {recursive: true});
   run('scripts/build.cjs'); run('scripts/verify-dependencies.cjs');
   cp.execFileSync(process.execPath, ['--test', 'test/unit/runtime-selection.test.cjs', 'test/unit/distribution-metadata.test.cjs'], {stdio: 'inherit'});
+  const preRelease = process.env.INTERLIS_CI_PRERELEASE === 'true';
   const reports = {};
-  for (const variant of ['full-jre', 'jlink']) {
-    const runtimeRoot = path.resolve('build/runtimes', target, variant), packages = path.resolve('build/comparison', target, variant);
+  for (const variant of (preRelease ? ['jlink'] : ['full-jre', 'jlink'])) {
+    const runtimeRoot = path.resolve('build/runtimes', target, variant), packages = preRelease ? output : path.resolve('build/comparison', target, variant);
     await require('../stage-runtime.cjs').stageRuntime({target, variant, input, output: runtimeRoot});
-    reports[variant] = await require('../package.cjs').packageVSIX({target, input, runtimeRoot, output: packages, build: false});
+    reports[variant] = await require('../package.cjs').packageVSIX({target, input, runtimeRoot, output: packages, build: false, preRelease});
     fs.copyFileSync(path.join(input, 'build-provenance.json'), path.join(packages, 'build-provenance.json'));
-    run('scripts/ci/smoke.cjs', {INTERLIS_SMOKE_PACKAGES: packages, INTERLIS_SMOKE_LABEL: variant});
+    run('scripts/ci/smoke.cjs', {INTERLIS_SMOKE_PACKAGES: packages, INTERLIS_SMOKE_LABEL: preRelease ? 'selected' : variant});
     clean();
   }
+  if (preRelease) return;
   const decision = {...require('../runtime-selection.cjs').selectRuntime(fs.statSync(reports['full-jre'].vsix).size, fs.statSync(reports.jlink.vsix).size), target, fullJreRuntimeBytes: reports['full-jre'].runtimeBytes, jlinkRuntimeBytes: reports.jlink.runtimeBytes, candidateTests: 'passed'};
   const selected = reports[decision.variant];
   fs.mkdirSync(output, {recursive: true});

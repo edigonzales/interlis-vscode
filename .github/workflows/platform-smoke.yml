@@ -1,12 +1,17 @@
 name: Native runtime packages
 on:
   push:
-    branches: [main, codex/vscode-extension, codex/jenesis-migration-b]
+    branches: [codex/vscode-extension, codex/jenesis-migration-b]
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      prerelease:
+        type: boolean
+        default: false
 permissions:
   contents: read
 concurrency:
-  group: platform-smoke-${{ github.ref }}
+  group: platform-smoke-${{ inputs.prerelease && github.run_id || github.ref }}
   cancel-in-progress: true
 jobs:
   common:
@@ -31,7 +36,7 @@ jobs:
       - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
         with:
           distribution: temurin
-          java-version: 25.0.3
+          java-version: 25.0.5
       - run: npm ci --ignore-scripts
         working-directory: extension
       - name: Check native process tracing
@@ -60,12 +65,13 @@ jobs:
             target: linux-x64
           - os: windows-2025
             target: win32-x64
-          - os: macos-14
+          - os: macos-15
             target: darwin-arm64
     runs-on: ${{ matrix.os }}
     timeout-minutes: 90
     env:
       INTERLIS_CI_TARGET: ${{ matrix.target }}
+      INTERLIS_CI_PRERELEASE: ${{ inputs.prerelease || false }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
@@ -84,7 +90,7 @@ jobs:
       - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
         with:
           distribution: temurin
-          java-version: 25.0.3
+          java-version: 25.0.5
       - run: npm ci --ignore-scripts
         working-directory: extension
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
@@ -104,16 +110,16 @@ jobs:
       - name: Check native process tracing
         if: runner.os == 'Linux'
         run: command -v strace || sudo apt-get install --yes --no-install-recommends strace
-      - name: Build, test and compare both Linux candidates
+      - name: Build and test Linux VSIX
         if: runner.os == 'Linux'
         run: node scripts/ci/trace-linux.cjs node scripts/ci/build-candidates.cjs
         working-directory: extension
-      - name: Build, test and compare both Windows candidates with process audit
+      - name: Build and test Windows VSIX with process audit
         if: runner.os == 'Windows'
         shell: pwsh
         run: ./scripts/ci/trace-windows.ps1
         working-directory: extension
-      - name: Build, test and compare both macOS candidates under interpreter guard
+      - name: Build and test macOS VSIX under interpreter guard
         if: runner.os == 'macOS'
         run: node ../core/tools/verification/without-python.cjs /bin/sh -c 'cd "$1" && exec "$2" scripts/ci/build-candidates.cjs' native "$PWD" "$(command -v node)"
         working-directory: extension
@@ -164,7 +170,7 @@ jobs:
             extension/build/reports/
             extension/build/runtimes/*/*/release/
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
-        if: always()
+        if: ${{ always() && !inputs.prerelease }}
         with:
           name: comparison-${{ matrix.target }}
           retention-days: 3

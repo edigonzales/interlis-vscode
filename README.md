@@ -11,8 +11,11 @@ The extension uses the existing Open VSX identity `edigonzales.interlis-editor`
 (display name **INTERLIS Editor**, publisher **edigonzales**). Local builds use
 `0.1.0`; GitHub Actions packages use `0.1.<GITHUB_RUN_NUMBER>`, for example
 `0.1.42`. Reruns keep the same version. Stamping changes only the prepared VSIX
-manifest; source manifests and locks remain unchanged. No registry publication is
-automatic. Historical V0–V5 reviews refer to the identities and bytes tested then.
+manifest. Successful pushes to `main` publish native preview packages on
+[Open VSX](https://open-vsx.org/extension/edigonzales/interlis-editor). In VSCodium,
+choose **Install Pre-Release Version** or **Switch to Pre-Release Version**.
+Report extension issues in the [INTERLIS Editor issue tracker](https://github.com/edigonzales/interlis-vscode/issues).
+Historical V0–V5 reviews refer to the identities and bytes tested then.
 
 Install the local VSIX through **Extensions → Install from VSIX**. Set
 `interlisGuru.server.javaPath` empty to use bundled Java25. An optional absolute
@@ -27,7 +30,6 @@ Diagnostics use the shared DE/EN formatter, including related locations.
 English fallback). Other INTERLIS extensions can supply competing
 providers; this extension reports a conflict and leaves their management to you.
 Untrusted workspaces receive passive syntax resources; Java starts after trust.
-Nothing is published automatically.
 
 **Compile Current Model** compiles the current unsaved version through the Java
 gate, asking for a model when a file declares several. **Compile Workspace** is
@@ -62,7 +64,7 @@ folders share one model space; duplicate model identities are not silently chose
 
 ## Development and verification
 
-Node22.13.0/npm10.9.2 and Temurin25.0.3 were used. Dependencies are pinned in
+Node22.13.0/npm10.9.2 and Temurin25.0.5 were used. Dependencies are pinned in
 `package-lock.json`; the server is pinned by full Core SHA and per-JAR hashes in
 `release/editor-artifacts.lock.json`. There are no links to another source tree.
 
@@ -99,14 +101,20 @@ Cross-packaging is not a native platform test. Linux/Windows qualification uses
 short native GitHub Actions smokes; their GUI and Remote GUI remain untested under
 the [user-adjusted scope](docs/implementation/vscode-extension/PLATFORM_TEST_SCOPE.md).
 
-GitHub Actions builds the locked server/renderer once, then builds and tests both
+For publication, GitHub Actions builds the locked server and renderer once,
+then builds and tests one VSIX with a Java 25 runtime linked by `jlink` on each
+native target runner. The upload job uses the exact tested packages and the
+repository secret `OPEN_VSIX_MARKETPLACE_TOKEN`. To release with a newer Core,
+update the editor artifacts lock in this repository.
+
+The standalone platform workflow builds the locked server/renderer once, then builds and tests both
 a full Temurin JRE and a custom `jlink` runtime on each native target runner.
 The final VSIX uses `jlink` only when its compressed download is at least 10%
 smaller. A failed candidate test fails the workflow; only insufficient size savings
 select the full JRE. The job summary and `*.selection.json` record the comparison.
 All three native jobs, including the full macOS qualification of the selected
 VSIX, must pass before `platform-packages` is uploaded. Comparison artifacts are
-kept for three days; no Marketplace publication is performed.
+kept for three days.
 
 Runtime JRE/JDK sources are pinned in `release/runtime-sources.lock.json`;
 `release/runtime-link.json` documents link options and dynamic module dependencies.

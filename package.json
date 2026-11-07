@@ -9,6 +9,10 @@
     "type": "git",
     "url": "https://github.com/edigonzales/interlis-vscode.git"
   },
+  "homepage": "https://github.com/edigonzales/interlis-vscode#readme",
+  "bugs": {
+    "url": "https://github.com/edigonzales/interlis-vscode/issues"
+  },
   "engines": {
     "vscode": "^1.100.0",
     "node": ">=22"
