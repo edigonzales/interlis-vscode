@@ -123,15 +123,16 @@ describe('Installed live Java diagram and native Sprotty editor',function(){
   await enter();await fresh();assert.equal(await (await ui.driver.findElement(By.id('follow'))).getText(),'Pinned');const firstRoot=await (await ui.driver.findElement(By.id('root'))).getText();assert.match(firstRoot,/Interactive\.ili$/);
   await back();await openSource('Other.ili');await enter();assert.equal(await (await ui.driver.findElement(By.id('root'))).getText(),firstRoot,'Pinned diagram silently followed the other editor');
   await click('follow');await ui.waitFor(async()=>await (await ui.driver.findElement(By.id('follow'))).getText()==='Following','Follow was not enabled');await back();await openSource('Other.ili');await enter('Other.ili');await ui.waitFor(async()=>/Other\.ili$/.test(await (await ui.driver.findElement(By.id('root'))).getText()),'Explicit follow did not switch source');assert.ok((await (await node('A')).getText()).includes('otherAttribute'));
-  await click('follow');await back();await openSource('Other.ili');await ui.palette('INTERLIS: Show Diagram for This File');await enter('Other.ili');const other=await node('A');await dragElement(await other.findElement(By.css('.interlis-title')),45,18);const otherPosition=await other.getAttribute('transform'),otherId=await other.getAttribute('data-element-id');await openSource('Interactive.ili');await ui.palette('INTERLIS: Show Diagram for This File');await enter('Interactive.ili');await ui.capture('GUI-18-parallel');
-  // Two separately opened custom documents remain independent, including their opaque root labels.
-  assert.match(await (await ui.driver.findElement(By.id('root'))).getText(),/Interactive\.ili$/);assert.ok(!(await (await node('A')).getText()).includes('otherAttribute'));assert.notEqual(await (await node('A')).getAttribute('data-element-id'),otherId);
-  await openSource('Other.ili');await ui.palette('INTERLIS: Show Diagram for This File');await enter('Other.ili');assert.equal(await (await node('A')).getAttribute('transform'),otherPosition,'Other panel lost its own dragged geometry');await ui.capture('GUI-18-other-retained');
+  await click('follow');await back();await openSource('Other.ili');await ui.palette('INTERLIS: Show Diagram for This File');await enter('Other.ili');const other=await node('A');await dragElement(await other.findElement(By.css('.interlis-title')),45,18);const otherPosition=await other.getAttribute('transform'),otherId=await other.getAttribute('data-element-id');
   const settingsDirectory=path.join(evidence,'Unicode Modelle/.vscode');
   fs.mkdirSync(settingsDirectory,{recursive:true});
   const settingsFile=path.join(settingsDirectory,'settings.json');
   const settingsText=JSON.stringify({'interlisGuru.diagram.direction':'DOWN'});
   fs.writeFileSync(settingsFile,settingsText);
+ await openSource('Interactive.ili');await ui.palette('INTERLIS: Show Diagram for This File');await enter('Interactive.ili');await ui.capture('GUI-18-parallel');
+  // Two separately opened custom documents remain independent, including their opaque root labels.
+  assert.match(await (await ui.driver.findElement(By.id('root'))).getText(),/Interactive\.ili$/);assert.ok(!(await (await node('A')).getText()).includes('otherAttribute'));assert.notEqual(await (await node('A')).getAttribute('data-element-id'),otherId);
+  await openSource('Other.ili');await ui.palette('INTERLIS: Show Diagram for This File');await enter('Other.ili');assert.equal(await (await node('A')).getAttribute('transform'),otherPosition,'Other panel lost its own dragged geometry');await ui.capture('GUI-18-other-retained');
   const direction=await ui.driver.findElement(By.id('diagram-direction'));
   assert.equal(await direction.getAttribute('value'),'RIGHT','Changing defaults moved an existing panel');
   await back();await ui.palette('INTERLIS: Reset Diagram Options to Defaults');await enter();
