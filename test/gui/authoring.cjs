@@ -12,7 +12,7 @@ async function prepare(text,line,column){
  // These native text assertions read Monaco's rendered lines. Give the
  // catalogue the full editor viewport when Problems opened with the tab.
  if(await ui.driver.executeScript("return document.querySelector('.part.panel')?.getBoundingClientRect().height > 0")){
-  await ui.palette('View: Close Panel');
+  await ui.palette('View: Toggle Panel Visibility');
  }
  await ui.replaceText(text);
  await ui.go(line,column);
