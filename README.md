@@ -84,10 +84,11 @@ npm run test:gui -- --suite smoke
 npm run test:gui -- --suite editor
 ```
 
-`stage:core` calls `java build/InterlisJvmBuild.java editor-bundle` on the
-explicit clean Core checkout, copies the complete runtime libraries and records
-their identities, neutral renderer, worker, schemas and host DTOs. Select the Core Node pin with an absolute `INTERLIS_NODE` (currently 24.22.0); the Extension Node engine remains >=22. It rejects a changing Core HEAD. Use the exact locked Core
-commit when reproducing a candidate. No separate compiler build is introduced.
+`stage:core` calls `java build/interlis/EditorBundleRun.java` on the
+explicit clean Core checkout. Manifest version 4 contains the server runtime,
+Core wire types, schemas and licenses. The extension builds the diagram
+renderer and its worker from its own sources. Staging rejects a changing
+Core HEAD. Use the exact locked Core commit to reproduce a candidate.
 A prebuilt bundle can be imported without a Core checkout or process start:
 
 ```sh
@@ -136,8 +137,8 @@ packaged vendor truststore is never modified.
 
 For local development, open this repository in Codium or VS Code and press **F5**
 (configuration **INTERLIS Editor: Build LSP + Extension**). It installs missing
-npm dependencies, builds the sibling `../interlis-java` LSP and shared diagram UI,
-builds the extension and opens a new Development Host using the **same editor**.
+npm dependencies, builds the sibling `../interlis-java` LSP,
+builds the extension and its diagram renderer and opens a new Development Host using the **same editor**.
 On the first opening, trust the sample workspace if asked and open `Example.ili`.
 
 Development output lives under `build/`; the existing editor application and

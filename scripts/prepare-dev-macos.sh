@@ -51,7 +51,7 @@ if [ "${1:-}" = --resolve-node ]; then
 else
   root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
   core=${INTERLIS_CORE_DIR:-"$root/../interlis-java"}
-  if [ ! -f "$core/build/InterlisJvmBuild.java" ]; then
+  if [ ! -f "$core/build/interlis/EditorBundleRun.java" ]; then
     printf 'Core checkout not found at %s. Set INTERLIS_CORE_DIR.\n' "$core" >&2
     exit 1
   fi

@@ -23,7 +23,7 @@ try {
     ['missing JAR', dir => fs.unlinkSync(path.join(dir, bundle.manifest.files.find(f => f.path.startsWith('server/')).path))],
     ['changed JAR', dir => fs.appendFileSync(path.join(dir, bundle.manifest.files.find(f => f.path.startsWith('server/')).path), 'changed')],
     ['extra JAR', dir => fs.writeFileSync(path.join(dir, 'server/lib/foreign.jar'), 'foreign')],
-    ['broken renderer', dir => fs.appendFileSync(path.join(dir, 'diagram-ui/diagram-ui.js'), 'changed')],
+    ['changed diagram schema', dir => fs.appendFileSync(path.join(dir, 'schemas/diagram-document-1.0.schema.json'), 'changed')],
   ];
   for (const [name, mutate] of cases) {
     const dir = path.join(temporary, name); fs.cpSync(result.directory, dir, {recursive: true}); mutate(dir);

@@ -4,12 +4,19 @@ const hash=file=>crypto.createHash('sha256').update(fs.readFileSync(file)).diges
 const git=(root,...args)=>cp.execFileSync('git',args,{cwd:root,encoding:'utf8'}).trim();
 function walk(root){return fs.readdirSync(root,{withFileTypes:true}).flatMap(entry=>{const file=path.join(root,entry.name);if(entry.isSymbolicLink())throw Error('Symlink in editor bundle');return entry.isDirectory()?walk(file):[file];});}
 function safeRelative(root,relative){if(!relative||path.isAbsolute(relative)||relative.includes('\\')||relative.includes(':')||relative.split('/').includes('..'))throw Error('Unsafe bundle path');const file=path.join(root,relative);if(!fs.realpathSync(file).startsWith(fs.realpathSync(root)+path.sep))throw Error('Bundle path escape');return file;}
+const contractFiles = [
+ 'types/editor-protocol.ts',
+ 'types/diagram-document.ts',
+ 'schemas/diagram-document-1.0.schema.json',
+ 'schemas/diagram-options-1.0.schema.json',
+ 'licenses/interlis-java.txt'
+];
 function readAndVerifyBundle(directory,expected,{development=false}={}){
  if(!path.isAbsolute(directory)||fs.lstatSync(directory).isSymbolicLink()||!expected||!/^[a-f0-9]{40}$/.test(expected.coreCommit)||!/^[a-f0-9]{64}$/.test(expected.manifestSha256))throw Error('Explicit producer commit and manifest reference required');
  const manifestFile=path.join(directory,'manifest.json');if(hash(manifestFile)!==expected.manifestSha256)throw Error('Foreign/changed editor bundle manifest');
  const manifest=JSON.parse(fs.readFileSync(manifestFile));
- if(manifest.schemaVersion!==3||manifest.coreCommit!==expected.coreCommit||manifest.editorProtocolVersion!==1||manifest.diagramDocumentVersion!=='1.0'||typeof manifest.dirty!=='boolean'||(!development&&manifest.dirty)||typeof manifest.serverVersion!=='string'||!manifest.serverVersion||!Array.isArray(manifest.files)||!manifest.files.length)throw Error('Foreign/incompatible editor bundle');
- for(const field of ['snapshotDigest','snapshotManifestSha256','productInputDigest','editorSourceDigest'])if(!/^[a-f0-9]{64}$/.test(manifest[field]||''))throw Error('Missing editor producer input identity');
+ if(manifest.schemaVersion!==4||manifest.coreCommit!==expected.coreCommit||manifest.editorProtocolVersion!==1||manifest.diagramDocumentVersion!=='1.0'||typeof manifest.dirty!=='boolean'||(!development&&manifest.dirty)||typeof manifest.serverVersion!=='string'||!manifest.serverVersion||!Array.isArray(manifest.files)||!manifest.files.length)throw Error('Foreign/incompatible editor bundle');
+ if(!/^[a-f0-9]{64}$/.test(manifest.editorSourceDigest||'')||!/^[a-f0-9]{40}$/.test(manifest.coreTree||''))throw Error('Missing editor producer input identity');
  if(!manifest.launch||Object.keys(manifest.launch).sort().join(',')!=='kind,mainClass,moduleName'||manifest.launch.kind!=='module'||manifest.launch.moduleName!=='guru.interlis.lsp'||manifest.launch.mainClass!=='guru.interlis.lsp.Main'||!manifest.moduleInventory||Array.isArray(manifest.moduleInventory))throw Error('Missing/incompatible modular launch');
  const modules=new Set(),serverFiles=manifest.files.filter(f=>f.path.startsWith('server/'));
  if(Object.keys(manifest.moduleInventory).length!==serverFiles.length)throw Error('Incomplete runtime module inventory');
@@ -19,7 +26,8 @@ function readAndVerifyBundle(directory,expected,{development=false}={}){
  for(const item of manifest.files){if(expectedFiles.has(item.path)||!/^[a-f0-9]{64}$/.test(item.sha256)||!Number.isSafeInteger(item.bytes)||item.bytes<0)throw Error('Invalid bundle inventory');expectedFiles.add(item.path);const file=safeRelative(directory,item.path);if(hash(file)!==item.sha256||fs.statSync(file).size!==item.bytes)throw Error('Changed editor bundle file: '+item.path);if(item.path.startsWith('server/')&&(!/^server\/lib\/[A-Za-z0-9_.-]+\.jar$/.test(item.path)||/(?:junit|interlis-verification|archive-tool|-tests\.jar|antlr4-\d)/.test(item.path)))throw Error('Nonproduct server artifact');}
  const actual=walk(directory).filter(p=>p!==manifestFile).map(p=>path.relative(directory,p).split(path.sep).join('/'));
  if(actual.length!==expectedFiles.size||actual.some(p=>!expectedFiles.has(p)))throw Error('Missing/extra editor bundle file');
- for(const name of ['diagram-ui.tgz','diagram-ui/diagram-ui.js','diagram-ui/diagram-ui.css','diagram-ui/diagram-layout-worker.js','types/editor-protocol.ts','types/diagram-document.ts','schemas/diagram-document-1.0.schema.json','schemas/diagram-options-1.0.schema.json','renderer-provenance.json','licenses/interlis-java.txt'])if(!expectedFiles.has(name))throw Error('Incomplete renderer/types/schema bundle: '+name);
+ for(const name of contractFiles)if(!expectedFiles.has(name))throw Error('Missing Core contract file: '+name);
+ if(expectedFiles.size!==serverFiles.length+contractFiles.length)throw Error('Unexpected Core contract file');
  if(!manifest.files.some(f=>/^server\/lib\/interlis-lsp-[\w.-]+\.jar$/.test(f.path)))throw Error('Missing LSP producer');
  return {directory,manifest,reference:{...expected},development};
 }
@@ -27,8 +35,8 @@ function buildCoreBundle(coreDirectory,{development=false,env=process.env}={}){
  const core=fs.realpathSync(coreDirectory),coreCommit=git(core,'rev-parse','HEAD');
  if(!development&&git(core,'status','--porcelain','--untracked-files=no'))throw Error('Core tracked tree must be clean');
  const home=require('./prepare-dev.cjs').findJavaHome(env),java=path.join(home,'bin',process.platform==='win32'?'java.exe':'java'),requestId=crypto.randomUUID();
- const buildEnv={...env,JAVA_HOME:home,INTERLIS_NODE:env.INTERLIS_NODE||process.execPath,PATH:[path.dirname(env.INTERLIS_NODE||process.execPath),path.join(home,'bin'),env.PATH||''].join(path.delimiter)};
- cp.execFileSync(java,['build/InterlisJvmBuild.java','editor-bundle','--request-id',requestId],{cwd:core,env:buildEnv,stdio:'inherit',shell:false});
+ const buildEnv={...env,JAVA_HOME:home,PATH:[path.join(home,'bin'),env.PATH||''].join(path.delimiter)};
+ cp.execFileSync(java,['build/interlis/EditorBundleRun.java','--request-id',requestId],{cwd:core,env:buildEnv,stdio:'inherit',shell:false});
  const result=JSON.parse(fs.readFileSync(path.join(core,'target/jenesis-jvm/reports/editor-bundle.json')));
  if(result.schemaVersion!==1||result.requestId!==requestId||result.coreCommit!==coreCommit||!path.isAbsolute(result.directory)||!result.directory.startsWith(path.join(core,'target/jenesis-jvm/editor-bundles')+path.sep))throw Error('Stale/foreign Core bundle result');
  if(git(core,'rev-parse','HEAD')!==coreCommit)throw Error('Core commit changed while building');
@@ -48,7 +56,7 @@ function importCoreBundle(bundle,{output=process.cwd(),development=false}={}){
  const staged=path.join(output,'.artifacts-'+crypto.randomUUID());fs.cpSync(source,staged,{recursive:true});
  readAndVerifyBundle(staged,bundle.reference,{development});readAndVerifyBundle(source,bundle.reference,{development});
  const files=bundle.manifest.files.filter(f=>f.path.startsWith('server/')).map(f=>({path:f.path.slice(7),sha256:f.sha256}));
- const lock={schemaVersion:2,launch:bundle.manifest.launch,moduleInventory:bundle.manifest.moduleInventory,coreCommit:bundle.manifest.coreCommit,protocolVersion:'lsp-3.17-baseline',editorProtocolVersion:1,diagramDocumentVersion:'1.0',mainClass:'guru.interlis.lsp.Main',serverVersion:bundle.manifest.serverVersion,files,rendererFiles:bundle.manifest.files.filter(f=>!f.path.startsWith('server/')),bundleManifestSha256:bundle.reference.manifestSha256};
+ const lock={schemaVersion:3,launch:bundle.manifest.launch,moduleInventory:bundle.manifest.moduleInventory,coreCommit:bundle.manifest.coreCommit,protocolVersion:'lsp-3.17-baseline',editorProtocolVersion:1,diagramDocumentVersion:'1.0',mainClass:'guru.interlis.lsp.Main',serverVersion:bundle.manifest.serverVersion,files,contractFiles:bundle.manifest.files.filter(f=>!f.path.startsWith('server/')),bundleManifestSha256:bundle.reference.manifestSha256};
  fs.rmSync(destination,{recursive:true,force:true});fs.renameSync(staged,destination);
  const release=path.join(output,'release');if(fs.existsSync(release)&&fs.lstatSync(release).isSymbolicLink())throw Error('Unsafe release output');fs.mkdirSync(release,{recursive:true});
  const temporary=path.join(release,'editor-artifacts-'+crypto.randomUUID()+'.json');fs.writeFileSync(temporary,JSON.stringify(lock,null,2)+'\n');fs.renameSync(temporary,path.join(release,'editor-artifacts.lock.json'));

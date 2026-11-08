@@ -12,11 +12,11 @@ const save=()=>fs.writeFileSync(path.join(output,'result.json'),JSON.stringify(r
 const env={...process.env,JAVA_HOME:javaHome,INTERLIS_JAVA:'',INTERLIS_TEST_CODE:path.join(cache,'Visual Studio Code.app/Contents/MacOS/Code')};
 function job(name,cwd,exe,args,{guard=true,negative=false}={}){
  clean();const startedAt=new Date().toISOString(),log=path.join(output,name+'.log'),fd=fs.openSync(log,'w');
- const command=guard?[path.join(core,'tools/verification/without-python.cjs'),'/bin/sh','-c','cd "$1" || exit 1; shift; exec "$@"',name,cwd,exe,...args]:args;
+ const command=guard?[path.join(root,'scripts/without-python.cjs'),'/bin/sh','-c','cd "$1" || exit 1; shift; exec "$@"',name,cwd,exe,...args]:args;
  console.log(JSON.stringify({job:name,status:'running',...pair}));
  const result=cp.spawnSync(guard?process.execPath:exe,command,{cwd,env,stdio:['ignore',fd,fd]});fs.closeSync(fd);
  const item={name,startedAt,finishedAt:new Date().toISOString(),log,exit:result.status,signal:result.signal,negative,command:{cwd,exe,args}};report.jobs.push(item);
- if(guard){const source=require(path.join(core,'tools/verification/layout.cjs')).report(core,'python-free/environment.json'),guardReport=JSON.parse(fs.readFileSync(source));assert.ok(Date.parse(guardReport.startedAt)>=Date.parse(startedAt)-1000,'Stale guard report');item.guard=path.join(output,name+'.guard.json');fs.copyFileSync(source,item.guard);assert.equal(guardReport.exitCode,result.status);}
+ if(guard){const source=path.join(root,'build/without-python/environment.json'),guardReport=JSON.parse(fs.readFileSync(source));assert.ok(Date.parse(guardReport.startedAt)>=Date.parse(startedAt)-1000,'Stale guard report');item.guard=path.join(output,name+'.guard.json');fs.copyFileSync(source,item.guard);assert.equal(guardReport.exitCode,result.status);}
  save();clean();if(result.status!==(negative?1:0))throw Error('Unexpected qualification exit: '+name+' '+result.status+'; '+log);
  if(name.startsWith('gui-')){const text=fs.readFileSync(log,'utf8'),match=[...text.matchAll(/GUI evidence: ([^\r\n]+)/g)].at(-1);assert.ok(match,'Missing GUI evidence');item.guiManifest=path.join(match[1],'manifest.json');const m=JSON.parse(fs.readFileSync(item.guiManifest));assert.equal(m.coreSha,pair.coreSha);assert.equal(m.extensionSha,pair.extensionSha);assert.equal(m.extensionShaAfter,pair.extensionSha);assert.equal(m.vsixSha256,report.vsixSha256);assert.equal(m.serverProcesses.remaining.length,0);
   if(negative){assert.equal(m.status,'failed');assert.equal(m.negativeMutation.restored,true);assert.equal(m.serverProcesses.started.length,0);assert.match(text,/GUI failed: exit 1/);}
@@ -45,17 +45,12 @@ try{
  report.javaModules = {};
  for (const module of modules) {
   const selection = module === 'interlis-compiler' ? 'guru.interlis.compiler.(' + classes.join('|') + ')' : module === 'interlis-compiler-cli' ? 'guru.interlis.cli.CliApplicationTest#diagramExportUsesCheckedSchema' : null;
-  job('java-' + module, core, path.join(javaHome,'bin/java'), ['build/InterlisJvmBuild.java','build','--module',module,...(selection?['--tests',selection]:[])]);
-  const index=fs.readFileSync(path.join(core,'target/jenesis-jvm/reports/engine-results.properties'),'utf8');
-  const evidence=index.match(/^evidence\.normal=(.+)$/m)?.[1];assert.ok(evidence,'Missing explicit normal evidence binding');
-  const dir=path.join(core,evidence,module,'native'),destination=path.join(output,'java-results',module);fs.mkdirSync(destination,{recursive:true});let tests=0;
+  job('java-' + module, core, path.join(javaHome,'bin/java'), [...(selection?['-Djenesis.test.filter='+selection]:[]),'build/jenesis/Make.java','+'+module]);
+  const dir=path.join(core,'target/jenesis-jvm/engine/build/maven/compose/module/build-testmodule-'+module,
+    'produce/assemble/observed/test/executed/output/reports/tests'),destination=path.join(output,'java-results',module);fs.mkdirSync(destination,{recursive:true});let tests=0;
   for(const file of fs.readdirSync(dir).filter(n=>n.endsWith('.xml'))){const text=fs.readFileSync(path.join(dir,file),'utf8');const suite=text.match(/<testsuite\b[^>]*>/)?.[0];assert.ok(suite,'No JUnit suite');tests+=Number(suite.match(/\btests="(\d+)"/)[1]);assert.ok(!/\b(?:failures|errors|skipped)="[1-9]/.test(suite),'Failed or skipped JUnit cases');fs.copyFileSync(path.join(dir,file),path.join(destination,file));}assert.ok(tests>0);report.javaModules[module]=tests;
  }save();
- const diagramUi=path.join(core,'frontend/diagram-ui');
- job('shared-diagram-ui-build',diagramUi,process.execPath,['build.cjs']);
- // Each browser test starts Chromium. Avoid competing render loops on the
- // hosted macOS runner while preserving every Core browser assertion.
- job('shared-diagram-ui',diagramUi,process.execPath,['--test','--test-concurrency=1',...fs.readdirSync(path.join(diagramUi,'test')).filter(n=>n.endsWith('.test.cjs')).sort().map(n=>'test/'+n)]);
+ job('extension-diagram-ui',root,process.execPath,['--test','--test-concurrency=1',...fs.readdirSync(path.join(root,'test/renderer')).filter(n=>n.endsWith('.test.cjs')).sort().map(n=>'test/renderer/'+n)]);
  for(const suite of ['comfort','authoring'])job('gui-'+suite,root,process.execPath,['scripts/gui.cjs','--suite',suite,'--vsix',report.vsix,'--cache',cache]);
  job('gui-resilience',root,process.execPath,['scripts/gui-resilience-run.cjs','--core-dir',core,'--cache',cache,'--java-home',javaHome,'--vsix',report.vsix],{guard:false});
  // This runner supplies the single combined inherited offline/interpreter sandbox.

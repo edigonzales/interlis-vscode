@@ -2,10 +2,9 @@
 
 Java owns parsing, semantic snapshots, repository closure, language queries,
 completion/END plans, diagnostics, documentation and graph projections. The
-extension transports LSP stdio messages and versioned requests, maps native editor
-interactions and hosts the shared `frontend/diagram-ui` renderer. It has no second
-INTERLIS symbol resolver. UI, schemas, adapters and ELK worker are local assets
-copied from the locked Core editor bundle; no sibling source link is required.
+extension transports LSP stdio messages, maps native editor interactions, and
+owns the diagram renderer, layout worker, view state and export. It imports the
+wire types and schema from the locked Core bundle.
 
 The client accepts editor protocol1, diagram protocol1 and DiagramDocument1.0.
 Server-instance IDs, document versions, snapshot IDs and request generations
@@ -66,7 +65,7 @@ GitHub Actions builds the exact locked Core and extension commits. Each native
 target installs and checks its actual VSIX using the packaged Java runtime,
 then runs the short native GUI smoke (GUI01–03). Linux runs its GUI in Xvfb with
 a window manager and a native X clipboard. The PR and stable release gates
-also run the shared renderer browser tests and the full portable editor,
+also run the extension renderer browser tests and the full portable editor,
 diagram and authoring suites (GUI01–35) against the selected Linux VSIX.
 The macOS offline sandbox and process-observer qualification (GUI36–42)
 remains available through the separate local command above.

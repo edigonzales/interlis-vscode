@@ -37,7 +37,7 @@ function findJavaHome(env = process.env) {
 function prepareDev({root = path.resolve(__dirname, '..'), coreDirectory, env = process.env} = {}) {
   if (Number(process.versions.node.split('.')[0]) < 22) throw Error('Development builds require Node 22 or newer');
   const core = path.resolve(coreDirectory || env.INTERLIS_CORE_DIR || path.join(root, '../interlis-java'));
-  if (!fs.existsSync(path.join(core, 'build/InterlisJvmBuild.java'))) {
+  if (!fs.existsSync(path.join(core, 'build/interlis/EditorBundleRun.java'))) {
     throw Error('Core checkout not found at ' + core + '. Set INTERLIS_CORE_DIR or pass --core-dir.');
   }
   let node = process.execPath;

@@ -19,7 +19,7 @@ export interface LaunchPlan {readonly java: string; readonly args: readonly stri
 /** Verifies the complete immutable server inventory before executing Java. */
 export async function resolveLaunchPlan(extensionRoot: string, java = '', override = ''): Promise<LaunchPlan> {
   const lock = JSON.parse(await fs.readFile(path.join(extensionRoot, 'release/editor-artifacts.lock.json'), 'utf8')) as ArtifactLock;
-  if (lock.schemaVersion !== 2 || !/^[a-f0-9]{40}$/.test(lock.coreCommit) || lock.protocolVersion !== 'lsp-3.17-baseline' || lock.mainClass !== 'guru.interlis.lsp.Main' || !lock.launch || Object.keys(lock.launch).sort().join(',') !== 'kind,mainClass,moduleName' || lock.launch.kind !== 'module' || lock.launch.moduleName !== 'guru.interlis.lsp' || lock.launch.mainClass !== lock.mainClass || !lock.moduleInventory || !Array.isArray(lock.files) || !lock.files.length) {
+  if (lock.schemaVersion !== 3 || !/^[a-f0-9]{40}$/.test(lock.coreCommit) || lock.protocolVersion !== 'lsp-3.17-baseline' || lock.mainClass !== 'guru.interlis.lsp.Main' || !lock.launch || Object.keys(lock.launch).sort().join(',') !== 'kind,mainClass,moduleName' || lock.launch.kind !== 'module' || lock.launch.moduleName !== 'guru.interlis.lsp' || lock.launch.mainClass !== lock.mainClass || !lock.moduleInventory || !Array.isArray(lock.files) || !lock.files.length) {
     throw new Error('Incompatible or missing INTERLIS server artifact lock.');
   }
   const root = override ? path.resolve(override) : path.join(extensionRoot, 'artifacts/server');

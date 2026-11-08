@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "launch": {
     "kind": "module",
     "mainClass": "guru.interlis.lsp.Main",
@@ -24,37 +24,37 @@
     "lib/interlis-compiler-0.2.0-SNAPSHOT.jar": {
       "explicit": true,
       "name": "guru.interlis.compiler",
-      "sha256": "12dd0c9f7735914a8bf05ed6c28a5fa4805b94b5db63866b34d451006138e70b"
+      "sha256": "c5f94b3d14c566863a742e05b12526e4c2d13771be88a108e0b3da547d0bc255"
     },
     "lib/interlis-documentation-0.2.0-SNAPSHOT.jar": {
       "explicit": true,
       "name": "guru.interlis.documentation",
-      "sha256": "ae89b2b1a9b0ae86f73afe0af06e93ae564b5b24422918639afcacec03fc54d2"
+      "sha256": "14470c2019668735ef00d9719b67c599ca909eb3634e815af768f39d37920b97"
     },
     "lib/interlis-lsp-0.2.0-SNAPSHOT.jar": {
       "explicit": true,
       "name": "guru.interlis.lsp",
-      "sha256": "454b6eb982564cd444ffe0d15f299f0d1f552129b9e228f95ff799f8a93dfc98"
+      "sha256": "c4f5b24d57fc069b96e057897b53c4692399d3000391c25a564f65150cec6450"
     },
     "lib/interlis-model-0.2.0-SNAPSHOT.jar": {
       "explicit": true,
       "name": "guru.interlis.model",
-      "sha256": "416d2bf8ac0467af63052408506e07598beb6849255ef812a19ccf5144411e28"
+      "sha256": "9716377b146a9f7f75e366fbf6a9a402f1d885b7b471e2cb03c8814211a805f9"
     },
     "lib/interlis-projection-0.2.0-SNAPSHOT.jar": {
       "explicit": true,
       "name": "guru.interlis.projection",
-      "sha256": "66c87d74a06c76621a544e4a173d806f667222e349472f3eaee50038e3bb67ea"
+      "sha256": "548496a4ed5b54ef8141eeea07fee166cfd5390959c73d91545eb14630b3686e"
     },
     "lib/interlis-repository-0.2.0-SNAPSHOT.jar": {
       "explicit": true,
       "name": "guru.interlis.repository",
-      "sha256": "18ec44be3139f8f3b6cd5f873469614f88b2fc2b2e3e4f8149d029c1295c13de"
+      "sha256": "faba219f256797f088490777a1fd86985b2b6a33aa985a8e3ac468e298d18543"
     },
     "lib/interlis-workspace-0.2.0-SNAPSHOT.jar": {
       "explicit": true,
       "name": "guru.interlis.workspace",
-      "sha256": "87c00c3559856f361ad95613ecd302e92202126e9a7869372135d2555686397a"
+      "sha256": "5be2f5b4d5ca0b614141e5c5983ecf07fadad47d69d9c326b09b07860c218768"
     },
     "lib/org.eclipse.lsp4j-0.23.1.jar": {
       "explicit": false,
@@ -67,7 +67,7 @@
       "sha256": "4e1aa77474de1791d96dc55932fb46efdf53233548f38f62ba7376f8b0bc6650"
     }
   },
-  "coreCommit": "e47ce23df46fb846a850bf9a81298d2ed6f541de",
+  "coreCommit": "b1f7e82781e9e47fcea0a1dad70bbed929a2c4f6",
   "protocolVersion": "lsp-3.17-baseline",
   "editorProtocolVersion": 1,
   "diagramDocumentVersion": "1.0",
@@ -88,31 +88,31 @@
     },
     {
       "path": "lib/interlis-compiler-0.2.0-SNAPSHOT.jar",
-      "sha256": "12dd0c9f7735914a8bf05ed6c28a5fa4805b94b5db63866b34d451006138e70b"
+      "sha256": "c5f94b3d14c566863a742e05b12526e4c2d13771be88a108e0b3da547d0bc255"
     },
     {
       "path": "lib/interlis-documentation-0.2.0-SNAPSHOT.jar",
-      "sha256": "ae89b2b1a9b0ae86f73afe0af06e93ae564b5b24422918639afcacec03fc54d2"
+      "sha256": "14470c2019668735ef00d9719b67c599ca909eb3634e815af768f39d37920b97"
     },
     {
       "path": "lib/interlis-lsp-0.2.0-SNAPSHOT.jar",
-      "sha256": "454b6eb982564cd444ffe0d15f299f0d1f552129b9e228f95ff799f8a93dfc98"
+      "sha256": "c4f5b24d57fc069b96e057897b53c4692399d3000391c25a564f65150cec6450"
     },
     {
       "path": "lib/interlis-model-0.2.0-SNAPSHOT.jar",
-      "sha256": "416d2bf8ac0467af63052408506e07598beb6849255ef812a19ccf5144411e28"
+      "sha256": "9716377b146a9f7f75e366fbf6a9a402f1d885b7b471e2cb03c8814211a805f9"
     },
     {
       "path": "lib/interlis-projection-0.2.0-SNAPSHOT.jar",
-      "sha256": "66c87d74a06c76621a544e4a173d806f667222e349472f3eaee50038e3bb67ea"
+      "sha256": "548496a4ed5b54ef8141eeea07fee166cfd5390959c73d91545eb14630b3686e"
     },
     {
       "path": "lib/interlis-repository-0.2.0-SNAPSHOT.jar",
-      "sha256": "18ec44be3139f8f3b6cd5f873469614f88b2fc2b2e3e4f8149d029c1295c13de"
+      "sha256": "faba219f256797f088490777a1fd86985b2b6a33aa985a8e3ac468e298d18543"
     },
     {
       "path": "lib/interlis-workspace-0.2.0-SNAPSHOT.jar",
-      "sha256": "87c00c3559856f361ad95613ecd302e92202126e9a7869372135d2555686397a"
+      "sha256": "5be2f5b4d5ca0b614141e5c5983ecf07fadad47d69d9c326b09b07860c218768"
     },
     {
       "path": "lib/org.eclipse.lsp4j-0.23.1.jar",
@@ -123,226 +123,11 @@
       "sha256": "4e1aa77474de1791d96dc55932fb46efdf53233548f38f62ba7376f8b0bc6650"
     }
   ],
-  "rendererFiles": [
-    {
-      "bytes": 3584065,
-      "path": "diagram-ui/adapter.cjs",
-      "sha256": "b1e8ac3aa344bcb9355fe5ca4c1f3247505a6160932023f3c23471387ef3c5f5"
-    },
-    {
-      "bytes": 4268,
-      "path": "diagram-ui/adapter.d.ts",
-      "sha256": "613723fbf870dc68277fcaea66c5f373dc597848a78e5e16accc1316713ef9d2"
-    },
-    {
-      "bytes": 23507,
-      "path": "diagram-ui/build-manifest.json",
-      "sha256": "5cf5a3ce7b1a1502a99c9ea9480ceb94284d68c480ecb8e7b796427f2c573d3a"
-    },
-    {
-      "bytes": 3288,
-      "path": "diagram-ui/contracts/elk.d.ts",
-      "sha256": "2e992211afcd079a0cd0a5df424086388b4ffcb0bd8d9ff3741940ad52006d4a"
-    },
-    {
-      "bytes": 2383,
-      "path": "diagram-ui/contracts/libavoid-js.d.ts",
-      "sha256": "85f2c7a7721e2cd8f6a61a296e9238d4199bf3f361bcfd49d2d7c19119c90cb7"
-    },
-    {
-      "bytes": 564,
-      "path": "diagram-ui/controls.d.ts",
-      "sha256": "f1609e1cb2b5a06229af7a966865e29bbc8728231f66d36bb0ebfd528b746bfd"
-    },
-    {
-      "bytes": 1613729,
-      "path": "diagram-ui/diagram-layout-worker.js",
-      "sha256": "c0dc844ac1739a1e1e4f64d08a9ec4594818d5aa7e0cb26e5096b6d34b864e2b"
-    },
-    {
-      "bytes": 3578,
-      "path": "diagram-ui/diagram-ui.css",
-      "sha256": "99ee2f0f8f5aab6122dc26b065488578bd10e0e511b062a95a686d8e75dc975b"
-    },
-    {
-      "bytes": 4800078,
-      "path": "diagram-ui/diagram-ui.js",
-      "sha256": "fa5804193bd9390e6b1b4235379b50c8a19894ce71cc1460da8864df9f9d3b28"
-    },
-    {
-      "bytes": 886,
-      "path": "diagram-ui/diagram-ui.js.LEGAL.txt",
-      "sha256": "d7d178cf2029faf34c444be41614e205af12d50a04c22175f65046160c03c3a5"
-    },
-    {
-      "bytes": 808,
-      "path": "diagram-ui/elk-layout-service.d.ts",
-      "sha256": "f87c01ded4e7bf977cad235cba47cfc455fe228f145ef5f7bc2442da195defc9"
-    },
-    {
-      "bytes": 785,
-      "path": "diagram-ui/export.d.ts",
-      "sha256": "88920e85ee536130e4387f681748e1254a24c30ec55a9c54c5c7ab28d94dc7d8"
-    },
-    {
-      "bytes": 1531,
-      "path": "diagram-ui/filters.d.ts",
-      "sha256": "7c770ae2b686e0ce43256bbb3549e54dd035260d31097191bfed6f4424a0d661"
-    },
-    {
-      "bytes": 1131,
-      "path": "diagram-ui/geometry.d.ts",
-      "sha256": "a967bea7ede97ebb22d5acd4c7ac14c0af3a9e2a694b4bd529c4dec6e3f908db"
-    },
-    {
-      "bytes": 697,
-      "path": "diagram-ui/identity.d.ts",
-      "sha256": "ef42378b2b6576bf64f0045dfeedfe56e98e31c734fce1e6decb72e30065fe6e"
-    },
-    {
-      "bytes": 3973,
-      "path": "diagram-ui/interactive.d.ts",
-      "sha256": "7014f0df6e8099364ba02a4c5273a42ce7bb457b1c48d7b36df7342c1f6f668e"
-    },
-    {
-      "bytes": 3959,
-      "path": "diagram-ui/layout.d.ts",
-      "sha256": "2861414d3b7dd2329ca656309321fac624ae0cacc1e9f4fae0c2936122f323e0"
-    },
-    {
-      "bytes": 584,
-      "path": "diagram-ui/libavoid-router.d.ts",
-      "sha256": "163ace9f66b994881256862ca06ac347687f106b3431ea46035a360f4151fb93"
-    },
-    {
-      "bytes": 5964,
-      "path": "diagram-ui/libavoid-router.js",
-      "sha256": "bd491f90a73f5b38789ffd1f6793ba91d93c6e19c1436b279646dca7dc516056"
-    },
-    {
-      "bytes": 1066,
-      "path": "diagram-ui/licenses/@inversifyjs-common-LICENSE",
-      "sha256": "e7f118bca6d3c2ea16a30302f1e0062b6c7ba63bb1718a0602f969062b67ecbd"
-    },
-    {
-      "bytes": 1066,
-      "path": "diagram-ui/licenses/@inversifyjs-core-LICENSE",
-      "sha256": "e7f118bca6d3c2ea16a30302f1e0062b6c7ba63bb1718a0602f969062b67ecbd"
-    },
-    {
-      "bytes": 1066,
-      "path": "diagram-ui/licenses/@inversifyjs-reflect-metadata-utils-LICENSE",
-      "sha256": "e7f118bca6d3c2ea16a30302f1e0062b6c7ba63bb1718a0602f969062b67ecbd"
-    },
-    {
-      "bytes": 1071,
-      "path": "diagram-ui/licenses/adopted-renderer-MIT.txt",
-      "sha256": "91904e7f7a936e2f873b6c7d893b34ecc43fa9f2beffe96a9d8e24c9ad449798"
-    },
-    {
-      "bytes": 1090,
-      "path": "diagram-ui/licenses/ajv-LICENSE",
-      "sha256": "a05350a88e318e4f5f2c2a1ff1e2e88daa4dd38e6e78b71cccae422bdc762cc3"
-    },
-    {
-      "bytes": 1057,
-      "path": "diagram-ui/licenses/autocompleter-MIT.txt",
-      "sha256": "9d548e9bd6dee30719b95fae5e5fefdf8ac36f3a61cff5f8766ad6f5e33b16b9"
-    },
-    {
-      "bytes": 15466,
-      "path": "diagram-ui/licenses/autocompleter-readme.md",
-      "sha256": "765cea95206473d6337fd481de82bc4f63c7732702aa1e9033112c2fb9e45838"
-    },
-    {
-      "bytes": 14480,
-      "path": "diagram-ui/licenses/elkjs-LICENSE.md",
-      "sha256": "89591d4578fb1ebd91501312a3d25f021bd865a2e436641c1cf7b1bc7e3c1617"
-    },
-    {
-      "bytes": 1101,
-      "path": "diagram-ui/licenses/file-saver-LICENSE.md",
-      "sha256": "2d1d7a93b46e4274355ac2904428707c4ee47ee8c6029fa394ebf405648d3f63"
-    },
-    {
-      "bytes": 1071,
-      "path": "diagram-ui/licenses/interlis-diagram-ui-MIT.txt",
-      "sha256": "91904e7f7a936e2f873b6c7d893b34ecc43fa9f2beffe96a9d8e24c9ad449798"
-    },
-    {
-      "bytes": 1827,
-      "path": "diagram-ui/licenses/inventory.json",
-      "sha256": "0309b6d9173f76fc5563625e459e65dacbadb8f13cd86e2f5a2f1dc342ca4c40"
-    },
-    {
-      "bytes": 1087,
-      "path": "diagram-ui/licenses/inversify-LICENSE",
-      "sha256": "bcb17487689c15a9124a3c11995c95a74150f5c1a3350aa86ec4753510bb4795"
-    },
-    {
-      "bytes": 26527,
-      "path": "diagram-ui/licenses/libavoid-js-LICENSE",
-      "sha256": "6da7ddf40cfea6f568961825b14478e879875f6ad033fad57889ae5bd52103f4"
-    },
-    {
-      "bytes": 9141,
-      "path": "diagram-ui/licenses/reflect-metadata-LICENSE",
-      "sha256": "c5217b0544ea9c91d010863582d6f6b35ec50e4146c34dee085ddcec5dd92def"
-    },
-    {
-      "bytes": 1086,
-      "path": "diagram-ui/licenses/snabbdom-LICENSE",
-      "sha256": "40b17e30359787ee415582223f3d10440f8bab87c5967e03406ea59120c59311"
-    },
-    {
-      "bytes": 14198,
-      "path": "diagram-ui/licenses/sprotty-LICENSE",
-      "sha256": "0becf16567beb77fa252b7664631dd177c8f9a1889e48995b45379c7130e5303"
-    },
-    {
-      "bytes": 14198,
-      "path": "diagram-ui/licenses/sprotty-protocol-LICENSE",
-      "sha256": "0becf16567beb77fa252b7664631dd177c8f9a1889e48995b45379c7130e5303"
-    },
-    {
-      "bytes": 750,
-      "path": "diagram-ui/licenses/tinyqueue-LICENSE",
-      "sha256": "780453e05abdc22307ee01c706a2e73f508d3e484fc4c804485ebf6fe0964694"
-    },
-    {
-      "bytes": 671,
-      "path": "diagram-ui/presentation.d.ts",
-      "sha256": "9b774ebad0132ae126349e6dcd4f28c22a5a4538f8c33d5dc4bfd3bbb38f6a70"
-    },
-    {
-      "bytes": 1209,
-      "path": "diagram-ui/render-types.d.ts",
-      "sha256": "e209e030962bda020a5734cad041102fadcfe10766f79f610661a4584c68c2b6"
-    },
-    {
-      "bytes": 4908,
-      "path": "diagram-ui/types.d.ts",
-      "sha256": "ae25650add1e8730c1472187c7127d214b51b712f83d802d5b7a6c116946ccff"
-    },
-    {
-      "bytes": 1643,
-      "path": "diagram-ui/view-state.d.ts",
-      "sha256": "d3e88c246a4aee844ab02f81f10228c01da934e32a641ecbd33663dd920caf44"
-    },
-    {
-      "bytes": 1885758,
-      "path": "diagram-ui.tgz",
-      "sha256": "2dc6e90f572fde2cf5acb48b3859e0b2cf86255f56a43e279603c652b7c403f7"
-    },
+  "contractFiles": [
     {
       "bytes": 1071,
       "path": "licenses/interlis-java.txt",
       "sha256": "91904e7f7a936e2f873b6c7d893b34ecc43fa9f2beffe96a9d8e24c9ad449798"
-    },
-    {
-      "bytes": 2275,
-      "path": "renderer-provenance.json",
-      "sha256": "bad89aaa9fb9ddc3f9ad86b4ac4fad0aa68bfbc45d781bc43d0ca1b2c728e016"
     },
     {
       "bytes": 11928,
@@ -365,5 +150,5 @@
       "sha256": "d0d0aab0a8d145c34780a640d79b21502b7b1b9445798ec61b3fbffaae3ba58c"
     }
   ],
-  "bundleManifestSha256": "6bc87a4cfc780b6b2060f811d49abdfb322ce6d723874299b135974d0ac81760"
+  "bundleManifestSha256": "34b83a7da30380fa36a4c70a50cf27698e627c760534e007561c0dcae7ed3d92"
 }

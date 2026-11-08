@@ -131,7 +131,7 @@ jobs:
         working-directory: extension
       - name: Build and test macOS VSIX under interpreter guard
         if: runner.os == 'macOS'
-        run: node ../core/tools/verification/without-python.cjs /bin/sh -c 'cd "$1" && exec "$2" scripts/ci/build-candidates.cjs' native "$PWD" "$(command -v node)"
+        run: node scripts/without-python.cjs /bin/sh -c 'cd "$1" && exec "$2" scripts/ci/build-candidates.cjs' native "$PWD" "$(command -v node)"
         working-directory: extension
       - name: Install Linux GUI dependencies
         if: runner.os == 'Linux'
@@ -144,14 +144,14 @@ jobs:
         if: runner.os != 'Linux'
         working-directory: extension
         run: node scripts/gui.cjs --suite smoke --vsix build/packages/interlis-editor-${{ matrix.target }}.vsix
-      - name: Run shared renderer browser suite
+      - name: Run extension renderer browser suite
         if: runner.os == 'Linux' && (github.event_name == 'pull_request' || inputs.full_gui)
-        working-directory: core/frontend/diagram-ui
+        working-directory: extension
         run: |
           npm ci --ignore-scripts
           npx --no-install playwright install --with-deps chromium
-          node build.cjs
-          node --test --test-concurrency=1 test/*.test.cjs
+          npm run build
+          npm run test:renderer
       - name: Run full Linux editor and authoring GUI suites
         if: runner.os == 'Linux' && (github.event_name == 'pull_request' || inputs.full_gui)
         working-directory: extension
