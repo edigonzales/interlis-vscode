@@ -21,7 +21,10 @@ async function check(id,value){await filters();const e=await ui.driver.findEleme
 async function node(label){return ui.driver.findElement(By.css('[data-label='+JSON.stringify(label)+']'));}
 async function selectNode(label){
  await closeOptions();
- const target=await node(label),{frame,point}=await nodeFramePointer(target);
+ const target=await node(label);
+ // A second native click toggles an already selected Sprotty element off.
+ if((await target.getAttribute('class')).split(' ').includes('selected'))return;
+ const {frame,point}=await nodeFramePointer(target);
  await ui.driver.actions().move({origin:frame,...point}).click().perform();
  await ui.waitFor(async()=>await target.getAttribute('class').then(c=>c.includes('selected')),'Native click did not select the intended node');
 }
