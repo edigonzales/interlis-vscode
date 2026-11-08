@@ -2,16 +2,26 @@ name: Native runtime packages
 on:
   push:
     branches: [codex/vscode-extension, codex/jenesis-migration-b]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
+    inputs:
+      full_gui:
+        description: Run the full Linux GUI gate
+        type: boolean
+        default: true
   workflow_call:
     inputs:
+      full_gui:
+        type: boolean
+        default: false
       prerelease:
         type: boolean
         default: false
 permissions:
   contents: read
 concurrency:
-  group: platform-smoke-${{ inputs.prerelease && github.run_id || github.ref }}
+  group: platform-smoke-${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
   common:
@@ -77,7 +87,7 @@ jobs:
         with:
           path: extension
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
-        if: runner.os == 'macOS'
+        if: runner.os == 'macOS' || (runner.os == 'Linux' && (github.event_name == 'pull_request' || inputs.full_gui))
         with:
           repository: edigonzales/interlis-java
           ref: ${{ needs.common.outputs.core-sha }}
@@ -123,27 +133,32 @@ jobs:
         if: runner.os == 'macOS'
         run: node ../core/tools/verification/without-python.cjs /bin/sh -c 'cd "$1" && exec "$2" scripts/ci/build-candidates.cjs' native "$PWD" "$(command -v node)"
         working-directory: extension
-      - name: Acquire GUI tools before offline qualification
-        if: runner.os == 'macOS'
-        run: node scripts/ci/prepare-gui.cjs
+      - name: Install Linux GUI dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install --yes xvfb xauth xsel openbox
+      - name: Run native GUI smoke under Xvfb
+        if: runner.os == 'Linux'
         working-directory: extension
-      - name: Prepare shared diagram UI qualification dependencies
-        if: runner.os == 'macOS'
+        run: xvfb-run -a --server-args="-screen 0 1920x1080x24" bash -c 'openbox & exec node scripts/gui.cjs --suite "$@"' gui smoke --vsix build/packages/interlis-editor-linux-x64.vsix
+      - name: Run native GUI smoke
+        if: runner.os != 'Linux'
+        working-directory: extension
+        run: node scripts/gui.cjs --suite smoke --vsix build/packages/interlis-editor-${{ matrix.target }}.vsix
+      - name: Run shared renderer browser suite
+        if: runner.os == 'Linux' && (github.event_name == 'pull_request' || inputs.full_gui)
+        working-directory: core/frontend/diagram-ui
         run: |
           npm ci --ignore-scripts
-          npx --no-install playwright install chromium
-        working-directory: core/frontend/diagram-ui
-      - name: Qualify the selected macOS VSIX
-        if: runner.os == 'macOS'
-        shell: bash
+          npx --no-install playwright install --with-deps chromium
+          node build.cjs
+          node --test --test-concurrency=1 test/*.test.cjs
+      - name: Run full Linux editor and authoring GUI suites
+        if: runner.os == 'Linux' && (github.event_name == 'pull_request' || inputs.full_gui)
         working-directory: extension
-        run: >-
-          node scripts/qualify-macos.cjs
-          --core-dir "$GITHUB_WORKSPACE/core"
-          --evidence "$PWD/build/qualification"
-          --cache "$PWD/build/gui-cache"
-          --java-home "$JAVA_HOME"
-          --vsix "$PWD/build/packages/interlis-editor-darwin-arm64.vsix"
+        run: |
+          for suite in comfort authoring; do
+            xvfb-run -a --server-args="-screen 0 1920x1080x24" bash -c 'openbox & exec node scripts/gui.cjs --suite "$@"' gui "$suite" --vsix build/packages/interlis-editor-linux-x64.vsix
+          done
       - name: Require unchanged tracked sources
         shell: bash
         working-directory: extension
@@ -164,16 +179,14 @@ jobs:
             extension/build/ci/smoke-*/command-*.log
             extension/build/ci/smoke-*/https-*.log
             extension/build/ci/process-audit/
-            extension/build/qualification/*.json
-            extension/build/qualification/*.log
-            extension/build/qualification/java-results/
+            extension/build/reports/gui/
             extension/build/reports/
             extension/build/runtimes/*/*/release/
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: ${{ always() && !inputs.prerelease }}
         with:
           name: comparison-${{ matrix.target }}
-          retention-days: 3
+          retention-days: 7
           path: extension/build/comparison/
   packages:
     needs: native
@@ -190,3 +203,13 @@ jobs:
           if-no-files-found: error
           retention-days: 14
           path: packages/
+  merge-gate:
+    name: Platform and GUI gate
+    if: always()
+    needs: packages
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Require the package and GUI checks to pass
+        env:
+          PACKAGE_RESULT: ${{ needs.packages.result }}
+        run: test "$PACKAGE_RESULT" = success
