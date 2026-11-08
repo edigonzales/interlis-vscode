@@ -23,7 +23,7 @@ describe('Installed INTERLIS repository and editor parity',function(){
  it('GUI-04 localizes a real conflict and navigates its related declaration',async()=>{
   await settings({'interlisGuru.diagnostics.language':'de'});await ui.openFile('Conflict.ili');
   const valid=fixture('Conflict.ili'),conflict=valid.replace('  END Data;','    CLASS Item =\n      second : TEXT*20;\n    END Item;\n  END Data;');
-  await ui.replaceText(conflict);await ui.palette('View: Toggle Problems');
+  await ui.replaceText(conflict);
   await ui.waitFor(()=>hasError('Namensraum'),'German conflict diagnostic missing');
   const german=await (await hasError('Namensraum')).getText();assert.ok(!german.includes('diagnostic.'));assert.ok(!german.includes('\u001b'));
   await ui.capture('GUI-04-german');
@@ -40,18 +40,23 @@ describe('Installed INTERLIS repository and editor parity',function(){
   ui.record('GUI-04',['edit duplicate class','save DE/EN language settings through Settings editor','expand Problems and double-click related declaration'],['readable DE/EN messages','no message keys or ANSI','original declaration line5']);
  });
  it('GUI-05 hovers and follows both qualified segments from the unsaved buffer',async()=>{
-  await ui.openFile('Example.ili');const original=await ui.readText();
+  await ui.openFile('Example.ili');const original=await ui.copyText();
   const changed=original.replaceAll('Height','CurrentHeight').replace(/height\s*:\s*CurrentHeight/,'height: Example.CurrentHeight');
   await ui.replaceText(changed);
-  const line=changed.split('\n')[7];await ui.go(8,line.indexOf('CurrentHeight')+2);
+  const lines=changed.split('\n');
+  const referenceLine=lines.findIndex(line=>line.includes('Example.CurrentHeight'))+1;
+  const modelLine=lines.findIndex(line=>/^MODEL Example\b/.test(line))+1;
+  const domainLine=lines.findIndex(line=>/^\s*CurrentHeight\s*=/.test(line))+1;
+  assert.ok(referenceLine>0&&modelLine>0&&domainLine>0,'Expected the qualified reference and both declarations');
+  const line=lines[referenceLine-1];await ui.go(referenceLine,line.indexOf('CurrentHeight')+2);
   await ui.palette('Show or Focus Hover');
   await ui.waitFor(async()=>{for(const hover of await ui.driver.findElements(By.css('.monaco-hover')))if((await hover.getText()).includes('CurrentHeight'))return true;return false;},'Hover did not describe the dirty qualified domain');
   await ui.capture('GUI-05-hover');await ui.driver.actions().sendKeys(Key.ESCAPE).perform();
-  await ui.go(8,line.indexOf('Example')+2);await ui.driver.actions().sendKeys(Key.F12).perform();await ui.waitFor(async()=>(await ui.editor.getCoordinates())[0]===3,'Qualified model segment did not resolve to MODEL');
-  await ui.go(8,line.indexOf('CurrentHeight')+2);await ui.driver.actions().sendKeys(Key.F12).perform();await ui.waitFor(async()=>(await ui.editor.getCoordinates())[0]===5,'Qualified dirty domain segment did not resolve');
-  assert.equal(await ui.editor.isDirty(),true);assert.equal(await ui.readText(),changed);assert.ok(!fs.readFileSync(path.join(evidence,'Unicode Modelle/Example.ili'),'utf8').includes('CurrentHeight'));
+  await ui.go(referenceLine,line.indexOf('Example')+2);await ui.driver.actions().sendKeys(Key.F12).perform();await ui.waitFor(async()=>(await ui.editor.getCoordinates())[0]===modelLine,'Qualified model segment did not resolve to MODEL');
+  await ui.go(referenceLine,line.indexOf('CurrentHeight')+2);await ui.driver.actions().sendKeys(Key.F12).perform();await ui.waitFor(async()=>(await ui.editor.getCoordinates())[0]===domainLine,'Qualified dirty domain segment did not resolve');
+  assert.equal(await ui.editor.isDirty(),true);assert.equal(await ui.copyText(),changed);assert.ok(!fs.readFileSync(path.join(evidence,'Unicode Modelle/Example.ili'),'utf8').includes('CurrentHeight'));
   await ui.capture('GUI-05-definition');await ui.replaceText(original);
-  ui.record('GUI-05',['paste changed declaration and qualified use into dirty editor','Show or Focus Hover','F12 on model segment','F12 on domain segment'],['current domain in hover','model line3','domain line5','disk remains original','dirty text preserved']);
+  ui.record('GUI-05',['paste changed declaration and qualified use into dirty editor','Show or Focus Hover','F12 on model segment','F12 on domain segment'],['current domain in hover','model and domain declaration locations','disk remains original','dirty text preserved']);
  });
  it('GUI-06 finds semantic references and opens the previously closed declaration file',async()=>{
   await ui.openFile('Survey.ili');const lines=fixture('Survey.ili').split('\n');await ui.go(12,lines[11].indexOf('BaseBuilding')+2);
@@ -98,7 +103,7 @@ describe('Installed INTERLIS repository and editor parity',function(){
   await ui.openFile('External.ili');await ui.waitCurrentAnalysis();await ui.go(6,fixture('External.ili').split('\n')[5].indexOf('RemoteHeight')+2);await ui.driver.actions().sendKeys(Key.F12).perform();await ui.waitEditor('RemoteMiddle.ili');assert.equal(await ui.copyText(),fixtureData.sources['RemoteMiddle.ili']);assert.notEqual(await ui.editor.getFileUri(),before);assert.equal(JSON.parse(fs.readFileSync(path.join(evidence,'repository-stats.json'))).requests.length,count);await ui.capture('GUI-09-offline');
   for(let repeat=0;repeat<2;repeat++){const oldHandle=await ui.editor.getFileUri();await ui.palette('INTERLIS: Restart Language Server');await ui.waitFor(()=>ui.status('Ready'),'Repeated offline restart did not become ready');await ui.openFile('External.ili');await ui.waitCurrentAnalysis();await ui.go(6,fixture('External.ili').split('\n')[5].indexOf('RemoteHeight')+2);await ui.driver.actions().sendKeys(Key.F12).perform();await ui.waitEditor('RemoteMiddle.ili');assert.equal(await ui.copyText(),fixtureData.sources['RemoteMiddle.ili']);assert.notEqual(await ui.editor.getFileUri(),oldHandle);assert.equal(JSON.parse(fs.readFileSync(path.join(evidence,'repository-stats.json'))).requests.length,count);await ui.capture('GUI-09-offline-repeat-'+(repeat+1));}
 
-  await settings({'interlisGuru.repositories':[fixtureData.base+'uncached/']});await ui.openFile('External.ili');await ui.palette('View: Toggle Problems');
+  await settings({'interlisGuru.repositories':[fixtureData.base+'uncached/']});await ui.openFile('External.ili');
   await ui.waitFor(()=>hasError('offline'),'Empty offline search did not show concrete cause');await ui.capture('GUI-09-offline-miss');assert.equal(JSON.parse(fs.readFileSync(path.join(evidence,'repository-stats.json'))).requests.length,count);
   await settings({'interlisGuru.repositories':[fixtureData.base]});
   await ui.openFile('Conflict.ili');await ui.replaceText(fixture('Base.ili'));await ui.openFile('Survey.ili');

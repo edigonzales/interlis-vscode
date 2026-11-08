@@ -25,6 +25,9 @@ Server Output**, **Stop Language Server**, **Restart Language Server** and
 **New Model from Template** are available in the palette. Templates create an
 unsaved document. Standard F12, formatting and diagnostics come from Java.
 
+Opening an INTERLIS file shows the Problems view and keeps keyboard focus in
+the editor.
+
 Diagnostics use the shared DE/EN formatter, including related locations.
 `interlisGuru.diagnostics.language` selects auto/de/en (auto follows the UI with
 English fallback). Other INTERLIS extensions can supply competing
