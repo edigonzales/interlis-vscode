@@ -46,7 +46,22 @@ describe('Installed live Java diagram and native Sprotty editor',function(){
   const canvas=await ui.driver.findElement(By.id('canvas')),canvasBox=await ui.driver.executeScript('const r=arguments[0].getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};',canvas);await ui.driver.actions().move({origin:canvas,x:Math.round(hit.x-canvasBox.x-canvasBox.width/2),y:Math.round(hit.y-canvasBox.y-canvasBox.height/2)}).click().perform();
   await ui.waitFor(async()=>(await ui.driver.findElements(By.css('[data-edge-id='+JSON.stringify(id)+'] [data-handle-kind]'))).length>0,'Interior handles missing');
   assert.equal((await ui.driver.findElements(By.css('[data-handle-kind="source"],[data-handle-kind="target"]'))).length,0);
-  const handle=await ui.driver.findElement(By.css('[data-edge-id='+JSON.stringify(id)+'] [data-handle-kind]')),r=await rect(handle);await ui.capture('GUI-14-handle-before');await dragElement(handle,28,28);
+  await ui.capture('GUI-14-handle-before');
+  const hitHandle=await ui.driver.executeScript((selectedEdge)=>{
+   for(const candidate of selectedEdge.querySelectorAll('[data-handle-kind]')){
+    const bounds=candidate.getBoundingClientRect();
+    if(bounds.left<0||bounds.top<0||bounds.right>innerWidth||bounds.bottom>innerHeight)continue;
+    const x=Math.floor(bounds.left+bounds.width/2),y=Math.floor(bounds.top+bounds.height/2);
+    // At fit scale a handle may cover only one pixel, and WebDriver floors its centre.
+    for(const dy of [0,1])for(const dx of [0,1]){
+     if(document.elementFromPoint(x+dx,y+dy)===candidate)return {handle:candidate,dx,dy};
+    }
+   }
+   return null;
+  },edge);
+  assert.ok(hitHandle,'No exposed interior routing handle on the selected edge');
+  await ui.driver.actions().move({origin:hitHandle.handle,x:hitHandle.dx,y:hitHandle.dy})
+   .press().move({x:28,y:28,origin:'pointer',duration:500}).release().perform();
   await ui.waitFor(async()=>await line.getAttribute('d')!==before,'Route did not change');assert.deepEqual([await edge.getAttribute('data-source'),await edge.getAttribute('data-target')],edgeIdentity);
   const after=await ui.driver.executeScript('return Object.fromEntries([...document.querySelectorAll(".sprotty-edge")].map(e=>[e.dataset.edgeId,e.querySelector("path")?.getAttribute("d")]))');for(const [otherId,d]of Object.entries(other))if(otherId!==id)assert.equal(after[otherId],d,'Unrelated edge route changed');
   await ui.capture('GUI-14-route-after');fs.writeFileSync(path.join(evidence,'GUI-14-route.json'),JSON.stringify({id,edgeIdentity,before,after:await line.getAttribute('d')},null,2));await unchanged();
