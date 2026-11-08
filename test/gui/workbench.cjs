@@ -21,7 +21,12 @@ async function finishSaveDialog(input,target,cancel=false){
  await waitFor(async()=>{try{return !await input.isDisplayed();}catch(error){if(error.name==='StaleElementReferenceError')return true;throw error;}},'Save dialog did not close');
 }
 async function readText(){return await driver.executeScript('return [...document.querySelectorAll(".part.editor .monaco-editor .view-lines .view-line")].sort((a,b)=>parseFloat(a.style.top)-parseFloat(b.style.top)).map(e=>e.textContent.replace(/\\u00a0/g," ").replace(/\\u200b/g,"")).join("\\n")');}
-async function focusEditor(){await driver.actions().clear();await driver.wait(async()=>{try{for(const span of await driver.findElements(By.css('.part.editor .monaco-editor .view-lines .view-line span span')))if((await span.getText()).trim()&&await span.isDisplayed()){try{await span.click();return true;}catch(error){if(error.name==='ElementClickInterceptedError')continue;throw error;}}return false;}catch(error){if(error.name==='StaleElementReferenceError')return false;throw error;}},5000,'No stable visible editor text to focus');await waitFor(async()=>await driver.executeScript("return !!document.activeElement.closest('.part.editor .monaco-editor') && document.activeElement.getAttribute('role')==='textbox'"),'Editor text input did not receive focus');}
+async function focusEditor(){
+ const hasEditorFocus=()=>driver.executeScript("return !!document.activeElement.closest('.part.editor .monaco-editor') && document.activeElement.getAttribute('role')==='textbox'");
+ await driver.actions().clear();
+ if(await hasEditorFocus())return;
+ await driver.wait(async()=>{try{for(const span of await driver.findElements(By.css('.part.editor .monaco-editor .view-lines .view-line span span')))if((await span.getText()).trim()&&await span.isDisplayed()){try{await span.click();return true;}catch(error){if(error.name==='ElementClickInterceptedError')continue;throw error;}}return false;}catch(error){if(error.name==='StaleElementReferenceError')return false;throw error;}},5000,'No stable visible editor text to focus');await waitFor(hasEditorFocus,'Editor text input did not receive focus');
+}
 async function palette(command, raw=false,keepOpen=false){
  const trace=async stage=>fs.appendFileSync(path.join(evidence,'palette-events.jsonl'),JSON.stringify({at:new Date().toISOString(),command,stage,visible:await driver.executeScript('return [...document.querySelectorAll(".quick-input-widget")].some(e=>e.offsetHeight>0)'),active:await driver.executeScript('return document.activeElement?.outerHTML.slice(0,500)')})+'\n');
  await driver.actions().clear();await driver.actions().sendKeys(Key.F1).perform();
