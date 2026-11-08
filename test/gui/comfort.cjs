@@ -19,9 +19,14 @@ async function hostAction(id){const element=await ui.driver.findElement(By.id('c
 async function choose(id,value){await ensureOptions();const e=await ui.driver.findElement(By.id(id));await e.click();const options=await e.findElements(By.css('option'));const target=await Promise.all(options.map(async o=>({o,value:await o.getAttribute('value')})));const item=target.find(i=>i.value===value);assert.ok(item,'Missing option '+id+' '+value);await item.o.click();await fresh();}
 async function check(id,value){await filters();const e=await ui.driver.findElement(By.id(id));if(await e.isSelected()!==value)await e.click();await fresh();}
 async function node(label){return ui.driver.findElement(By.css('[data-label='+JSON.stringify(label)+']'));}
-async function selectNode(label){await closeOptions();const target=await node(label),title=await target.findElement(By.css('.interlis-title')),id=await target.getAttribute('data-element-id');const hit=await ui.driver.executeScript('const r=arguments[0].getBoundingClientRect(),e=document.elementFromPoint(Math.floor(r.x+r.width/2),Math.floor(r.y+r.height/2));return e?.closest("[data-kind]")?.getAttribute("data-element-id");',title);assert.equal(hit,id,'Another semantic node covers the intended native click');await ui.driver.actions().move({origin:title}).click().perform();await ui.waitFor(async()=>await target.getAttribute('class').then(c=>c.includes('selected')),'Native click did not select the intended node');}
+async function selectNode(label){
+ await closeOptions();
+ const target=await node(label),{frame,point}=await nodeFramePointer(target);
+ await ui.driver.actions().move({origin:frame,...point}).click().perform();
+ await ui.waitFor(async()=>await target.getAttribute('class').then(c=>c.includes('selected')),'Native click did not select the intended node');
+}
 async function drag(e,dx,dy){await ui.driver.actions().move({origin:e}).press().move({x:dx,y:dy,origin:'pointer',duration:400}).release().perform();}
-async function dragNodeFrame(target,dx,dy){
+async function nodeFramePointer(target){
  const frame=await target.findElement(By.css('.interlis-frame'));
  const point=await ui.driver.executeScript(function(frame){
   const bounds=frame.getBoundingClientRect();
@@ -33,6 +38,10 @@ async function dragNodeFrame(target,dx,dy){
   return null;
  },frame);
  assert.ok(point,'No unobstructed pointer target on the node frame');
+ return {frame,point};
+}
+async function dragNodeFrame(target,dx,dy){
+ const {frame,point}=await nodeFramePointer(target);
  await ui.driver.actions().move({origin:frame,...point}).press().move({x:dx,y:dy,origin:'pointer',duration:400}).release().perform();
 }
 async function open(name){await source(name);await ui.palette('INTERLIS: Show Diagram for This File');await ui.waitFor(async()=>{await enter();return await (await ui.driver.findElement(By.id('root'))).getAttribute('textContent')===name;},'Expected visible diagram root '+name);await fresh();await hostAction('refresh');}
