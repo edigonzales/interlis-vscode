@@ -120,8 +120,8 @@ export function mountDiagramControls(parent:HTMLElement,canvas:DiagramCanvas,hos
  }
  setting(layout,'Direction','direction',[['RIGHT','Left to right'],['LEFT','Right to left'],['DOWN','Top to bottom'],['UP','Bottom to top']]);
  setting(layout,'Routing','edgeRouting',[['ORTHOGONAL','Orthogonal'],['POLYLINE','Polyline'],['SPLINES','Curved']]);
- button(layout,'diagram-settle','Rearrange layout',()=>run(()=>canvas.settle())).title='Keep manually positioned and pinned nodes';
- button(layout,'diagram-reset-layout','Reset layout',()=>run(()=>canvas.resetLayout())).title='Discard manual positions, pins and routes';
+ const settle=button(layout,'diagram-settle','Rearrange layout',()=>run(()=>canvas.settle()));
+ const resetLayout=button(layout,'diagram-reset-layout','Reset layout',()=>run(()=>canvas.resetLayout()));
  setting(advanced,'Node placement','nodePlacement',[['BRANDES_KOEPF','Brandes–Köpf'],['SIMPLE','Simple'],['INTERACTIVE','Interactive'],['LINEAR_SEGMENTS','Linear segments'],['NETWORK_SIMPLEX','Network simplex']]);
  setting(advanced,'Crossing style','edgeCrossingStyle',[['GAPS','Gaps'],['PLAIN','Plain']]);
  setting(advanced,'Rendering target','renderingTarget',[['STANDARD','Standard'],['INKSCAPE','Inkscape']]);
@@ -131,7 +131,7 @@ export function mountDiagramControls(parent:HTMLElement,canvas:DiagramCanvas,hos
  let treeSnapshot='';
  function refreshTree():void {
   const dto=canvas.getDocument();if(!dto)return;
-  const stamp=dto.snapshotId+':'+[...canvas.filters.hiddenIds].sort().join('|');
+  const stamp=JSON.stringify([dto.snapshotId,dto.optionsFingerprint,dto.selection,[...canvas.filters.hiddenIds].sort()]);
   if(stamp===treeSnapshot)return;treeSnapshot=stamp;tree.replaceChildren();
   const values=[...dto.containers,...dto.nodes];
   function append(parent:HTMLElement,parentId:string|null,depth:number):void {
@@ -190,7 +190,7 @@ export function mountDiagramControls(parent:HTMLElement,canvas:DiagramCanvas,hos
   focus=action(moreMenu,'diagram-focus','Focus selected',()=>focusHost(canvas.selectedSymbolIds(),Number(depth.value),language.value));
   full=action(moreMenu,'diagram-full','Show complete diagram',()=>focusHost([],0,language.value));
  }
- if(host.resetOptions)button(contents,'diagram-reset-options','Reset diagram options to defaults',()=>run(host.resetOptions!));
+ const resetOptions=host.resetOptions?button(contents,'diagram-reset-options','Reset diagram options to defaults',()=>run(host.resetOptions!)):undefined;
  if(host.openSettings)action(moreMenu,'diagram-open-settings','Open Diagram Settings',host.openSettings);
  for(const format of ['SVG','PNG']as const)for(const scope of ['FULL','VISIBLE']as const){
   action(exportMenu,'diagram-export-'+format.toLowerCase()+'-'+scope.toLowerCase(),format+(scope==='FULL'?' · Full diagram':' · Visible area'),()=>host.export(format,scope));
@@ -201,6 +201,12 @@ export function mountDiagramControls(parent:HTMLElement,canvas:DiagramCanvas,hos
  function refreshActions():void {
   const current=canvas.isCurrent(),selected=canvas.selectedIds(),positions=canvas.selectedPositions();
   enable(exportButton,current,'Wait for a current diagram');
+  if(!current&&openMenu===exportMenu)closeMenu(false);
+  enable(settle,current,'Wait for a current diagram');
+  if(current)settle.title='Keep manually positioned and pinned nodes';
+  enable(resetLayout,current,'Wait for a current diagram');
+  if(current)resetLayout.title='Discard manual positions, pins and routes';
+  enable(resetOptions,current,'Wait for a current diagram');
   enable(reveal,current,'Wait for a current diagram');
   enable(full,current,'Wait for a current diagram');
   enable(focus,current&&canvas.selectedSymbolIds().length>0,'Select a current diagram element with a source symbol');
