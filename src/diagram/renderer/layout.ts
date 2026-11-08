@@ -6,7 +6,7 @@ import type {
 } from "./render-types";
 
 
-import { type DiagramSettings, type EdgeRouting, type RenderingTarget } from "./settings";
+import { type DiagramSettings, type EdgeRouting } from "./settings";
 export { defaultDiagramSettings } from "./settings";
 export type { DiagramSettings, EdgeRouting, RenderingTarget, NodePlacement, EdgeCrossingStyle, AttributeMode } from "./settings";
 
@@ -28,7 +28,6 @@ export interface LayoutEdge {
   readonly sections: readonly LayoutEdgeSection[];
   readonly labels: readonly LayoutLabel[];
   readonly routing: EdgeRouting;
-  readonly routeKind: "STATIC" | "INKSCAPE_POLYLINE" | "INKSCAPE_ORTHOGONAL";
   readonly source: DiagramEdge;
 }
 
@@ -54,7 +53,6 @@ export interface LayoutLabel {
 export interface LayoutDiagram {
   readonly width: number;
   readonly height: number;
-  readonly renderingTarget: RenderingTarget;
   readonly nodes: readonly LayoutNode[];
   readonly edges: readonly LayoutEdge[];
 }
@@ -285,7 +283,6 @@ export async function layoutDiagram(
         sections,
         labels,
         routing: settings.edgeRouting,
-        routeKind: "STATIC",
         source,
       });
     }
@@ -341,17 +338,12 @@ export async function layoutDiagram(
         }
       : edge;
   });
-  const layout: LayoutDiagram = {
+  return {
     width: Math.max(1, graph.width ?? 0),
     height: Math.max(1, graph.height ?? 0),
-    renderingTarget: settings.renderingTarget,
     nodes,
     edges: completedEdges,
   };
-  return settings.renderingTarget === "INKSCAPE" &&
-    settings.edgeRouting !== "SPLINES"
-    ? routeLayoutWithLibavoid(layout, settings)
-    : layout;
 }
 
 const containerKinds = new Set(["model", "modelscope", "model-scope", "topic"]);
@@ -450,179 +442,4 @@ const nodeContentLayout = (
     lines,
     height: Math.max(62, (lines.at(-1)?.y ?? 48) + 14),
   };
-};
-
-const pointOnPolyline = (
-  points: readonly { x: number; y: number }[],
-  fraction: number,
-): { x: number; y: number; nx: number; ny: number } => {
-  if (points.length === 0) return { x: 0, y: 0, nx: 0, ny: -1 };
-  if (points.length === 1)
-    return { x: points[0]!.x, y: points[0]!.y, nx: 0, ny: -1 };
-  const segments = points.slice(1).map((point, index) => {
-    const start = points[index]!;
-    return {
-      start,
-      point,
-      length: Math.hypot(point.x - start.x, point.y - start.y),
-    };
-  });
-  const total = segments.reduce((sum, segment) => sum + segment.length, 0);
-  let remaining = total * fraction;
-  for (const segment of segments) {
-    if (remaining <= segment.length || segment === segments.at(-1)) {
-      const ratio = segment.length === 0 ? 0 : remaining / segment.length;
-      const dx = segment.point.x - segment.start.x;
-      const dy = segment.point.y - segment.start.y;
-      const length = Math.max(1, Math.hypot(dx, dy));
-      return {
-        x: segment.start.x + dx * ratio,
-        y: segment.start.y + dy * ratio,
-        nx: -dy / length,
-        ny: dx / length,
-      };
-    }
-    remaining -= segment.length;
-  }
-  const point = points.at(-1)!;
-  return { x: point.x, y: point.y, nx: 0, ny: -1 };
-};
-
-const labelsOnRoute = (
-  edge: LayoutEdge,
-  settings: DiagramSettings,
-): readonly LayoutLabel[] =>
-  visibleEdgeLabelSpecs(edge.source, settings).map((spec) => {
-    const fraction =
-      spec.kind === "association"
-        ? 0.5
-        : spec.kind === "sourceCardinality"
-          ? 0.12
-          : 0.88;
-    const point = pointOnPolyline(edge.points, fraction);
-    const offset = spec.kind === "association" ? 10 : 12;
-    const size = edgeLabelSize(spec.text);
-    return {
-      id: spec.id,
-      kind: spec.kind,
-      text: spec.text,
-      x: point.x + point.nx * offset - size.width / 2,
-      y: point.y + point.ny * offset - size.height / 2,
-      width: size.width,
-      height: size.height,
-    };
-  });
-
-const translateLayout = (
-  layout: LayoutDiagram,
-  offsetX: number,
-  offsetY: number,
-  width: number,
-  height: number,
-): LayoutDiagram => ({
-  ...layout,
-  width,
-  height,
-  nodes: layout.nodes.map((node) => ({
-    ...node,
-    x: node.x + offsetX,
-    y: node.y + offsetY,
-  })),
-  edges: layout.edges.map((edge) => ({
-    ...edge,
-    points: edge.points.map((point) => ({
-      x: point.x + offsetX,
-      y: point.y + offsetY,
-    })),
-    sections: edge.sections.map((section) => ({
-      startPoint: {
-        x: section.startPoint.x + offsetX,
-        y: section.startPoint.y + offsetY,
-      },
-      bendPoints: section.bendPoints.map((point) => ({
-        x: point.x + offsetX,
-        y: point.y + offsetY,
-      })),
-      endPoint: {
-        x: section.endPoint.x + offsetX,
-        y: section.endPoint.y + offsetY,
-      },
-    })),
-    labels: edge.labels.map((label) => ({
-      ...label,
-      x: label.x + offsetX,
-      y: label.y + offsetY,
-    })),
-  })),
-});
-
-const fitLayoutBounds = (layout: LayoutDiagram): LayoutDiagram => {
-  const xBounds = [
-    ...layout.nodes.flatMap((node) => [node.x, node.x + node.width]),
-    ...layout.edges.flatMap((edge) => edge.points.map((point) => point.x)),
-    ...layout.edges.flatMap((edge) =>
-      edge.labels.flatMap((label) => [label.x, label.x + label.width]),
-    ),
-  ];
-  const yBounds = [
-    ...layout.nodes.flatMap((node) => [node.y, node.y + node.height]),
-    ...layout.edges.flatMap((edge) => edge.points.map((point) => point.y)),
-    ...layout.edges.flatMap((edge) =>
-      edge.labels.flatMap((label) => [label.y, label.y + label.height]),
-    ),
-  ];
-  const minimumX = Math.min(0, ...xBounds);
-  const minimumY = Math.min(0, ...yBounds);
-  const maximumX = Math.max(layout.width, ...xBounds);
-  const maximumY = Math.max(layout.height, ...yBounds);
-  const offsetX = minimumX < 0 ? 10 - minimumX : 0;
-  const offsetY = minimumY < 0 ? 10 - minimumY : 0;
-  const width = Math.max(1, maximumX + offsetX + 10);
-  const height = Math.max(1, maximumY + offsetY + 10);
-  return translateLayout(layout, offsetX, offsetY, width, height);
-};
-
-const routeLayoutWithLibavoid = async (
-  layout: LayoutDiagram,
-  settings: DiagramSettings,
-): Promise<LayoutDiagram> => {
-  if (settings.edgeRouting === "SPLINES") return layout;
-  const {routeWithLibavoid}=await import("./libavoid-router.js");
-  const routes = await routeWithLibavoid(
-    layout.nodes.map((node) => ({
-      ...node,
-      obstacle: !isContainerNode(node.source),
-    })),
-    layout.edges.map((edge) => ({
-      id: edge.id,
-      sourceId: edge.sourceId,
-      targetId: edge.targetId,
-    })),
-    settings.edgeRouting,
-  );
-  const edges = layout.edges.map((edge): LayoutEdge => {
-    const points = routes.get(edge.id);
-    if (!points)
-      throw new Error(
-        `The Inkscape-compatible router did not return edge ${edge.id}.`,
-      );
-    const routed: LayoutEdge = {
-      ...edge,
-      points,
-      sections: [
-        {
-          startPoint: points[0]!,
-          bendPoints: points.slice(1, -1),
-          endPoint: points.at(-1)!,
-        },
-      ],
-      labels: [],
-      routeKind:
-        settings.edgeRouting === "ORTHOGONAL"
-          ? "INKSCAPE_ORTHOGONAL"
-          : "INKSCAPE_POLYLINE",
-    };
-    return { ...routed, labels: labelsOnRoute(routed, settings) };
-  });
-  return fitLayoutBounds({ ...layout, edges });
 };

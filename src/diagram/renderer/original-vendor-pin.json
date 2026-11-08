@@ -62,7 +62,7 @@
       "change": "One strict declaration correction: T['children'][number] -> NonNullable<T['children']>[number]. Runtime elkjs source unchanged."
     }
   ],
-  "provenance": "Schema pins and upstream source identities for the shared diagram renderer. Original vendor digests record external source provenance.",
+  "provenance": "Schema pins and upstream source identities for the historical Core diagram renderer. Original vendor digests record external source provenance.",
   "diagramOptionsSchema": {
     "file": "interlis-wasm-bridge/src/main/resources/guru/interlis/bridge/diagram-options-1.0.schema.json",
     "sha256": "825c35756a4c00f743bdbacc0700def78b871d75f2b7c74c06a1daabbfd87b91"

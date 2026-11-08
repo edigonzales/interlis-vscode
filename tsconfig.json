@@ -15,9 +15,6 @@
       ],
       "elkjs/lib/elk.bundled.js": [
         "./src/diagram/renderer/contracts/elk.d.ts"
-      ],
-      "libavoid-js": [
-        "./src/diagram/renderer/contracts/libavoid-js.d.ts"
       ]
     }
   },

@@ -309,7 +309,7 @@ export class DiagramCanvas {
   const mark=++this.generation;this.setStatus('LOADING','Updating diagram…');
   const projection=legacyProjection(view);for(const node of projection.nodes){const value=[...document.nodes,...document.containers].find(value=>value.id===node.id);if(value){const p=presentation(value,settings);node.layoutSize=p;node.headerHeight=p.titleLines.length*18+22;}}
   try {
-   const layout=await this.worker.layout(projection,{...settings,renderingTarget:"STANDARD"});if(this.closed||mark!==this.generation)return false;if(optionsRevision!==this.optionsRevision)return this.accept(full,sessionKey,this.settings,local);
+   const layout=await this.worker.layout(projection,settings);if(this.closed||mark!==this.generation)return false;if(optionsRevision!==this.optionsRevision)return this.accept(full,sessionKey,this.settings,local);
    for(const node of layout.nodes)if(![node.x,node.y,node.width,node.height].every(Number.isFinite)||node.width<=0||node.height<=0)throw new Error('Invalid layout bounds');
    for(const edge of layout.edges)if(!edge.points.every(point=>Number.isFinite(point.x)&&Number.isFinite(point.y)))throw new Error('Invalid edge geometry');
    const first=!this.document;const reconciled=reconcileGeometry(this.document,full,this.state);

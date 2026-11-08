@@ -2,8 +2,7 @@ import {promises as fs} from 'node:fs';
 import {createHash} from 'node:crypto';
 import path from 'node:path';
 
-const rendererFiles = ['diagram-ui.js', 'diagram-ui.css', 'diagram-layout-worker.js',
-  'libavoid-router.js', 'libavoid.wasm'];
+const rendererFiles = ['diagram-ui.js', 'diagram-ui.css', 'diagram-layout-worker.js'];
 const coreFiles = ['types/editor-protocol.ts', 'types/diagram-document.ts',
   'schemas/diagram-document-1.0.schema.json', 'schemas/diagram-options-1.0.schema.json',
   'licenses/interlis-java.txt'];
@@ -46,5 +45,5 @@ export async function verifyDiagramAssets(root: string): Promise<void> {
   }
   await verifyFiles(path.join(root, 'artifacts'), lock.contractFiles, coreFiles, name => coreFiles.includes(name));
   await verifyFiles(renderer, manifest.assets, rendererFiles,
-    name => rendererFiles.includes(name) || /^(diagram-ui|libavoid-router)\.js\.LEGAL\.txt$/.test(name));
+    name => rendererFiles.includes(name) || name === 'diagram-ui.js.LEGAL.txt');
 }
