@@ -105,6 +105,18 @@ describe('Installed live Java diagram and native Sprotty editor',function(){
   const current=await (await node('A')).getAttribute('transform');assert.equal(current,before,'Stable moved node lost its position');
   await ui.driver.executeScript('for(const release of window.__heldLayouts.splice(0))release();');await ui.waitFor(async()=>(await (await node('C')).getText()).includes('newAttribute'),'Late result replaced current view');assert.equal(await (await node('A')).getAttribute('transform'),before);await ui.capture('GUI-17-current');
   await back();await openSource('Interactive.ili');await ui.replaceText(original);assert.equal(await ui.copyText(),original);await enter();await fresh();
+  const cancel=await ui.driver.findElement(By.id('diagram-cancel'));
+  assert.equal(await cancel.isEnabled(),false,'Idle diagram offered Cancel');
+  await ui.driver.executeScript('window.__holdNextLayout=true');
+  await click('refresh');
+  await ui.waitFor(async()=>await ui.driver.executeScript('return window.__heldLayouts.length===1'),'Second real worker result was not held');
+  assert.equal(await cancel.isEnabled(),true);
+  await cancel.click();
+  await ui.waitFor(async()=>/cancelled/i.test(await (await ui.driver.findElement(By.id('status'))).getText()),'Cancel status missing');
+  await ui.driver.executeScript('for(const release of window.__heldLayouts.splice(0))release();');
+  assert.equal(await cancel.isEnabled(),false);
+  assert.equal(await (await ui.driver.findElement(By.id('canvas'))).getAttribute('data-status'),'STALE');
+  await click('refresh');await fresh();
   record('GUI-17',['hold one real ELK Worker response','add source attribute with native paste','wait for newer live analysis','release the old actual response'],['current attribute shown','obsolete worker cannot publish','stable moved node retains geometry','source changes only through explicit text editing']);
  });
  it('GUI-18 keeps explicit panels isolated and follows another ILI file only after explicit activation',async()=>{
@@ -115,6 +127,20 @@ describe('Installed live Java diagram and native Sprotty editor',function(){
   // Two separately opened custom documents remain independent, including their opaque root labels.
   assert.match(await (await ui.driver.findElement(By.id('root'))).getText(),/Interactive\.ili$/);assert.ok(!(await (await node('A')).getText()).includes('otherAttribute'));assert.notEqual(await (await node('A')).getAttribute('data-element-id'),otherId);
   await openSource('Other.ili');await ui.palette('INTERLIS: Show Diagram for This File');await enter();await fresh();assert.equal(await (await node('A')).getAttribute('transform'),otherPosition,'Other panel lost its own dragged geometry');await ui.capture('GUI-18-other-retained');
+  const settingsDirectory=path.join(evidence,'Unicode Modelle/.vscode');
+  fs.mkdirSync(settingsDirectory,{recursive:true});
+  const settingsFile=path.join(settingsDirectory,'settings.json');
+  const settingsText=JSON.stringify({'interlisGuru.diagram.direction':'DOWN'});
+  fs.writeFileSync(settingsFile,settingsText);
+  const direction=await ui.driver.findElement(By.id('diagram-direction'));
+  assert.equal(await direction.getAttribute('value'),'RIGHT','Changing defaults moved an existing panel');
+  await back();await ui.palette('INTERLIS: Reset Diagram Options to Defaults');await enter();
+  await ui.waitFor(async()=>await (await ui.driver.findElement(By.id('diagram-direction'))).getAttribute('value')==='DOWN','Reset did not read current workspace defaults');
+  await fresh();
+  assert.equal(await (await node('A')).getAttribute('transform'),otherPosition,'Options reset discarded manual position');
+  assert.equal(fs.readFileSync(settingsFile,'utf8'),settingsText,'Local reset rewrote workspace settings');
+  await openSource('Interactive.ili');await ui.palette('INTERLIS: Show Diagram for This File');await enter();await fresh();
+  assert.equal(await (await ui.driver.findElement(By.id('diagram-direction'))).getAttribute('value'),'RIGHT','Options reset changed the other panel');
   record('GUI-18',['activate B while A is pinned','explicitly enable Follow','activate B again','pin B and open A separately'],['pinned A retains source','only explicit follow switches to B','A/B labels and layout are separate']);
  });
 });

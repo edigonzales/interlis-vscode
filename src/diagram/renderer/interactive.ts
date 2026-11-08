@@ -329,6 +329,7 @@ export class DiagramCanvas {
  private setStatus(status:DiagramStatus,message:string):void {this.status=status;this.element.dataset.status=status;this.callbacks.status?.(status,message);}
  getViewState():DiagramViewState {return structuredClone(this.state);}
  getDocument():DiagramDocumentDto|undefined {return this.document;}
+ isCurrent():boolean {return this.current&&['FRESH','PARTIAL','EMPTY'].includes(this.status);}
  async fit():Promise<void> {
   const graph=this.element.querySelector('svg.sprotty-graph') as SVGSVGElement|null;
   if(!graph||this.closed)return;const bounds=paintedBounds(graph),width=this.element.clientWidth,height=this.element.clientHeight;
@@ -357,7 +358,7 @@ export class DiagramCanvas {
  async zoom(factor:number,clientX?:number,clientY?:number):Promise<void> {const v=this.viewport(),r=this.element.getBoundingClientRect(),x=clientX===undefined?r.width/2:clientX-r.left,y=clientY===undefined?r.height/2:clientY-r.top,zoom=Math.max(.08,Math.min(4,v.zoom*factor));await this.setViewport({zoom,x:v.x+x/v.zoom-x/zoom,y:v.y+y/v.zoom-y/zoom});}
  async saveState():Promise<SavedViewState|undefined> {if(!this.document)return;return saveViewState(this.document,{geometry:this.state,pins:this.pins,manualNodes:this.manualNodes,manualRoutes:this.manualRoutes,hiddenNodes:this.filters.hiddenIds,filters:this.filters.filters,settings:this.settings,viewport:this.viewport()});}
  async restoreState(value:unknown):Promise<void> {if(!this.document)throw Error('No diagram for saved state');const document=this.document,generation=this.generation,state=await restoreViewState(document,value);if(this.closed||generation!==this.generation||this.document!==document)return;this.state=state.geometry;this.pins=state.pins;this.manualNodes=state.manualNodes;this.manualRoutes=state.manualRoutes;this.filters.hiddenIds=state.hiddenNodes;this.filters.filters=state.filters;this.settings=state.settings;await this.repaint();await this.setViewport(state.viewport);}
- exportSvg(scope:ExportScope):SvgArtifact {if(!this.current||!this.rendered||!['FRESH','PARTIAL','EMPTY'].includes(this.status))throw Error('Wait for a current diagram before exporting');return exportSvg(this.element,this.rendered,this.settings,scope,this.viewport());}
+ exportSvg(scope:ExportScope):SvgArtifact {if(!this.isCurrent()||!this.rendered)throw Error('Wait for a current diagram before exporting');return exportSvg(this.element,this.rendered,this.settings,scope,this.viewport());}
  async exportPng(scope:ExportScope,scale=1):Promise<{data:Uint8Array;width:number;height:number}> {const revision=this.revision,generation=this.generation,artifact=await exportPng(this.exportSvg(scope),scale);if(this.closed||generation!==this.generation||revision!==this.revision)throw Error('View changed during export; retry');return artifact;}
  dispose():void {if(this.closed)return;this.closed=true;this.generation++;this.resize?.disconnect();for(const cleanup of this.cleanup)cleanup();this.worker.close();this.container.unbindAll();this.element.replaceChildren();this.document=undefined;this.root=undefined;this.view=undefined;this.state={positions:{},routes:{}};}
 }

@@ -128,6 +128,10 @@
       {
         "command": "interlisGuru.diagram.cancel",
         "title": "INTERLIS: Cancel Diagram Update"
+      },
+      {
+        "command": "interlisGuru.diagram.resetOptions",
+        "title": "INTERLIS: Reset Diagram Options to Defaults"
       }
     ],
     "configuration": {
@@ -374,6 +378,44 @@
           "default": "",
           "scope": "window",
           "description": "Explicit absolute path to an optional local template."
+        },
+        "interlisGuru.diagram.direction": {
+          "type": "string",
+          "enum": [
+            "RIGHT",
+            "LEFT",
+            "DOWN",
+            "UP"
+          ],
+          "enumDescriptions": [
+            "Left to right",
+            "Right to left",
+            "Top to bottom",
+            "Bottom to top"
+          ],
+          "default": "RIGHT",
+          "scope": "window",
+          "description": "Layout direction for a new diagram or an options reset. Saved views retain their direction."
+        },
+        "interlisGuru.diagram.associationPresentation": {
+          "type": "string",
+          "enum": [
+            "ENTITY",
+            "COMPACT_BINARY"
+          ],
+          "enumDescriptions": [
+            "Show associations as entities",
+            "Draw eligible binary associations as relationships"
+          ],
+          "default": "ENTITY",
+          "scope": "window",
+          "description": "Association presentation for a new diagram or an options reset. Saved views retain their presentation."
+        },
+        "interlisGuru.diagram.deemphasizeAbstractTypes": {
+          "type": "boolean",
+          "default": true,
+          "scope": "window",
+          "description": "Use a subdued style for abstract types in new diagrams or after an options reset. Saved views retain their setting."
         }
       }
     },
