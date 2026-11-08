@@ -344,7 +344,6 @@ export class DiagramCanvas {
  async redo():Promise<void> {const state=this.future.pop();if(state){this.history.push(this.frame());this.applyFrame(state);this.trimHistory();await this.repaint();}}
  private async repaint():Promise<void> {if(this.document&&this.current)await this.accept(this.document,this.sessionKey,this.settings,true);}
  selectedSymbolIds():string[] {const ids=new Set(this.selectedIds()),document=this.document;if(!document)return [];return [...new Set([...document.containers,...document.nodes].flatMap(node=>ids.has(node.id)&&node.symbol?[node.symbol.symbol]:[]).concat(document.edges.flatMap(edge=>ids.has(edge.id)&&edge.origin?[edge.origin.symbol]:[])))];}
- getScrollBounds():{minX:number;maxX:number;minY:number;maxY:number} {const svg=this.element.querySelector<SVGSVGElement>('svg.sprotty-graph');if(!svg)return {minX:0,maxX:1,minY:0,maxY:1};const b=paintedBounds(svg),v=this.viewport();return {minX:b.x-this.element.clientWidth/v.zoom+64/v.zoom,maxX:b.x+b.width-64/v.zoom,minY:b.y-this.element.clientHeight/v.zoom+64/v.zoom,maxY:b.y+b.height-64/v.zoom};}
  getSettings():DiagramSettings {return {...this.settings};}
  async configure(settings:DiagramSettings):Promise<void> {this.settings=validateViewSettings(settings);this.optionsRevision++;await this.settle();}
  async filter(path:string,value:boolean):Promise<void> {this.filters.set(path,value);this.optionsRevision++;await this.repaint();}

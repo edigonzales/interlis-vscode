@@ -22,7 +22,7 @@ interface Details {
   sources:Map<string,HostSource>; coordinates:Map<string,Coordinates>;
 }
 const details=new WeakMap<DiagramView,Details>();
-export function freeze<T>(value:T):T {
+function freeze<T>(value:T):T {
   if(value && typeof value==='object'){Object.freeze(value);Object.values(value).forEach(freeze);}return value;
 }
 function detached<T>(value:T):T {return JSON.parse(JSON.stringify(value)) as T;}

@@ -4,7 +4,9 @@ Java owns parsing, semantic snapshots, repository closure, language queries,
 completion/END plans, diagnostics, documentation and graph projections. The
 extension transports LSP stdio messages, maps native editor interactions, and
 owns the diagram renderer, layout worker, view state and export. It imports the
-wire types and schema from the locked Core bundle.
+wire types and schema from the locked Core bundle. Core tests own projection
+semantics and portable compiler/worker transport. Extension renderer tests
+exercise the packaged browser code, with native VSIX tests for the host boundary.
 
 The client accepts editor protocol1, diagram protocol1 and DiagramDocument1.0.
 Server-instance IDs, document versions, snapshot IDs and request generations

@@ -26,7 +26,7 @@ function buildDiagram() {
   const packages = new Set(['elkjs', 'libavoid-js']);
   for (const [entry, name, platform, format] of [
     ['interactive.ts', 'diagram-ui.js', 'browser', 'esm'],
-    ['static-adapter.ts', 'adapter.cjs', 'node', 'cjs'],
+    ['adapter.ts', 'adapter.cjs', 'node', 'cjs'],
     ['libavoid-router.ts', 'libavoid-router.js', 'browser', 'esm']
   ]) {
     const built = esbuild.buildSync({...common, entryPoints: [path.join(source, entry)],

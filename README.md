@@ -105,14 +105,15 @@ Cross-packaging is not a native platform test. Linux/Windows qualification uses
 short native GitHub Actions smokes; their GUI and Remote GUI remain untested under
 the [user-adjusted scope](docs/implementation/vscode-extension/PLATFORM_TEST_SCOPE.md).
 
-For publication, GitHub Actions builds the locked server and renderer once,
-then builds and tests one VSIX with a Java 25 runtime linked by `jlink` on each
+For publication, GitHub Actions builds the locked Core bundle once. Each native runner builds
+the extension renderer and tests one VSIX with a Java 25 runtime linked by `jlink` on each
 native target runner. The upload job uses the exact tested packages and the
 repository secret `OPEN_VSIX_MARKETPLACE_TOKEN`. To release with a newer Core,
 update the editor artifacts lock in this repository.
 
-The standalone platform workflow builds the locked server/renderer once, then builds and tests both
-a full Temurin JRE and a custom `jlink` runtime on each native target runner.
+The standalone platform workflow shares the locked Core bundle. Each native
+runner builds the renderer and tests both a full Temurin JRE and a custom
+`jlink` runtime.
 The final VSIX uses `jlink` only when its compressed download is at least 10%
 smaller. A failed candidate test fails the workflow; only insufficient size savings
 select the full JRE. The job summary and `*.selection.json` record the comparison.
@@ -183,7 +184,7 @@ npm run test:extension-host
 
 This additional isolated Extension-Host run checks activation, the real definition
 provider and dirty-buffer restart through VSCode APIs. It is not GUI evidence.
-On macOS use the Core `tools/verification/without-python.cjs` wrapper for the
+On macOS use the extension’s `scripts/without-python.cjs` wrapper for the
 review and qualification processes, setting the Extension CWD inside the guard.
 See the [execution plan](docs/implementation/vscode-extension/EXECUTION_PLAN.md)
 and [current status](docs/implementation/vscode-extension/STATUS.md).
@@ -193,16 +194,17 @@ Source resource origins and license hashes are in
 regenerated from esbuild's actual input graph. Java third-party notices remain
 inside the unchanged distribution JARs, alongside the Core license.
 
-V3 local diagram controls include visibility filters, pins, Settle/Reset, view
-Undo/Redo, routing and layout choices, and full/visible SVG/PNG export of the
-current arranged view. Initial settings use `interlisGuru.diagram.*`; automatic
-opening and follow-active-editor default to false. `INTERLIS: Reveal Source
-Selection in Diagram` uses the Java symbol query. Save uses the native dialog;
-Cancel creates no file. View storage keeps bounded hashed presentation identities,
-geometry and filters, independently for each workspace/root/panel. It stores no
-source text. The `comfort` GUI suite runs cumulative GUI01–28; its qualification
-has passed its independent V3 review. See STATUS and the archived review for
-the exact accepted product pair and evidence.
+The diagram toolbar has Refresh, Fit, follow mode, Options, Export and More.
+Options opens a drawer with Display, Layout, Filters and Advanced. Domain
+enumeration values and inline attribute enumerations have separate controls,
+as do member and association-end cardinalities. The Inkscape target preserves
+live connectors for straight and orthogonal routes. Splines export as static paths.
+
+Initial settings use `interlisGuru.diagram.*`. **INTERLIS: Reset Diagram Options
+to Settings** reapplies defaults to the active diagram. **More** contains
+selection, visibility and view history actions. View storage keeps bounded
+geometry and filters per workspace, source and panel. Theme changes preserve
+the view, and Full/Visible SVG and PNG use the colors captured at export start.
 
 ## Editor assistance and catalogues
 
@@ -240,7 +242,7 @@ macOS sandbox denies interpreter execution, external IP traffic and source reads
 while its Code launcher has an empty PATH. Acquire VS Code/ChromeDriver in a normal
 GUI run first. See [architecture and test contracts](docs/development.md).
 
-The Jenesis migration B uses the single Core Java 25 entry point for server and renderer staging. The committed artifact lock uses schema 2 with the fixed `guru.interlis.lsp/guru.interlis.lsp.Main` module launch; Core bundles use schema 3. `resolveLaunchPlan` returns a frozen, verified module plan. The LSP protocol and renderer schemas keep their existing versions. Unknown modules, extra launch flags, automatic own modules, changed JARs and damaged bundled runtimes fail verification.
+The Java 25 Jenesis entry point produces the Core editor bundle (manifest v4). The extension pins that bundle in artifact lock v3 and launches `guru.interlis.lsp/guru.interlis.lsp.Main`. It builds and verifies its renderer assets separately. Editor and diagram protocol 1 and DiagramDocument 1.0 retain their wire format.
 
 The existing pinned full-JRE/jlink pipeline remains the runtime owner. Its analysis combines actual module descriptors, jdeps and documented dynamic providers; application JARs stay outside the JDK-only image. On the local macOS arm64 migration gate both actual VSIX variants were inspected; jlink saved 35.6% and passed HTTP/HTTPS protocol, isolated extension-host navigation/restart, and corruption probes. Windows/Linux workflow definitions were updated but not executed for this local migration. Full release/platform qualification remains a separate gate. Original migration receipts and the final independent candidate-pair review are retained outside both repositories in `interlis-java-jenesis-b-evidence`.
 

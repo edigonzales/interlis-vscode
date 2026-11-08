@@ -51,7 +51,7 @@ jobs:
         working-directory: extension
       - name: Check native process tracing
         run: command -v strace || sudo apt-get install --yes --no-install-recommends strace
-      - name: Build the locked common server and renderer
+      - name: Build the locked Core editor bundle
         run: node scripts/ci/trace-linux.cjs node scripts/ci/build-smokes.cjs
         working-directory: extension
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -148,9 +148,7 @@ jobs:
         if: runner.os == 'Linux' && (github.event_name == 'pull_request' || inputs.full_gui)
         working-directory: extension
         run: |
-          npm ci --ignore-scripts
           npx --no-install playwright install --with-deps chromium
-          npm run build
           npm run test:renderer
       - name: Run full Linux editor and authoring GUI suites
         if: runner.os == 'Linux' && (github.event_name == 'pull_request' || inputs.full_gui)
