@@ -201,7 +201,7 @@ as do member and association-end cardinalities. The Inkscape target preserves
 live connectors for straight and orthogonal routes. Splines export as static paths.
 
 Initial settings use `interlisGuru.diagram.*`. **INTERLIS: Reset Diagram Options
-to Settings** reapplies defaults to the active diagram. **More** contains
+to Defaults** reapplies defaults to the active diagram. **More** contains
 selection, visibility and view history actions. View storage keeps bounded
 geometry and filters per workspace, source and panel. Theme changes preserve
 the view, and Full/Visible SVG and PNG use the colors captured at export start.
