@@ -62,15 +62,19 @@ completed guard/JUnit report, checks all42 GUI IDs and preserves the exact VSIX.
 The independent final review separately validates these raw results and designs
 its own counterprobes. It is not started by this qualification command.
 
-GitHub Actions builds exact locked Core/extension inputs and short native Linux
-and Windows smokes inspect actual VSIX bytes, use bundled Java over real stdio,
-install with VS Code's real CLI from Unicode/space paths and reject a removed JAR.
-They run no GUI or corpus suite. Linux descendant exec tracing and Windows native
-process-start events establish which executables actually ran; these observations
-are not described as the macOS sandbox or as prevention of every possible process.
-CI artifacts carry full commit pairs, vendor/runtime/VSIX digests, exits, commands
-and durations. Builds must leave tracked locks unchanged. Isolated testbranch
-pushes and Actions runs are authorized; there is no merge, tag or marketplace step.
+GitHub Actions builds the exact locked Core and extension commits. Each native
+target installs and checks its actual VSIX using the packaged Java runtime,
+then runs the short native GUI smoke (GUI01–03). Linux runs its GUI in Xvfb with
+a window manager and a native X clipboard. The PR and stable release gates
+also run the shared renderer browser tests and the full portable editor,
+diagram and authoring suites (GUI01–35) against the selected Linux VSIX.
+The macOS offline sandbox and process-observer qualification (GUI36–42)
+remains available through the separate local command above.
+
+The platform workflow uploads GUI screenshots, logs, result manifests and
+native process evidence. Its final `Platform and GUI gate` job fails when the
+package or any scheduled platform check fails. Configure this job as a required
+status check for `main` once the new workflow has reported it.
 
 The authoritative phase records remain under
 `implementation/vscode-extension/STATUS.md`. Independent OpenCode2 direct DeepSeek
@@ -93,11 +97,21 @@ requires that number; malformed or missing CI numbers fail before packaging.
 workflow for all platform packages so every target and rerun shares the version.
 
 Outputs are `build/packages/interlis-editor-<target>.vsix` with matching
-`.inventory.json` files carrying ID, version and SHA256. Packaging checks both
-actual VSIX JSON and XML metadata. GUI tests compare the installed manifest with
-the selected VSIX; native CI smokes additionally check the run-derived expected
-version and Code CLI's actual installed listing. The platform workflow runs on
-main, the existing test branch and manual dispatch. There is no registry publish step.
+`.inventory.json` files carrying ID, version and SHA256. Packaging checks the
+VSIX JSON and XML metadata. The publication workflow uses the same version
+sequence for both channels and publishes the packages built and tested in
+that run.
+
+| Trigger | GUI checks | Open VSX |
+| --- | --- | --- |
+| Pull request against `main` | Native smoke on Linux, Windows and macOS, plus full Linux GUI | None |
+| Push to `main` | One native GUI smoke per platform | Pre-release |
+| Manual **Publish Open VSX** run on `main` | Native smoke on all three platforms, plus full Linux GUI | Stable release |
+
+Start a stable release by selecting `main` and **Run workflow** in **Publish
+Open VSX**. No tag is needed. The publish job waits for the same-run package
+and GUI gate. To qualify a branch without publishing, manually run
+**Native runtime packages** with the full Linux GUI option.
 
 ## F5 development loop
 
