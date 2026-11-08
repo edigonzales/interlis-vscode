@@ -43,7 +43,7 @@ describe('Installed INTERLIS editor smoke',function(){
   assert.ok(declarationLine>0,'Expected the Height declaration');
   await go(reference.line,reference.column+2);await driver.actions().sendKeys(Key.F12).perform();
   await waitFor(async()=>(await editor.getCoordinates())[0]===declarationLine,'F12 did not navigate to Height declaration');
-  const unformatted=original.replace(/^ +/gm,'');await replaceText(unformatted);assert.equal(await readText(),unformatted,'Unformatted preparation was not applied');await capture('GUI-03-unformatted');
+  const unformatted=original.replace(/^ +/gm,'');await replaceText(unformatted);assert.equal(await readText(),unformatted.replace(/\r\n/g,'\n'),'Unformatted preparation was not applied');await capture('GUI-03-unformatted');
   await palette('Format Document');await waitFor(async()=>(await copyText())!==unformatted,'Formatting did not change layout');
   const formatted=await copyText();fs.writeFileSync(path.join(evidence,'GUI-03-buffers.json'),JSON.stringify({unformatted,formatted},null,2));await capture('GUI-03-formatted');assert.equal(formatted.replace(/\s/g,''),unformatted.replace(/\s/g,''));
   await focusEditor();await palette('Undo');
