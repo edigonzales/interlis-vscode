@@ -73,5 +73,36 @@ test('native shared controls preserve hidden geometry, own undo, real curves and
  assert.equal(await page.locator('#diagram-export-svg-full').isVisible(),true);
  await page.keyboard.press('Escape');
  assert.equal(await page.locator('#diagram-export-svg-full').isVisible(),false);
+ await page.setViewportSize({width:1400,height:1000});
+ await page.evaluate(async()=>{
+  const dto=structuredClone(input),warning=dto.nodes.find(node=>node.label==='A');
+  warning.status='UNRESOLVED';dto.completeness='PARTIAL';
+  await canvas.accept(dto,'comfort',canvas.getSettings());
+ });
+ await page.locator('[data-label="A"] .interlis-warning').waitFor();
+ const semanticColors=await page.evaluate(()=>{
+  const root=document.documentElement,rows=[];
+  const number=paint=>paint.match(/[\d.]+/g).slice(0,3).map(Number);
+  const luminance=paint=>number(paint).map(value=>value/255)
+   .map(value=>value<=.04045?value/12.92:((value+.055)/1.055)**2.4)
+   .reduce((sum,value,index)=>sum+value*[.2126,.7152,.0722][index],0);
+  const ratio=(foreground,background)=>{const a=luminance(foreground),b=luminance(background);return (Math.max(a,b)+.05)/(Math.min(a,b)+.05);};
+  for(const [kind,background,foreground]of [
+   ['vscode-light','#fff','#222'],['vscode-dark','#181818','#eee'],
+   ['vscode-high-contrast','#000','#fff'],['vscode-high-contrast-light','#fff','#000']
+  ]){
+   root.className=kind;
+   root.style.setProperty('--vscode-editor-background',background);
+   root.style.setProperty('--vscode-editor-foreground',foreground);
+   const node=document.querySelector('[data-label="A"]'),text=node.querySelector('.interlis-warning');
+   const frame=node.querySelector('.interlis-frame');
+   if(!text)throw Error('Missing warning in the partial diagram');
+   rows.push({kind,warning:ratio(getComputedStyle(text).fill,getComputedStyle(frame).fill)});
+  }
+  return rows;
+ });
+ for(const row of semanticColors)assert.ok(row.warning>=4.5,JSON.stringify(row));
+ fs.writeFileSync(path.join(out,'theme-role-ratios.json'),JSON.stringify(semanticColors,null,2)+'\n');
+
  }catch(error){if(page){await page.screenshot({path:path.join(out,'failure.png'),fullPage:true});fs.writeFileSync(path.join(out,'failure-dom.html'),await page.content());}throw error;}finally{await browser?.close();await new Promise(r=>server.close(r));}
 });

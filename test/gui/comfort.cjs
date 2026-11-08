@@ -50,7 +50,11 @@ describe('Installed V3 local view parity and actual files',function(){this.timeo
   await enter();await fresh();
   await choose('association','COMPACT_BINARY');
   await ui.waitFor(()=>ui.driver.executeScript('return [...document.querySelectorAll(".sprotty-edge")].some(e=>e.dataset.source===e.dataset.target)'),'Compact self edge missing');
+  assert.equal(await (await ui.driver.findElement(By.id('canvas'))).getAttribute('data-status'),'FRESH');
   await check('diagram-filter-kinds-VIEW',false);
+  await check('diagram-filter-indirectImports',false);
+  await check('diagram-filter-directImports',false);
+  await closeOptions();await click('fit');
   await selectNode('A');
   const state=()=>ui.driver.executeScript('const c=document.querySelector("#canvas"),s=c.querySelector("svg.sprotty-graph");return {diagram:c.dataset.diagramId,snapshot:c.dataset.snapshotId,viewport:s.querySelector("g").getAttribute("transform"),nodes:[...s.querySelectorAll(".interlis-node")].map(e=>[e.dataset.elementId,e.getAttribute("transform"),e.classList.contains("selected"),e.dataset.pinned]),routes:[...s.querySelectorAll(".interlis-edge-line")].map(e=>e.getAttribute("d"))};');
   const stable=await state();

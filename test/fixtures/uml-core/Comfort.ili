@@ -10,6 +10,8 @@ CLASS B EXTENDS A=local:TEXT*20;END B;
 CLASS C=END C;
 VIEW Overview PROJECTION OF a~A; = ALL OF a; END Overview;
 ASSOCIATION Many=one--{1}A;two--{0..*}B;three--{1}C;note:TEXT*20;END Many;
-ASSOCIATION Self=parent--{0..1}A;children--{*}A;END Self; ASSOCIATION Contains=owner-<#>{1}A;items--{*}B;END Contains; ASSOCIATION Shares=owner-<>{1}A;items--{*}C;END Shares;
+ASSOCIATION Self=parent--{0..1}A;children--{*}A;END Self;
+ASSOCIATION Contains=containerOwner-<#>{1}A;containedParts--{*}B;END Contains;
+ASSOCIATION Shares=shareOwner-<>{1}A;sharedParts--{*}C;END Shares;
 END Data;END Comfort.
 !! <script>alert(1)</script> command:javascript: https://invalid.example/ ‮ inert comment
