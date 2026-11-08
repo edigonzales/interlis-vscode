@@ -123,9 +123,9 @@ with the sample INTERLIS workspace. The normal editor installation/profile is
 reused. The first workspace-trust question is handled normally.
 
 The task installs extension dependencies when absent or their lock changes, runs
-the sibling Core's incremental `editorBundle` task, verifies the emitted hashes,
-and builds copied extension sources against that bundle's protocol types.
-The Core task builds its shared UI and dependencies as needed. Java25 is discovered
+the sibling Core's incremental Java editor-bundle build, and verifies the emitted
+hashes. The extension builds its renderer, worker and UI from its own copied
+sources against the staged protocol types. Java 25 is discovered
 locally; `INTERLIS_DEV_JAVA_HOME` selects an explicit JDK. `INTERLIS_CORE_DIR`
 (or `npm run dev:prepare -- --core-dir /absolute/core`) selects another checkout.
 
