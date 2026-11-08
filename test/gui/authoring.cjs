@@ -7,7 +7,18 @@ async function keys(...values){await ui.driver.actions().sendKeys(...values).per
 async function cursorGeometry(){return ui.driver.executeScript('const e=document.activeElement?.closest(".monaco-editor")||document.querySelector(".monaco-editor.focused");return e?[...e.querySelectorAll(".cursors-layer .cursor")].map(c=>{const r=c.getBoundingClientRect();return {x:r.x,y:r.y,height:r.height};}).filter(r=>r.height>0):[];');}
 async function advance(key){let before;await ui.waitFor(async()=>{const value=await cursorGeometry();if(value.length){before=JSON.stringify(value);return true;}return false;},'Native snippet carets not visible');await keys(key);await ui.waitFor(async()=>{const now=await cursorGeometry();return now.length&&JSON.stringify(now)!==before;},'Native placeholder transition did not finish');}
 
-async function prepare(text,line,column){await ui.openFile('Catalog.ili');await ui.replaceText(text);await ui.go(line,column);}
+async function prepare(text,line,column){
+ await ui.openFile('Catalog.ili');
+ // These native text assertions read Monaco's rendered lines. Give the
+ // catalogue the full editor viewport when Problems opened with the tab.
+ const panelVisible=()=>ui.driver.executeScript("return document.querySelector('.part.panel')?.getBoundingClientRect().height > 0");
+ if(await panelVisible()){
+  await ui.driver.actions().keyDown(ui.primaryModifier).sendKeys('j').keyUp(ui.primaryModifier).perform();
+  await ui.waitFor(async()=>!await panelVisible(),'Authoring editor panel did not close');
+ }
+ await ui.replaceText(text);
+ await ui.go(line,column);
+}
 async function suggest(label){await ui.palette('Trigger Suggest');let target=-1,focused=-1;await ui.waitFor(async()=>{const rows=await ui.driver.findElements(By.css('.suggest-widget .monaco-list-row'));target=-1;focused=-1;for(let i=0;i<rows.length;i++)if(await rows[i].isDisplayed()){if((await rows[i].getText()).startsWith(label))target=i;if((await rows[i].getAttribute('class')).split(' ').includes('focused')||await rows[i].getAttribute('aria-selected')==='true')focused=i;}return target>=0&&focused>=0;},'Missing real suggestion '+label);if(target!==focused)await keys(...Array(Math.abs(target-focused)).fill(target>focused?Key.DOWN:Key.UP));await ui.waitFor(async()=>{for(const row of await ui.driver.findElements(By.css('.suggest-widget .monaco-list-row.focused')))if((await row.getText()).startsWith(label))return true;return false;},'Keyboard did not select '+label);await keys(Key.ENTER);}
 
 async function settings(patch){await ui.palette('Preferences: Open User Settings (JSON)');await ui.waitEditor('settings.json');const config={...JSON.parse(await ui.copyText()),...patch};await ui.replaceText(JSON.stringify(config));await ui.driver.actions().keyDown(ui.primaryModifier).sendKeys('s').keyUp(ui.primaryModifier).perform();await ui.waitFor(async()=>!(await ui.editor.isDirty()),'Settings not saved');await ui.openFile('Catalog.ili');}

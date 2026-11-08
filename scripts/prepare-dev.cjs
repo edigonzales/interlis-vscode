@@ -40,9 +40,19 @@ function prepareDev({root = path.resolve(__dirname, '..'), coreDirectory, env = 
   if (!fs.existsSync(path.join(core, 'build/InterlisJvmBuild.java'))) {
     throw Error('Core checkout not found at ' + core + '. Set INTERLIS_CORE_DIR or pass --core-dir.');
   }
+  let node = process.execPath;
+  let coreNode = env.INTERLIS_NODE || node;
+  if (process.platform === 'darwin') {
+    const selection = cp.spawnSync('/bin/sh', [path.join(__dirname, 'prepare-dev-macos.sh'), '--resolve-node', core], {
+      env, encoding: 'utf8',
+    });
+    if (selection.error) throw selection.error;
+    if (selection.status !== 0) throw Error(selection.stderr.trim() || 'Could not resolve the Core Node.js runtime');
+    node = coreNode = selection.stdout.trim();
+  }
   const javaHome = findJavaHome(env);
-  const buildEnv = {...env, JAVA_HOME: javaHome, INTERLIS_NODE: env.INTERLIS_NODE || process.execPath,
-    PATH: [path.dirname(process.execPath), path.join(javaHome, 'bin'), env.PATH || ''].join(path.delimiter)};
+  const buildEnv = {...env, JAVA_HOME: javaHome, INTERLIS_NODE: coreNode,
+    PATH: [path.dirname(node), path.join(javaHome, 'bin'), env.PATH || ''].join(path.delimiter)};
   const run = (command, args, cwd) => cp.execFileSync(command, args, {
     cwd, env: buildEnv, stdio: 'inherit', shell: process.platform === 'win32',
   });
@@ -71,7 +81,7 @@ function prepareDev({root = path.resolve(__dirname, '..'), coreDirectory, env = 
   const modules = path.join(development, 'node_modules');
   if (!fs.existsSync(modules)) fs.symlinkSync(path.join(root, 'node_modules'), modules, process.platform === 'win32' ? 'junction' : 'dir');
   fs.rmSync(path.join(development, 'out'), {recursive: true, force: true});
-  run(process.execPath, [path.join(root, 'scripts/build.cjs')], development);
+  run(node, [path.join(root, 'scripts/build.cjs')], development);
 
   const java = path.join(javaHome, 'bin', process.platform === 'win32' ? 'java.exe' : 'java');
   fs.writeFileSync(path.join(build, 'dev.env'), 'INTERLIS_DEV_JAVA=' + JSON.stringify(java.replaceAll('\\', '/')) + '\n');

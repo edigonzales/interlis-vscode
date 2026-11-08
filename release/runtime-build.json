@@ -5,8 +5,8 @@
   "version": "25.0.5+8-LTS",
   "archiveSha256": "36dc14d797aaff6d89aab302cd053fdba6207dfdcf772052fa7b023a94b0e857",
   "archiveUrl": "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.5%2B8/OpenJDK25U-jdk_aarch64_mac_hotspot_25.0.5_8.tar.gz",
-  "coreCommit": "c02c9112f93cd69c113faf52d6267f601433e0fd",
-  "serverLockSha256": "b3ab728e04d1f5cfb7b4df15932e951823a6d0f921d8c5560ac052a758f03ee0",
+  "coreCommit": "e47ce23df46fb846a850bf9a81298d2ed6f541de",
+  "serverLockSha256": "389f0ab4301c9ee34bad84639b5265c0fb386b8b93cf653e276a26a6c4e6125b",
   "serverFiles": [
     {
       "path": "lib/antlr4-runtime-4.13.2.jar",

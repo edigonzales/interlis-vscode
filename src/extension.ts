@@ -21,6 +21,40 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
   context.subscriptions.push(output, status, watcher);
   let client: LanguageClient | undefined;
   let deactivating = false;
+  const tabGroups = vscode.window.tabGroups;
+  const pendingProblems = new WeakSet<vscode.Tab>();
+  function showProblemsForNewTab(): void {
+    const editor = vscode.window.activeTextEditor;
+    if (!editor || deactivating || !tabGroups.all.length) return;
+    const group = tabGroups.activeTabGroup;
+    const tab = group.activeTab;
+    if (!tab || !pendingProblems.has(tab) || !(tab.input instanceof vscode.TabInputText)) return;
+    const document = editor.document;
+    if (editor.viewColumn !== group.viewColumn || tab.input.uri.toString() !== document.uri.toString()) return;
+    pendingProblems.delete(tab);
+    if (document.languageId !== 'interlis' || document.uri.scheme === 'untitled' || !/\.ili$/i.test(document.uri.path)) return;
+    void Promise.resolve(vscode.commands.executeCommand('workbench.panel.markers.view.focus', {preserveFocus: true}))
+      .catch(error => {
+        if (!deactivating) output.appendLine(`Could not show Problems: ${error}`);
+      });
+  }
+  const initialTab = tabGroups.all.length ? tabGroups.activeTabGroup.activeTab : undefined;
+  if (initialTab) pendingProblems.add(initialTab);
+  // Tab and editor updates can arrive in either order.
+  context.subscriptions.push(
+    tabGroups.onDidChangeTabs(event => {
+      for (const tab of event.opened) pendingProblems.add(tab);
+      showProblemsForNewTab();
+    }),
+    tabGroups.onDidChangeTabGroups(event => {
+      for (const group of event.opened) {
+        for (const tab of group.tabs) pendingProblems.add(tab);
+      }
+      showProblemsForNewTab();
+    }),
+    vscode.window.onDidChangeActiveTextEditor(showProblemsForNewTab)
+  );
+  showProblemsForNewTab();
   let warnedConflicts = '';
   function warnConflicts(): void {
     if (!vscode.workspace.isTrusted || deactivating) return;

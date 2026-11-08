@@ -5,6 +5,10 @@
       "label": "INTERLIS: Prepare Development Host",
       "type": "shell",
       "command": "npm run dev:prepare",
+      "osx": {
+        "command": "/bin/sh",
+        "args": [{ "value": "${workspaceFolder}/scripts/prepare-dev-macos.sh", "quoting": "strong" }]
+      },
       "options": {
         "cwd": "${workspaceFolder}"
       },
