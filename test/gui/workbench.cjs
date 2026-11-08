@@ -21,12 +21,7 @@ async function finishSaveDialog(input,target,cancel=false){
  await waitFor(async()=>{try{return !await input.isDisplayed();}catch(error){if(error.name==='StaleElementReferenceError')return true;throw error;}},'Save dialog did not close');
 }
 async function readText(){return await driver.executeScript('return [...document.querySelectorAll(".part.editor .monaco-editor .view-lines .view-line")].sort((a,b)=>parseFloat(a.style.top)-parseFloat(b.style.top)).map(e=>e.textContent.replace(/\\u00a0/g," ").replace(/\\u200b/g,"")).join("\\n")');}
-async function focusEditor(){
- const hasEditorFocus=()=>driver.executeScript("return !!document.activeElement.closest('.part.editor .monaco-editor') && document.activeElement.getAttribute('role')==='textbox'");
- await driver.actions().clear();
- if(await hasEditorFocus())return;
- await driver.wait(async()=>{try{for(const span of await driver.findElements(By.css('.part.editor .monaco-editor .view-lines .view-line span span')))if((await span.getText()).trim()&&await span.isDisplayed()){try{await span.click();return true;}catch(error){if(error.name==='ElementClickInterceptedError')continue;throw error;}}return false;}catch(error){if(error.name==='StaleElementReferenceError')return false;throw error;}},5000,'No stable visible editor text to focus');await waitFor(hasEditorFocus,'Editor text input did not receive focus');
-}
+async function focusEditor(){await driver.actions().clear();await driver.wait(async()=>{try{for(const span of await driver.findElements(By.css('.part.editor .monaco-editor .view-lines .view-line span span')))if((await span.getText()).trim()&&await span.isDisplayed()){try{await span.click();return true;}catch(error){if(error.name==='ElementClickInterceptedError')continue;throw error;}}return false;}catch(error){if(error.name==='StaleElementReferenceError')return false;throw error;}},5000,'No stable visible editor text to focus');await waitFor(async()=>await driver.executeScript("return !!document.activeElement.closest('.part.editor .monaco-editor') && document.activeElement.getAttribute('role')==='textbox'"),'Editor text input did not receive focus');}
 async function palette(command, raw=false,keepOpen=false){
  const trace=async stage=>fs.appendFileSync(path.join(evidence,'palette-events.jsonl'),JSON.stringify({at:new Date().toISOString(),command,stage,visible:await driver.executeScript('return [...document.querySelectorAll(".quick-input-widget")].some(e=>e.offsetHeight>0)'),active:await driver.executeScript('return document.activeElement?.outerHTML.slice(0,500)')})+'\n');
  await driver.actions().clear();await driver.actions().sendKeys(Key.F1).perform();
@@ -48,20 +43,8 @@ async function go(line,col){
 async function select(line,col,length){await go(line,col);await driver.actions().keyDown(Key.SHIFT).sendKeys(...Array(length).fill(Key.RIGHT)).keyUp(Key.SHIFT).perform();}
 async function replaceText(text){
  const clipboard=(await import('clipboardy')).default;const previous=clipboard.readSync();
- const expected=text.replace(/\r\n/g,'\n');
- try{
-  clipboard.writeSync(text);
-  await focusEditor();
-  await driver.actions().keyDown(PRIMARY).sendKeys('a').keyUp(PRIMARY).keyDown(PRIMARY).sendKeys('v').keyUp(PRIMARY).perform();
-  // Monaco only renders the viewport. The Problems panel can hide some of the pasted lines.
-  if(expected){
-   const actual=await copyText();
-   await driver.actions().sendKeys(Key.RIGHT).perform();
-   assert.equal(actual.replace(/\r\n/g,'\n'),expected,'Pasted buffer differs from prepared text');
-  }else{
-   await waitFor(async()=>await readText()==='','Pasted buffer is not empty');
-  }
- }finally{clipboard.writeSync(previous);}
+ try{clipboard.writeSync(text);await focusEditor();await driver.actions().keyDown(PRIMARY).sendKeys('a').keyUp(PRIMARY).keyDown(PRIMARY).sendKeys('v').keyUp(PRIMARY).perform();await waitFor(async()=>await readText()===text.replace(/\r\n/g,'\n'),'Pasted buffer differs from prepared text');}
+ finally{clipboard.writeSync(previous);}
 }
 async function status(text){return !!await wb.getStatusBar().getItem(`INTERLIS: ${text}`);}
 function record(id,actions,assertions){completed.push({id,actions,assertions,at:new Date().toISOString()});fs.writeFileSync(path.join(evidence,'cases.json'),JSON.stringify(completed,null,2));}
@@ -83,12 +66,11 @@ async function openFile(name){
 }
 module.exports={primaryModifier:PRIMARY,initialize,openFile,waitEditor,capture,waitFor,finishSaveDialog,readText,focusEditor,palette,go,select,replaceText,status,record};
 Object.defineProperties(module.exports,{driver:{get:()=>driver},wb:{get:()=>wb},editor:{get:()=>editor,set:value=>{editor=value;}}});
-async function copyText(){
+module.exports.copyText=async function(){
  const clipboard=(await import('clipboardy')).default,previous=clipboard.readSync();
  try{const sentinel='interlis-copy-'+require('node:crypto').randomUUID();clipboard.writeSync(sentinel);await focusEditor();await driver.actions().keyDown(PRIMARY).sendKeys('a').keyUp(PRIMARY).keyDown(PRIMARY).sendKeys('c').keyUp(PRIMARY).perform();await waitFor(async()=>clipboard.readSync()!==sentinel,'Native copy did not finish');return clipboard.readSync();}
  finally{clipboard.writeSync(previous);}
-}
-module.exports.copyText=copyText;
+};
 /** Read the actual current process trace as a readiness oracle; all user actions remain native UI. */
 module.exports.waitCurrentAnalysis=async function(){
  const uri=await editor.getFileUri(),manifest=JSON.parse(fs.readFileSync(path.join(evidence,'manifest.json')));
