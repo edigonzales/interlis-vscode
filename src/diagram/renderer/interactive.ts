@@ -349,8 +349,9 @@ export class DiagramCanvas {
  async filterAll(value:boolean):Promise<void> {this.filters.setAll(value);this.optionsRevision++;await this.repaint();}
  async resetFilters():Promise<void> {this.filters.reset();this.optionsRevision++;await this.repaint();}
  async hide(ids:string[],hidden=true):Promise<void> {this.optionsRevision++;for(const id of ids)if(hidden)this.filters.hiddenIds.add(id);else this.filters.hiddenIds.delete(id);await this.repaint();}
+ selectedNodeIds():string[] {return this.root?[...this.root.index.all()].filter(e=>e instanceof InterlisNode&&e.selected).map(e=>e.id):[];}
  selectedPositions():{pinned:boolean;unpinned:boolean} {
-  const nodes=this.selectedIds().filter(id=>Object.hasOwn(this.state.positions,id));
+  const nodes=this.selectedNodeIds().filter(id=>Object.hasOwn(this.state.positions,id));
   return {pinned:nodes.some(id=>this.pins.has(id)),unpinned:nodes.some(id=>!this.pins.has(id))};
  }
  layoutHistory():{undo:boolean;redo:boolean} {return {undo:this.history.length>0,redo:this.future.length>0};}

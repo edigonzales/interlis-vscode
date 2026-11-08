@@ -43,8 +43,8 @@ const names:Record<string,string>={
  CLASS:'Classes',STRUCTURE:'Structures',DOMAIN:'Domains',ASSOCIATION:'Associations',VIEW:'Views',
  EXTERNAL_REFERENCE:'External references',MODEL_IMPORT:'Model imports',ASSOCIATION_ROLE:'Association roles',
  DOMAIN_USE:'Domain uses',STRUCTURE_COMPOSITION:'Structure composition',VIEW_DERIVATION:'View derivation',
- attributes:'Attributes',roles:'Roles',types:'Types',cardinalities:'Cardinalities',constraints:'Constraints',
- enumerations:'Enumerations',modelFrames:'Model frames',topicFrames:'Topic frames',
+ attributes:'Attributes',roles:'Roles',types:'Types',cardinalities:'Member cardinalities',constraints:'Constraints',
+ enumerations:'Domain enumeration values',modelFrames:'Model frames',topicFrames:'Topic frames',
  directImports:'Direct imports',indirectImports:'Indirect imports'
 };
 function filterName(name:string):string {
@@ -116,7 +116,7 @@ export function mountDiagramControls(parent:HTMLElement,canvas:DiagramCanvas,hos
   ['Inline enumeration values','showLocalEnumerationValues'],['De-emphasize abstract types','deemphasizeAbstractTypes']] as const){
   const input=element('input');input.type='checkbox';
   input.onchange=()=>run(()=>canvas.configure({...canvas.getSettings(),[key]:input.checked}));
-  display.append(label(text,input));bindings.push(()=>{input.checked=canvas.getSettings()[key];});
+  input.id='diagram-'+key;display.append(label(text,input));bindings.push(()=>{input.checked=canvas.getSettings()[key];});
  }
  setting(layout,'Direction','direction',[['RIGHT','Left to right'],['LEFT','Right to left'],['DOWN','Top to bottom'],['UP','Bottom to top']]);
  setting(layout,'Routing','edgeRouting',[['ORTHOGONAL','Orthogonal'],['POLYLINE','Polyline'],['SPLINES','Curved']]);
@@ -125,26 +125,35 @@ export function mountDiagramControls(parent:HTMLElement,canvas:DiagramCanvas,hos
  setting(advanced,'Node placement','nodePlacement',[['BRANDES_KOEPF','Brandes–Köpf'],['SIMPLE','Simple'],['INTERACTIVE','Interactive'],['LINEAR_SEGMENTS','Linear segments'],['NETWORK_SIMPLEX','Network simplex']]);
  setting(advanced,'Crossing style','edgeCrossingStyle',[['GAPS','Gaps'],['PLAIN','Plain']]);
  setting(advanced,'Rendering target','renderingTarget',[['STANDARD','Standard'],['INKSCAPE','Inkscape']]);
+ const targetDescription=element('small');targetDescription.id='diagram-rendering-target-help';
+ targetDescription.textContent='Inkscape preserves connector metadata for straight and orthogonal routes. Curved routes are exported as paths.';
+ advanced.append(targetDescription);advanced.querySelector('#diagram-renderingTarget')?.setAttribute('aria-describedby',targetDescription.id);
 
  const elements=section(filters,'Elements'),relationships=section(filters,'Relationships'),details=section(filters,'Details'),imports=section(filters,'Imports');
  const tree=element('ul','interlis-elements');elements.append(tree);
  let treeSnapshot='';
+ const treeInputs=new Map<string,HTMLInputElement>();
  function refreshTree():void {
   const dto=canvas.getDocument();if(!dto)return;
-  const stamp=JSON.stringify([dto.snapshotId,dto.optionsFingerprint,dto.selection,[...canvas.filters.hiddenIds].sort()]);
-  if(stamp===treeSnapshot)return;treeSnapshot=stamp;tree.replaceChildren();
+  const stamp=JSON.stringify([dto.snapshotId,dto.optionsFingerprint,dto.selection]);
+  if(stamp===treeSnapshot){
+   for(const [id,input]of treeInputs)input.checked=!canvas.filters.hiddenIds.has(id);
+   return;
+  }
+  const focused=[...treeInputs].find(([,input])=>input===document.activeElement)?.[0];
+  treeSnapshot=stamp;treeInputs.clear();tree.replaceChildren();
   const values=[...dto.containers,...dto.nodes];
   function append(parent:HTMLElement,parentId:string|null,depth:number):void {
    if(depth>64)return;
    for(const value of values.filter(item=>('parentId'in item?item.parentId:item.containerId)===parentId)){
     const item=element('li'),input=element('input');input.type='checkbox';input.checked=!canvas.filters.hiddenIds.has(value.id);
-    input.setAttribute('aria-label','Show '+value.canonicalName);
+    input.setAttribute('aria-label','Show '+value.canonicalName);treeInputs.set(value.id,input);
     input.onchange=()=>run(()=>canvas.hide([value.id],!input.checked));
     const nested=element('ul');append(nested,value.id,depth+1);item.append(label(value.label,input));
     if(nested.childElementCount)item.append(nested);parent.append(item);
    }
   }
-  append(tree,null,0);
+  append(tree,null,0);if(focused)treeInputs.get(focused)?.focus();
  }
  const filterGroup=element('div','interlis-filter-actions');filters.append(filterGroup);
  button(filterGroup,'diagram-filter-all','Show all',()=>run(()=>canvas.filterAll(true)));
@@ -160,16 +169,17 @@ export function mountDiagramControls(parent:HTMLElement,canvas:DiagramCanvas,hos
 
  const zoom=element('div','interlis-zoom');
  const percentage=element('output');percentage.setAttribute('aria-label','Diagram zoom');
- button(zoom,'diagram-zoom-out','−',()=>run(()=>canvas.zoom(1/1.25))).setAttribute('aria-label','Zoom out');
+ const zoomOut=button(zoom,'diagram-zoom-out','−',()=>run(()=>canvas.zoom(1/1.25)));
  zoom.append(percentage);
- button(zoom,'diagram-zoom-in','+',()=>run(()=>canvas.zoom(1.25))).setAttribute('aria-label','Zoom in');
+ const zoomIn=button(zoom,'diagram-zoom-in','+',()=>run(()=>canvas.zoom(1.25)));
+ for(const [control,text] of [[zoomOut,'Zoom out'],[zoomIn,'Zoom in']] as const){control.setAttribute('aria-label',text);control.title=text;}
  const canvasElement=document.getElementById(canvas.elementId);
  if(canvasElement)canvasElement.after(zoom);else root.append(zoom);
  if(!providedToolbar)button(toolbar,'fit','Fit',()=>run(()=>canvas.fit()));
  const action=(menu:HTMLElement,id:string,text:string,callback:()=>unknown)=>button(menu,id,text,()=>{closeMenu(true);run(callback);});
  const pin=action(moreMenu,'diagram-pin','Pin position',()=>canvas.pinSelected(true));
  const unpin=action(moreMenu,'diagram-unpin','Unpin position',()=>canvas.pinSelected(false));
- const hide=action(moreMenu,'diagram-hide','Hide selected',()=>canvas.hide(canvas.selectedIds()));
+ const hide=action(moreMenu,'diagram-hide','Hide selected',()=>canvas.hide(canvas.selectedNodeIds()));
  const undo=action(moreMenu,'diagram-undo','Undo layout',()=>canvas.undo());
  const redo=action(moreMenu,'diagram-redo','Redo layout',()=>canvas.redo());
  const reveal=host.reveal? action(moreMenu,'diagram-reveal','Reveal source selection',host.reveal):undefined;
@@ -195,12 +205,12 @@ export function mountDiagramControls(parent:HTMLElement,canvas:DiagramCanvas,hos
  for(const format of ['SVG','PNG']as const)for(const scope of ['FULL','VISIBLE']as const){
   action(exportMenu,'diagram-export-'+format.toLowerCase()+'-'+scope.toLowerCase(),format+(scope==='FULL'?' · Full diagram':' · Visible area'),()=>host.export(format,scope));
  }
- function enable(control:HTMLButtonElement|undefined,enabled:boolean,reason:string):void {
-  if(control){control.disabled=!enabled;control.title=enabled?'':reason;}
+ function enable(control:HTMLButtonElement|undefined,enabled:boolean,reason:string,tooltip=''):void {
+  if(control){control.disabled=!enabled;control.title=enabled?tooltip:reason;}
  }
  function refreshActions():void {
-  const current=canvas.isCurrent(),selected=canvas.selectedIds(),positions=canvas.selectedPositions();
-  enable(exportButton,current,'Wait for a current diagram');
+  const current=canvas.isCurrent(),selected=canvas.selectedNodeIds(),positions=canvas.selectedPositions();
+  enable(exportButton,current,'Wait for a current diagram','Export diagram');
   if(!current&&openMenu===exportMenu)closeMenu(false);
   enable(settle,current,'Wait for a current diagram');
   if(current)settle.title='Keep manually positioned and pinned nodes';
@@ -212,7 +222,7 @@ export function mountDiagramControls(parent:HTMLElement,canvas:DiagramCanvas,hos
   enable(focus,current&&canvas.selectedSymbolIds().length>0,'Select a current diagram element with a source symbol');
   enable(pin,current&&positions.unpinned,'Select an unpinned node');
   enable(unpin,current&&positions.pinned,'Select a pinned node');
-  enable(hide,current&&selected.length>0,'Select diagram elements');
+  enable(hide,current&&selected.length>0,'Select diagram nodes or frames');
   const history=canvas.layoutHistory();
   enable(undo,current&&history.undo,'No earlier layout');
   enable(redo,current&&history.redo,'No later layout');

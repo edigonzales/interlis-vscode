@@ -2,7 +2,7 @@
 INTERLIS 2.4;
 MODEL Comfort AT "x" VERSION "1" =
 IMPORTS V3Middle;
-DOMAIN Number=0..999;
+DOMAIN Number=0..999; State=(first,second);
 TOPIC Data(ABSTRACT)=OID AS INTERLIS.UUIDOID;
 STRUCTURE Info=value:TEXT*12;END Info;
 CLASS A(ABSTRACT)=number:Number;external:V3Middle.Link;flag:(first,group(child));part:Info;MANDATORY CONSTRAINT number>=0;END A;
