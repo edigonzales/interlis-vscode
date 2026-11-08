@@ -43,8 +43,20 @@ async function go(line,col){
 async function select(line,col,length){await go(line,col);await driver.actions().keyDown(Key.SHIFT).sendKeys(...Array(length).fill(Key.RIGHT)).keyUp(Key.SHIFT).perform();}
 async function replaceText(text){
  const clipboard=(await import('clipboardy')).default;const previous=clipboard.readSync();
- try{clipboard.writeSync(text);await focusEditor();await driver.actions().keyDown(PRIMARY).sendKeys('a').keyUp(PRIMARY).keyDown(PRIMARY).sendKeys('v').keyUp(PRIMARY).perform();await waitFor(async()=>await readText()===text.replace(/\r\n/g,'\n'),'Pasted buffer differs from prepared text');}
- finally{clipboard.writeSync(previous);}
+ const expected=text.replace(/\r\n/g,'\n');
+ try{
+  clipboard.writeSync(text);
+  await focusEditor();
+  await driver.actions().keyDown(PRIMARY).sendKeys('a').keyUp(PRIMARY).keyDown(PRIMARY).sendKeys('v').keyUp(PRIMARY).perform();
+  // Monaco only renders the viewport. The Problems panel can hide some of the pasted lines.
+  if(expected){
+   const actual=await copyText();
+   await driver.actions().sendKeys(Key.RIGHT).perform();
+   assert.equal(actual.replace(/\r\n/g,'\n'),expected,'Pasted buffer differs from prepared text');
+  }else{
+   await waitFor(async()=>await readText()==='','Pasted buffer is not empty');
+  }
+ }finally{clipboard.writeSync(previous);}
 }
 async function status(text){return !!await wb.getStatusBar().getItem(`INTERLIS: ${text}`);}
 function record(id,actions,assertions){completed.push({id,actions,assertions,at:new Date().toISOString()});fs.writeFileSync(path.join(evidence,'cases.json'),JSON.stringify(completed,null,2));}
@@ -66,11 +78,12 @@ async function openFile(name){
 }
 module.exports={primaryModifier:PRIMARY,initialize,openFile,waitEditor,capture,waitFor,finishSaveDialog,readText,focusEditor,palette,go,select,replaceText,status,record};
 Object.defineProperties(module.exports,{driver:{get:()=>driver},wb:{get:()=>wb},editor:{get:()=>editor,set:value=>{editor=value;}}});
-module.exports.copyText=async function(){
+async function copyText(){
  const clipboard=(await import('clipboardy')).default,previous=clipboard.readSync();
  try{const sentinel='interlis-copy-'+require('node:crypto').randomUUID();clipboard.writeSync(sentinel);await focusEditor();await driver.actions().keyDown(PRIMARY).sendKeys('a').keyUp(PRIMARY).keyDown(PRIMARY).sendKeys('c').keyUp(PRIMARY).perform();await waitFor(async()=>clipboard.readSync()!==sentinel,'Native copy did not finish');return clipboard.readSync();}
  finally{clipboard.writeSync(previous);}
-};
+}
+module.exports.copyText=copyText;
 /** Read the actual current process trace as a readiness oracle; all user actions remain native UI. */
 module.exports.waitCurrentAnalysis=async function(){
  const uri=await editor.getFileUri(),manifest=JSON.parse(fs.readFileSync(path.join(evidence,'manifest.json')));
