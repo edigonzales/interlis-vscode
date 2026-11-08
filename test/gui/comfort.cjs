@@ -88,11 +88,22 @@ describe('Installed V3 local view parity and actual files',function(){this.timeo
    }
    reports[tag]={graph,panel};
   }
+  fs.writeFileSync(path.join(evidence,'P4-contrast.json'),JSON.stringify(reports,null,2)+'\n');
   const originalWidth=await ui.driver.executeScript('return document.documentElement.clientWidth');
+  const delta=originalWidth-365;
   await back();
-  const window=ui.driver.manage().window(),rect=await window.getRect();
+  const sash=()=>ui.driver.executeScript(function(){
+   const boxes=[...document.querySelectorAll('.editor-group-container')].map(node=>node.getBoundingClientRect()).filter(box=>box.width>0);
+   const right=boxes.reduce((edge,box)=>Math.max(edge,box.left),0);
+   return [...document.querySelectorAll('.monaco-sash.vertical:not(.disabled)')].filter(node=>{
+    const box=node.getBoundingClientRect();
+    return box.height>180&&Math.abs(box.left+box.width/2-right)<8;
+   })[0];
+  });
+  const divider=await sash();
+  assert.ok(divider,'Actual split-editor sash missing');
+  await drag(divider,delta,0);
   try{
-   await window.setRect({width:Math.max(680,Math.round(rect.width-2*(originalWidth-365))),height:rect.height});
    await enter();await fresh();
    const narrow=await ui.driver.executeScript('const n=document.querySelector("#diagram-toolbar");return {width:document.documentElement.clientWidth,client:n.clientWidth,scroll:n.scrollWidth,height:n.clientHeight};');
    assert.ok(narrow.width>=310&&narrow.width<=440,JSON.stringify(narrow));
@@ -100,9 +111,13 @@ describe('Installed V3 local view parity and actual files',function(){this.timeo
    assert.deepEqual(await state(),stable,'Resizing the real webview changed the viewport or layout');
    await ensureOptions();await ui.capture('P4-narrow-open');
    await closeOptions();await ui.capture('P4-narrow-closed');
-  }finally{await back();await window.setRect(rect);}
+   fs.writeFileSync(path.join(evidence,'P4-narrow.json'),JSON.stringify(narrow,null,2)+'\n');
+  }finally{
+   await back();
+   const current=await sash();
+   if(current)await drag(current,-delta,0);
+  }
   await enter();await fresh();
-  fs.writeFileSync(path.join(evidence,'P4-contrast.json'),JSON.stringify(reports,null,2)+'\n');
   await filters();
   const control=await ui.driver.findElement(By.id('diagram-filter-types'));
   await control.sendKeys(Key.SPACE);await fresh();await control.sendKeys(Key.SPACE);await fresh();
@@ -172,6 +187,10 @@ async function measureTheme(panel) {
     const fill=blend(rgb(getComputedStyle(marker).fill),background);
     if(name==='filled composition')sample(name+' fill',marker,'fill',background,3);
     else if(ratio(fill,background)>1.01)throw Error(name+' interior differs from canvas');
+   }
+   for(const mask of canvas.querySelectorAll('mask')){
+    const fill=node=>rgb(getComputedStyle(node).fill).slice(0,3).join(',');
+    if(fill(mask.querySelector('rect'))!=='255,255,255'||[...mask.querySelectorAll('circle')].some(node=>fill(node)!=='0,0,0'))throw Error('Crossing mask paint changed with theme');
    }
    const toolbar=document.querySelector('#options');sample('toolbar text',toolbar,'color',surface(toolbar),4.5);
   }
