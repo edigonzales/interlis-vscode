@@ -28,10 +28,12 @@ test('native shared controls preserve hidden geometry, own undo, real curves and
  const saved=await page.evaluate(()=>canvas.saveState());await page.locator('#diagram-reset-layout').click();await ready();assert.notEqual(await node.getAttribute('transform'),moved);await page.evaluate(value=>canvas.restoreState(value),saved);await ready();assert.equal(await node.getAttribute('transform'),moved);await page.locator('#diagram-edgeRouting').selectOption('ORTHOGONAL');await ready();const orthogonal=await page.evaluate(()=>canvas.exportSvg('FULL'));assert.match(orthogonal.svg,/inkscape:connector-type="orthogonal"/);assert.match(orthogonal.svg,/inkscape:connection-start="#interlis-/);fs.writeFileSync(path.join(out,'orthogonal.svg'),orthogonal.svg);await page.screenshot({path:path.join(out,'restored.png'),fullPage:true});// Presentation-only malicious metadata counterfixture: no fabricated compiler result.
  const danger='<script>alert(1)</script> javascript: command: \u202e';await page.evaluate(async label=>{const dto=structuredClone(input);dto.nodes[0].label=label;await canvas.accept(dto,'comfort',canvas.getSettings());},danger);await ready();assert.equal(await page.locator('#canvas script,#canvas foreignObject').count(),0);const safe=await page.evaluate(()=>canvas.exportSvg('FULL').svg);assert.match(safe,/&lt;script&gt;/);assert.match(safe,/U\+202E/);assert.doesNotMatch(safe,/<script>/);fs.writeFileSync(path.join(out,'safe-label.svg'),safe);assert.deepEqual(errors,[]);
  await page.locator('#diagram-options-close').click();
+ const beforeTheme=await page.evaluate(()=>({layoutCount,history:canvas.layoutHistory(),state:canvas.getViewState(),viewport:canvas.getViewport()}));
+ assert.deepEqual(beforeTheme.history,{undo:false,redo:false});
  const themed=await page.evaluate(async()=>{
   const root=document.documentElement;
   const set=(background,foreground)=>{root.style.setProperty('--vscode-editor-background',background);root.style.setProperty('--vscode-editor-foreground',foreground);};
-  set('#181818','#eeeeee');
+  set('#181818','#eeeeee');await Promise.resolve();
   const dark=canvas.exportSvg('FULL');
   const original=HTMLImageElement.prototype.decode;
   let release;
@@ -56,6 +58,28 @@ test('native shared controls preserve hidden geometry, own undo, real curves and
  assert.equal(themed.light,'rgb(255, 255, 255)');
  assert.deepEqual([themed.width,themed.height],themed.expected);
  assert.equal(themed.styles,true);
+ assert.deepEqual(await page.evaluate(()=>({layoutCount,history:canvas.layoutHistory(),state:canvas.getViewState(),viewport:canvas.getViewport()})),beforeTheme);
+ const fallback=await page.evaluate(async()=>{
+  const root=document.documentElement;
+  root.className='vscode-dark';
+  root.style.setProperty('--vscode-editor-background','transparent');
+  root.style.setProperty('--vscode-editor-foreground',' ');
+  root.style.setProperty('--vscode-editorWidget-background','transparent');
+  await Promise.resolve();
+  const node=document.querySelector('[data-label="A"]');
+  const paints={
+   canvas:getComputedStyle(document.querySelector('svg.sprotty-graph')).backgroundColor,
+   surface:getComputedStyle(node.querySelector('.interlis-frame')).fill,
+   text:getComputedStyle(node.querySelector('.interlis-title')).fill,
+  };
+  root.style.setProperty('--vscode-editorWidget-background',' ');
+  await Promise.resolve();
+  paints.emptySurface=getComputedStyle(node.querySelector('.interlis-frame')).fill;
+  return paints;
+ });
+ assert.deepEqual(fallback,{canvas:'rgb(24, 24, 24)',surface:'rgb(36, 39, 44)',text:'rgb(239, 239, 239)',emptySurface:'rgb(36, 39, 44)'});
+ await page.locator('svg.sprotty-graph').press('ArrowRight');
+ assert.equal(await page.locator('svg.sprotty-graph').evaluate(node=>node.matches(':focus-visible')&&getComputedStyle(node).outlineWidth==='2px'),true);
  const edgeId=await page.locator('.sprotty-edge[data-edge-id]').first().getAttribute('data-edge-id');
  await page.evaluate(id=>canvas.select([id]),edgeId);
  await page.locator('#more').press('Enter');
@@ -80,7 +104,7 @@ test('native shared controls preserve hidden geometry, own undo, real curves and
   await canvas.accept(dto,'comfort',canvas.getSettings());
  });
  await page.locator('[data-label="A"] .interlis-warning').waitFor();
- const semanticColors=await page.evaluate(()=>{
+ const semanticColors=await page.evaluate(async()=>{
   const root=document.documentElement,rows=[];
   const number=paint=>paint.match(/[\d.]+/g).slice(0,3).map(Number);
   const luminance=paint=>number(paint).map(value=>value/255)
@@ -94,6 +118,7 @@ test('native shared controls preserve hidden geometry, own undo, real curves and
    root.className=kind;
    root.style.setProperty('--vscode-editor-background',background);
    root.style.setProperty('--vscode-editor-foreground',foreground);
+   await Promise.resolve();
    const node=document.querySelector('[data-label="A"]'),text=node.querySelector('.interlis-warning');
    const frame=node.querySelector('.interlis-frame');
    if(!text)throw Error('Missing warning in the partial diagram');

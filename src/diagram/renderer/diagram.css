@@ -6,11 +6,9 @@
   --diagram-selection: #005fb8;
   --diagram-warning: #785300;
   --diagram-error: #a1252d;
-  --diagram-background: var(--vscode-editor-background, var(--diagram-canvas-fallback));
-  --diagram-foreground: var(--vscode-editor-foreground, var(--diagram-text-fallback));
-  --diagram-surface: var(--vscode-editorWidget-background, var(--diagram-surface-fallback));
-  --diagram-edge: var(--diagram-foreground);
-  --diagram-frame: var(--diagram-foreground);
+  --diagram-background: var(--diagram-canvas-fallback);
+  --diagram-foreground: var(--diagram-text-fallback);
+  --diagram-surface: var(--diagram-surface-fallback);
 }
 .vscode-dark, .vscode-high-contrast:not(.vscode-high-contrast-light) {
   --diagram-canvas-fallback: #181818;
@@ -29,18 +27,12 @@
   --diagram-warning: #693b00;
 }
 .vscode-light, .vscode-high-contrast-light { color-scheme: light; }
-.interlis-webview {
-  --diagram-background: var(--vscode-editor-background, var(--diagram-canvas-fallback));
-  --diagram-foreground: var(--vscode-editor-foreground, var(--diagram-text-fallback));
-  --diagram-surface: var(--vscode-editorWidget-background, var(--diagram-surface-fallback));
-  --diagram-edge: var(--diagram-foreground);
-  --diagram-frame: var(--diagram-foreground);
-}
 .interlis-canvas{position:relative;min-width:0;min-height:240px;width:100%;height:100%;overflow:hidden;color:var(--diagram-foreground);background:var(--diagram-background)}
 .interlis-canvas .sprotty-graph{width:100%;height:100%;outline:none;background:var(--diagram-background)}
+.interlis-canvas .sprotty-graph:focus-visible{outline:2px solid var(--diagram-selection);outline-offset:-2px}
 .interlis-viewer{width:100%;height:100%}
 .interlis-hidden{position:absolute;left:-10000px;top:-10000px;width:0;height:0;visibility:hidden;overflow:hidden}
-.interlis-canvas .interlis-frame{fill:var(--diagram-surface);stroke:var(--diagram-frame);stroke-width:1.5}
+.interlis-canvas .interlis-frame{fill:var(--diagram-surface);stroke:var(--diagram-foreground);stroke-width:1.5}
 .interlis-canvas .interlis-container>.interlis-frame{fill:none;stroke-dasharray:6 3}
 .interlis-canvas .selected>.interlis-frame{stroke:var(--diagram-selection);stroke-width:3}
 .interlis-canvas text{font:12px monospace;fill:var(--diagram-foreground);user-select:none}
@@ -49,10 +41,10 @@
 .interlis-canvas .interlis-stereotype,.interlis-canvas .interlis-warning{font-size:11px}
 .interlis-canvas .interlis-member{cursor:pointer}
 .interlis-canvas .interlis-member.selected{font-weight:bold;text-decoration:underline}
-.interlis-canvas .sprotty-edge path{fill:none;stroke:var(--diagram-edge);stroke-width:1.7}
+.interlis-canvas .sprotty-edge path{fill:none;stroke:var(--diagram-foreground);stroke-width:1.7}
 .interlis-canvas .sprotty-edge.selected path{stroke:var(--diagram-selection);stroke-width:2.5}
-.interlis-canvas .interlis-marker{fill:var(--diagram-background);stroke:var(--diagram-edge);stroke-width:1.5}
-.interlis-canvas .interlis-marker.composition{fill:var(--diagram-edge)}
+.interlis-canvas .interlis-marker{fill:var(--diagram-background);stroke:var(--diagram-foreground);stroke-width:1.5}
+.interlis-canvas .interlis-marker.composition{fill:var(--diagram-foreground)}
 .interlis-canvas .sprotty-edge.selected .interlis-marker{stroke:var(--diagram-selection);stroke-width:2}
 .interlis-canvas .interlis-warning{fill:var(--diagram-warning);font-weight:bold}
 .interlis-canvas .interlis-edge-label,.interlis-canvas .interlis-end-label{font:11px monospace;paint-order:stroke;stroke:var(--diagram-background);stroke-width:4px;stroke-linejoin:round;fill:var(--diagram-foreground)}

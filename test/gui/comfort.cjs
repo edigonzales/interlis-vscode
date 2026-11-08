@@ -57,6 +57,13 @@ describe('Installed V3 local view parity and actual files',function(){this.timeo
   await closeOptions();await click('fit');
   await selectNode('A');
   const state=()=>ui.driver.executeScript('const c=document.querySelector("#canvas"),s=c.querySelector("svg.sprotty-graph");return {diagram:c.dataset.diagramId,snapshot:c.dataset.snapshotId,viewport:s.querySelector("g").getAttribute("transform"),nodes:[...s.querySelectorAll(".interlis-node")].map(e=>[e.dataset.elementId,e.getAttribute("transform"),e.classList.contains("selected"),e.dataset.pinned]),routes:[...s.querySelectorAll(".interlis-edge-line")].map(e=>e.getAttribute("d"))};');
+  await ui.driver.executeScript(function(){
+   window.themeRequests=[];
+   window.addEventListener('message',event=>{
+    const value=event.data;
+    if(value?.channel===document.body.dataset.channel&&(value.type==='diagram'||value.type==='status'))window.themeRequests.push(value.type);
+   });
+  });
   const stable=await state();
   assert.ok(stable.nodes.some(node=>node[2]),'Theme check needs an actual selection');
   const reports={};
@@ -72,6 +79,7 @@ describe('Installed V3 local view parity and actual files',function(){this.timeo
    await ui.waitFor(()=>ui.driver.executeScript('return document.querySelector(".monaco-workbench").classList.contains(arguments[0])',themeClass),'Workbench theme did not change');
    await enter();await fresh();
    assert.deepEqual(await state(),stable,'Theme change altered diagram identity, selection, viewport or geometry');
+   assert.deepEqual(await ui.driver.executeScript('return window.themeRequests'),[],'Theme change received projection or compiler status messages');
    const graph=await measureTheme(false);
    if(tag==='light')initial=graph.background;
    if(tag==='dark')assert.notDeepEqual(graph.background,initial);
@@ -180,6 +188,8 @@ async function measureTheme(panel) {
    sample('stereotype',selected.querySelector('.interlis-stereotype'),'fill',face,4.5);
    sample('member',selected.querySelector('.interlis-member'),'fill',face,4.5);
    sample('relationship line',canvas.querySelector('.interlis-edge-line'),'stroke',background,3);
+   sample('association label',canvas.querySelector('.interlis-edge-label'),'fill',background,4.5);
+   const status=document.querySelector('#status');sample('status text',status,'color',surface(status),4.5);
    sample('relationship end label',canvas.querySelector('.interlis-end-label'),'fill',background,4.5);
    for(const [name,selector]of [
     ['inheritance arrow','.interlis-marker[data-inheritance=true]'],

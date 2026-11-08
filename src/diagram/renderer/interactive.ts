@@ -17,6 +17,7 @@ import {presentation,endLabel} from './presentation';
 import {DiagramFilterController,type DiagramFilters} from './filters';
 import {saveViewState,restoreViewState,validateViewSettings,type SavedViewState} from './view-state';
 import {curvePath,curveSamples,curveEnvelope,crossingGaps,svgId,paintedBounds,displayText} from './geometry';
+import {observeDiagramTheme} from './theme';
 import {exportSvg,exportPng,type ExportScope,type SvgArtifact} from './export';
 
 export const defaultInteractiveSettings:DiagramSettings=Object.freeze({...defaultDiagramSettings});
@@ -254,6 +255,7 @@ export class DiagramCanvas {
  getViewport():{zoom:number;x:number;y:number} {return this.viewport();}
  private viewport():{zoom:number;x:number;y:number} {const root=this.root as InterlisGraph|undefined;return {zoom:root?.zoom??1,x:root?.scroll.x??0,y:root?.scroll.y??0};}
  constructor(private readonly element:HTMLElement,private readonly callbacks:DiagramCallbacks,workerUrl:URL|string,layoutService?:LayoutServicePort) {
+  this.cleanup.push(observeDiagramTheme(element));
   if(!element.id)element.id='interlis-view-'+crypto.randomUUID();this.worker=layoutService??new ElkLayoutService(workerUrl);
   const viewer=document.createElement('div');viewer.id=element.id+'-viewer';viewer.className='interlis-viewer';element.append(viewer);
   loadDefaultModules(this.container,{exclude:[edgeEditModule,labelEditModule,labelEditUiModule]});
@@ -368,7 +370,6 @@ export class DiagramCanvas {
  async exportPng(scope:ExportScope,scale=1):Promise<{data:Uint8Array;width:number;height:number}> {const revision=this.revision,generation=this.generation,artifact=await exportPng(this.exportSvg(scope),scale);if(this.closed||generation!==this.generation||revision!==this.revision)throw Error('View changed during export; retry');return artifact;}
  dispose():void {if(this.closed)return;this.closed=true;this.generation++;this.resize?.disconnect();for(const cleanup of this.cleanup)cleanup();this.worker.close();this.container.unbindAll();this.element.replaceChildren();this.document=undefined;this.root=undefined;this.view=undefined;this.state={positions:{},routes:{}};}
 }
-export {adapt,diagramAdapter,defaultDiagramSettings} from './adapter';
 export type {DiagramDocumentDto} from './types';
 export {ElkLayoutService} from './elk-layout-service';
 export type {LayoutServicePort} from './elk-layout-service';

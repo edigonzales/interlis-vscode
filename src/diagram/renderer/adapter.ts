@@ -1,7 +1,7 @@
 import validate from '../generated/schema-validator.cjs';
 import type * as D from './types';
 import type {DiagramNode as LegacyNode, DiagramEdge as LegacyEdge, SourceRange as LegacyRange} from './render-types';
-import {layoutAndRenderDiagram, renderSvg, toSprottyModel, defaultDiagramSettings as upstreamDefaultSettings, type DiagramSettings, type LayoutDiagram} from './layout';
+import {defaultDiagramSettings as upstreamDefaultSettings} from './settings';
 
 export const defaultDiagramSettings=Object.freeze({...upstreamDefaultSettings});
 
@@ -22,7 +22,7 @@ interface Details {
   sources:Map<string,HostSource>; coordinates:Map<string,Coordinates>;
 }
 const details=new WeakMap<DiagramView,Details>();
-function freeze<T>(value:T):T {
+export function freeze<T>(value:T):T {
   if(value && typeof value==='object'){Object.freeze(value);Object.values(value).forEach(freeze);}return value;
 }
 function detached<T>(value:T):T {return JSON.parse(JSON.stringify(value)) as T;}
@@ -163,38 +163,6 @@ export function legacyProjection(view:DiagramView):{nodes:LegacyNode[];edges:Leg
     label:edge.label,cardinality:cardinality(edge.targetEnd.cardinality),sourceCardinality:cardinality(edge.sourceEnd.cardinality),targetCardinality:cardinality(edge.targetEnd.cardinality)}));
   return {nodes,edges};
 }
-export interface RenderedDiagram {readonly snapshotId:string;readonly layout:LayoutDiagram;readonly svg:string;readonly sprotty:ReturnType<typeof import('./layout').toSprottyModel>;}
-const renderedSignatures=new WeakMap<RenderedDiagram,string>();
-function geometryKey(projection:ReturnType<typeof legacyProjection>,settings:DiagramSettings):string {
-  return JSON.stringify({settings,nodes:projection.nodes.map(n=>({id:n.id,containerId:n.containerId,kind:n.kind,members:n.members,operations:n.operations,enumValues:n.enumValues})),edges:projection.edges});
-}
-/** Reuses one accepted host layout only when geometry and settings still agree.
- * Labels and source ranges are refreshed from the new immutable projection;
- * no Core value or revision is mutated. Callers publish only current snapshots.
- */
-export async function render(view:DiagramView,settings:DiagramSettings=defaultDiagramSettings,previous?:RenderedDiagram):Promise<RenderedDiagram> {
-  const effective={...settings,...(view.notices.length?{deemphasizeAbstractTypes:false}:{})};
-  const projection=legacyProjection(view),signature=geometryKey(projection,effective);
-  let result:Omit<RenderedDiagram,'snapshotId'>;
-  if(previous && renderedSignatures.get(previous)===signature){
-    const byId=new Map(projection.nodes.map(node=>[node.id,node]));
-    const layout:LayoutDiagram={...previous.layout,nodes:previous.layout.nodes.map(node=>({...node,source:byId.get(node.id)!}))};
-    result={layout,svg:renderSvg(layout,effective),sprotty:toSprottyModel(layout)};
-  }else result=await layoutAndRenderDiagram(projection,effective);
-  const rendered=freeze({snapshotId:view.snapshotId,...result});renderedSignatures.set(rendered,signature);return rendered;
-}
-/** Stateless typed adapter over the pinned renderer; all views remain snapshot-bound. */
-export class SprottyDiagramAdapter {
-  readonly adapt=adapt;
-  readonly isStale=isStale;
-  readonly resolveNavigation=resolveNavigation;
-  readonly elementsForSymbol=elementsForSymbol;
-  readonly legacyProjection=legacyProjection;
-  readonly render=render;
-  readonly defaultDiagramSettings=defaultDiagramSettings;
-}
-export const diagramAdapter=Object.freeze(new SprottyDiagramAdapter());
-
 export {reconcileGeometry} from './identity';
 export {defaultFilters,visibleDocument,importDepths,DiagramFilterController} from './filters';
 export {validateSavedViewState,validateViewSettings,validateFilters,saveViewState,restoreViewState} from './view-state';
