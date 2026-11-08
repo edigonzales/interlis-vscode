@@ -8,23 +8,23 @@ const previous=api.getState() as {panelId?:unknown}|undefined;
 const panelId=typeof previous?.panelId==='string'&&/^[a-f0-9-]{36}$/.test(previous.panelId)?previous.panelId:crypto.randomUUID();api.setState({panelId});
 let hostPending=false,projectionLayout=false;
 const cancelButton=document.getElementById('diagram-cancel') as HTMLButtonElement;
-function updateCancel():void{cancelButton.disabled=!hostPending&&!projectionLayout;}
+function updateCancel():void{cancelButton.hidden=cancelButton.disabled=!hostPending&&!projectionLayout;}
 let saveTimer:ReturnType<typeof setTimeout>|undefined;
 const status=document.getElementById('status')!,element=document.getElementById('canvas')!;
 const send=(type:string,values:Record<string,unknown>={})=>api.postMessage({protocolVersion:1,channel,generation,type,...values});
-// Import the exact staged neutral bundle, without rebuilding or duplicating its implementation.
+// Load the extension's packaged renderer and layout worker.
 const {DiagramCanvas,mountDiagramControls}=await import(/* @vite-ignore */ body.dataset.ui!);
 const workerResponse=await fetch(body.dataset.worker!);if(!workerResponse.ok)throw Error('The packaged layout worker could not be loaded');
 const workerUrl=URL.createObjectURL(new Blob([await workerResponse.arrayBuffer()],{type:'application/javascript'}));
 let controls:{refresh():void;refreshActions():void;dispose():void}|undefined;
-const canvas=new DiagramCanvas(element,{navigate:(id:string)=>send('navigate',{elementId:id}),status:(state:string,message:string)=>{status.textContent=message.slice(0,1000);updateCancel();controls?.refreshActions();},changed:()=>{if(saveTimer)clearTimeout(saveTimer);const mark=generation;saveTimer=setTimeout(()=>{void canvas.saveState().then((viewState:unknown)=>{if(alive&&mark===generation&&viewState)send('saveState',{viewState});}).catch(()=>{});},250);}},workerUrl);
-controls=mountDiagramControls(document.getElementById('view-controls')!,canvas,{error:(message:string)=>{status.textContent=message.slice(0,1000);},export:(format:string,scope:string)=>send('export',{format,scope}),reveal:()=>send('reveal'),focus:(symbolIds:string[],depth:number,translation:string)=>send('focus',{symbolIds,depth,translation})});
+const canvas=new DiagramCanvas(element,{navigate:(id:string)=>send('navigate',{elementId:id}),status:(state:string,message:string)=>{status.textContent=message.slice(0,1000);updateCancel();controls?.refreshActions();},changed:()=>{controls?.refreshActions();if(saveTimer)clearTimeout(saveTimer);const mark=generation;saveTimer=setTimeout(()=>{void canvas.saveState().then((viewState:unknown)=>{if(alive&&mark===generation&&viewState)send('saveState',{viewState});}).catch(()=>{});},250);}},workerUrl);
+controls=mountDiagramControls(document.getElementById('view-controls')!,canvas,{error:(message:string)=>{status.textContent=message.slice(0,1000);},export:(format:string,scope:string)=>send('export',{format,scope}),reveal:()=>send('reveal'),focus:(symbolIds:string[],depth:number,translation:string)=>send('focus',{symbolIds,depth,translation}),resetOptions:()=>send('resetOptions'),openSettings:()=>send('openSettings')},document.getElementById('diagram-toolbar')!);
 document.getElementById('refresh')!.onclick=()=>send('refresh');
 cancelButton.onclick=()=>{hostPending=false;projectionLayout=false;updateCancel();canvas.invalidate('Diagram update cancelled — Refresh to continue');send('cancel');};
 document.getElementById('fit')!.onclick=()=>void canvas.fit();
 document.getElementById('follow')!.onclick=()=>send('follow',{follow:!follow});
 document.getElementById('association')!.onchange=event=>send('association',{association:(event.target as HTMLSelectElement).value});
-function updateFollow(value:boolean):void {follow=value;const button=document.getElementById('follow')!;button.textContent=follow?'Following':'Pinned';button.setAttribute('aria-pressed',String(follow));}
+function updateFollow(value:boolean):void {follow=value;body.dataset.following=String(follow);const button=document.getElementById('follow')!;button.textContent=follow?'Following':'Pinned';button.setAttribute('aria-pressed',String(follow));}
 window.addEventListener('message',event=>{
  const value=event.data;if(!alive||!value||value.protocolVersion!==1||value.channel!==channel||!Number.isSafeInteger(value.generation)||value.generation<generation)return;
  generation=value.generation;

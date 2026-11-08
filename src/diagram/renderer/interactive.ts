@@ -349,6 +349,11 @@ export class DiagramCanvas {
  async filterAll(value:boolean):Promise<void> {this.filters.setAll(value);this.optionsRevision++;await this.repaint();}
  async resetFilters():Promise<void> {this.filters.reset();this.optionsRevision++;await this.repaint();}
  async hide(ids:string[],hidden=true):Promise<void> {this.optionsRevision++;for(const id of ids)if(hidden)this.filters.hiddenIds.add(id);else this.filters.hiddenIds.delete(id);await this.repaint();}
+ selectedPositions():{pinned:boolean;unpinned:boolean} {
+  const nodes=this.selectedIds().filter(id=>Object.hasOwn(this.state.positions,id));
+  return {pinned:nodes.some(id=>this.pins.has(id)),unpinned:nodes.some(id=>!this.pins.has(id))};
+ }
+ layoutHistory():{undo:boolean;redo:boolean} {return {undo:this.history.length>0,redo:this.future.length>0};}
  selectedIds():string[] {return this.root?[...this.root.index.all()].filter(e=>(e instanceof InterlisNode||e instanceof InterlisEdge)&&e.selected).map(e=>e.id):[];}
  async pinSelected(value:boolean):Promise<void> {for(const id of this.selectedIds())if(this.state.positions[id]){if(value)this.pins.add(id);else this.pins.delete(id);}await this.repaint();}
  async settle():Promise<void> {this.remember();const visible=new Set([...this.rendered?.nodes??[],...this.rendered?.containers??[]].map(n=>n.id)),edges=new Set(this.rendered?.edges.map(e=>e.id));this.state={positions:Object.fromEntries(Object.entries(this.state.positions).filter(([id])=>this.pins.has(id)||this.manualNodes.has(id)||!visible.has(id))),routes:Object.fromEntries(Object.entries(this.state.routes).filter(([id])=>this.manualRoutes.has(id)||!edges.has(id)))};await this.repaint();}

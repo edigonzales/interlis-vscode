@@ -26,10 +26,100 @@
 .interlis-canvas .frame-hidden>.interlis-frame,.interlis-canvas .frame-hidden>.interlis-title{visibility:hidden}
 .interlis-canvas .deemphasized>.interlis-frame{stroke-dasharray:5 3}
 .interlis-canvas [data-pinned=true]>.interlis-frame{stroke-width:3}
-.interlis-controls{display:flex;flex-wrap:wrap;gap:6px;padding:5px;font:12px sans-serif;color:inherit;background:var(--diagram-background)}
-.interlis-controls label{display:inline-flex;gap:3px;align-items:center}
-.interlis-controls button,.interlis-controls select{color:inherit;background:var(--diagram-background);border:1px solid var(--diagram-border);padding:3px}
-.interlis-controls details{max-width:100%}.interlis-filter-list{display:flex;flex-wrap:wrap;gap:8px;max-height:180px;overflow:auto}
-.interlis-controls :focus-visible{outline:2px solid var(--diagram-selection);outline-offset:2px}
-.interlis-controls{max-height:32vh;overflow:auto;flex-shrink:0;--diagram-background:var(--vscode-editor-background,#fff);--diagram-border:var(--vscode-editor-foreground,#60748c);--diagram-selection:var(--vscode-focusBorder,#0777bf)}
-.interlis-controls [role=tree]{flex-basis:100%;max-height:180px;overflow:auto}
+/* Diagram editor and standalone renderer controls. */
+.interlis-webview {
+  --diagram-background: var(--vscode-editor-background, #fff);
+  --diagram-foreground: var(--vscode-editor-foreground, #223247);
+  --diagram-container: var(--vscode-sideBar-background, #f1f5f8);
+  --diagram-border: var(--vscode-editor-foreground, #60748c);
+  --diagram-selection: var(--vscode-focusBorder, #0777bf);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  background: var(--diagram-background);
+  color: var(--diagram-foreground);
+  font: 13px var(--vscode-font-family, system-ui);
+}
+.interlis-webview #view-controls, .interlis-controls { display: contents; }
+.interlis-webview #canvas { flex: 1; min-height: 0; }
+.interlis-webview #status {
+  order: 3;
+  min-height: 20px;
+  max-height: 3em;
+  overflow: auto;
+  padding: 2px 8px;
+  border-top: 1px solid var(--vscode-panel-border, #aaa);
+}
+.interlis-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 39px;
+  padding: 0 6px;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--vscode-panel-border, #aaa);
+}
+.interlis-toolbar #root {
+  margin-inline: auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.interlis-webview:not([data-following=true]) #root { display: none; }
+.interlis-toolbar #options { margin-inline-start: auto; }
+.interlis-toolbar button, .interlis-options button, .interlis-menu button, .interlis-zoom button,
+.interlis-options select {
+  font: inherit;
+  color: var(--vscode-button-secondaryForeground, #223247);
+  background: var(--vscode-button-secondaryBackground, #e9eef4);
+  border: 1px solid var(--vscode-button-border, transparent);
+  border-radius: 3px;
+  padding: 4px 7px;
+  min-height: 26px;
+}
+.interlis-toolbar button:focus-visible, .interlis-options :focus-visible, .interlis-menu button:focus-visible,
+.interlis-zoom button:focus-visible { outline: 2px solid var(--vscode-focusBorder, #0777bf); outline-offset: 1px; }
+.interlis-toolbar button:disabled, .interlis-menu button:disabled { opacity: .55; }
+.interlis-options, .interlis-menu, .interlis-zoom {
+  position: absolute;
+  color: var(--vscode-sideBar-foreground, #223247);
+  background: var(--vscode-sideBar-background, #f1f5f8);
+  border: 1px solid var(--vscode-panel-border, #aaa);
+  border-radius: 4px;
+  z-index: 3;
+}
+.interlis-options {
+  inset: 40px 4px 28px auto;
+  width: min(300px, calc(100% - 12px));
+  display: flex;
+  flex-direction: column;
+}
+.interlis-options[hidden], .interlis-menu[hidden] { display: none; }
+.interlis-options header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px;
+  border-bottom: 1px solid var(--vscode-panel-border, #aaa);
+}
+.interlis-options-content { overflow: auto; padding: 8px; }
+.interlis-options fieldset { margin: 0 0 7px; padding: 6px; border: 1px solid var(--vscode-panel-border, #aaa); }
+.interlis-options label { display: flex; align-items: center; justify-content: space-between; gap: 4px; margin: 3px 0; }
+.interlis-options select { max-width: 63%; }
+.interlis-options ul { margin: 0; padding-inline-start: 12px; list-style-type: none; }
+.interlis-filter-list { margin-bottom: 7px; }
+.interlis-filter-list summary { margin-bottom: 5px; cursor: pointer; }
+.interlis-filter-actions { display: flex; flex-wrap: wrap; gap: 4px; }
+.interlis-menu { top: 40px; right: 5px; display: grid; gap: 2px; padding: 4px; z-index: 4; }
+.interlis-menu button { text-align: start; }
+.interlis-zoom { bottom: 31px; right: 9px; display: flex; align-items: center; gap: 5px; padding: 2px; }
+body:has(.interlis-options:not([hidden])) .interlis-zoom { display: none; }
+.interlis-zoom output { min-width: 35px; text-align: center; }
+@media (max-width: 470px) {
+  .interlis-toolbar #root { display: none; }
+  .interlis-toolbar button[data-compact] { font-size: 0; min-width: 28px; }
+  .interlis-toolbar button[data-compact]::before { content: attr(data-compact); font-size: 15px; }
+}
