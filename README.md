@@ -142,6 +142,13 @@ profile are reused. Personal settings and installed extensions are not modified.
 Local Core edits are supported, and tracked release locks stay unchanged.
 Stop the debug session and press F5 again after changes to rebuild and restart.
 For preparation without launching an editor, use `npm run dev:prepare`.
+On macOS, install the exact Core `nodeVersion` from `gradle.properties` once
+with `fnm install 24.22.0` (use the checkout's pin if it differs). F5 and
+`npm run dev:prepare` look for that installation in `FNM_DIR` or the standard
+macOS fnm directory, then check Node on `PATH`. F5 also works from the Dock
+without Node or npm on `PATH`. An absolute `INTERLIS_NODE` takes precedence
+and must point to the pinned version.
+
 Set `INTERLIS_CORE_DIR` for a different Core checkout and
 `INTERLIS_DEV_JAVA_HOME` for an explicit JDK25. Otherwise it discovers Java25
 from JAVA_HOME, macOS registrations, SDKMAN or PATH. Node22+ and a JDK25 must
