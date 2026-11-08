@@ -12,7 +12,7 @@ async function suggest(label){await ui.palette('Trigger Suggest');let target=-1,
 
 async function settings(patch){await ui.palette('Preferences: Open User Settings (JSON)');await ui.waitEditor('settings.json');const config={...JSON.parse(await ui.copyText()),...patch};await ui.replaceText(JSON.stringify(config));await ui.driver.actions().keyDown(ui.primaryModifier).sendKeys('s').keyUp(ui.primaryModifier).perform();await ui.waitFor(async()=>!(await ui.editor.isDirty()),'Settings not saved');await ui.openFile('Catalog.ili');}
 async function quickFix(title){await ui.driver.actions().keyDown(ui.primaryModifier).sendKeys('.').keyUp(ui.primaryModifier).perform();await ui.waitFor(async()=>{for(const row of await ui.driver.findElements(By.css('.action-widget .monaco-list-row')))if(await row.isDisplayed()&&(await row.getText()).includes(title)){await row.click();return true;}return false;},'Visible Quick Fix missing: '+title);}
-async function undoEquals(text){await ui.palette('Undo');await ui.waitFor(async()=>(await ui.readText())===text,'Single native Undo did not restore the source');}
+async function undoEquals(text){await ui.palette('Undo');await ui.waitFor(async()=>(await ui.copyText())===text,'Single native Undo did not restore the source');}
 
 describe('Installed editor assistance and documentation',function(){
  this.timeout(150000);this.bail(true);
