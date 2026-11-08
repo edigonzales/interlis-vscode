@@ -5,12 +5,28 @@ import {paintedBounds,svgId,type Rectangle} from './geometry';
 export type ExportScope='FULL'|'VISIBLE';
 export interface SvgArtifact {svg:string;width:number;height:number;viewBox:Rectangle;scope:ExportScope;snapshotId:string;}
 const svgNamespace='http://www.w3.org/2000/svg',inkscapeNamespace='http://www.inkscape.org/namespaces/inkscape';
-const paints=['visibility','display','fill','fill-opacity','stroke','stroke-width','stroke-opacity','stroke-dasharray','stroke-linecap','stroke-linejoin','font-family','font-size','font-weight','font-style','text-anchor','dominant-baseline','opacity','color','paint-order','vector-effect'] as const;
+const paints=['visibility','display','fill','fill-opacity','stroke','stroke-width','stroke-opacity','stroke-dasharray','stroke-linecap','stroke-linejoin','font-family','font-size','font-weight','font-style','text-anchor','dominant-baseline','text-decoration-line','opacity','color','paint-order','vector-effect'] as const;
+
+function canvasBackground(source:SVGSVGElement,element:HTMLElement):string {
+ const pixel=window.document.createElement('canvas');
+ pixel.width=pixel.height=1;
+ const context=pixel.getContext('2d');
+ const fallback=getComputedStyle(element).getPropertyValue('--diagram-canvas-fallback').trim()||'white';
+ if(!context)return getComputedStyle(source).backgroundColor||fallback;
+ const layers:string[]=[];
+ for(let node:Element|null=source;node;node=node.parentElement)layers.unshift(getComputedStyle(node).backgroundColor);
+ for(const color of [fallback,...layers]){
+  context.fillStyle=color;
+  context.fillRect(0,0,1,1);
+ }
+ const [red,green,blue]=context.getImageData(0,0,1,1).data;
+ return 'rgb('+red+', '+green+', '+blue+')';
+}
 
 /** Serializes the actual painted view. It never reprojects or invokes ELK. */
 export function exportSvg(element:HTMLElement,document:DiagramDocumentDto,settings:DiagramSettings,scope:ExportScope,viewport:{zoom:number;x:number;y:number}):SvgArtifact {
  const source=element.querySelector<SVGSVGElement>('svg.sprotty-graph');if(!source)throw Error('There is no current diagram to export');
- const bounds=paintedBounds(source),box=scope==='FULL'?{x:bounds.x-24,y:bounds.y-24,width:bounds.width+48,height:bounds.height+48}:{x:viewport.x,y:viewport.y,width:element.clientWidth/viewport.zoom,height:element.clientHeight/viewport.zoom};
+ const bounds=paintedBounds(source),box=scope==='FULL'?{x:bounds.x-24,y:bounds.y-24,width:Math.ceil(bounds.width+48),height:Math.ceil(bounds.height+48)}:{x:viewport.x,y:viewport.y,width:element.clientWidth/viewport.zoom,height:element.clientHeight/viewport.zoom};
  const width=Math.max(1,Math.ceil(scope==='VISIBLE'?element.clientWidth:box.width)),height=Math.max(1,Math.ceil(scope==='VISIBLE'?element.clientHeight:box.height));
  const clone=source.cloneNode(true) as SVGSVGElement;const old=[source,...source.querySelectorAll<SVGElement>('*')],next=[clone,...clone.querySelectorAll<SVGElement>('*')];
  for(let i=0;i<old.length;i++){
@@ -23,7 +39,7 @@ export function exportSvg(element:HTMLElement,document:DiagramDocumentDto,settin
  clone.setAttribute('xmlns',svgNamespace);clone.setAttribute('width',String(width));clone.setAttribute('height',String(height));clone.setAttribute('viewBox',`${box.x} ${box.y} ${box.width} ${box.height}`);clone.setAttribute('role','img');clone.removeAttribute('tabindex');
  const graph=clone.querySelector('g');graph?.removeAttribute('transform');
  const metadata=window.document.createElementNS(svgNamespace,'metadata');metadata.textContent=JSON.stringify({schemaVersion:1,snapshotId:document.snapshotId,sourceRevisions:document.sourceRevisions,completeness:document.completeness,scope,filtered:true,renderingTarget:settings.renderingTarget,edgeRouting:settings.edgeRouting});clone.prepend(metadata);
- const background=window.document.createElementNS(svgNamespace,'rect');background.setAttribute('x',String(box.x));background.setAttribute('y',String(box.y));background.setAttribute('width',String(box.width));background.setAttribute('height',String(box.height));let color=getComputedStyle(element).getPropertyValue('--diagram-background').trim()||getComputedStyle(element).backgroundColor;if(!color||color==='rgba(0, 0, 0, 0)'||/url\s*\(/i.test(color))color='white';background.setAttribute('fill',color);background.setAttribute('class','interlis-export-background');clone.insertBefore(background,graph);
+ const background=window.document.createElementNS(svgNamespace,'rect');background.setAttribute('x',String(box.x));background.setAttribute('y',String(box.y));background.setAttribute('width',String(box.width));background.setAttribute('height',String(box.height));background.setAttribute('fill',canvasBackground(source,element));background.setAttribute('class','interlis-export-background');clone.insertBefore(background,graph);
  const nodes=new Map<string,SVGElement>();for(const node of clone.querySelectorAll<SVGElement>('[data-kind][data-element-id]')){
   const shape=[...node.children].find(c=>c.tagName.toLowerCase()==='rect'&&c.classList.contains('interlis-frame'));if(shape){shape.id=svgId('shape:'+node.getAttribute('data-element-id'));nodes.set(node.getAttribute('data-element-id')!,shape as SVGElement);}
   if(settings.renderingTarget==='INKSCAPE'){node.setAttributeNS(inkscapeNamespace,'inkscape:groupmode','group');node.setAttributeNS(inkscapeNamespace,'inkscape:label',node.getAttribute('data-canonical-name')??node.getAttribute('data-label')??'');}

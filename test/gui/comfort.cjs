@@ -16,7 +16,7 @@ async function click(id){
  await (await ui.driver.findElement(By.id(id))).click();
 }
 async function hostAction(id){const element=await ui.driver.findElement(By.id('canvas'));await ui.waitFor(async()=>!!await element.getAttribute('data-diagram-id'),'Missing accepted Java diagram identity');const before=await element.getAttribute('data-diagram-id');await click(id);await ui.waitFor(async()=>await element.getAttribute('data-diagram-id')!==before&&['FRESH','PARTIAL'].includes(await element.getAttribute('data-status')),'No new accepted current Java projection after '+id);}
-async function choose(id,value){if(id!=='association')await ensureOptions();const e=await ui.driver.findElement(By.id(id));await e.click();const options=await e.findElements(By.css('option'));const target=await Promise.all(options.map(async o=>({o,value:await o.getAttribute('value')})));const item=target.find(i=>i.value===value);assert.ok(item,'Missing option '+id+' '+value);await item.o.click();await fresh();}
+async function choose(id,value){await ensureOptions();const e=await ui.driver.findElement(By.id(id));await e.click();const options=await e.findElements(By.css('option'));const target=await Promise.all(options.map(async o=>({o,value:await o.getAttribute('value')})));const item=target.find(i=>i.value===value);assert.ok(item,'Missing option '+id+' '+value);await item.o.click();await fresh();}
 async function check(id,value){await filters();const e=await ui.driver.findElement(By.id(id));if(await e.isSelected()!==value)await e.click();await fresh();}
 async function node(label){return ui.driver.findElement(By.css('[data-label='+JSON.stringify(label)+']'));}
 async function selectNode(label){await closeOptions();const target=await node(label),title=await target.findElement(By.css('.interlis-title')),id=await target.getAttribute('data-element-id');const hit=await ui.driver.executeScript('const r=arguments[0].getBoundingClientRect(),e=document.elementFromPoint(Math.floor(r.x+r.width/2),Math.floor(r.y+r.height/2));return e?.closest("[data-kind]")?.getAttribute("data-element-id");',title);assert.equal(hit,id,'Another semantic node covers the intended native click');await ui.driver.actions().move({origin:title}).click().perform();await ui.waitFor(async()=>await target.getAttribute('class').then(c=>c.includes('selected')),'Native click did not select the intended node');}
@@ -25,12 +25,13 @@ async function open(name){await source(name);await ui.palette('INTERLIS: Show Di
 async function unchanged(){await source('Comfort.ili');assert.equal(await ui.copyText(),original);assert.equal(digest(path.join(evidence,'Unicode Modelle/Comfort.ili')),sourceHash);}
 async function filters(){await ensureOptions();const details=await ui.driver.findElement(By.css('#view-controls details'));if(await details.getAttribute('open')===null)await details.findElement(By.css('summary')).click();}
 async function save(format,scope,name,cancel=false){await click('diagram-export-'+format.toLowerCase()+'-'+scope.toLowerCase());await back();const input=await ui.driver.wait(async()=>{for(const e of await ui.driver.findElements(By.css('.quick-input-widget input')))if(await e.isDisplayed())return e;return false;},10000,'Save dialog input absent');const target=path.join(evidence,name);await ui.finishSaveDialog(input,target,cancel);if(!cancel)await ui.waitFor(()=>fs.existsSync(target),'Export file not created');else assert.equal(fs.existsSync(target),false);await enter();return target;}
-async function decodePair(svgFile,pngFile,name){const svg=fs.readFileSync(svgFile,'utf8'),png=fs.readFileSync(pngFile).toString('base64');const result=await ui.driver.executeAsyncScript('const [svg,png,done]=arguments;const urls=[];const load=(blob)=>new Promise((resolve,reject)=>{const image=new Image(),url=URL.createObjectURL(blob);urls.push(url);image.onload=()=>resolve(image);image.onerror=()=>reject(Error("Image decode failed"));image.src=url;});(async()=>{const parser=new DOMParser().parseFromString(svg,"image/svg+xml");if(parser.querySelector("parsererror,script,foreignObject"))throw Error("Bad SVG XML");for(const element of parser.querySelectorAll("[id]")){if([...parser.querySelectorAll("[id]")].filter(e=>e.id===element.id).length!==1)throw Error("Duplicate SVG ID");}const data=Uint8Array.from(atob(png),c=>c.charCodeAt(0)),a=await load(new Blob([svg],{type:"image/svg+xml"})),b=await load(new Blob([data],{type:"image/png"}));if(a.naturalWidth!==b.naturalWidth||a.naturalHeight!==b.naturalHeight)throw Error("Dimensions differ");const canvas=document.createElement("canvas");canvas.width=a.naturalWidth;canvas.height=a.naturalHeight;const ctx=canvas.getContext("2d");ctx.drawImage(a,0,0);const first=ctx.getImageData(0,0,canvas.width,canvas.height).data;ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(b,0,0);const second=ctx.getImageData(0,0,canvas.width,canvas.height).data;let different=0;for(let i=0;i<first.length;i++)if(first[i]!==second[i])different++;a.id="artifact-image-probe";a.style.cssText="position:fixed;inset:20px;max-width:calc(100% - 40px);max-height:calc(100% - 40px);background:white;z-index:10000;object-fit:contain";document.body.append(a);done({width:canvas.width,height:canvas.height,different,channels:first.length});})().catch(error=>done({error:String(error)})).finally(()=>urls.forEach(url=>URL.revokeObjectURL(url)));',svg,png);assert.equal(result.error,undefined);assert.equal(result.different,0,'Actual SVG and PNG pixels differ');fs.writeFileSync(path.join(evidence,name+'-pixels.json'),JSON.stringify(result,null,2));await ui.capture(name+'-decoded');await ui.driver.executeScript('document.getElementById("artifact-image-probe")?.remove()');}
+async function decodePair(svgFile,pngFile,name){const svg=fs.readFileSync(svgFile,'utf8'),png=fs.readFileSync(pngFile).toString('base64');const result=await ui.driver.executeAsyncScript('const [svg,png,done]=arguments;const urls=[];const load=(blob)=>new Promise((resolve,reject)=>{const image=new Image(),url=URL.createObjectURL(blob);urls.push(url);image.onload=()=>resolve(image);image.onerror=()=>reject(Error("Image decode failed"));image.src=url;});(async()=>{const parser=new DOMParser().parseFromString(svg,"image/svg+xml");if(parser.querySelector("parsererror,script,foreignObject"))throw Error("Bad SVG XML");for(const element of parser.querySelectorAll("[id]")){if([...parser.querySelectorAll("[id]")].filter(e=>e.id===element.id).length!==1)throw Error("Duplicate SVG ID");}const data=Uint8Array.from(atob(png),c=>c.charCodeAt(0)),a=await load(new Blob([svg],{type:"image/svg+xml"})),b=await load(new Blob([data],{type:"image/png"}));if(a.naturalWidth!==b.naturalWidth||a.naturalHeight!==b.naturalHeight)throw Error("Dimensions differ");const canvas=document.createElement("canvas");canvas.width=a.naturalWidth;canvas.height=a.naturalHeight;const ctx=canvas.getContext("2d");ctx.drawImage(a,0,0);const first=ctx.getImageData(0,0,canvas.width,canvas.height).data;ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(b,0,0);const second=ctx.getImageData(0,0,canvas.width,canvas.height).data;let different=0;for(let i=0;i<first.length;i++)if(first[i]!==second[i])different++;a.id="artifact-image-probe";a.style.cssText="position:fixed;inset:20px;max-width:calc(100% - 40px);max-height:calc(100% - 40px);background:white;z-index:10000;object-fit:contain";document.body.append(a);done({width:canvas.width,height:canvas.height,different,channels:first.length,background:[...first.slice(0,4)]});})().catch(error=>done({error:String(error)})).finally(()=>urls.forEach(url=>URL.revokeObjectURL(url)));',svg,png);assert.equal(result.error,undefined);assert.equal(result.different,0,'Actual SVG and PNG pixels differ');fs.writeFileSync(path.join(evidence,name+'-pixels.json'),JSON.stringify(result,null,2));await ui.capture(name+'-decoded');await ui.driver.executeScript('document.getElementById("artifact-image-probe")?.remove()');return result;}
 function record(id,actions,assertions){ui.record(id,actions,assertions);}
 
 describe('Installed V3 local view parity and actual files',function(){this.timeout(120000);this.bail(true);
  before(async()=>{if(process.env.INTERLIS_GUI_V3_ONLY){await ui.initialize();await ui.openFile('Example.ili');await ui.waitFor(()=>ui.status('Ready'),'Server did not initialize');}});
  afterEach(async function(){if(this.currentTest.state==='failed'){await ui.capture('failure-'+this.currentTest.title.slice(0,6));fs.writeFileSync(path.join(evidence,'failure-comfort-dom.html'),await ui.driver.getPageSource());}await back();});
+ if(!process.env.INTERLIS_GUI_THEME_ONLY){
  it('GUI-19 filters structural kinds and All None Reset through native controls',async()=>{await open('Comfort.ili');await source('Comfort.ili');original=await ui.copyText();sourceHash=digest(path.join(evidence,'Unicode Modelle/Comfort.ili'));await enter();await fresh();await ui.capture('GUI-19-before');await filters();for(const kind of ['CLASS','STRUCTURE','DOMAIN','VIEW','ASSOCIATION']){await check('diagram-filter-kinds-'+kind,false);assert.equal((await ui.driver.findElements(By.css('[data-kind="'+kind+'"]'))).length,0);await check('diagram-filter-kinds-'+kind,true);assert.ok((await ui.driver.findElements(By.css('[data-kind="'+kind+'"]'))).length>0);}await click('diagram-filter-none');await ui.waitFor(async()=>await (await ui.driver.findElement(By.id('canvas'))).getAttribute('data-status')==='EMPTY','None did not show Empty');assert.match(await (await ui.driver.findElement(By.id('status'))).getText(),/No visible/);await ui.capture('GUI-19-empty');await click('diagram-filter-all');await fresh();await click('diagram-filter-reset');await fresh();await ui.capture('GUI-19-reset');await unchanged();record('GUI-19',['native kind checkboxes and All/None/Reset'],['consistent actual Java nodes','honest empty status','source unchanged']);});
  it('GUI-20 filters direct and indirect actual imports and restores hidden positions',async()=>{await enter();await fresh();await filters();const models=await ui.driver.findElements(By.css('[data-kind=MODEL]'));assert.ok(models.length>=3,'Real transitive import closure missing');const direct=await node('V3Middle'),indirect=await node('V3Base');const before=await indirect.getAttribute('transform');await ui.capture('GUI-20-imports');await check('diagram-filter-indirectImports',false);assert.equal((await ui.driver.findElements(By.css('[data-label=V3Base]'))).length,0);assert.ok((await ui.driver.findElements(By.css('[data-label=V3Middle]'))).length>0);await check('diagram-filter-indirectImports',true);assert.equal(await (await node('V3Base')).getAttribute('transform'),before);await check('diagram-filter-directImports',false);assert.equal((await ui.driver.findElements(By.css('[data-label=V3Middle]'))).length,0);await check('diagram-filter-directImports',true);await ui.capture('GUI-20-restored');await selectNode('A');await hostAction('diagram-focus');const stubs=await ui.driver.findElements(By.css('[data-kind=EXTERNAL_REFERENCE]'));assert.ok(stubs.length>0,'Selected Core scope must expose actual external stubs');const stubId=await stubs[0].getAttribute('data-element-id'),stubPosition=await stubs[0].getAttribute('transform');for(const kind of ['INHERITANCE','ASSOCIATION_ROLE','ASSOCIATION','REFERENCE','STRUCTURE_COMPOSITION','DOMAIN_USE','VIEW_DERIVATION','MODEL_IMPORT','TRANSLATION'])await check('diagram-filter-edges-'+kind,false);assert.equal((await ui.driver.findElements(By.css('[data-kind=EXTERNAL_REFERENCE]'))).length,0);await ui.capture('GUI-20-no-stubs');for(const kind of ['INHERITANCE','ASSOCIATION_ROLE','ASSOCIATION','REFERENCE','STRUCTURE_COMPOSITION','DOMAIN_USE','VIEW_DERIVATION','MODEL_IMPORT','TRANSLATION'])await check('diagram-filter-edges-'+kind,true);assert.equal(await (await ui.driver.findElement(By.css('[data-element-id='+JSON.stringify(stubId)+']'))).getAttribute('transform'),stubPosition);await hostAction('diagram-full');record('GUI-20',['native direct/indirect import filters'],['real imported model closure','restored geometry','no empty dangling frames']);});
  it('GUI-21 shows exact inherited members inline enums and independent compartments',async()=>{await enter();await fresh();await choose('diagram-attributeMode','OWN_AND_INHERITED');assert.match(await (await node('B')).getText(),/inherited/);assert.match(await (await node('A')).getText(),/flag.first/);assert.match(await (await node('A')).getText(),/abstract/);await ui.capture('GUI-21-inherited');await choose('diagram-attributeMode','OWN');assert.doesNotMatch(await (await node('B')).getText(),/inherited/);await choose('diagram-attributeMode','NONE');assert.equal((await (await node('A')).findElements(By.css('[data-compartment=ATTRIBUTES]'))).length,0);assert.ok((await (await node('A')).findElements(By.css('[data-compartment=CONSTRAINTS]'))).length>0);await filters();await check('diagram-filter-enumerations',false);assert.equal((await (await node('State')).findElements(By.css('[data-compartment=ENUM_VALUES]'))).length,0);assert.match(await (await node('A')).getText(),/flag.first/);await check('diagram-filter-enumerations',true);await check('diagram-showLocalEnumerationValues',false);assert.doesNotMatch(await (await node('A')).getText(),/flag.first/);assert.match(await (await node('State')).getText(),/first/);await check('diagram-showLocalEnumerationValues',true);await choose('diagram-attributeMode','OWN_AND_INHERITED');const edgeCardinality=await ui.driver.executeScript('return [...document.querySelectorAll(".interlis-end-label")].some(e=>e.textContent.includes("0.."))');assert.equal(edgeCardinality,true);await check('diagram-filter-cardinalities',false);assert.equal(await ui.driver.executeScript('return [...document.querySelectorAll(".interlis-end-label")].some(e=>e.textContent.includes("0.."))'),true);assert.doesNotMatch(await (await node('Many')).getText(),/0\.\./);await check('diagram-filter-cardinalities',true);await check('diagram-showRoleCardinalities',false);assert.match(await (await node('Many')).getText(),/0\.\./);assert.equal(await ui.driver.executeScript('return [...document.querySelectorAll(".interlis-end-label")].some(e=>e.textContent.includes("0.."))'),false);await check('diagram-showRoleCardinalities',true);await check('diagram-filter-types',false);assert.doesNotMatch(await (await node('A')).getText(),/number :/);await check('diagram-filter-types',true);await ui.capture('GUI-21-restored');record('GUI-21',['OWN/NONE/inherited and enum/type switches'],['original inherited and inline enum text','constraints independent of attributes','abstract non-colour marker']);});
@@ -40,5 +41,142 @@ describe('Installed V3 local view parity and actual files',function(){this.timeo
  it('GUI-25 reveals exact Java source identity and projects focus neighbourhood translations',async()=>{await source('Comfort.ili');const lines=original.split(/\r?\n/),line=lines.findIndex(l=>l.includes('CLASS B EXTENDS'));await ui.go(line+1,lines[line].indexOf('B')+1);await ui.palette('INTERLIS: Reveal Source Selection in Diagram');await enter();await fresh();await ui.waitFor(async()=>await (await node('B')).getAttribute('class').then(c=>c.includes('selected')),'Java source identity not selected');await ui.capture('GUI-25-source-highlight');await hostAction('diagram-focus');assert.ok((await ui.driver.findElements(By.css('[data-label=B]'))).length>0);await selectNode('B');await ensureOptions();const depth=await ui.driver.findElement(By.css('[aria-label="Neighbourhood depth"]'));await depth.click();for(const option of await depth.findElements(By.css('option')))if(await option.getAttribute('value')==='1')await option.click();await hostAction('diagram-focus');assert.ok((await ui.driver.findElements(By.css('[data-label=A][data-kind=CLASS]'))).length>0);await ui.capture('GUI-25-neighbourhood');await hostAction('diagram-full');assert.ok((await ui.driver.findElements(By.css('[data-label=C][data-kind=CLASS]'))).length>0,'Clearing selection must restore the whole root even when depth is 1');await ui.capture('GUI-25-cleared-focus');await open('Translated.ili');await ensureOptions();const language=await ui.driver.findElement(By.css('[aria-label="Label language"]'));const choices=await language.findElements(By.css('option'));assert.ok(choices.length>=2,'Core translation model choice absent');await choices.at(-1).click();await hostAction('diagram-full');assert.ok((await ui.driver.findElements(By.css('[data-label=Route]'))).length>0);await ui.capture('GUI-25-translated');await open('Comfort.ili');record('GUI-25',['native cursor and Reveal command','focus selected','Core translation model choice'],['Java-versioned highlight','new projected scope','actual translated Core labels']);});
  it('GUI-26 writes full visible SVG PNG and cancels through native Save UI',async()=>{await enter();await fresh();await click('fit');await filters();await check('diagram-filter-kinds-VIEW',false);await ui.capture('GUI-26-export-view');const files=[];for(const format of ['SVG','PNG'])for(const scope of ['FULL','VISIBLE'])files.push(await save(format,scope,'GUI-26-'+format+'-'+scope+'.'+format.toLowerCase()));await save('SVG','FULL','GUI-26-cancelled.svg',true);const {decodeDiagramExport}=require('../../build/diagram-export.cjs');for(const file of files){const bytes=fs.readFileSync(file);if(file.endsWith('.svg')){decodeDiagramExport('SVG',bytes.toString());assert.doesNotMatch(bytes.toString(),/data-label="Overview"/);}else {decodeDiagramExport('PNG',bytes.toString('base64'));assert.ok(bytes.readUInt32BE(16)>0);assert.ok(bytes.readUInt32BE(20)>0);}}await decodePair(files[0],files[2],'GUI-26-full');await decodePair(files[1],files[3],'GUI-26-visible');await ui.capture('GUI-26-files-saved');record('GUI-26',['native full/visible SVG/PNG Save dialogs','native Cancel'],['four actual files validated','real browser SVG and PNG decoders and exact pixel equality','filtered View absent','PNG IHDR dimensions','Cancel writes nothing']);});
  it('GUI-27 exports actual Inkscape connections gaps and static spline paths',async()=>{await enter();await fresh();await choose('diagram-renderingTarget','INKSCAPE');await choose('diagram-edgeCrossingStyle','GAPS');await choose('diagram-edgeRouting','ORTHOGONAL');const ortho=await save('SVG','FULL','GUI-27-orthogonal.svg');assert.match(fs.readFileSync(ortho,'utf8'),/inkscape:connection-start="#interlis-/);await ui.capture('GUI-27-orthogonal-gaps');await choose('diagram-edgeCrossingStyle','PLAIN');await choose('diagram-edgeRouting','POLYLINE');await save('SVG','FULL','GUI-27-polyline.svg');await choose('diagram-edgeRouting','SPLINES');const spline=await save('SVG','FULL','GUI-27-splines.svg');assert.match(fs.readFileSync(spline,'utf8'),/data-interlis-static-start/);assert.doesNotMatch(fs.readFileSync(spline,'utf8'),/inkscape:connector-type/);await ui.capture('GUI-27-static-splines');record('GUI-27',['native Inkscape routing and crossing switches','actual SVG saves'],['live connector references only straight routing','static spline references','screen images and actual files']);});
- it('GUI-28 uses native light dark high contrast themes and accessible keyboard controls',async()=>{await enter();await fresh();for(const theme of ['Light Modern','Dark Modern','Dark High Contrast']){await back();await ui.focusEditor();await ui.palette('Preferences: Color Theme',false,true);const input=await ui.driver.findElement(By.css('.quick-input-widget input'));await input.sendKeys(Key.chord(ui.primaryModifier,'a'),theme);const row=await ui.driver.wait(async()=>{for(const option of await ui.driver.findElements(By.css('.quick-input-list .monaco-list-row')))if(await option.isDisplayed()&&(await option.getText()).trim().startsWith(theme))return option;return false;},5000,'Actual pinned built-in theme not offered: '+theme);await row.click();const themeClass=theme==='Light Modern'?'vs':theme==='Dark Modern'?'vs-dark':'hc-black';await ui.waitFor(async()=>await ui.driver.executeScript('return document.querySelector(".monaco-workbench").classList.contains(arguments[0])',themeClass),'Workbench theme did not change');await enter();await fresh();const themeSvg=await ui.driver.findElement(By.css('svg.sprotty-graph'));await click('fit');for(let zoom=0;zoom<4;zoom++)await ui.driver.actions().scroll(0,0,0,-200,themeSvg).perform();const colors=await ui.driver.executeScript('const e=document.querySelector(".interlis-title"),f=document.querySelector(".interlis-frame");return {text:getComputedStyle(e).fill,background:getComputedStyle(f).fill};');assert.notEqual(colors.text,colors.background);await ui.capture('GUI-28-'+theme.replaceAll(' ','-'));}await filters();const control=await ui.driver.findElement(By.id('diagram-filter-types'));await control.sendKeys(Key.SPACE);await fresh();await control.sendKeys(Key.SPACE);await fresh();assert.ok(await control.getAttribute('id'));assert.equal((await ui.driver.findElements(By.css('#canvas script,#canvas foreignObject'))).length,0);await source('Comfort.ili');const attackLine=original.split(/\r?\n/).findIndex(line=>line.includes('<script>'));assert.ok(attackLine>=0);await ui.go(attackLine+1,1);await ui.capture('GUI-28-inert-source-comment');await unchanged();record('GUI-28',['native theme selection Light Dark High Contrast','native keyboard checkbox activation'],['visible text/background differ','accessible native controls','source unchanged']);});
+ }
+ it('GUI-28 applies real themes to a stable view and writes independently decodable theme exports',async()=>{
+  if(process.env.INTERLIS_GUI_THEME_ONLY){
+   await open('Comfort.ili');await source('Comfort.ili');original=await ui.copyText();
+   sourceHash=digest(path.join(evidence,'Unicode Modelle/Comfort.ili'));await enter();await fresh();
+  }
+  await enter();await fresh();
+  await choose('association','COMPACT_BINARY');
+  await ui.waitFor(()=>ui.driver.executeScript('return [...document.querySelectorAll(".sprotty-edge")].some(e=>e.dataset.source===e.dataset.target)'),'Compact self edge missing');
+  await check('diagram-filter-kinds-VIEW',false);
+  await selectNode('A');
+  const state=()=>ui.driver.executeScript('const c=document.querySelector("#canvas"),s=c.querySelector("svg.sprotty-graph");return {diagram:c.dataset.diagramId,snapshot:c.dataset.snapshotId,viewport:s.querySelector("g").getAttribute("transform"),nodes:[...s.querySelectorAll(".interlis-node")].map(e=>[e.dataset.elementId,e.getAttribute("transform"),e.classList.contains("selected"),e.dataset.pinned]),routes:[...s.querySelectorAll(".interlis-edge-line")].map(e=>e.getAttribute("d"))};');
+  const stable=await state();
+  assert.ok(stable.nodes.some(node=>node[2]),'Theme check needs an actual selection');
+  const reports={};
+  let initial;
+  for(const [theme,themeClass,tag]of [
+   ['Light Modern','vs','light'],['Dark Modern','vs-dark','dark'],['Light Modern','vs','light-return'],
+   ['Dark High Contrast','hc-black','hc-dark'],['Light High Contrast','hc-light','hc-light']
+  ]){
+   await back();await ui.focusEditor();await ui.palette('Preferences: Color Theme',false,true);
+   const input=await ui.driver.findElement(By.css('.quick-input-widget input'));await input.sendKeys(Key.chord(ui.primaryModifier,'a'),theme);
+   const row=await ui.driver.wait(async()=>{for(const option of await ui.driver.findElements(By.css('.quick-input-list .monaco-list-row')))if(await option.isDisplayed()&&(await option.getText()).trim().startsWith(theme))return option;return false;},5000,'Actual pinned built-in theme not offered: '+theme);
+   await row.click();
+   await ui.waitFor(()=>ui.driver.executeScript('return document.querySelector(".monaco-workbench").classList.contains(arguments[0])',themeClass),'Workbench theme did not change');
+   await enter();await fresh();
+   assert.deepEqual(await state(),stable,'Theme change altered diagram identity, selection, viewport or geometry');
+   const graph=await measureTheme(false);
+   if(tag==='light')initial=graph.background;
+   if(tag==='dark')assert.notDeepEqual(graph.background,initial);
+   if(tag==='light-return')assert.deepEqual(graph.background,initial);
+   await ui.capture('P4-'+tag+'-closed');
+   await (await ui.driver.findElement(By.id('options'))).sendKeys(Key.ENTER);
+   const panel=await measureTheme(true);
+   if(tag==='light'||tag==='dark')await ui.capture('P4-'+tag+'-open');
+   await (await ui.driver.findElement(By.id('diagram-options-close'))).sendKeys(Key.ESCAPE);
+   assert.deepEqual(await state(),stable,'Options panel changed the diagram');
+   if(tag!=='light-return'){
+    const svgFile=await save('SVG','FULL','P4-'+tag+'.svg'),pngFile=await save('PNG','FULL','P4-'+tag+'.png');
+    const svg=fs.readFileSync(svgFile,'utf8');
+    require('../../build/diagram-export.cjs').decodeDiagramExport('SVG',svg);
+    assert.doesNotMatch(svg,/var\(--|data-label="Overview"/);
+    const image=await decodePair(svgFile,pngFile,'P4-'+tag);
+    assert.deepEqual(image.background,graph.background,'Neutral SVG/PNG background differs from the theme');
+   }
+   reports[tag]={graph,panel};
+  }
+  const originalWidth=await ui.driver.executeScript('return document.documentElement.clientWidth');
+  await back();
+  const window=ui.driver.manage().window(),rect=await window.getRect();
+  try{
+   await window.setRect({width:Math.max(680,Math.round(rect.width-2*(originalWidth-365))),height:rect.height});
+   await enter();await fresh();
+   const narrow=await ui.driver.executeScript('const n=document.querySelector("#diagram-toolbar");return {width:document.documentElement.clientWidth,client:n.clientWidth,scroll:n.scrollWidth,height:n.clientHeight};');
+   assert.ok(narrow.width>=310&&narrow.width<=440,JSON.stringify(narrow));
+   assert.ok(narrow.height<=44&&narrow.scroll<=narrow.client,JSON.stringify(narrow));
+   assert.deepEqual(await state(),stable,'Resizing the real webview changed the viewport or layout');
+   await ensureOptions();await ui.capture('P4-narrow-open');
+   await closeOptions();await ui.capture('P4-narrow-closed');
+  }finally{await back();await window.setRect(rect);}
+  await enter();await fresh();
+  fs.writeFileSync(path.join(evidence,'P4-contrast.json'),JSON.stringify(reports,null,2)+'\n');
+  await filters();
+  const control=await ui.driver.findElement(By.id('diagram-filter-types'));
+  await control.sendKeys(Key.SPACE);await fresh();await control.sendKeys(Key.SPACE);await fresh();
+  assert.equal((await ui.driver.findElements(By.css('#canvas script,#canvas foreignObject'))).length,0);
+  await source('Comfort.ili');const attackLine=original.split(/\r?\n/).findIndex(line=>line.includes('<script>'));
+  assert.ok(attackLine>=0);await ui.go(attackLine+1,1);await ui.capture('GUI-28-inert-source-comment');await unchanged();
+  record('GUI-28',['native Light Dark and both High Contrast themes','live switch with selected node','native SVG and PNG exports'],['text 4.5:1, important graphics 3:1','stable diagram and layout','neutral decode and exact SVG/PNG parity','source unchanged']);
+ });
 });
+
+async function measureTheme(panel) {
+ const measurements=await ui.driver.executeScript(function(panel){
+  const context=document.createElement('canvas').getContext('2d');
+  function rgb(paint){
+   context.clearRect(0,0,1,1);context.fillStyle=paint;context.fillRect(0,0,1,1);
+   return [...context.getImageData(0,0,1,1).data];
+  }
+  function blend(front,back,opacity=1){
+   const a=front[3]/255*opacity;
+   return back.slice(0,3).map((channel,index)=>front[index]*a+channel*(1-a)).concat(255);
+  }
+  function surface(node){
+   const path=[];for(let cursor=node;cursor;cursor=cursor.parentElement)path.unshift(cursor);
+   return path.reduce((back,item)=>blend(rgb(getComputedStyle(item).backgroundColor),back),[255,255,255,255]);
+  }
+  function ratio(first,second){
+   const l=values=>values.slice(0,3).map(value=>value/255).map(value=>value<=.04045?value/12.92:((value+.055)/1.055)**2.4).reduce((sum,value,index)=>sum+value*[.2126,.7152,.0722][index],0);
+   const a=l(first),b=l(second);return (Math.max(a,b)+.05)/(Math.min(a,b)+.05);
+  }
+  const canvas=document.querySelector('#canvas'),background=surface(canvas.querySelector('svg.sprotty-graph'));
+  const rows=[];
+  const sample=(name,node,paint,back,minimum)=>{
+   if(!node)throw Error('Missing theme sample: '+name);
+   const style=getComputedStyle(node),opacity=Number(style.opacity)*(paint==='fill'?Number(style.fillOpacity):paint==='stroke'?Number(style.strokeOpacity):1);
+   const foreground=blend(rgb(style[paint]),back,opacity);
+   rows.push({name,ratio:ratio(foreground,back),minimum,foreground,background:back});
+  };
+  if(panel){
+   for(const selector of ['#diagram-options header strong','#diagram-direction','#diagram-options-close','#options']){
+    const node=document.querySelector(selector);sample(selector,node,'color',surface(node),4.5);
+   }
+   const focus=document.querySelector('#diagram-options-close');
+   if(!focus.matches(':focus-visible')||parseFloat(getComputedStyle(focus).outlineWidth)<2)throw Error('Keyboard focus outline is missing');
+   sample('keyboard focus outline',focus,'outlineColor',surface(focus.parentElement),3);
+  }else{
+   for(const kind of ['CLASS','DOMAIN','MODEL','TOPIC']){
+    const node=canvas.querySelector('[data-kind='+kind+']'),frame=node.querySelector('.interlis-frame');
+    const fill=getComputedStyle(frame).fill;
+    const face=fill==='none'?background:blend(rgb(fill),background,Number(getComputedStyle(frame).fillOpacity));
+    sample(kind+' title',node.querySelector('.interlis-title'),'fill',face,4.5);
+    sample(kind+' frame',frame,'stroke',face,3);
+   }
+   const selected=canvas.querySelector('.interlis-node.selected'),frame=selected.querySelector('.interlis-frame');
+   const face=blend(rgb(getComputedStyle(frame).fill),background);
+   sample('selection outline',frame,'stroke',face,3);
+   sample('stereotype',selected.querySelector('.interlis-stereotype'),'fill',face,4.5);
+   sample('member',selected.querySelector('.interlis-member'),'fill',face,4.5);
+   sample('relationship line',canvas.querySelector('.interlis-edge-line'),'stroke',background,3);
+   sample('relationship end label',canvas.querySelector('.interlis-end-label'),'fill',background,4.5);
+   for(const [name,selector]of [
+    ['inheritance arrow','.interlis-marker[data-inheritance=true]'],
+    ['hollow aggregation','.interlis-marker[data-aggregation=AGGREGATION]'],
+    ['filled composition','.interlis-marker[data-aggregation=COMPOSITION]']
+   ]){
+    const marker=canvas.querySelector(selector);
+    sample(name,marker,'stroke',background,3);
+    const fill=blend(rgb(getComputedStyle(marker).fill),background);
+    if(name==='filled composition')sample(name+' fill',marker,'fill',background,3);
+    else if(ratio(fill,background)>1.01)throw Error(name+' interior differs from canvas');
+   }
+   const toolbar=document.querySelector('#options');sample('toolbar text',toolbar,'color',surface(toolbar),4.5);
+  }
+  return {background,rows};
+ },panel);
+ for(const row of measurements.rows)assert.ok(row.ratio>=row.minimum,JSON.stringify(row));
+ return measurements;
+}

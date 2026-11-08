@@ -28,6 +28,34 @@ test('native shared controls preserve hidden geometry, own undo, real curves and
  const saved=await page.evaluate(()=>canvas.saveState());await page.locator('#diagram-reset-layout').click();await ready();assert.notEqual(await node.getAttribute('transform'),moved);await page.evaluate(value=>canvas.restoreState(value),saved);await ready();assert.equal(await node.getAttribute('transform'),moved);await page.locator('#diagram-edgeRouting').selectOption('ORTHOGONAL');await ready();const orthogonal=await page.evaluate(()=>canvas.exportSvg('FULL'));assert.match(orthogonal.svg,/inkscape:connector-type="orthogonal"/);assert.match(orthogonal.svg,/inkscape:connection-start="#interlis-/);fs.writeFileSync(path.join(out,'orthogonal.svg'),orthogonal.svg);await page.screenshot({path:path.join(out,'restored.png'),fullPage:true});// Presentation-only malicious metadata counterfixture: no fabricated compiler result.
  const danger='<script>alert(1)</script> javascript: command: \u202e';await page.evaluate(async label=>{const dto=structuredClone(input);dto.nodes[0].label=label;await canvas.accept(dto,'comfort',canvas.getSettings());},danger);await ready();assert.equal(await page.locator('#canvas script,#canvas foreignObject').count(),0);const safe=await page.evaluate(()=>canvas.exportSvg('FULL').svg);assert.match(safe,/&lt;script&gt;/);assert.match(safe,/U\+202E/);assert.doesNotMatch(safe,/<script>/);fs.writeFileSync(path.join(out,'safe-label.svg'),safe);assert.deepEqual(errors,[]);
  await page.locator('#diagram-options-close').click();
+ const themed=await page.evaluate(async()=>{
+  const root=document.documentElement;
+  const set=(background,foreground)=>{root.style.setProperty('--vscode-editor-background',background);root.style.setProperty('--vscode-editor-foreground',foreground);};
+  set('#181818','#eeeeee');
+  const dark=canvas.exportSvg('FULL');
+  const original=HTMLImageElement.prototype.decode;
+  let release;
+  HTMLImageElement.prototype.decode=async function(){await new Promise(resolve=>{release=resolve;});return original.call(this);};
+  let png;
+  try{
+   const pending=canvas.exportPng('FULL');
+   if(!release)throw Error('PNG encoding did not enter the real async image decode');
+   set('#ffffff','#222222');
+   release();png=await pending;
+  }finally{HTMLImageElement.prototype.decode=original;}
+  const light=canvas.exportSvg('FULL');
+  const data=await createImageBitmap(new Blob([png.data],{type:'image/png'}));
+  const probe=document.createElement('canvas');probe.width=probe.height=1;
+  const ctx=probe.getContext('2d');ctx.drawImage(data,0,0,1,1,0,0,1,1);
+  const pixel=[...ctx.getImageData(0,0,1,1).data];data.close();
+  const background=artifact=>new DOMParser().parseFromString(artifact.svg,'image/svg+xml').querySelector('.interlis-export-background').getAttribute('fill');
+  return {pixel,dark:background(dark),light:background(light),width:png.width,height:png.height,expected:[dark.width,dark.height],styles:[dark.svg,light.svg].every(svg=>!svg.includes('var(--'))};
+ });
+ assert.deepEqual(themed.pixel,[24,24,24,255]);
+ assert.equal(themed.dark,'rgb(24, 24, 24)');
+ assert.equal(themed.light,'rgb(255, 255, 255)');
+ assert.deepEqual([themed.width,themed.height],themed.expected);
+ assert.equal(themed.styles,true);
  const edgeId=await page.locator('.sprotty-edge[data-edge-id]').first().getAttribute('data-edge-id');
  await page.evaluate(id=>canvas.select([id]),edgeId);
  await page.locator('#more').press('Enter');

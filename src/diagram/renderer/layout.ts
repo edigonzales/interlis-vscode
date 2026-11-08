@@ -513,7 +513,7 @@ const contentLines = (
         }),
       );
   }
-  if (node.kind === "DOMAIN" || (settings.attributeMode !== "NONE" && settings.showLocalEnumerationValues))
+  if (node.kind.toLowerCase() === "domain" || (settings.attributeMode !== "NONE" && settings.showLocalEnumerationValues))
     for (const value of node.enumValues)
       result.push({ text: value, kind: "enumeration" });
   if (settings.attributeMode !== "NONE")

@@ -87,7 +87,7 @@ function marker(at:Point,previous:Point,aggregation:string,inheritance=false):VN
  if(aggregation==='NONE'&&!inheritance)return [];
  const angle=Math.atan2(at.y-previous.y,at.x-previous.x)*180/Math.PI;
  return [svg('polygon',{points:inheritance?'0,0 -16,-8 -16,8':'0,0 -8,-5 -16,0 -8,5',transform:`translate(${at.x} ${at.y}) rotate(${angle})`,
-  'class-interlis-marker':true,'class-composition':aggregation==='COMPOSITION','data-aggregation':aggregation,fill:aggregation==='COMPOSITION'?'currentColor':'var(--diagram-background,white)'})];
+  'class-interlis-marker':true,'class-composition':aggregation==='COMPOSITION','data-aggregation':aggregation,'data-inheritance':String(inheritance)})];
 }
 interface LabelBox {x:number;y:number;width:number;height:number;}
 class LabelPlacement {
