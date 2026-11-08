@@ -11,8 +11,10 @@ async function prepare(text,line,column){
  await ui.openFile('Catalog.ili');
  // These native text assertions read Monaco's rendered lines. Give the
  // catalogue the full editor viewport when Problems opened with the tab.
- if(await ui.driver.executeScript("return document.querySelector('.part.panel')?.getBoundingClientRect().height > 0")){
-  await ui.palette('View: Toggle Panel Visibility');
+ const panelVisible=()=>ui.driver.executeScript("return document.querySelector('.part.panel')?.getBoundingClientRect().height > 0");
+ if(await panelVisible()){
+  await ui.driver.actions().keyDown(ui.primaryModifier).sendKeys('j').keyUp(ui.primaryModifier).perform();
+  await ui.waitFor(async()=>!await panelVisible(),'Authoring editor panel did not close');
  }
  await ui.replaceText(text);
  await ui.go(line,column);
