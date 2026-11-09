@@ -20,7 +20,24 @@ test('native shared controls preserve hidden geometry, own undo, real curves and
  const viewportBefore=await page.evaluate(()=>canvas.getViewport());const canvasBox=await page.locator('#canvas').boundingBox();await page.mouse.move(canvasBox.x+canvasBox.width/2,canvasBox.y+canvasBox.height/2);await page.mouse.wheel(0,-120);await page.waitForTimeout(80);assert.ok((await page.evaluate(()=>canvas.getViewport())).zoom>viewportBefore.zoom);await page.locator('svg.sprotty-graph').press('ArrowRight');await page.waitForTimeout(50);assert.ok((await page.evaluate(()=>canvas.getViewport())).x>viewportBefore.x);await page.locator('#fit').click();
  await page.locator('#options').click();
  await page.locator('#diagram-filter-modelFrames').uncheck();await ready();const frameExport=await page.evaluate(()=>canvas.exportSvg('FULL').svg);assert.ok(await page.evaluate(svg=>{const doc=new DOMParser().parseFromString(svg,'image/svg+xml');return [...doc.querySelectorAll('[data-kind="MODEL"]>.interlis-frame')].every(rect=>rect.style.visibility==='hidden');},frameExport),'Frame visibility was lost during serialization');await page.locator('#diagram-filter-modelFrames').check();await ready();
- const before=await page.evaluate(()=>({input:JSON.stringify(input),state:canvas.getViewState()}));await page.locator('#diagram-edgeRouting').selectOption('SPLINES');await ready();assert.ok(await page.locator('path.interlis-edge-line').first().getAttribute('d').then(d=>d.includes(' C ')),'SPLINES must paint actual cubic curves');await page.locator('#diagram-renderingTarget').selectOption('INKSCAPE');await ready();
+ const before=await page.evaluate(()=>({input:JSON.stringify(input),state:canvas.getViewState()}));
+ await page.locator('#diagram-edgeRouting').selectOption('SPLINES');await ready();
+ assert.ok(await page.locator('path.interlis-edge-line').first().getAttribute('d').then(d=>d.includes(' C ')),'SPLINES must paint actual cubic curves');
+ const selectedNode=await node.getAttribute('data-element-id');
+ await page.evaluate(id=>canvas.select([id]),selectedNode);
+ await page.waitForFunction(id=>canvas.selectedIds().includes(id),selectedNode);
+ const exportTargetState=()=>page.evaluate(()=>({
+  layoutCount,geometry:canvas.getViewState(),viewport:canvas.getViewport(),history:canvas.layoutHistory(),
+  selected:canvas.selectedIds(),paths:[...document.querySelectorAll('.interlis-edge-line')].map(path=>path.getAttribute('d'))
+ }));
+ const liveView=await exportTargetState();
+ for(const target of ['INKSCAPE','STANDARD','INKSCAPE']){
+  await page.locator('#diagram-renderingTarget').selectOption(target);
+  await ready();
+  assert.deepEqual(await exportTargetState(),liveView,'Changing the export target modified the live diagram or invoked ELK');
+  const exported=await page.evaluate(()=>canvas.exportSvg('FULL').svg);
+  assert.equal(exported.includes('data-interlis-static-start'),target==='INKSCAPE');
+ }
  const artifacts=await page.evaluate(async()=>{const count=layoutCount,full=canvas.exportSvg('FULL'),visible=canvas.exportSvg('VISIBLE'),png=await canvas.exportPng('VISIBLE');return {full,visible,png:Array.from(png.data),pngWidth:png.width,pngHeight:png.height,count,after:layoutCount,input:JSON.stringify(input),state:canvas.getViewState()};});assert.equal(artifacts.count,artifacts.after,'Export invoked ELK');assert.equal(before.input,artifacts.input,'View modified semantic input');assert.equal(artifacts.visible.width,1300);assert.equal(artifacts.visible.height,750);assert.deepEqual(Buffer.from(artifacts.png).subarray(0,8),Buffer.from([137,80,78,71,13,10,26,10]));assert.equal(Buffer.from(artifacts.png).readUInt32BE(16),1300);assert.equal(Buffer.from(artifacts.png).readUInt32BE(20),750);assert.match(artifacts.full.svg,/data-element-id=/);assert.match(artifacts.full.svg,/data-interlis-static-start/);assert.doesNotMatch(artifacts.full.svg,/inkscape:connector-type/);assert.doesNotMatch(artifacts.full.svg,/interlis-edge-hit|data-handle-kind|<script|foreignObject/);
  fs.writeFileSync(path.join(out,'full.svg'),artifacts.full.svg);fs.writeFileSync(path.join(out,'visible.svg'),artifacts.visible.svg);fs.writeFileSync(path.join(out,'visible.png'),Buffer.from(artifacts.png));
  await page.evaluate(async svg=>{const blob=URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));try{const image=new Image();image.src=blob;await image.decode();if(!image.naturalWidth||!image.naturalHeight)throw Error('Export image is empty');}finally{URL.revokeObjectURL(blob);}},artifacts.full.svg);

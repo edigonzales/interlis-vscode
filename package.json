@@ -264,19 +264,19 @@
           "type": "boolean",
           "default": true,
           "scope": "window",
-          "description": "Initial local diagram presentation setting."
+          "description": "Show association names on relationship lines by default."
         },
         "interlisGuru.diagram.showRoleCardinalities": {
           "type": "boolean",
           "default": true,
           "scope": "window",
-          "description": "Initial local diagram presentation setting."
+          "description": "Show role cardinalities at relationship ends by default. Member cardinalities have a separate diagram filter."
         },
         "interlisGuru.diagram.showLocalEnumerationValues": {
           "type": "boolean",
           "default": true,
           "scope": "window",
-          "description": "Initial local diagram presentation setting."
+          "description": "Show enumeration values declared inline on attributes by default. Domain enumeration values have a separate diagram filter."
         },
         "interlisGuru.diagram.attributeMode": {
           "type": "string",
@@ -287,7 +287,12 @@
           ],
           "default": "OWN",
           "scope": "window",
-          "description": "Initial local diagram presentation setting; each panel has independent controls."
+          "description": "Choose which members appear inside diagram nodes by default.",
+          "enumDescriptions": [
+            "Show members declared on each element.",
+            "Show declared and inherited members.",
+            "Hide attribute and role compartments."
+          ]
         },
         "interlisGuru.diagram.edgeRouting": {
           "type": "string",
@@ -298,7 +303,12 @@
           ],
           "default": "ORTHOGONAL",
           "scope": "window",
-          "description": "Initial local diagram presentation setting; each panel has independent controls."
+          "description": "Choose the default shape of diagram connections.",
+          "enumDescriptions": [
+            "Use horizontal and vertical segments.",
+            "Use straight segments joined at bends.",
+            "Use curved Bézier paths."
+          ]
         },
         "interlisGuru.diagram.nodePlacement": {
           "type": "string",
@@ -311,7 +321,14 @@
           ],
           "default": "BRANDES_KOEPF",
           "scope": "window",
-          "description": "Initial local diagram presentation setting; each panel has independent controls."
+          "description": "Choose the default ELK strategy for placing nodes within layers.",
+          "enumDescriptions": [
+            "Balance alignment and compactness using Brandes–Köpf.",
+            "Use ELK’s simple placement strategy.",
+            "Use ELK’s interactive placement strategy.",
+            "Align nodes along linear segments.",
+            "Use the network simplex strategy to place nodes."
+          ]
         },
         "interlisGuru.diagram.rendering.target": {
           "type": "string",
@@ -321,7 +338,11 @@
           ],
           "default": "STANDARD",
           "scope": "window",
-          "description": "Initial local diagram presentation setting; each panel has independent controls."
+          "description": "Choose the default SVG export target. This setting preserves the on-screen layout.",
+          "enumDescriptions": [
+            "Export standalone SVG paths without Inkscape connector metadata.",
+            "Include Inkscape connectors for straight and orthogonal routes. Export curves as static paths."
+          ]
         },
         "interlisGuru.diagram.edgeCrossings": {
           "type": "string",
@@ -331,7 +352,11 @@
           ],
           "default": "GAPS",
           "scope": "window",
-          "description": "Initial local diagram presentation setting; each panel has independent controls."
+          "description": "Choose the default appearance of crossing diagram connections.",
+          "enumDescriptions": [
+            "Draw small gaps at crossings to distinguish overlapping lines.",
+            "Draw continuous lines at crossings."
+          ]
         },
         "interlisGuru.documentation.language": {
           "type": "string",

@@ -345,7 +345,19 @@ export class DiagramCanvas {
  private async repaint():Promise<void> {if(this.document&&this.current)await this.accept(this.document,this.sessionKey,this.settings,true);}
  selectedSymbolIds():string[] {const ids=new Set(this.selectedIds()),document=this.document;if(!document)return [];return [...new Set([...document.containers,...document.nodes].flatMap(node=>ids.has(node.id)&&node.symbol?[node.symbol.symbol]:[]).concat(document.edges.flatMap(edge=>ids.has(edge.id)&&edge.origin?[edge.origin.symbol]:[])))];}
  getSettings():DiagramSettings {return {...this.settings};}
- async configure(settings:DiagramSettings):Promise<void> {this.settings=validateViewSettings(settings);this.optionsRevision++;await this.settle();}
+ async configure(settings:DiagramSettings):Promise<void> {
+  const next=validateViewSettings(settings),previous=this.settings;
+  this.settings=next;
+  // The export target is read by the serializer and does not affect the live model.
+  if(next.renderingTarget!==previous.renderingTarget&&
+    (Object.keys({...previous,...next}) as Array<keyof DiagramSettings>).every(key=>key==='renderingTarget'||next[key]===previous[key])){
+   this.revision++;
+   if(this.isCurrent())this.callbacks.changed?.(this.getViewState());
+   return;
+  }
+  this.optionsRevision++;
+  await this.settle();
+ }
  async filter(path:string,value:boolean):Promise<void> {this.filters.set(path,value);this.optionsRevision++;await this.repaint();}
  async filterAll(value:boolean):Promise<void> {this.filters.setAll(value);this.optionsRevision++;await this.repaint();}
  async resetFilters():Promise<void> {this.filters.reset();this.optionsRevision++;await this.repaint();}
