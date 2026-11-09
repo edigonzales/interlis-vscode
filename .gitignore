@@ -4,3 +4,6 @@ build/
 artifacts/
 .vscode-test/
 *.vsix
+
+/src/diagram/generated/
+/licenses/bundled-diagram-notices.txt

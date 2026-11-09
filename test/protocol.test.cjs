@@ -1,10 +1,10 @@
 const {test}=require('node:test');const assert=require('node:assert/strict');const {spawn}=require('node:child_process');const fs=require('node:fs');const {pathToFileURL}=require('node:url');const path=require('node:path');
 const {resolveLaunchPlan}=require('../build/launch.cjs');
 test('packaged Java distribution initializes, diagnoses real fixture and shuts down over clean stdio', {timeout:30000},async()=>{
+ const plan=await resolveLaunchPlan(process.env.INTERLIS_TEST_EXTENSION_ROOT||process.cwd(),process.env.INTERLIS_JAVA||'');
  const temporary=fs.mkdtempSync(path.join(require('node:os').tmpdir(),'ili-wire-'));
  const tls=process.env.INTERLIS_TEST_HTTPS==='1'?{key:fs.readFileSync(path.resolve('test/fixtures/https/localhost-key.pem')),cert:fs.readFileSync(path.resolve('test/fixtures/https/localhost-cert.pem'))}:undefined;
  const repository=await require('../scripts/gui-repository.cjs').start(temporary,tls);
- const plan=await resolveLaunchPlan(process.env.INTERLIS_TEST_EXTENSION_ROOT||process.cwd(),process.env.INTERLIS_JAVA||'');
  const trust=process.env.INTERLIS_TEST_TRUSTSTORE;
  if(tls&&!path.isAbsolute(trust||''))throw Error('HTTPS protocol test requires an explicit test truststore');
  const args=tls?['-Djavax.net.ssl.trustStore='+trust,'-Djavax.net.ssl.trustStorePassword=interlis-test',...plan.args]:plan.args;
@@ -21,7 +21,7 @@ test('packaged Java distribution initializes, diagnoses real fixture and shuts d
   const current=await request('interlis/compile',{mode:'current',textDocument:{uri,version:1}});assert.equal(current.outcome,'succeeded');
   assert.equal(result.capabilities.experimental.interlis.diagramProtocolVersion,1);assert.equal(result.capabilities.experimental.interlis.diagramDocumentVersion,'1.0');
   const diagram=await request('interlis/diagram',{protocolVersion:1,requestId:'packaged-diagram',textDocument:{uri,version:1},options:{schemaVersion:'1.0'}});
-  assert.equal(diagram.protocolVersion,1);assert.equal(diagram.serverInstanceId,result.capabilities.experimental.interlis.serverInstanceId);assert.equal(diagram.rootUri,uri);assert.equal(diagram.documentVersion,1);assert.equal(typeof diagram.document,'object');require('../artifacts/diagram-ui/adapter.cjs').adapt(diagram.document);assert.equal(diagram.document.snapshotId,diagram.snapshotId);assert.equal(diagram.document.completeness,'COMPLETE');assert.ok(diagram.document.nodes.length);
+  assert.equal(diagram.protocolVersion,1);assert.equal(diagram.serverInstanceId,result.capabilities.experimental.interlis.serverInstanceId);assert.equal(diagram.rootUri,uri);assert.equal(diagram.documentVersion,1);assert.equal(typeof diagram.document,'object');require('../build/diagram/adapter.cjs').adapt(diagram.document);assert.equal(diagram.document.snapshotId,diagram.snapshotId);assert.equal(diagram.document.completeness,'COMPLETE');assert.ok(diagram.document.nodes.length);
   const declaration=diagram.document.nodes.find(node=>node.label==='Building');assert.ok(declaration,JSON.stringify(diagram.document.nodes));
   const location=await request('interlis/diagramNavigate',{protocolVersion:1,serverInstanceId:diagram.serverInstanceId,diagramId:diagram.diagramId,snapshotId:diagram.snapshotId,textDocument:{uri,version:1},elementId:declaration.id});assert.equal(location.uri,uri);assert.equal(location.readonly,false);
   const {diagramProjectionRequest}=require('../build/diagram-options.cjs');

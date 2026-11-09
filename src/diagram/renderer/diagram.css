@@ -1,0 +1,160 @@
+/* Semantic diagram paints. Theme category supplies opaque accent and status colors. */
+:root {
+  --diagram-canvas-fallback: #fff;
+  --diagram-text-fallback: #222936;
+  --diagram-surface-fallback: #f3f5f8;
+  --diagram-selection: #005fb8;
+  --diagram-warning: #785300;
+  --diagram-error: #a1252d;
+  --diagram-background: var(--diagram-canvas-fallback);
+  --diagram-foreground: var(--diagram-text-fallback);
+  --diagram-surface: var(--diagram-surface-fallback);
+}
+.vscode-dark, .vscode-high-contrast:not(.vscode-high-contrast-light) {
+  --diagram-canvas-fallback: #181818;
+  --diagram-text-fallback: #efefef;
+  --diagram-surface-fallback: #24272c;
+  --diagram-selection: #82c6ff;
+  --diagram-warning: #ffd36e;
+  --diagram-error: #ff9ea0;
+  color-scheme: dark;
+}
+.vscode-high-contrast:not(.vscode-high-contrast-light) {
+  --diagram-selection: #7bd9ff;
+}
+.vscode-high-contrast-light {
+  --diagram-selection: #003f80;
+  --diagram-warning: #693b00;
+}
+.vscode-light, .vscode-high-contrast-light { color-scheme: light; }
+.interlis-canvas{position:relative;min-width:0;min-height:240px;width:100%;height:100%;overflow:hidden;color:var(--diagram-foreground);background:var(--diagram-background)}
+.interlis-canvas .sprotty-graph{width:100%;height:100%;outline:none;background:var(--diagram-background)}
+.interlis-canvas .sprotty-graph:focus-visible{outline:2px solid var(--diagram-selection);outline-offset:-2px}
+.interlis-viewer{width:100%;height:100%}
+.interlis-hidden{position:absolute;left:-10000px;top:-10000px;width:0;height:0;visibility:hidden;overflow:hidden}
+.interlis-canvas .interlis-frame{fill:var(--diagram-surface);stroke:var(--diagram-foreground);stroke-width:1.5}
+.interlis-canvas .interlis-container>.interlis-frame{fill:none;stroke-dasharray:6 3}
+.interlis-canvas .selected>.interlis-frame{stroke:var(--diagram-selection);stroke-width:3}
+.interlis-canvas text{font:12px monospace;fill:var(--diagram-foreground);user-select:none}
+.interlis-canvas .interlis-title{font-weight:bold}
+.interlis-canvas .abstract>.interlis-title{font-style:italic}
+.interlis-canvas .interlis-stereotype,.interlis-canvas .interlis-warning{font-size:11px}
+.interlis-canvas .interlis-member{cursor:pointer}
+.interlis-canvas .interlis-member.selected{font-weight:bold;text-decoration:underline}
+.interlis-canvas .sprotty-edge path{fill:none;stroke:var(--diagram-foreground);stroke-width:1.7}
+.interlis-canvas .sprotty-edge.selected path{stroke:var(--diagram-selection);stroke-width:2.5}
+.interlis-canvas .interlis-marker{fill:var(--diagram-background);stroke:var(--diagram-foreground);stroke-width:1.5}
+.interlis-canvas .interlis-marker.composition{fill:var(--diagram-foreground)}
+.interlis-canvas .sprotty-edge.selected .interlis-marker{stroke:var(--diagram-selection);stroke-width:2}
+.interlis-canvas .interlis-warning{fill:var(--diagram-warning);font-weight:bold}
+.interlis-canvas .interlis-edge-label,.interlis-canvas .interlis-end-label{font:11px monospace;paint-order:stroke;stroke:var(--diagram-background);stroke-width:4px;stroke-linejoin:round;fill:var(--diagram-foreground)}
+.interlis-canvas .sprotty-routing-handle{fill:var(--diagram-background);stroke:var(--diagram-selection);stroke-width:2;cursor:move}
+.interlis-canvas .sprotty-routing-handle-selected{fill:var(--diagram-selection)}
+.interlis-canvas .sprotty-hidden{position:absolute;width:0;height:0;visibility:hidden;overflow:hidden}
+
+.interlis-canvas[data-status=STALE] .interlis-viewer,.interlis-canvas[data-status=LOADING] .interlis-viewer{pointer-events:none}
+.interlis-canvas .sprotty-edge path.interlis-edge-hit{stroke:transparent;stroke-width:10;pointer-events:stroke}
+.interlis-canvas .frame-hidden>.interlis-frame,.interlis-canvas .frame-hidden>.interlis-title{visibility:hidden}
+.interlis-canvas .deemphasized>.interlis-frame{stroke-dasharray:5 3}
+.interlis-canvas [data-pinned=true]>.interlis-frame{stroke-width:3}
+/* Diagram editor and standalone renderer controls. */
+.interlis-webview {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  background: var(--diagram-background);
+  color: var(--diagram-foreground);
+  font: 13px var(--vscode-font-family, system-ui);
+}
+.interlis-webview #view-controls, .interlis-controls { display: contents; }
+.interlis-webview #canvas { flex: 1; min-height: 0; }
+.interlis-webview #status {
+  order: 3;
+  min-height: 20px;
+  max-height: 3em;
+  overflow: auto;
+  padding: 2px 8px;
+  border-top: 1px solid var(--vscode-panel-border, #aaa);
+}
+.interlis-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 39px;
+  padding: 0 6px;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--vscode-panel-border, #aaa);
+}
+.interlis-toolbar #root {
+  margin-inline: auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.interlis-webview:not([data-following=true]) #root { display: none; }
+.interlis-toolbar #options { margin-inline-start: auto; }
+.interlis-toolbar button, .interlis-options button, .interlis-menu button, .interlis-zoom button,
+.interlis-options select {
+  font: inherit;
+  color: var(--vscode-button-secondaryForeground, var(--diagram-foreground));
+  background: var(--vscode-button-secondaryBackground, var(--diagram-surface));
+  border: 1px solid var(--vscode-button-border, transparent);
+  border-radius: 3px;
+  padding: 4px 7px;
+  min-height: 26px;
+}
+.interlis-toolbar button:focus-visible, .interlis-options :focus-visible, .interlis-menu button:focus-visible,
+.interlis-zoom button:focus-visible { outline: 2px solid var(--diagram-selection); outline-offset: 1px; }
+.interlis-toolbar button:disabled, .interlis-menu button:disabled { opacity: .55; }
+.interlis-options, .interlis-menu, .interlis-zoom {
+  position: absolute;
+  color: var(--vscode-sideBar-foreground, var(--diagram-foreground));
+  background: var(--vscode-sideBar-background, var(--diagram-surface));
+  border: 1px solid var(--vscode-panel-border, #aaa);
+  border-radius: 4px;
+  z-index: 3;
+}
+.interlis-options {
+  inset: 40px 4px 28px auto;
+  width: min(300px, calc(100% - 12px));
+  display: flex;
+  flex-direction: column;
+}
+.interlis-options[hidden], .interlis-menu[hidden] { display: none; }
+.interlis-options header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px;
+  border-bottom: 1px solid var(--vscode-panel-border, #aaa);
+}
+.interlis-options-content { overflow: auto; padding: 8px; }
+.interlis-options fieldset { margin: 0 0 7px; padding: 6px; border: 1px solid var(--vscode-panel-border, #aaa); }
+.interlis-options label { display: flex; align-items: center; justify-content: space-between; gap: 4px; margin: 3px 0; }
+.interlis-options select { max-width: 63%; }
+.interlis-options ul { margin: 0; padding-inline-start: 12px; list-style-type: none; }
+.interlis-filter-list { margin-bottom: 7px; }
+.interlis-filter-list summary { margin-bottom: 5px; cursor: pointer; }
+.interlis-filter-actions { display: flex; flex-wrap: wrap; gap: 4px; }
+.interlis-menu { top: 40px; right: 5px; display: grid; gap: 2px; padding: 4px; z-index: 4; }
+.interlis-menu button { text-align: start; }
+.interlis-zoom { bottom: 31px; right: 9px; display: flex; align-items: center; gap: 5px; padding: 2px; }
+body:has(.interlis-options:not([hidden])) .interlis-zoom { display: none; }
+.interlis-zoom output { min-width: 35px; text-align: center; }
+@media (max-width: 470px) {
+  .interlis-toolbar #root { display: none; }
+  .interlis-toolbar button[data-compact] { font-size: 0; min-width: 28px; }
+  .interlis-toolbar button[data-compact]::before { content: attr(data-compact); font-size: 15px; }
+}
+
+.interlis-webview:has(#canvas[data-status=PARTIAL]) #status,
+.interlis-webview:has(#canvas[data-status=STALE]) #status { color: var(--diagram-warning); }
+.interlis-webview:has(#canvas[data-status=ERROR]) #status { color: var(--diagram-error); }
+.interlis-options select {
+  color: var(--vscode-input-foreground, var(--diagram-foreground));
+  background: var(--vscode-input-background, var(--diagram-surface));
+  border-color: var(--vscode-input-border, var(--vscode-panel-border, transparent));
+}

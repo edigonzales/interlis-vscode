@@ -88,7 +88,7 @@ async function stageRuntime({target, variant = 'full-jre', output = process.cwd(
       });
       const actual = fs.readdirSync(path.join(input, 'artifacts/server/lib')).sort();
       if (JSON.stringify(actual) !== JSON.stringify(server.files.map(file => path.basename(file.path)).sort())) throw Error('Unexpected server libraries');
-      if(server.schemaVersion!==2||server.launch?.kind!=='module'||server.launch.moduleName!=='guru.interlis.lsp')throw Error('Modular server lock required for jlink analysis');
+      if(server.schemaVersion!==3||server.launch?.kind!=='module'||server.launch.moduleName!=='guru.interlis.lsp')throw Error('Modular server lock required for jlink analysis');
       const analysis = run('jdeps', ['--multi-release', '25', '--print-module-deps', '--recursive', '--add-modules', 'java.logging,java.sql,com.google.errorprone.annotations', '--module-path', jars.join(path.delimiter), '--module', server.launch.moduleName]);
       const lines = analysis.trim().split(/\r?\n/);
       const detected = lines.at(-1);

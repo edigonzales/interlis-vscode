@@ -6,7 +6,17 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "outDir": "build/types"
+    "outDir": "build/types",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "paths": {
+      "elkjs/lib/elk-api.js": [
+        "./src/diagram/renderer/contracts/elk.d.ts"
+      ],
+      "elkjs/lib/elk.bundled.js": [
+        "./src/diagram/renderer/contracts/elk.d.ts"
+      ]
+    }
   },
   "include": [
     "src/**/*.ts"

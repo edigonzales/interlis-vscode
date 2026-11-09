@@ -6,7 +6,7 @@ const evidence=process.env.INTERLIS_GUI_EVIDENCE;let webview,original,dirty,sour
 const digest=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
 async function back(){await ui.driver.switchTo().defaultContent();}
 async function openSource(name){await back();await ui.palette('View: Focus First Editor Group');await ui.openFile(name);}
-async function enter(){await back();await ui.driver.wait(async()=>{for(const frame of await ui.driver.findElements(By.css('iframe.webview.ready'))){if(!await frame.isDisplayed()||!await ui.driver.executeScript('const r=arguments[0].getBoundingClientRect();return r.width>0&&r.height>0&&document.elementFromPoint(r.x+r.width/2,r.y+r.height/2)===arguments[0]',frame))continue;await ui.driver.switchTo().frame(frame);const inner=await ui.driver.findElements(By.id('active-frame'));if(inner.length){await ui.driver.switchTo().frame(inner[0]);if((await ui.driver.findElements(By.id('canvas'))).length)return true;}await back();}return false;},15000,'Visible UML webview missing');}
+async function enter(currentRoot){await back();await ui.driver.wait(async()=>{for(const frame of await ui.driver.findElements(By.css('iframe.webview.ready'))){if(!await frame.isDisplayed()||!await ui.driver.executeScript('const r=arguments[0].getBoundingClientRect();return r.width>0&&r.height>0&&document.elementFromPoint(r.x+r.width/2,r.y+r.height/2)===arguments[0]',frame))continue;await ui.driver.switchTo().frame(frame);const inner=await ui.driver.findElements(By.id('active-frame'));if(inner.length){await ui.driver.switchTo().frame(inner[0]);const canvas=(await ui.driver.findElements(By.id('canvas')))[0];if(canvas&&(!currentRoot||(['FRESH','PARTIAL'].includes(await canvas.getAttribute('data-status'))&&await (await ui.driver.findElement(By.id('root'))).getAttribute('textContent')===currentRoot)))return true;}await back();}return false;},15000,'Visible UML webview missing');}
 async function fresh(){await ui.waitFor(async()=>['FRESH','PARTIAL'].includes(await (await ui.driver.findElement(By.id('canvas'))).getAttribute('data-status')),'Diagram did not reach a current real view');}
 async function click(id){await (await ui.driver.findElement(By.id(id))).click();}
 async function rect(element){return element.getRect();}
@@ -26,7 +26,18 @@ describe('Installed live Java diagram and native Sprotty editor',function(){
   assert.equal(await (await ui.driver.findElement(By.id('follow'))).getText(),'Pinned');
   for(const kind of ['MODEL','TOPIC','CLASS','STRUCTURE','DOMAIN','VIEW','ASSOCIATION'])assert.ok((await ui.driver.findElements(By.css('[data-kind="'+kind+'"]'))).length>0,'Missing semantic kind '+kind);
   assert.ok((await ui.driver.findElements(By.css('svg.sprotty-graph .sprotty-edge'))).length>=10);
-  assert.ok((await (await node('State')).getText()).includes('first'));assert.ok((await (await node('State')).getText()).includes('second'));assert.ok((await (await node('A')).findElements(By.css('[data-compartment=CONSTRAINTS]'))).length>0);await ui.capture('GUI-12-current');
+  assert.ok((await (await node('State')).getText()).includes('first'));assert.ok((await (await node('State')).getText()).includes('second'));assert.ok((await (await node('A')).findElements(By.css('[data-compartment=CONSTRAINTS]'))).length>0);assert.equal(await (await ui.driver.findElement(By.id('diagram-options'))).isDisplayed(),false);
+  assert.equal((await ui.driver.findElements(By.css('nav[aria-label="Diagram controls"]'))).length,1);
+  await ui.capture('P3-options-closed');
+  const toolbarHeight=await (await ui.driver.findElement(By.id('diagram-toolbar'))).getRect();
+  assert.ok(toolbarHeight.height>=36&&toolbarHeight.height<=44,JSON.stringify(toolbarHeight));
+  const options=await ui.driver.findElement(By.id('options'));
+  await options.sendKeys(Key.ENTER);
+  assert.equal(await (await ui.driver.findElement(By.id('diagram-options'))).isDisplayed(),true);
+  await ui.capture('P3-options-open');
+  await (await ui.driver.findElement(By.id('diagram-options-close'))).sendKeys(Key.ESCAPE);
+  assert.equal(await (await ui.driver.findElement(By.id('diagram-options'))).isDisplayed(),false);
+  await ui.capture('GUI-12-current');
   fs.writeFileSync(path.join(evidence,'GUI-12-view-dom.html'),await ui.driver.getPageSource());
   record('GUI-12',['open Interactive.ili from Explorer','Show Diagram for This File command','wait for current custom editor'],['MODEL/TOPIC and actual projected node categories','real SVG Sprotty edges','pinned default','current Java result']);
  });
@@ -85,36 +96,63 @@ describe('Installed live Java diagram and native Sprotty editor',function(){
  it('GUI-16 preserves ternary attribution composition end notation and actual self edges',async()=>{
   await enter();await fresh();const many=await node('Many'),text=await many.getText();for(const label of ['one','two','three','note'])assert.ok(text.includes(label),'N-ary association lost '+label);
   const composition=await ui.driver.findElements(By.css('[data-aggregation="COMPOSITION"]'));assert.ok(composition.length>0,'Composition marker missing');await ui.capture('GUI-16-entity');
-  const select=await ui.driver.findElement(By.id('association'));await select.findElement(By.css('option[value="COMPACT_BINARY"]')).click();await fresh();
+  await click('options');const select=await ui.driver.findElement(By.id('association'));await select.findElement(By.css('option[value="COMPACT_BINARY"]')).click();await fresh();
   await ui.waitFor(async()=>await ui.driver.executeScript('return [...document.querySelectorAll(".sprotty-edge")].some(e=>e.dataset.source===e.dataset.target)'),'Compact self relationship not rendered');
   const loop=await ui.driver.executeScript('const e=[...document.querySelectorAll(".sprotty-edge")].find(e=>e.dataset.source===e.dataset.target),p=e.querySelector("path"),b=p.getBBox(),s=p.getPointAtLength(0),t=p.getPointAtLength(p.getTotalLength());return {width:b.width,height:b.height,separation:Math.hypot(s.x-t.x,s.y-t.y)}');assert.ok(loop.width>15&&loop.height>15&&loop.separation>15,'Self edge folded into a line: '+JSON.stringify(loop));
   assert.ok((await (await node('Many')).getText()).includes('note'));assert.ok(await ui.driver.executeScript('const groups={};for(const e of document.querySelectorAll(".sprotty-edge")){const key=e.dataset.source+"→"+e.dataset.target;groups[key]=(groups[key]||0)+1;}return Object.values(groups).some(count=>count>=2);'),'Parallel semantic associations were lost');const labels=await ui.driver.executeScript('return [...document.querySelectorAll(".interlis-end-label")].map(e=>({text:e.textContent,box:(()=>{const r=e.getBoundingClientRect();return {x:r.x,y:r.y,width:r.width,height:r.height};})()}))');
   for(const role of ['parent','children','owner','items','one','two','three'])assert.ok(labels.some(label=>label.text.includes(role)),'Missing end role '+role);
   for(let i=0;i<labels.length;i++)for(let j=i+1;j<labels.length;j++){const a=labels[i].box,b=labels[j].box;assert.ok(!(a.x<b.x+b.width&&a.x+a.width>b.x&&a.y<b.y+b.height&&a.y+a.height>b.y),'End labels overlap: '+labels[i].text+' / '+labels[j].text);}
-  await ui.capture('GUI-16-compact-self');fs.writeFileSync(path.join(evidence,'GUI-16-end-labels.json'),JSON.stringify(labels,null,2));await unchanged();
+  await click('diagram-options-close');await ui.capture('GUI-16-compact-self');fs.writeFileSync(path.join(evidence,'GUI-16-end-labels.json'),JSON.stringify(labels,null,2));await unchanged();
   record('GUI-16',['inspect ternary association members','select Compact binary through native option','inspect self path and end notation'],['three roles and own attribute retained','composition diamond present','self edge visible','all role/cardinality labels readable without overlaps','source unchanged']);
  });
  it('GUI-17 rejects a held actual worker response and preserves a manually moved stable node',async()=>{
   await enter();await fresh();const before=await (await node('A')).getAttribute('transform');
   // Controlled transport fault: hold one genuine ELK result after computation. No success or model is fabricated.
   await ui.driver.executeScript(`const NativeWorker=window.Worker;window.__heldLayouts=[];window.__holdNextLayout=true;window.Worker=class extends NativeWorker {set onmessage(callback){super.onmessage=event=>{if(window.__holdNextLayout&&event.data?.data?.children){window.__holdNextLayout=false;window.__heldLayouts.push(()=>callback.call(this,event));}else callback.call(this,event);};}};`);
-  await click('refresh');await ui.waitFor(async()=>await ui.driver.executeScript('return window.__heldLayouts.length===1'),'Actual layout response was not held');await ui.capture('GUI-17-held');const controls=await ui.driver.findElement(By.css('#view-controls details'));if(await controls.getAttribute('open')===null)await controls.findElement(By.css('summary')).click();const typeFilter=await ui.driver.findElement(By.id('diagram-filter-types'));await typeFilter.click();assert.ok(!['FRESH','PARTIAL'].includes(await (await ui.driver.findElement(By.id('canvas'))).getAttribute('data-status')),'A local filter republished the held obsolete graph as current');
+  await click('refresh');await ui.waitFor(async()=>await ui.driver.executeScript('return window.__heldLayouts.length===1'),'Actual layout response was not held');await ui.capture('GUI-17-held');await click('options');const controls=await ui.driver.findElement(By.css('#view-controls details'));if(await controls.getAttribute('open')===null)await controls.findElement(By.css('summary')).click();const typeFilter=await ui.driver.findElement(By.id('diagram-filter-types'));await typeFilter.click();assert.ok(!['FRESH','PARTIAL'].includes(await (await ui.driver.findElement(By.id('canvas'))).getAttribute('data-status')),'A local filter republished the held obsolete graph as current');
   await back();await openSource('Interactive.ili');const partial=original.replace('CLASS C=END C;','CLASS C=partialAttribute:MissingDiagramType;END C;');await ui.replaceText(partial);await enter();await ui.waitFor(async()=>await (await ui.driver.findElement(By.id('canvas'))).getAttribute('data-status')==='PARTIAL','Erroneous source was not marked partial');await ui.capture('GUI-17-partial');
   await back();await openSource('Interactive.ili');const changed=original.replace('CLASS C=END C;','CLASS C=newAttribute:TEXT*12;END C;');await ui.replaceText(changed);assert.equal(await ui.copyText(),changed);
   await enter();await ui.waitFor(async()=>await ui.driver.executeScript('return document.querySelector("[data-label=\\"C\\"]")?.textContent.includes("newAttribute")&&["FRESH","PARTIAL"].includes(document.getElementById("canvas").dataset.status)'),'Current source did not replace the held generation');
   const current=await (await node('A')).getAttribute('transform');assert.equal(current,before,'Stable moved node lost its position');
   await ui.driver.executeScript('for(const release of window.__heldLayouts.splice(0))release();');await ui.waitFor(async()=>(await (await node('C')).getText()).includes('newAttribute'),'Late result replaced current view');assert.equal(await (await node('A')).getAttribute('transform'),before);await ui.capture('GUI-17-current');
   await back();await openSource('Interactive.ili');await ui.replaceText(original);assert.equal(await ui.copyText(),original);await enter();await fresh();
+  const cancel=await ui.driver.findElement(By.id('diagram-cancel'));
+  assert.equal(await cancel.isEnabled(),false,'Idle diagram offered Cancel');
+  await ui.driver.executeScript('window.__holdNextLayout=true');
+  await click('refresh');
+  await ui.waitFor(async()=>await ui.driver.executeScript('return window.__heldLayouts.length===1'),'Second real worker result was not held');
+  assert.equal(await cancel.isEnabled(),true);
+  await cancel.click();
+  await ui.waitFor(async()=>/cancelled/i.test(await (await ui.driver.findElement(By.id('status'))).getText()),'Cancel status missing');
+  await ui.driver.executeScript('for(const release of window.__heldLayouts.splice(0))release();');
+  assert.equal(await cancel.isEnabled(),false);
+  assert.equal(await (await ui.driver.findElement(By.id('canvas'))).getAttribute('data-status'),'STALE');
+  await click('refresh');await fresh();
   record('GUI-17',['hold one real ELK Worker response','add source attribute with native paste','wait for newer live analysis','release the old actual response'],['current attribute shown','obsolete worker cannot publish','stable moved node retains geometry','source changes only through explicit text editing']);
  });
  it('GUI-18 keeps explicit panels isolated and follows another ILI file only after explicit activation',async()=>{
-  await enter();await fresh();assert.equal(await (await ui.driver.findElement(By.id('follow'))).getText(),'Pinned');const firstRoot=await (await ui.driver.findElement(By.id('root'))).getText();assert.match(firstRoot,/Interactive\.ili$/);
-  await back();await openSource('Other.ili');await enter();assert.equal(await (await ui.driver.findElement(By.id('root'))).getText(),firstRoot,'Pinned diagram silently followed the other editor');
-  await click('follow');await ui.waitFor(async()=>await (await ui.driver.findElement(By.id('follow'))).getText()==='Following','Follow was not enabled');await back();await openSource('Other.ili');await enter();await fresh();await ui.waitFor(async()=>/Other\.ili$/.test(await (await ui.driver.findElement(By.id('root'))).getText()),'Explicit follow did not switch source');assert.ok((await (await node('A')).getText()).includes('otherAttribute'));
-  await click('follow');await back();await openSource('Other.ili');await ui.palette('INTERLIS: Show Diagram for This File');await enter();await fresh();const other=await node('A');await dragElement(await other.findElement(By.css('.interlis-title')),45,18);const otherPosition=await other.getAttribute('transform'),otherId=await other.getAttribute('data-element-id');await openSource('Interactive.ili');await ui.palette('INTERLIS: Show Diagram for This File');await enter();await fresh();await ui.capture('GUI-18-parallel');
+  await enter();await fresh();assert.equal(await (await ui.driver.findElement(By.id('follow'))).getText(),'Pinned');const firstRoot=await (await ui.driver.findElement(By.id('root'))).getAttribute('textContent');assert.match(firstRoot,/Interactive\.ili$/);
+  await back();await openSource('Other.ili');await enter();assert.equal(await (await ui.driver.findElement(By.id('root'))).getAttribute('textContent'),firstRoot,'Pinned diagram silently followed the other editor');
+  await click('follow');await ui.waitFor(async()=>await (await ui.driver.findElement(By.id('follow'))).getText()==='Following','Follow was not enabled');await back();await openSource('Other.ili');await enter('Other.ili');await ui.waitFor(async()=>/Other\.ili$/.test(await (await ui.driver.findElement(By.id('root'))).getAttribute('textContent')),'Explicit follow did not switch source');assert.ok((await (await node('A')).getText()).includes('otherAttribute'));
+  await click('follow');await back();await openSource('Other.ili');await ui.palette('INTERLIS: Show Diagram for This File');await enter('Other.ili');const other=await node('A');await dragElement(await other.findElement(By.css('.interlis-title')),45,18);const otherPosition=await other.getAttribute('transform'),otherId=await other.getAttribute('data-element-id');
+  const settingsDirectory=path.join(evidence,'Unicode Modelle/.vscode');
+  fs.mkdirSync(settingsDirectory,{recursive:true});
+  const settingsFile=path.join(settingsDirectory,'settings.json');
+  const settingsText=JSON.stringify({'interlisGuru.diagram.direction':'DOWN'});
+  fs.writeFileSync(settingsFile,settingsText);
+ await openSource('Interactive.ili');await ui.palette('INTERLIS: Show Diagram for This File');await enter('Interactive.ili');await ui.capture('GUI-18-parallel');
   // Two separately opened custom documents remain independent, including their opaque root labels.
-  assert.match(await (await ui.driver.findElement(By.id('root'))).getText(),/Interactive\.ili$/);assert.ok(!(await (await node('A')).getText()).includes('otherAttribute'));assert.notEqual(await (await node('A')).getAttribute('data-element-id'),otherId);
-  await openSource('Other.ili');await ui.palette('INTERLIS: Show Diagram for This File');await enter();await fresh();assert.equal(await (await node('A')).getAttribute('transform'),otherPosition,'Other panel lost its own dragged geometry');await ui.capture('GUI-18-other-retained');
+  assert.match(await (await ui.driver.findElement(By.id('root'))).getAttribute('textContent'),/Interactive\.ili$/);assert.ok(!(await (await node('A')).getText()).includes('otherAttribute'));assert.notEqual(await (await node('A')).getAttribute('data-element-id'),otherId);
+  await openSource('Other.ili');await ui.palette('INTERLIS: Show Diagram for This File');await enter('Other.ili');assert.equal(await (await node('A')).getAttribute('transform'),otherPosition,'Other panel lost its own dragged geometry');await ui.capture('GUI-18-other-retained');
+  await click('options');const direction=await ui.driver.findElement(By.id('diagram-direction'));
+  assert.equal(await direction.getAttribute('value'),'RIGHT','Changing defaults moved an existing panel');
+  await back();await ui.palette('INTERLIS: Reset Diagram Options to Defaults');await enter();
+  await ui.waitFor(async()=>await (await ui.driver.findElement(By.id('diagram-direction'))).getAttribute('value')==='DOWN','Reset did not read current workspace defaults');
+  await fresh();
+  assert.equal(await (await node('A')).getAttribute('transform'),otherPosition,'Options reset discarded manual position');
+  assert.equal(fs.readFileSync(settingsFile,'utf8'),settingsText,'Local reset rewrote workspace settings');
+  await openSource('Interactive.ili');await ui.palette('INTERLIS: Show Diagram for This File');await enter('Interactive.ili');
+  assert.equal(await (await ui.driver.findElement(By.id('diagram-direction'))).getAttribute('value'),'RIGHT','Options reset changed the other panel');
   record('GUI-18',['activate B while A is pinned','explicitly enable Follow','activate B again','pin B and open A separately'],['pinned A retains source','only explicit follow switches to B','A/B labels and layout are separate']);
  });
 });

@@ -18,7 +18,7 @@ function run(script, env = {}) {cp.execFileSync(process.execPath, [script], {std
   if (lock.coreCommit !== provenance.coreSha) throw Error('Foreign Core commit');
   require('node:assert/strict').deepEqual(stagedLock, {...lock, bundleManifestSha256: provenance.bundleManifestSha256},
     'Foreign Core artifact lock');
-  // TypeScript builds consume the exact common renderer declarations.
+  // TypeScript builds consume the staged Core wire types and schemas.
   fs.rmSync('artifacts', {recursive: true, force: true});
   fs.cpSync(path.join(input, 'artifacts'), 'artifacts', {recursive: true});
   run('scripts/build.cjs'); run('scripts/verify-dependencies.cjs');

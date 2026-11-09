@@ -9,7 +9,7 @@ const {bundleManifestSha256} = require('../stage-core.cjs').stageCore(core, {out
 const stagedLock = JSON.parse(fs.readFileSync(path.join(output, 'release/editor-artifacts.lock.json')));
 // The producer manifest binds this build's inventory. Match the locked product files independently.
 require('node:assert/strict').deepEqual(stagedLock, {...lock, bundleManifestSha256},
-  'Core rebuild differs from committed server/renderer lock');
+  'Core rebuild differs from committed editor artifact lock');
 const record = {schemaVersion: 1, coreSha: lock.coreCommit, bundleManifestSha256, extensionSha: git(root, ['rev-parse', 'HEAD']), extensionId: 'edigonzales.interlis-editor', version: require('../distribution-metadata.cjs').distributionManifest(require('../../package.json')).version};
 fs.writeFileSync(path.join(output, 'build-provenance.json'), JSON.stringify(record, null, 2) + '\n');
 if (git(root, ['status', '--porcelain', '--untracked-files=no'])) throw Error('Common build changed tracked sources');

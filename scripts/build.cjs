@@ -1,5 +1,7 @@
 const {execFileSync}=require('node:child_process');
 const path=require('node:path');const fs=require('node:fs');
+const renderer = require('./build-diagram.cjs');
+renderer.generateValidator();
 execFileSync(process.execPath,[require.resolve('typescript/bin/tsc'),'--noEmit'],{stdio:'inherit'});
 const bundle=require('esbuild').buildSync({entryPoints:['src/extension.ts'],outfile:'out/extension.cjs',bundle:true,platform:'node',target:'node20',format:'cjs',external:['vscode'],metafile:true});
 require('esbuild').buildSync({entryPoints:['src/host/launch.ts'],outfile:'build/launch.cjs',bundle:true,platform:'node',format:'cjs'});
@@ -12,3 +14,5 @@ require('esbuild').buildSync({entryPoints:['src/host/diagram-assets.ts'],outfile
 require('esbuild').buildSync({entryPoints:['src/host/diagram-export.ts'],outfile:'build/diagram-export.cjs',bundle:true,platform:'node',format:'cjs'});
 require('esbuild').buildSync({entryPoints:['src/host/diagram-state.ts'],outfile:'build/diagram-state.cjs',bundle:true,platform:'node',format:'cjs'});
 require('esbuild').buildSync({entryPoints:['src/host/diagram-options.ts'],outfile:'build/diagram-options.cjs',bundle:true,platform:'node',format:'cjs'});
+
+renderer.buildDiagram();

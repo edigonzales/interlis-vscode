@@ -9,14 +9,13 @@ Ursprung: `edigonzales/interlis-language-tools`, Commit `f27801bfebf0fdac82a19e0
 
 Snippets und Modellvorlage sind neu geschrieben. Keine alte Extension-/Compiler-/AST-/LanguageServicequelle übernommen.
 
-In V2 ausgeführt: kontrollierte Übernahme der vorhandenen Core-Diagrammquellen
-nach `CORE/frontend/diagram-ui`, mit Originalcommit/-pfaden/-hashes in dessen
-`provenance.json` und unveränderten MIT-/EPL-Texten. Fremde Compiler-/AST-/Language-
-Service-Typen sind entfernt. Beide Consumer verwenden dieselbe eigene neutrale
-Quelle mit echtem Sprotty1.4.0, Sprotty-Protokoll1.4.0 und ELK0.11.0. Das Core-
-Editorbundle enthält die vollständigen gebündelten Dependencylizenzen. Die
-Extension besitzt nur geprüfte Artefakte, keine zweite Rendererquellkopie.
-Dokumentationsprojektion bleibt V4-Arbeit.
+## Diagrammrenderer
+
+Die VS-Code-Extension baut Sprotty, ELK und die Diagrammassets aus
+`src/diagram/renderer`. Dessen `provenance.json` und `original-vendor-pin.json`
+halten die ursprünglichen Quellen, Commits und Hashes fest. Die Original-
+und Abhängigkeitslizenzen werden mit der Extension ausgeliefert. Die
+frühere gemeinsame V2-Quelle im Core ist in den V2-Berichten dokumentiert.
 
 ## V1-Testeingaben aus dem gemeinsamen Core
 

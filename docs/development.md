@@ -2,10 +2,11 @@
 
 Java owns parsing, semantic snapshots, repository closure, language queries,
 completion/END plans, diagnostics, documentation and graph projections. The
-extension transports LSP stdio messages and versioned requests, maps native editor
-interactions and hosts the shared `frontend/diagram-ui` renderer. It has no second
-INTERLIS symbol resolver. UI, schemas, adapters and ELK worker are local assets
-copied from the locked Core editor bundle; no sibling source link is required.
+extension transports LSP stdio messages, maps native editor interactions, and
+owns the diagram renderer, layout worker, view state and export. It imports the
+wire types and schema from the locked Core bundle. Core tests own projection
+semantics and portable compiler/worker transport. Extension renderer tests
+exercise the packaged browser code, with native VSIX tests for the host boundary.
 
 The client accepts editor protocol1, diagram protocol1 and DiagramDocument1.0.
 Server-instance IDs, document versions, snapshot IDs and request generations
@@ -66,7 +67,7 @@ GitHub Actions builds the exact locked Core and extension commits. Each native
 target installs and checks its actual VSIX using the packaged Java runtime,
 then runs the short native GUI smoke (GUI01–03). Linux runs its GUI in Xvfb with
 a window manager and a native X clipboard. The PR and stable release gates
-also run the shared renderer browser tests and the full portable editor,
+also run the extension renderer browser tests and the full portable editor,
 diagram and authoring suites (GUI01–35) against the selected Linux VSIX.
 The macOS offline sandbox and process-observer qualification (GUI36–42)
 remains available through the separate local command above.
@@ -122,9 +123,9 @@ with the sample INTERLIS workspace. The normal editor installation/profile is
 reused. The first workspace-trust question is handled normally.
 
 The task installs extension dependencies when absent or their lock changes, runs
-the sibling Core's incremental `editorBundle` task, verifies the emitted hashes,
-and builds copied extension sources against that bundle's protocol types.
-The Core task builds its shared UI and dependencies as needed. Java25 is discovered
+the sibling Core's incremental Java editor-bundle build, and verifies the emitted
+hashes. The extension builds its renderer, worker and UI from its own copied
+sources against the staged protocol types. Java 25 is discovered
 locally; `INTERLIS_DEV_JAVA_HOME` selects an explicit JDK. `INTERLIS_CORE_DIR`
 (or `npm run dev:prepare -- --core-dir /absolute/core`) selects another checkout.
 

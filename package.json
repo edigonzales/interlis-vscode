@@ -128,6 +128,10 @@
       {
         "command": "interlisGuru.diagram.cancel",
         "title": "INTERLIS: Cancel Diagram Update"
+      },
+      {
+        "command": "interlisGuru.diagram.resetOptions",
+        "title": "INTERLIS: Reset Diagram Options to Defaults"
       }
     ],
     "configuration": {
@@ -260,19 +264,19 @@
           "type": "boolean",
           "default": true,
           "scope": "window",
-          "description": "Initial local diagram presentation setting."
+          "description": "Show association names on relationship lines by default."
         },
         "interlisGuru.diagram.showRoleCardinalities": {
           "type": "boolean",
           "default": true,
           "scope": "window",
-          "description": "Initial local diagram presentation setting."
+          "description": "Show role cardinalities at relationship ends by default. Member cardinalities have a separate diagram filter."
         },
         "interlisGuru.diagram.showLocalEnumerationValues": {
           "type": "boolean",
           "default": true,
           "scope": "window",
-          "description": "Initial local diagram presentation setting."
+          "description": "Show enumeration values declared inline on attributes by default. Domain enumeration values have a separate diagram filter."
         },
         "interlisGuru.diagram.attributeMode": {
           "type": "string",
@@ -283,7 +287,12 @@
           ],
           "default": "OWN",
           "scope": "window",
-          "description": "Initial local diagram presentation setting; each panel has independent controls."
+          "description": "Choose which members appear inside diagram nodes by default.",
+          "enumDescriptions": [
+            "Show members declared on each element.",
+            "Show declared and inherited members.",
+            "Hide attribute and role compartments."
+          ]
         },
         "interlisGuru.diagram.edgeRouting": {
           "type": "string",
@@ -294,7 +303,12 @@
           ],
           "default": "ORTHOGONAL",
           "scope": "window",
-          "description": "Initial local diagram presentation setting; each panel has independent controls."
+          "description": "Choose the default shape of diagram connections.",
+          "enumDescriptions": [
+            "Use horizontal and vertical segments.",
+            "Use straight segments joined at bends.",
+            "Use curved Bézier paths."
+          ]
         },
         "interlisGuru.diagram.nodePlacement": {
           "type": "string",
@@ -307,7 +321,14 @@
           ],
           "default": "BRANDES_KOEPF",
           "scope": "window",
-          "description": "Initial local diagram presentation setting; each panel has independent controls."
+          "description": "Choose the default ELK strategy for placing nodes within layers.",
+          "enumDescriptions": [
+            "Balance alignment and compactness using Brandes–Köpf.",
+            "Use ELK’s simple placement strategy.",
+            "Use ELK’s interactive placement strategy.",
+            "Align nodes along linear segments.",
+            "Use the network simplex strategy to place nodes."
+          ]
         },
         "interlisGuru.diagram.rendering.target": {
           "type": "string",
@@ -317,7 +338,11 @@
           ],
           "default": "STANDARD",
           "scope": "window",
-          "description": "Initial local diagram presentation setting; each panel has independent controls."
+          "description": "Choose the default SVG export target. This setting preserves the on-screen layout.",
+          "enumDescriptions": [
+            "Export standalone SVG paths without Inkscape connector metadata.",
+            "Include Inkscape connectors for straight and orthogonal routes. Export curves as static paths."
+          ]
         },
         "interlisGuru.diagram.edgeCrossings": {
           "type": "string",
@@ -327,7 +352,11 @@
           ],
           "default": "GAPS",
           "scope": "window",
-          "description": "Initial local diagram presentation setting; each panel has independent controls."
+          "description": "Choose the default appearance of crossing diagram connections.",
+          "enumDescriptions": [
+            "Draw small gaps at crossings to distinguish overlapping lines.",
+            "Draw continuous lines at crossings."
+          ]
         },
         "interlisGuru.documentation.language": {
           "type": "string",
@@ -374,6 +403,44 @@
           "default": "",
           "scope": "window",
           "description": "Explicit absolute path to an optional local template."
+        },
+        "interlisGuru.diagram.direction": {
+          "type": "string",
+          "enum": [
+            "RIGHT",
+            "LEFT",
+            "DOWN",
+            "UP"
+          ],
+          "enumDescriptions": [
+            "Left to right",
+            "Right to left",
+            "Top to bottom",
+            "Bottom to top"
+          ],
+          "default": "RIGHT",
+          "scope": "window",
+          "description": "Layout direction for a new diagram or an options reset. Saved views retain their direction."
+        },
+        "interlisGuru.diagram.associationPresentation": {
+          "type": "string",
+          "enum": [
+            "ENTITY",
+            "COMPACT_BINARY"
+          ],
+          "enumDescriptions": [
+            "Show associations as entities",
+            "Draw eligible binary associations as relationships"
+          ],
+          "default": "ENTITY",
+          "scope": "window",
+          "description": "Association presentation for a new diagram or an options reset. Saved views retain their presentation."
+        },
+        "interlisGuru.diagram.deemphasizeAbstractTypes": {
+          "type": "boolean",
+          "default": true,
+          "scope": "window",
+          "description": "Use a subdued style for abstract types in new diagrams or after an options reset. Saved views retain their setting."
         }
       }
     },
@@ -556,10 +623,18 @@
     "verify:no-legacy-dependencies": "node scripts/verify-dependencies.cjs",
     "test:extension-host": "node scripts/extension-host.cjs",
     "test:installed": "node scripts/gui.cjs --suite smoke",
-    "dev:prepare": "node scripts/prepare-dev.cjs"
+    "dev:prepare": "node scripts/prepare-dev.cjs",
+    "test:renderer": "node --test --test-concurrency=1 test/renderer/*.test.cjs"
   },
   "dependencies": {
+    "ajv": "8.20.0",
+    "elkjs": "0.11.0",
+    "inversify": "6.1.3",
+    "reflect-metadata": "0.2.2",
     "sax": "1.6.1",
+    "snabbdom": "3.5.1",
+    "sprotty": "1.4.0",
+    "sprotty-protocol": "1.4.0",
     "vscode-languageclient": "9.0.1"
   },
   "devDependencies": {
@@ -569,6 +644,7 @@
     "@vscode/vsce": "4.1.0",
     "clipboardy": "5.3.2",
     "esbuild": "0.25.12",
+    "playwright": "1.64.1",
     "typescript": "5.9.3",
     "vscode-extension-tester": "8.28.1",
     "yauzl": "3.4.0"

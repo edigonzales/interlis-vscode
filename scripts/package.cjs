@@ -47,6 +47,7 @@ async function packageVSIX({target, input = process.cwd(), runtimeRoot = input, 
     const xml = fs.readFileSync(path.join(inspected, 'extension.vsixmanifest'), 'utf8');
     for (const attribute of [`Version="${manifest.version}"`, `Publisher="${manifest.publisher}"`, `Id="${manifest.name}"`, `TargetPlatform="${target}"`]) if (!xml.includes(attribute)) throw Error('VSIX XML identity/version/target differs: ' + attribute);
     if (xml.includes('Id="Microsoft.VisualStudio.Code.PreRelease" Value="true"') !== preRelease) throw Error('VSIX pre-release metadata differs');
+    await require('../build/diagram-assets.cjs').verifyDiagramAssets(installed);
     if (hash(path.join(installed, 'release/runtime-artifacts.lock.json')) !== runtimeLockSha256) throw Error('VSIX lost its runtime inventory');
     const actual = await runtimeInventory(path.join(installed, 'artifacts/runtime', target), target !== 'win32-x64');
     if (JSON.stringify(actual) !== JSON.stringify(record.files)) throw Error('Packaged runtime bytes or modes differ');
