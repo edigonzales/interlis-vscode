@@ -29,12 +29,12 @@
     "lib/interlis-documentation-0.2.0-SNAPSHOT.jar": {
       "explicit": true,
       "name": "guru.interlis.documentation",
-      "sha256": "14470c2019668735ef00d9719b67c599ca909eb3634e815af768f39d37920b97"
+      "sha256": "658b5aab810b3a2fa1a4ecabe3cb0cdfd84199f9f573883fa7f0779ac62cb465"
     },
     "lib/interlis-lsp-0.2.0-SNAPSHOT.jar": {
       "explicit": true,
       "name": "guru.interlis.lsp",
-      "sha256": "c4f5b24d57fc069b96e057897b53c4692399d3000391c25a564f65150cec6450"
+      "sha256": "952d3ef9715202f19ac3d43ef42e5626e9afcece2adb46d101da9ac08b0434d0"
     },
     "lib/interlis-model-0.2.0-SNAPSHOT.jar": {
       "explicit": true,
@@ -44,7 +44,7 @@
     "lib/interlis-projection-0.2.0-SNAPSHOT.jar": {
       "explicit": true,
       "name": "guru.interlis.projection",
-      "sha256": "548496a4ed5b54ef8141eeea07fee166cfd5390959c73d91545eb14630b3686e"
+      "sha256": "4741573c8c427a2d11a3d189a87510e01acfe8bd980220c3efd6fb72a0025d0c"
     },
     "lib/interlis-repository-0.2.0-SNAPSHOT.jar": {
       "explicit": true,
@@ -67,7 +67,7 @@
       "sha256": "4e1aa77474de1791d96dc55932fb46efdf53233548f38f62ba7376f8b0bc6650"
     }
   },
-  "coreCommit": "e69a6e4cac4f6cd781beb8a1be0ffb2f06a0fcd7",
+  "coreCommit": "42f310df1cbbfc9cab552d05bcc023ab81e46d75",
   "protocolVersion": "lsp-3.17-baseline",
   "editorProtocolVersion": 1,
   "diagramDocumentVersion": "1.0",
@@ -92,11 +92,11 @@
     },
     {
       "path": "lib/interlis-documentation-0.2.0-SNAPSHOT.jar",
-      "sha256": "14470c2019668735ef00d9719b67c599ca909eb3634e815af768f39d37920b97"
+      "sha256": "658b5aab810b3a2fa1a4ecabe3cb0cdfd84199f9f573883fa7f0779ac62cb465"
     },
     {
       "path": "lib/interlis-lsp-0.2.0-SNAPSHOT.jar",
-      "sha256": "c4f5b24d57fc069b96e057897b53c4692399d3000391c25a564f65150cec6450"
+      "sha256": "952d3ef9715202f19ac3d43ef42e5626e9afcece2adb46d101da9ac08b0434d0"
     },
     {
       "path": "lib/interlis-model-0.2.0-SNAPSHOT.jar",
@@ -104,7 +104,7 @@
     },
     {
       "path": "lib/interlis-projection-0.2.0-SNAPSHOT.jar",
-      "sha256": "548496a4ed5b54ef8141eeea07fee166cfd5390959c73d91545eb14630b3686e"
+      "sha256": "4741573c8c427a2d11a3d189a87510e01acfe8bd980220c3efd6fb72a0025d0c"
     },
     {
       "path": "lib/interlis-repository-0.2.0-SNAPSHOT.jar",
@@ -150,5 +150,5 @@
       "sha256": "d0d0aab0a8d145c34780a640d79b21502b7b1b9445798ec61b3fbffaae3ba58c"
     }
   ],
-  "bundleManifestSha256": "dc257219a598a85447d07b8ce8a7567b67557f350e2e049b28ded10c6a32a911"
+  "bundleManifestSha256": "6aeaba030b0dd0a8ede75e91b78ce40fb158334f9d46a54fce131a45d329dad1"
 }

@@ -10,7 +10,7 @@ export interface DiagramFilters {
 }
 export const nodeKinds=['CLASS','STRUCTURE','ASSOCIATION','VIEW','DOMAIN','EXTERNAL_REFERENCE','GRAPHIC','DRAWING_RULE','LINE_FORM','METADATA_BASKET','METAOBJECT'] as const;
 export const edgeKinds=['INHERITANCE','ASSOCIATION_ROLE','ASSOCIATION','REFERENCE','STRUCTURE_COMPOSITION','DOMAIN_USE','VIEW_DERIVATION','MODEL_IMPORT','TRANSLATION'] as const;
-export function defaultFilters():DiagramFilters {return {kinds:Object.fromEntries(nodeKinds.map(k=>[k,true])),edges:Object.fromEntries(edgeKinds.map(k=>[k,true])),attributes:true,roles:true,types:true,cardinalities:true,constraints:true,enumerations:true,modelFrames:true,topicFrames:true,directImports:true,indirectImports:true};}
+export function defaultFilters():DiagramFilters {return {kinds:Object.fromEntries(nodeKinds.map(k=>[k,true])),edges:Object.fromEntries(edgeKinds.map(k=>[k,k!=='DOMAIN_USE'&&k!=='STRUCTURE_COMPOSITION'])),attributes:true,roles:true,types:true,cardinalities:true,constraints:true,enumerations:true,modelFrames:true,topicFrames:true,directImports:true,indirectImports:true};}
 
 /** Distances follow only explicit Core-projected MODEL_IMPORT edges. */
 export function importDepths(document:DiagramDocumentDto):Map<string,number> {

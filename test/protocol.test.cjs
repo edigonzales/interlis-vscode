@@ -28,6 +28,58 @@ test('packaged Java distribution initializes, diagnoses real fixture and shuts d
   const focused=await request('interlis/diagram',{protocolVersion:1,requestId:'packaged-neighbourhood',textDocument:{uri,version:1},...diagramProjectionRequest({association:'ENTITY',symbolIds:[declaration.symbol.symbol],depth:1,snapshotId:diagram.snapshotId})});assert.match(focused.document.optionsFingerprint,/scope=NEIGHBOURHOOD/);assert.match(focused.document.optionsFingerprint,/depth=1/);
   const fromEmpty=await request('interlis/diagram',{protocolVersion:1,requestId:'packaged-clear-focus',textDocument:{uri,version:1},...diagramProjectionRequest({association:'ENTITY',symbolIds:[],depth:2,snapshotId:focused.snapshotId})});assert.match(fromEmpty.document.optionsFingerprint,/scope=WITH_DEPENDENCIES/);assert.ok(!fromEmpty.document.optionsFingerprint.includes('depth='));assert.equal(fromEmpty.document.completeness,'COMPLETE');
   assert.equal(result.capabilities.experimental.interlis.diagramSelection,true);const selectionRequest={protocolVersion:1,serverInstanceId:fromEmpty.serverInstanceId,diagramId:fromEmpty.diagramId,snapshotId:fromEmpty.snapshotId,textDocument:{uri,version:1},sourceDocument:{uri,version:1},position:location.range.start};const selected=await request('interlis/diagramSelect',selectionRequest);assert.equal(selected.snapshotId,fromEmpty.snapshotId);assert.ok(selected.elementIds.includes(fromEmpty.document.nodes.find(n=>n.label==='Building').id));await assert.rejects(request('interlis/diagramSelect',{...selectionRequest,sourceDocument:{uri,version:2}}),/-32801|modified|version/i);
+  const typesPath=path.join(temporary,'DiagramTypes.ili'),typesUri=pathToFileURL(typesPath).href;
+  const typesSource=`INTERLIS 2.4;
+MODEL DiagramTypes AT "x" VERSION "1" =
+  DOMAIN Identifier = TEXT*20;
+  TOPIC Data = OID AS INTERLIS.UUIDOID;
+    STRUCTURE Address = street : TEXT*100; END Address;
+    CLASS Target = END Target;
+    CLASS Person =
+      identifier : Identifier;
+      address : Address;
+      homepage : INTERLIS.URI;
+      created : INTERLIS.XMLDate;
+      reference : REFERENCE TO Target;
+    END Person;
+    CLASS Child EXTENDS Person = END Child;
+    ASSOCIATION Link =
+      sourceRole -- {1} Person;
+      targetRole -- {0..*} Target;
+    END Link;
+  END Data;
+END DiagramTypes.`;
+  fs.writeFileSync(typesPath,typesSource);
+  const typesTextDocument={uri:typesUri,version:1};
+  send('textDocument/didOpen',{textDocument:{...typesTextDocument,languageId:'interlis',text:typesSource}});
+  assert.equal((await request('interlis/compile',{mode:'current',textDocument:typesTextDocument})).outcome,'succeeded');
+  const {document:types}=await request('interlis/diagram',{protocolVersion:1,requestId:'packaged-diagram-types',
+    textDocument:typesTextDocument,options:{schemaVersion:'1.0'}});
+  const {adapt,DiagramFilterController,legacyProjection}=require('../build/diagram/adapter.cjs');
+  const full=adapt(types).document;
+  assert.equal(full.completeness,'COMPLETE');
+  assert.deepEqual(full.notices,[]);
+  assert.ok(!full.nodes.some(n=>n.kind==='EXTERNAL_REFERENCE'||n.canonicalName.startsWith('INTERLIS.')));
+  assert.ok(!full.containers.some(c=>c.label==='External'));
+  assert.deepEqual(full.nodes.filter(n=>['DOMAIN','STRUCTURE'].includes(n.kind)).map(n=>n.label).sort(),['Address','Identifier']);
+  const filters=new DiagramFilterController();
+  const currentView=()=>legacyProjection(adapt(filters.visible(full)));
+  const defaultView=currentView(),person=defaultView.nodes.find(n=>n.label==='Person');
+  assert.deepEqual(Object.fromEntries(person.members.map(m=>[m.name,m.type])),
+    {identifier:'Identifier',address:'Address',homepage:'URI',created:'XMLDate',reference:'REFERENCE'});
+  assert.deepEqual([...new Set(defaultView.edges.map(e=>e.kind))].sort(),['association','inheritance','reference']);
+  for(const [kind,label] of [['DOMAIN_USE','Identifier'],['STRUCTURE_COMPOSITION','Address']]){
+    const matching=full.edges.filter(e=>e.kind===kind);
+    assert.ok(matching.length>0);
+    assert.ok(matching.every(e=>full.nodes.find(n=>n.id===e.target.elementId).label===label));
+    filters.set('edges.'+kind,true);
+    const view=currentView();
+    assert.deepEqual(view.edges.map(e=>e.id).sort(),[...defaultView.edges,...matching].map(e=>e.id).sort());
+    assert.deepEqual(view.nodes.find(n=>n.id===person.id).members,person.members);
+    filters.set('edges.'+kind,false);
+  }
+  assert.deepEqual(currentView(),defaultView);
+  send('textDocument/didClose',{textDocument:{uri:typesUri}});
   assert.equal(result.capabilities.experimental.interlis.documentation,true);
   for(const format of ['MARKDOWN','HTML','DOCX','MERMAID','PLANTUML','GRAPHML']) {
     const exported=await request('interlis/export',{protocolVersion:1,textDocument:{uri,version:1},format,options:{language:'DE',inheritance:'INLINE',headers:{catalog:'Paketkatalog'}}});

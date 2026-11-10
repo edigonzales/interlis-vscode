@@ -1,6 +1,6 @@
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),http=require('node:http'),{chromium}=require('playwright');
 const root=path.resolve(__dirname,'../..'),out=path.join(root,'build/comfort-test');
-const html=`<!doctype html><html><head><link rel="stylesheet" href="/out/diagram/diagram-ui.css"><style>body{margin:0}#controls{height:190px;overflow:auto}#canvas{width:1300px;height:750px}</style></head><body><div id="status"></div><div id="controls"></div><div id="canvas" class="interlis-canvas"></div><script type="module">import {DiagramCanvas,mountDiagramControls,ElkLayoutService} from '/out/diagram/diagram-ui.js';window.layoutCount=0;const worker=new ElkLayoutService('/out/diagram/diagram-layout-worker.js'),layout=worker.layout.bind(worker);worker.layout=(...args)=>{window.layoutCount++;return layout(...args)};window.canvas=new DiagramCanvas(document.getElementById('canvas'),{navigate:()=>{},status:(s,m)=>document.getElementById('status').textContent=s+': '+m},'',worker);window.controls=mountDiagramControls(document.getElementById('controls'),canvas,{error:m=>document.getElementById('status').textContent='ERROR '+m,export:()=>{}});window.input=await(await fetch('/test/renderer/fixtures/interactive.json')).json();await canvas.accept(input,'comfort');</script></body></html>`;
+const html=`<!doctype html><html><head><link rel="stylesheet" href="/out/diagram/diagram-ui.css"><style>body{margin:0}#controls{height:190px;overflow:auto}#canvas{width:1300px;height:750px}</style></head><body><div id="status"></div><div id="controls"></div><div id="canvas" class="interlis-canvas"></div><script type="module">import {DiagramCanvas,mountDiagramControls,ElkLayoutService} from '/out/diagram/diagram-ui.js';window.layoutCount=0;const worker=new ElkLayoutService('/out/diagram/diagram-layout-worker.js'),layout=worker.layout.bind(worker);worker.layout=(...args)=>{window.layoutCount++;window.layoutEdges=args[0].edges.map(edge=>edge.id);return layout(...args)};window.canvas=new DiagramCanvas(document.getElementById('canvas'),{navigate:()=>{},status:(s,m)=>document.getElementById('status').textContent=s+': '+m},'',worker);window.controls=mountDiagramControls(document.getElementById('controls'),canvas,{error:m=>document.getElementById('status').textContent='ERROR '+m,export:()=>{}});window.input=await(await fetch('/test/renderer/fixtures/interactive.json')).json();await canvas.accept(input,'comfort');</script></body></html>`;
 test('native shared controls preserve hidden geometry, own undo, real curves and current SVG/PNG export',{timeout:60000},async()=>{
  fs.mkdirSync(out,{recursive:true});const server=http.createServer((req,res)=>{const name=new URL(req.url,'http://localhost').pathname;if(name==='/'){res.setHeader('content-type','text/html');res.end(html);return;}const file=path.resolve(root,name.slice(1));if(!file.startsWith(root+path.sep)||!fs.existsSync(file)){res.writeHead(404).end();return;}res.setHeader('content-type',file.endsWith('.json')?'application/json':file.endsWith('.css')?'text/css':'text/javascript');res.end(fs.readFileSync(file));});await new Promise(r=>server.listen(0,'127.0.0.1',r));let browser,page;const errors=[];
  try{browser=await chromium.launch({headless:true});page=await browser.newPage({viewport:{width:1400,height:1050},deviceScaleFactor:2});page.on('pageerror',e=>errors.push(String(e)));await page.goto('http://127.0.0.1:'+server.address().port);const ready=()=>page.waitForFunction(()=>document.querySelector('#canvas').dataset.status==='FRESH');await ready();
@@ -19,6 +19,39 @@ test('native shared controls preserve hidden geometry, own undo, real curves and
  await page.locator('#diagram-options-close').click();
  const viewportBefore=await page.evaluate(()=>canvas.getViewport());const canvasBox=await page.locator('#canvas').boundingBox();await page.mouse.move(canvasBox.x+canvasBox.width/2,canvasBox.y+canvasBox.height/2);await page.mouse.wheel(0,-120);await page.waitForTimeout(80);assert.ok((await page.evaluate(()=>canvas.getViewport())).zoom>viewportBefore.zoom);await page.locator('svg.sprotty-graph').press('ArrowRight');await page.waitForTimeout(50);assert.ok((await page.evaluate(()=>canvas.getViewport())).x>viewportBefore.x);await page.locator('#fit').click();
  await page.locator('#options').click();
+ const relationshipIds=await page.evaluate(()=>Object.fromEntries(
+  ['DOMAIN_USE','STRUCTURE_COMPOSITION'].map(kind=>[kind,input.edges.filter(edge=>edge.kind===kind).map(edge=>edge.id)])));
+ for(const ids of Object.values(relationshipIds))assert.ok(ids.length>0);
+ const defaultEdges=await page.evaluate(()=>input.edges.filter(edge=>!['DOMAIN_USE','STRUCTURE_COMPOSITION'].includes(edge.kind)).map(edge=>edge.id));
+ const assertVisibleEdges=async(...kinds)=>{
+  const expected=[...defaultEdges,...kinds.flatMap(kind=>relationshipIds[kind])].sort();
+  const actual=await page.evaluate(()=>{
+   const svg=new DOMParser().parseFromString(canvas.exportSvg('FULL').svg,'image/svg+xml');
+   const ids=root=>[...root.querySelectorAll('[data-edge-id]')].map(edge=>edge.getAttribute('data-edge-id')).sort();
+   return {layout:[...layoutEdges].sort(),painted:ids(document.querySelector('#canvas')),svg:ids(svg)};
+  });
+  assert.deepEqual(actual,{layout:expected,painted:expected,svg:expected});
+  assert.equal(await node.getAttribute('transform'),moved);
+ };
+ const pngDigest=()=>page.evaluate(async()=>{
+  const png=await canvas.exportPng('FULL');
+  return [...new Uint8Array(await crypto.subtle.digest('SHA-256',png.data))];
+ });
+ const domainFilter=page.getByRole('checkbox',{name:'Domain uses',exact:true});
+ const structureFilter=page.getByRole('checkbox',{name:'Structure composition',exact:true});
+ assert.equal(await domainFilter.isChecked(),false);
+ assert.equal(await structureFilter.isChecked(),false);
+ await assertVisibleEdges();
+ const defaultPng=await pngDigest();
+ await domainFilter.check();await ready();
+ await assertVisibleEdges('DOMAIN_USE');
+ await structureFilter.check();await ready();
+ await assertVisibleEdges('DOMAIN_USE','STRUCTURE_COMPOSITION');
+ assert.notDeepEqual(await pngDigest(),defaultPng,'PNG did not reflect the visible relationship changes');
+ await domainFilter.uncheck();await ready();
+ await assertVisibleEdges('STRUCTURE_COMPOSITION');
+ await structureFilter.uncheck();await ready();
+ await assertVisibleEdges();
  await page.locator('#diagram-filter-modelFrames').uncheck();await ready();const frameExport=await page.evaluate(()=>canvas.exportSvg('FULL').svg);assert.ok(await page.evaluate(svg=>{const doc=new DOMParser().parseFromString(svg,'image/svg+xml');return [...doc.querySelectorAll('[data-kind="MODEL"]>.interlis-frame')].every(rect=>rect.style.visibility==='hidden');},frameExport),'Frame visibility was lost during serialization');await page.locator('#diagram-filter-modelFrames').check();await ready();
  const before=await page.evaluate(()=>({input:JSON.stringify(input),state:canvas.getViewState()}));
  await page.locator('#diagram-edgeRouting').selectOption('SPLINES');await ready();
