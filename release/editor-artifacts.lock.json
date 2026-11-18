@@ -62,7 +62,7 @@
       "sha256": "3706bd9f966e445f060f0a11f752bd53aa8d197846bb1de15b0ec0d452c48e2c"
     }
   },
-  "coreCommit": "477619c9975cacad47524d5c0e77a3fa8b429e86",
+  "coreCommit": "48ea616d7ec36d0fa445dfb33ce0e24f82fa653d",
   "protocolVersion": "lsp-3.17-baseline",
   "editorProtocolVersion": 1,
   "diagramDocumentVersion": "1.0",
@@ -141,5 +141,5 @@
       "bytes": 2894
     }
   ],
-  "bundleManifestSha256": "964ac69c85c7018ce12b2f516abae2f00d2d52f459b28f14769b64e6ff7f4949"
+  "bundleManifestSha256": "f7b57280d34b579a87b6cd4d8c2ee62081cb7f6b1c445283b929732a640ba478"
 }
