@@ -2,72 +2,67 @@
   "schemaVersion": 3,
   "launch": {
     "kind": "module",
-    "mainClass": "guru.interlis.lsp.Main",
-    "moduleName": "guru.interlis.lsp"
+    "moduleName": "guru.interlis.lsp",
+    "mainClass": "guru.interlis.lsp.Main"
   },
   "moduleInventory": {
     "lib/antlr4-runtime-4.13.2.jar": {
-      "explicit": false,
       "name": "org.antlr.antlr4.runtime",
+      "explicit": false,
       "sha256": "dd3e8a13a2d669bf84fb8d834de35ce4875f27157698d206241ec8488aadcaf7"
     },
     "lib/error_prone_annotations-2.48.0.jar": {
-      "explicit": true,
       "name": "com.google.errorprone.annotations",
+      "explicit": true,
       "sha256": "b49c5c958316ed67a09c699dda9aa749caf434d51d863dea599ef36a49b9c855"
     },
     "lib/gson-2.14.0.jar": {
-      "explicit": true,
       "name": "com.google.gson",
+      "explicit": true,
       "sha256": "2cbd119bf1961c28788310963dc80ba65f58cdeec1dd139c8bdb1240faa2c36f"
     },
     "lib/interlis-compiler-0.2.0-SNAPSHOT.jar": {
-      "explicit": true,
       "name": "guru.interlis.compiler",
-      "sha256": "c5f94b3d14c566863a742e05b12526e4c2d13771be88a108e0b3da547d0bc255"
-    },
-    "lib/interlis-documentation-0.2.0-SNAPSHOT.jar": {
       "explicit": true,
-      "name": "guru.interlis.documentation",
-      "sha256": "658b5aab810b3a2fa1a4ecabe3cb0cdfd84199f9f573883fa7f0779ac62cb465"
+      "sha256": "703fd37538840b575a685eeb3f65f97dd0fc65fbadcc5fa7ebcb12a56d7dbc7e"
     },
     "lib/interlis-lsp-0.2.0-SNAPSHOT.jar": {
-      "explicit": true,
       "name": "guru.interlis.lsp",
-      "sha256": "952d3ef9715202f19ac3d43ef42e5626e9afcece2adb46d101da9ac08b0434d0"
+      "explicit": true,
+      "sha256": "274136dc6d7fd5aab39f9dff77dea55cd93da17c8b5d1b8664da0c6a4483052b"
     },
     "lib/interlis-model-0.2.0-SNAPSHOT.jar": {
-      "explicit": true,
       "name": "guru.interlis.model",
-      "sha256": "9716377b146a9f7f75e366fbf6a9a402f1d885b7b471e2cb03c8814211a805f9"
+      "explicit": true,
+      "sha256": "0e1f4e6a7537ad3bf25dd9664df68cee42a095865ae17748fc00e475aca21259"
     },
     "lib/interlis-projection-0.2.0-SNAPSHOT.jar": {
-      "explicit": true,
       "name": "guru.interlis.projection",
-      "sha256": "4741573c8c427a2d11a3d189a87510e01acfe8bd980220c3efd6fb72a0025d0c"
+      "explicit": true,
+      "sha256": "b723565a8aed9562c46849bc93539fb2024992da322244ac2b09f097ce1dea42"
     },
     "lib/interlis-repository-0.2.0-SNAPSHOT.jar": {
-      "explicit": true,
       "name": "guru.interlis.repository",
-      "sha256": "faba219f256797f088490777a1fd86985b2b6a33aa985a8e3ac468e298d18543"
+      "explicit": true,
+      "sha256": "d99f4aee3cff07fd67c6b33993c48663e6e8802518014297d5e3e42f183bf04e"
     },
     "lib/interlis-workspace-0.2.0-SNAPSHOT.jar": {
-      "explicit": true,
       "name": "guru.interlis.workspace",
-      "sha256": "5be2f5b4d5ca0b614141e5c5983ecf07fadad47d69d9c326b09b07860c218768"
+      "explicit": true,
+      "sha256": "ca5f0b99e8c268d1355451fe5bddada3a9e6fff9c2109b45beaf867be6771084"
     },
-    "lib/org.eclipse.lsp4j-0.23.1.jar": {
-      "explicit": false,
+    "lib/org.eclipse.lsp4j-0.23.1-module.jar": {
       "name": "org.eclipse.lsp4j",
-      "sha256": "b16bbc6232a3946e03d537bb9be74e18489dbc6a8b8c5ab6cb7980854df8440f"
-    },
-    "lib/org.eclipse.lsp4j.jsonrpc-0.23.1.jar": {
       "explicit": false,
+      "sha256": "ce40c0d261079d5eb7da52e352f634ccb24f5a1ee99d09864d338e9000c290dd"
+    },
+    "lib/org.eclipse.lsp4j.jsonrpc-0.23.1-module.jar": {
       "name": "org.eclipse.lsp4j.jsonrpc",
-      "sha256": "4e1aa77474de1791d96dc55932fb46efdf53233548f38f62ba7376f8b0bc6650"
+      "explicit": false,
+      "sha256": "3706bd9f966e445f060f0a11f752bd53aa8d197846bb1de15b0ec0d452c48e2c"
     }
   },
-  "coreCommit": "42f310df1cbbfc9cab552d05bcc023ab81e46d75",
+  "coreCommit": "1b9508f8b4859149af55e4d2037b267fab5b810f",
   "protocolVersion": "lsp-3.17-baseline",
   "editorProtocolVersion": 1,
   "diagramDocumentVersion": "1.0",
@@ -88,67 +83,63 @@
     },
     {
       "path": "lib/interlis-compiler-0.2.0-SNAPSHOT.jar",
-      "sha256": "c5f94b3d14c566863a742e05b12526e4c2d13771be88a108e0b3da547d0bc255"
-    },
-    {
-      "path": "lib/interlis-documentation-0.2.0-SNAPSHOT.jar",
-      "sha256": "658b5aab810b3a2fa1a4ecabe3cb0cdfd84199f9f573883fa7f0779ac62cb465"
+      "sha256": "703fd37538840b575a685eeb3f65f97dd0fc65fbadcc5fa7ebcb12a56d7dbc7e"
     },
     {
       "path": "lib/interlis-lsp-0.2.0-SNAPSHOT.jar",
-      "sha256": "952d3ef9715202f19ac3d43ef42e5626e9afcece2adb46d101da9ac08b0434d0"
+      "sha256": "274136dc6d7fd5aab39f9dff77dea55cd93da17c8b5d1b8664da0c6a4483052b"
     },
     {
       "path": "lib/interlis-model-0.2.0-SNAPSHOT.jar",
-      "sha256": "9716377b146a9f7f75e366fbf6a9a402f1d885b7b471e2cb03c8814211a805f9"
+      "sha256": "0e1f4e6a7537ad3bf25dd9664df68cee42a095865ae17748fc00e475aca21259"
     },
     {
       "path": "lib/interlis-projection-0.2.0-SNAPSHOT.jar",
-      "sha256": "4741573c8c427a2d11a3d189a87510e01acfe8bd980220c3efd6fb72a0025d0c"
+      "sha256": "b723565a8aed9562c46849bc93539fb2024992da322244ac2b09f097ce1dea42"
     },
     {
       "path": "lib/interlis-repository-0.2.0-SNAPSHOT.jar",
-      "sha256": "faba219f256797f088490777a1fd86985b2b6a33aa985a8e3ac468e298d18543"
+      "sha256": "d99f4aee3cff07fd67c6b33993c48663e6e8802518014297d5e3e42f183bf04e"
     },
     {
       "path": "lib/interlis-workspace-0.2.0-SNAPSHOT.jar",
-      "sha256": "5be2f5b4d5ca0b614141e5c5983ecf07fadad47d69d9c326b09b07860c218768"
+      "sha256": "ca5f0b99e8c268d1355451fe5bddada3a9e6fff9c2109b45beaf867be6771084"
     },
     {
-      "path": "lib/org.eclipse.lsp4j-0.23.1.jar",
-      "sha256": "b16bbc6232a3946e03d537bb9be74e18489dbc6a8b8c5ab6cb7980854df8440f"
+      "path": "lib/org.eclipse.lsp4j-0.23.1-module.jar",
+      "sha256": "ce40c0d261079d5eb7da52e352f634ccb24f5a1ee99d09864d338e9000c290dd"
     },
     {
-      "path": "lib/org.eclipse.lsp4j.jsonrpc-0.23.1.jar",
-      "sha256": "4e1aa77474de1791d96dc55932fb46efdf53233548f38f62ba7376f8b0bc6650"
+      "path": "lib/org.eclipse.lsp4j.jsonrpc-0.23.1-module.jar",
+      "sha256": "3706bd9f966e445f060f0a11f752bd53aa8d197846bb1de15b0ec0d452c48e2c"
     }
   ],
   "contractFiles": [
     {
-      "bytes": 1071,
       "path": "licenses/interlis-java.txt",
-      "sha256": "91904e7f7a936e2f873b6c7d893b34ecc43fa9f2beffe96a9d8e24c9ad449798"
+      "sha256": "91904e7f7a936e2f873b6c7d893b34ecc43fa9f2beffe96a9d8e24c9ad449798",
+      "bytes": 1071
     },
     {
-      "bytes": 11928,
       "path": "schemas/diagram-document-1.0.schema.json",
-      "sha256": "105e7eeb24f6ef682e04695ecbbc127a51805178c6ee1a4310cb7ca1426fc779"
+      "sha256": "105e7eeb24f6ef682e04695ecbbc127a51805178c6ee1a4310cb7ca1426fc779",
+      "bytes": 11928
     },
     {
-      "bytes": 2423,
       "path": "schemas/diagram-options-1.0.schema.json",
-      "sha256": "825c35756a4c00f743bdbacc0700def78b871d75f2b7c74c06a1daabbfd87b91"
+      "sha256": "825c35756a4c00f743bdbacc0700def78b871d75f2b7c74c06a1daabbfd87b91",
+      "bytes": 2423
     },
     {
-      "bytes": 4409,
       "path": "types/diagram-document.ts",
-      "sha256": "2f3b7bb797320aa526b50800947e8c9a8c51f494c4727833d95bdf2d17d900d3"
+      "sha256": "2f3b7bb797320aa526b50800947e8c9a8c51f494c4727833d95bdf2d17d900d3",
+      "bytes": 4409
     },
     {
-      "bytes": 2894,
       "path": "types/editor-protocol.ts",
-      "sha256": "d0d0aab0a8d145c34780a640d79b21502b7b1b9445798ec61b3fbffaae3ba58c"
+      "sha256": "d0d0aab0a8d145c34780a640d79b21502b7b1b9445798ec61b3fbffaae3ba58c",
+      "bytes": 2894
     }
   ],
-  "bundleManifestSha256": "6aeaba030b0dd0a8ede75e91b78ce40fb158334f9d46a54fce131a45d329dad1"
+  "bundleManifestSha256": "ea051bac300057244f73caf55bda454422887c0296bcbf3da66b240d21225559"
 }

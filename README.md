@@ -84,8 +84,8 @@ npm run test:gui -- --suite smoke
 npm run test:gui -- --suite editor
 ```
 
-`stage:core` calls `java build/interlis/EditorBundleRun.java` on the
-explicit clean Core checkout. Manifest version 4 contains the server runtime,
+`stage:core` runs the Gradle wrapper with `editorBundle` in the
+explicit clean Core checkout and imports `build/editor-bundle`. Manifest version 4 contains the server runtime,
 Core wire types, schemas and licenses. The extension builds the diagram
 renderer and its worker from its own sources. Staging rejects a changing
 Core HEAD. Use the exact locked Core commit to reproduce a candidate.
@@ -95,7 +95,7 @@ A prebuilt bundle can be imported without a Core checkout or process start:
 node scripts/stage-core.cjs --bundle-dir /absolute/bundle --core-commit PRODUCER_SHA --manifest-sha256 PRODUCER_MANIFEST_SHA256
 ```
 
-Both identities must come from the selected producer result. Dirty Core bundles are accepted only by the separate development preparation path.
+Use the Core commit and SHA-256 of the selected bundle's `manifest.json`. Dirty Core bundles are accepted only by the separate development preparation path.
 
 VSIX output: `build/packages/interlis-editor-darwin-arm64.vsix`.
 Use `linux-x64` or `win32-x64` for the other target packages. Each archive contains
@@ -242,8 +242,6 @@ macOS sandbox denies interpreter execution, external IP traffic and source reads
 while its Code launcher has an empty PATH. Acquire VS Code/ChromeDriver in a normal
 GUI run first. See [architecture and test contracts](docs/development.md).
 
-The Java 25 Jenesis entry point produces the Core editor bundle (manifest v4). The extension pins that bundle in artifact lock v3 and launches `guru.interlis.lsp/guru.interlis.lsp.Main`. It builds and verifies its renderer assets separately. Editor and diagram protocol 1 and DiagramDocument 1.0 retain their wire format.
+The Java 25 Gradle build produces the Core editor bundle (manifest v4). The extension pins that bundle in artifact lock v3 and launches `guru.interlis.lsp/guru.interlis.lsp.Main`. It builds and verifies its renderer assets separately. Editor and diagram protocol 1 and DiagramDocument 1.0 retain their wire format.
 
 The existing pinned full-JRE/jlink pipeline remains the runtime owner. Its analysis combines actual module descriptors, jdeps and documented dynamic providers; application JARs stay outside the JDK-only image. On the local macOS arm64 migration gate both actual VSIX variants were inspected; jlink saved 35.6% and passed HTTP/HTTPS protocol, isolated extension-host navigation/restart, and corruption probes. Windows/Linux workflow definitions were updated but not executed for this local migration. Full release/platform qualification remains a separate gate. Original migration receipts and the final independent candidate-pair review are retained outside both repositories in `interlis-java-jenesis-b-evidence`.
-
-The historical phase V0–V5 `npm run review` transport was removed during migration B. Current pair reviews use a fresh external OpenCode 2/direct DeepSeek request with OS-enforced read-only candidate worktrees and an external evidence directory, as specified by Core `docs/implementation/jenesis-migration-b/OPENCODE_REVIEW_PROMPT.md`. Historical phase review records retain their original transport descriptions.

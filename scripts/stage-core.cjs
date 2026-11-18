@@ -34,13 +34,16 @@ function readAndVerifyBundle(directory,expected,{development=false}={}){
 function buildCoreBundle(coreDirectory,{development=false,env=process.env}={}){
  const core=fs.realpathSync(coreDirectory),coreCommit=git(core,'rev-parse','HEAD');
  if(!development&&git(core,'status','--porcelain','--untracked-files=no'))throw Error('Core tracked tree must be clean');
- const home=require('./prepare-dev.cjs').findJavaHome(env),java=path.join(home,'bin',process.platform==='win32'?'java.exe':'java'),requestId=crypto.randomUUID();
+ const home=require('./prepare-dev.cjs').findJavaHome(env);
  const buildEnv={...env,JAVA_HOME:home,PATH:[path.join(home,'bin'),env.PATH||''].join(path.delimiter)};
- cp.execFileSync(java,['build/interlis/EditorBundleRun.java','--request-id',requestId],{cwd:core,env:buildEnv,stdio:'inherit',shell:false});
- const result=JSON.parse(fs.readFileSync(path.join(core,'target/jenesis-jvm/reports/editor-bundle.json')));
- if(result.schemaVersion!==1||result.requestId!==requestId||result.coreCommit!==coreCommit||!path.isAbsolute(result.directory)||!result.directory.startsWith(path.join(core,'target/jenesis-jvm/editor-bundles')+path.sep))throw Error('Stale/foreign Core bundle result');
+ const windows=process.platform==='win32';
+ const wrapper=windows?'gradlew.bat':path.join(core,'gradlew');
+ const command=windows?[buildEnv.ComSpec||'cmd.exe','/d','/v:off','/c',wrapper]:[wrapper];
+ cp.execFileSync(command[0],[...command.slice(1),'--no-daemon','editorBundle'],
+   {cwd:core,env:buildEnv,stdio:'inherit',shell:false});
+ const directory=path.join(core,'build/editor-bundle');
  if(git(core,'rev-parse','HEAD')!==coreCommit)throw Error('Core commit changed while building');
- return readAndVerifyBundle(result.directory,{coreCommit,manifestSha256:result.manifestSha256},{development});
+ return readAndVerifyBundle(directory,{coreCommit,manifestSha256:hash(path.join(directory,'manifest.json'))},{development});
 }
 function importCoreBundle(bundle,{output=process.cwd(),development=false}={}){
  bundle=readAndVerifyBundle(bundle.directory,bundle.reference,{development});
@@ -48,7 +51,7 @@ function importCoreBundle(bundle,{output=process.cwd(),development=false}={}){
  if(fs.lstatSync(output).isSymbolicLink())throw Error('Unsafe staging output root');output=fs.realpathSync(output);
  const source=fs.realpathSync(bundle.directory),destination=path.join(output,'artifacts');
  if(output===path.parse(output).root||output===os.homedir()||output===source||output.startsWith(source+path.sep)||source===destination||source.startsWith(destination+path.sep))throw Error('Unsafe/overlapping staging output');
- if(fs.existsSync(path.join(output,'pom.xml')))throw Error('Core source root is not an extension staging output');
+ if(fs.existsSync(path.join(output,'settings.gradle'))&&fs.existsSync(path.join(output,'gradlew')))throw Error('Core source root is not an extension staging output');
  const packageFile=path.join(output,'package.json');
  if(fs.existsSync(packageFile)){if(JSON.parse(fs.readFileSync(packageFile)).name!=='interlis-editor')throw Error('Foreign staging project');}
  else if(fs.readdirSync(output).some(name=>!['artifacts','release','licenses'].includes(name)))throw Error('Nonempty unowned staging output');

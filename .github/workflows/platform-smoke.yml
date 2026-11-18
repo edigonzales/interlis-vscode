@@ -1,7 +1,7 @@
 name: Native runtime packages
 on:
   push:
-    branches: [codex/vscode-extension, codex/jenesis-migration-b]
+    branches: [codex/vscode-extension]
   pull_request:
     branches: [main]
   workflow_dispatch:
