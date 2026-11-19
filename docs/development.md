@@ -56,7 +56,6 @@ the already packaged native VSIX.
 
 ```sh
 node scripts/gui-offline-run.cjs /absolute/gui-cache
-node scripts/prepare-test-fixtures.cjs --java-home "$JAVA_HOME"
 node scripts/gui-resilience-run.cjs --cache /absolute/gui-cache --java-home "$JAVA_HOME"
 ```
 

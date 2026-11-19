@@ -65,7 +65,7 @@ jobs:
         with:
           node-version: 22.13.0
       # Test-only javac/keytool and macOS qualification. jlink itself uses the
-      # separate JDK archive verified against runtime-sources.lock.json.
+      # separate JDK archive verified against release/jdk-sources.json.
       - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
         with:
           distribution: temurin

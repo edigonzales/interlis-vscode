@@ -2,6 +2,18 @@ const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),cp=r
 const options={};for(let i=2;i<process.argv.length;i+=2)options[process.argv[i]]=process.argv[i+1];
 for(const key of ['--cache','--java-home'])if(!path.isAbsolute(options[key]||''))throw Error('Supply absolute '+key);
 if(process.platform!=='darwin')throw Error('macOS resource observer only');
+const lib=path.resolve('build/lsp/lib'),jars=fs.readdirSync(lib);
+const lsp=jars.find(name=>/^interlis-lsp-.*\.jar$/.test(name));
+const gson=jars.find(name=>/^gson-.*\.jar$/.test(name));
+if(!lsp||!gson)throw Error('Stage the LSP distribution first.');
+const fixture=path.resolve('build/test-fixtures/protocol-mismatch'),classes=path.join(fixture,'classes');
+fs.mkdirSync(classes,{recursive:true});
+const jdkTool=name=>path.join(options['--java-home'],'bin',name);
+cp.execFileSync(jdkTool('javac'),['--release','25','-cp',path.join(lib,gson),'-d',classes,
+  'test/fixtures/protocol-mismatch/Main.java'],{stdio:'inherit'});
+const incompatible=path.join(fixture,'interlis-lsp-incompatible.jar');
+fs.copyFileSync(path.join(lib,lsp),incompatible);
+cp.execFileSync(jdkTool('jar'),['--update','--file',incompatible,'-C',classes,'guru/interlis/lsp/Main.class'],{stdio:'inherit'});
 const root=path.resolve(__dirname,'..'),storage=fs.mkdtempSync(path.join(os.tmpdir(),'ili GUI ä-')),token=crypto.randomBytes(24).toString('hex');
 const output=path.resolve('build/reports/resource-observer',new Date().toISOString().replace(/[:.]/g,'-'));fs.mkdirSync(output,{recursive:true});
 const report={startedAt:new Date().toISOString(),storage,status:'running',scope:'Outside the inherited GUI sandbox, this fixed read-only observer samples only the own Electron tree using ps. It accepts no command, path or PID from the client. The actual GUI harness and all product descendants remain under the original interpreter guard.',samples:[]};

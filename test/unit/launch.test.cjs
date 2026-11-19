@@ -8,7 +8,7 @@ const {resolveLaunchPlan} = require('../../build/launch.cjs');
 test('launch uses the native bundled JVM and the fixed JPMS entry point', async t => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'interlis launch ä '));
   t.after(() => fs.rmSync(root, {recursive: true, force: true}));
-  const lib = path.join(root, 'lsp/lib'), jar = path.join(lib, 'interlis-lsp-0.2.0-SNAPSHOT.jar');
+  const lib = path.join(root, 'lsp/lib'), jar = path.join(lib, 'interlis-lsp-test.jar');
   fs.mkdirSync(lib, {recursive: true});
   await assert.rejects(resolveLaunchPlan(root), /Missing INTERLIS LSP JAR/);
   fs.writeFileSync(jar, '');
