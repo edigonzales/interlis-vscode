@@ -71,6 +71,7 @@ npm ci
 ./gradlew stageLsp
 npm run build
 npm run test:unit
+INTERLIS_JAVA="$JAVA_HOME/bin/java" npm run test:protocol
 npm run package:vsix
 node scripts/ci/smoke.cjs
 npm run test:gui -- --suite smoke
@@ -81,7 +82,8 @@ The Gradle wrapper resolves one Maven ZIP at
 `jars.interlis.guru/snapshots/`. The version is declared in `gradle.properties`.
 Use `--refresh-dependencies` to check for a newer build of the same SNAPSHOT.
 Windows uses `gradlew.bat`. Node and VSIX tasks consume `build/lsp` from the
-single staging run.
+single staging run. The source-tree protocol test uses the explicitly supplied
+Java path. The installed-package smoke uses the Java executable inside the VSIX.
 
 Packaging runs on the target platform and creates
 `build/packages/interlis-editor-<target>.vsix`. Each VSIX includes its own

@@ -55,8 +55,9 @@ cache for the offline test. These commands use the staged Maven inputs and
 the already packaged native VSIX.
 
 ```sh
-node scripts/gui-offline-run.cjs /absolute/gui-cache
-node scripts/gui-resilience-run.cjs --cache /absolute/gui-cache --java-home "$JAVA_HOME"
+node scripts/ci/prepare-gui.cjs
+node scripts/gui-offline-run.cjs "$PWD/build/gui-cache"
+node scripts/gui-resilience-run.cjs --cache "$PWD/build/gui-cache" --java-home "$JAVA_HOME"
 ```
 
 The offline sandbox denies source reads, external networking and interpreter

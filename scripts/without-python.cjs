@@ -40,7 +40,6 @@ try {
   if (!probes.some(r => path.isAbsolute(r.command) && r.error === 'EPERM')) throw new Error('No absolute interpreter execution denial was proved');
   const args = process.argv.slice(2);
   if (!args.length) throw new Error('Supply the command to execute inside the environment');
-  if (path.basename(args[0]).includes('gradlew') && !args.includes('--no-daemon')) args.push('--no-daemon');
   const gitHead = cp.execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();
   const dirty = cp.execFileSync('git', ['status', '--porcelain'], {cwd: root, encoding: 'utf8'});
   const report = {guardPid:process.pid,gitHead, dirty, status: 'running', startedAt: new Date().toISOString(), command: args, path: bin,
