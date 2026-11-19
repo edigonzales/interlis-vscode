@@ -2,17 +2,17 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "INTERLIS Editor: Build LSP + Extension",
+      "name": "INTERLIS Editor: Stage LSP and Build Extension",
       "type": "extensionHost",
       "request": "launch",
       "runtimeExecutable": "${execPath}",
       "args": [
         "--new-window",
-        "--extensionDevelopmentPath=${workspaceFolder}/build/dev-extension",
+        "--extensionDevelopmentPath=${workspaceFolder}",
         "${workspaceFolder}/test/fixtures/editor-basic"
       ],
       "outFiles": [
-        "${workspaceFolder}/build/dev-extension/out/**/*.cjs"
+        "${workspaceFolder}/out/**/*.cjs"
       ],
       "preLaunchTask": "INTERLIS: Prepare Development Host",
       "envFile": "${workspaceFolder}/build/dev.env"

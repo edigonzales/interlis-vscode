@@ -2,7 +2,6 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
-const {createHash} = require('node:crypto');
 const esbuild = require('esbuild');
 const Ajv = require('ajv/dist/2020');
 const standalone = require('ajv/dist/standalone').default;
@@ -12,7 +11,7 @@ const output = 'out/diagram';
 
 function generateValidator() {
   const ajv = new Ajv({strict: true, allErrors: true, code: {source: true}});
-  const validate = ajv.compile(require(path.resolve('artifacts/schemas/diagram-document-1.0.schema.json')));
+  const validate = ajv.compile(require(path.resolve('build/lsp/schemas/diagram-document-1.0.schema.json')));
   const generated = 'src/diagram/generated';
   fs.mkdirSync(generated, {recursive: true});
   fs.writeFileSync(path.join(generated, 'schema-validator.cjs'), standalone(ajv, validate));
@@ -53,9 +52,7 @@ function buildDiagram() {
     for (const file of legal) notices.push(name + '\n' + fs.readFileSync(path.join(root, file), 'utf8'));
   }
   fs.writeFileSync('licenses/bundled-diagram-notices.txt', notices.join('\n\n--------------------\n\n') + '\n');
-  const assets = fs.readdirSync(output).sort()
-    .map(file => ({path: file, sha256: createHash('sha256').update(fs.readFileSync(path.join(output, file))).digest('hex')}));
-  fs.writeFileSync(path.join(output, 'manifest.json'), JSON.stringify({schemaVersion: 1, assets}, null, 2) + '\n');
+
 }
 
 module.exports = {generateValidator, buildDiagram};

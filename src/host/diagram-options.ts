@@ -1,4 +1,4 @@
-import type {DiagramRequest} from '../../artifacts/types/editor-protocol';
+import type {DiagramRequest} from '../../build/lsp/types/editor-protocol';
 import {defaultDiagramSettings,type DiagramSettings} from '../diagram/renderer/settings';
 /** User projection choices only. Java owns symbol resolution and relationship traversal. */
 export function diagramProjectionRequest(choice:{association:'ENTITY'|'COMPACT_BINARY';symbolIds?:string[];depth?:number;translation?:string;snapshotId?:string}):Pick<DiagramRequest,'options'|'symbolIds'> {

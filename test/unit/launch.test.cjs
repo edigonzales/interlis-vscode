@@ -1,12 +1,28 @@
-const {test}=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const os=require('node:os');const path=require('node:path');
-const sourceRoot=process.env.INTERLIS_TEST_EXTENSION_ROOT||process.cwd();
-const {resolveLaunchPlan}=require('../../build/launch.cjs');
-test('default launch uses the verified bundled Java without a PATH lookup',async()=>{const plan=await resolveLaunchPlan(sourceRoot);assert.equal(plan.runtimeSource,'bundled');assert.ok(plan.java.startsWith(path.join(sourceRoot,'artifacts/runtime',process.platform+'-'+process.arch)));assert.match(plan.runtimeDigest,/^[a-f0-9]{64}$/);});
-test('developer overrides require an explicit absolute executable',async()=>{await assert.rejects(resolveLaunchPlan(sourceRoot,'java'),/absolute/);});
-test('missing Java executable fails clearly',async()=>{await assert.rejects(resolveLaunchPlan(sourceRoot,'/nonexistent/interlis-java'),/ENOENT/);});
-test('tampered server bytes are rejected before process start',async()=>{const root=fs.mkdtempSync(path.join(os.tmpdir(),'interlis-inventory-'));try{fs.cpSync(path.join(sourceRoot,'artifacts/server'),root,{recursive:true});const lock=JSON.parse(fs.readFileSync(path.join(sourceRoot,'release/editor-artifacts.lock.json')));fs.appendFileSync(path.join(root,lock.files[0].path),'changed');await assert.rejects(resolveLaunchPlan(sourceRoot,'',root),/digest mismatch/);}finally{fs.rmSync(root,{recursive:true,force:true});}});
-test('manifest identity, passive resources and static snippets are self contained',()=>{const p=require('../../package.json');assert.equal(p.publisher+'.'+p.name,'edigonzales.interlis-editor');assert.equal(p.displayName,'INTERLIS Editor');assert.equal(p.version,'0.1.0');assert.deepEqual(p.extensionKind,['workspace']);assert.deepEqual(p.contributes.languages[0].extensions,['.ili','.ILI']);for(const cmd of p.contributes.commands)assert.match(cmd.command,/^interlisGuru\./);for(const r of [p.contributes.languages[0].configuration,p.contributes.grammars[0].path,p.contributes.snippets[0].path])JSON.parse(fs.readFileSync(r));assert.ok(fs.readFileSync('resources/templates/model.ili','utf8').includes('INTERLIS 2.4;'));});
-test('wrong Java version or non-Java executable is rejected before launching an LSP',async()=>{const temporary=fs.mkdtempSync(path.join(os.tmpdir(),'interlis-wrong-java-'));try{let executable=process.execPath;if(process.platform!=='win32'){executable=path.join(temporary,'java');fs.writeFileSync(executable,'#!/bin/sh\nprintf \'openjdk version "21.0.7"\\n\' >&2\n');fs.chmodSync(executable,0o755);}await assert.rejects(resolveLaunchPlan(sourceRoot,executable),/requires Java 25|Cannot run Java 25/);}finally{fs.rmSync(temporary,{recursive:true,force:true});}});
+const {test} = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+const {resolveLaunchPlan} = require('../../build/launch.cjs');
 
-test('production launch is a frozen, finite module plan',async()=>{const plan=await resolveLaunchPlan(sourceRoot);assert.equal(plan.moduleName,'guru.interlis.lsp');assert.deepEqual(plan.args,['--module-path',path.join(sourceRoot,'artifacts/server/lib'),'--module','guru.interlis.lsp/guru.interlis.lsp.Main']);assert.ok(Object.isFrozen(plan));assert.ok(Object.isFrozen(plan.args));});
-test('unknown module and arbitrary launch flags are rejected before starting Java',async()=>{const root=fs.mkdtempSync(path.join(os.tmpdir(),'interlis-module-lock-'));try{fs.mkdirSync(path.join(root,'release'));const lock=JSON.parse(fs.readFileSync(path.join(sourceRoot,'release/editor-artifacts.lock.json')));for(const mutate of [x=>x.launch.moduleName='guru.interlis.missing',x=>x.launch.javaArgs=['--add-opens=ALL-UNNAMED']]){const changed=structuredClone(lock);mutate(changed);fs.writeFileSync(path.join(root,'release/editor-artifacts.lock.json'),JSON.stringify(changed));await assert.rejects(resolveLaunchPlan(root,'/nonexistent/java'),/artifact lock/);}}finally{fs.rmSync(root,{recursive:true,force:true});}});
+test('launch uses the native bundled JVM and the fixed JPMS entry point', async t => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'interlis launch ä '));
+  t.after(() => fs.rmSync(root, {recursive: true, force: true}));
+  const lib = path.join(root, 'lsp/lib'), jar = path.join(lib, 'interlis-lsp-0.2.0-SNAPSHOT.jar');
+  fs.mkdirSync(lib, {recursive: true});
+  await assert.rejects(resolveLaunchPlan(root), /Missing INTERLIS LSP JAR/);
+  fs.writeFileSync(jar, '');
+  fs.mkdirSync(path.join(root, 'runtime/wrong-platform/bin'), {recursive: true});
+  await assert.rejects(resolveLaunchPlan(root), /Install the matching VSIX/);
+  const java = path.join(root, 'runtime', process.platform + '-' + process.arch, 'bin',
+    process.platform === 'win32' ? 'java.exe' : 'java');
+  fs.mkdirSync(path.dirname(java), {recursive: true});
+  await assert.rejects(resolveLaunchPlan(root), /Missing bundled Java/);
+  fs.writeFileSync(java, '', {mode: 0o755});
+  const plan = await resolveLaunchPlan(root);
+  assert.equal(plan.java, java);
+  assert.deepEqual(plan.args, ['--module-path', lib, '--module', 'guru.interlis.lsp/guru.interlis.lsp.Main']);
+  assert.equal(plan.runtimeSource, 'bundled');
+  await assert.rejects(resolveLaunchPlan(root, 'java'), /absolute executable/);
+  await assert.rejects(resolveLaunchPlan(root, process.execPath), /Cannot run Java 25 executable|requires Java 25/);
+});

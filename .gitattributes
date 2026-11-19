@@ -1,5 +1,3 @@
-# Release lock identities must be byte-identical across native CI checkouts.
-release/*.json text eol=lf
 # Build-generated notices use LF and must not dirty a Windows checkout.
 licenses/*.txt text eol=lf
 
@@ -7,3 +5,5 @@ licenses/*.txt text eol=lf
 test/fixtures/uml-core/Interactive.ili -text whitespace=cr-at-eol
 
 test/renderer/fixtures/*.ili -text whitespace=cr-at-eol
+
+gradlew.bat -text whitespace=cr-at-eol

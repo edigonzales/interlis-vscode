@@ -1,11 +1,9 @@
 # INTERLIS Editor
 
 Desktop VS Code extension `edigonzales.interlis-editor` using the Java INTERLIS
-language server. Target-specific VSIX packages contain a pinned, verified Java25
+language server. Target-specific VSIX packages contain a vendor-verified Java 25
 runtime, repository resolution/cache, readable diagnostics, root compilation and
-an interactive UML custom editor. V0–V5 have independent cumulative acceptance under the
-user-adjusted platform scope. Current platform evidence and the exact accepted product pair are
-tracked in [STATUS](docs/implementation/vscode-extension/STATUS.md).
+an interactive UML custom editor.
 
 The extension uses the existing Open VSX identity `edigonzales.interlis-editor`
 (display name **INTERLIS Editor**, publisher **edigonzales**). Local builds use
@@ -61,103 +59,40 @@ panel keeps its own arrangement. Filters, pins, Settle/Reset, view Undo/Redo,
 routing choices and full/visible SVG/PNG export are available.
 **Cancel** stops a pending analysis/layout update and leaves the view stale;
 **Refresh** resumes it. A crashed/stopped server also leaves visible diagrams stale.
-Executable and server-bundle overrides are read only from user settings, never
-from a model repository's workspace configuration. Multiple local workspace
+The Java override is read only from user settings. Multiple local workspace
 folders share one model space; duplicate model identities are not silently chosen.
 
 ## Development and verification
 
-Node22.13.0/npm10.9.2 and Temurin25.0.5 were used. Dependencies are pinned in
-`package-lock.json`; the server is pinned by full Core SHA and per-JAR hashes in
-`release/editor-artifacts.lock.json`. There are no links to another source tree.
+Use Node 22 or later and a Java 25 JDK for the build. Set `JAVA_HOME` first.
 
 ```sh
 npm ci
-JAVA_HOME=/absolute/jdk25 npm run stage:core -- --core-dir /absolute/interlis-java
-npm run stage:runtime -- --target all
+./gradlew stageLsp
 npm run build
-npm run test:protocol
 npm run test:unit
-npm run verify:no-legacy-dependencies
-npm run package:vsix -- --target darwin-arm64
+npm run package:vsix
+node scripts/ci/smoke.cjs
 npm run test:gui -- --suite smoke
-npm run test:gui -- --suite editor
 ```
 
-`stage:core` runs the Gradle wrapper with `editorBundle` in the
-explicit clean Core checkout and imports `build/editor-bundle`. Manifest version 4 contains the server runtime,
-Core wire types, schemas and licenses. The extension builds the diagram
-renderer and its worker from its own sources. Staging rejects a changing
-Core HEAD. Use the exact locked Core commit to reproduce a candidate.
-A prebuilt bundle can be imported without a Core checkout or process start:
+The Gradle wrapper resolves one Maven ZIP at
+`guru.interlis:interlis-lsp-distribution:<interlisLspVersion>@zip` from
+`jars.interlis.guru/snapshots/`. The version is declared in `gradle.properties`.
+Use `--refresh-dependencies` to check for a newer build of the same SNAPSHOT.
+Windows uses `gradlew.bat`. Node and VSIX tasks consume `build/lsp` from the
+single staging run.
 
-```sh
-node scripts/stage-core.cjs --bundle-dir /absolute/bundle --core-commit PRODUCER_SHA --manifest-sha256 PRODUCER_MANIFEST_SHA256
-```
+Packaging runs on the target platform and creates
+`build/packages/interlis-editor-<target>.vsix`. Each VSIX includes its own
+jlink runtime plus the LSP modules. The installed extension starts Java from
+the package. The build verifies the Temurin JDK archive against the vendor
+checksum in `release/jdk-sources.json`.
 
-Use the Core commit and SHA-256 of the selected bundle's `manifest.json`. Dirty Core bundles are accepted only by the separate development preparation path.
-
-VSIX output: `build/packages/interlis-editor-darwin-arm64.vsix`.
-Use `linux-x64` or `win32-x64` for the other target packages. Each archive contains
-only its own runtime. Source URLs, vendor archive SHA256s and extracted file hashes
-are locked under `release/`; unexpected, missing or changed files prevent startup.
-Cross-packaging is not a native platform test. Linux/Windows qualification uses
-short native GitHub Actions smokes; their GUI and Remote GUI remain untested under
-the [user-adjusted scope](docs/implementation/vscode-extension/PLATFORM_TEST_SCOPE.md).
-
-For publication, GitHub Actions builds the locked Core bundle once. Each native runner builds
-the extension renderer and tests one VSIX with a Java 25 runtime linked by `jlink` on each
-native target runner. The upload job uses the exact tested packages and the
-repository secret `OPEN_VSIX_MARKETPLACE_TOKEN`. To release with a newer Core,
-update the editor artifacts lock in this repository.
-
-The standalone platform workflow shares the locked Core bundle. Each native
-runner builds the renderer and tests both a full Temurin JRE and a custom
-`jlink` runtime.
-The final VSIX uses `jlink` only when its compressed download is at least 10%
-smaller. A failed candidate test fails the workflow; only insufficient size savings
-select the full JRE. The job summary and `*.selection.json` record the comparison.
-All three native jobs, including the full macOS qualification of the selected
-VSIX, must pass before `platform-packages` is uploaded. Comparison artifacts are
-kept for three days.
-
-Runtime JRE/JDK sources are pinned in `release/runtime-sources.lock.json`;
-`release/runtime-link.json` documents link options and dynamic module dependencies.
-Generated inventories, provenance and notices live under `build/runtimes/` in CI,
-leaving committed locks unchanged. To build a native candidate locally:
-
-```sh
-node scripts/stage-runtime.cjs --target darwin-arm64 --variant jlink --output "$PWD/build/local-runtime"
-node scripts/package.cjs --target darwin-arm64 --runtime-root "$PWD/build/local-runtime" --output "$PWD/build/local-packages"
-```
-
-`--input /absolute/common-root` selects a staged Core bundle for either command.
-Java stays inside the VSIX, with no first-run download or system-Java fallback.
-HTTPS checks use an isolated test truststore and an EC certificate fixture; the
-packaged vendor truststore is never modified.
-
-For local development, open this repository in Codium or VS Code and press **F5**
-(configuration **INTERLIS Editor: Build LSP + Extension**). It installs missing
-npm dependencies, builds the sibling `../interlis-java` LSP,
-builds the extension and its diagram renderer and opens a new Development Host using the **same editor**.
-On the first opening, trust the sample workspace if asked and open `Example.ili`.
-
-Development output lives under `build/`; the existing editor application and
-profile are reused. Personal settings and installed extensions are not modified. No VSIX installation or runtime download is required.
-Local Core edits are supported, and tracked release locks stay unchanged.
-Stop the debug session and press F5 again after changes to rebuild and restart.
-For preparation without launching an editor, use `npm run dev:prepare`.
-On macOS, install the exact Core `nodeVersion` from `gradle.properties` once
-with `fnm install 24.22.0` (use the checkout's pin if it differs). F5 and
-`npm run dev:prepare` look for that installation in `FNM_DIR` or the standard
-macOS fnm directory, then check Node on `PATH`. F5 also works from the Dock
-without Node or npm on `PATH`. An absolute `INTERLIS_NODE` takes precedence
-and must point to the pinned version.
-
-Set `INTERLIS_CORE_DIR` for a different Core checkout and
-`INTERLIS_DEV_JAVA_HOME` for an explicit JDK25. Otherwise it discovers Java25
-from JAVA_HOME, macOS registrations, SDKMAN or PATH. Node22+ and a JDK25 must
-already be installed.
+For local debugging, install npm dependencies once, open this folder in VS Code
+or VSCodium and press F5. The pre-launch task stages the Maven ZIP and compiles
+the extension. The Development Host uses the Java 25 JDK from that task.
+Open `Example.ili` in the sample workspace and grant trust if prompted.
 
 The GUI runner downloads VSCode1.140.0 and matching ChromeDriver into an isolated
 test directory, installs the VSIX and uses ExTester8.28.1/Selenium. Optional
@@ -241,7 +176,3 @@ The offline `distribution` suite is launched through
 macOS sandbox denies interpreter execution, external IP traffic and source reads,
 while its Code launcher has an empty PATH. Acquire VS Code/ChromeDriver in a normal
 GUI run first. See [architecture and test contracts](docs/development.md).
-
-The Java 25 Gradle build produces the Core editor bundle (manifest v4). The extension pins that bundle in artifact lock v3 and launches `guru.interlis.lsp/guru.interlis.lsp.Main`. It builds and verifies its renderer assets separately. Editor and diagram protocol 1 and DiagramDocument 1.0 retain their wire format.
-
-The existing pinned full-JRE/jlink pipeline remains the runtime owner. Its analysis combines actual module descriptors, jdeps and documented dynamic providers; application JARs stay outside the JDK-only image. On the local macOS arm64 migration gate both actual VSIX variants were inspected; jlink saved 35.6% and passed HTTP/HTTPS protocol, isolated extension-host navigation/restart, and corruption probes. Windows/Linux workflow definitions were updated but not executed for this local migration. Full release/platform qualification remains a separate gate. Original migration receipts and the final independent candidate-pair review are retained outside both repositories in `interlis-java-jenesis-b-evidence`.

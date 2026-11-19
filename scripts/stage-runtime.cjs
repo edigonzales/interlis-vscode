@@ -5,8 +5,6 @@ const cp = require('node:child_process');
 const {pipeline} = require('node:stream/promises');
 const {Readable} = require('node:stream');
 const hash = file => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
-const json = file => JSON.parse(fs.readFileSync(file));
-const writeJSON = (file, value) => {fs.mkdirSync(path.dirname(file), {recursive: true}); fs.writeFileSync(file, JSON.stringify(value, null, 2) + '\n');};
 
 async function download(source, cache) {
   fs.mkdirSync(cache, {recursive: true});
@@ -22,130 +20,65 @@ async function download(source, cache) {
     await pipeline(Readable.fromWeb(response.body), fs.createWriteStream(temporary, {flags: 'wx'}));
     verify(temporary);
     const check = await fetch(source.checksumUrl, {signal: AbortSignal.timeout(30000)});
-    if (!check.ok || !(await check.text()).trim().startsWith(source.archive.sha256)) throw Error('Vendor checksum sidecar mismatch');
+    if (!check.ok || (await check.text()).trim().split(/\s+/)[0] !== source.archive.sha256) throw Error('Vendor checksum sidecar mismatch');
     fs.renameSync(temporary, file);
   } finally {fs.rmSync(temporary, {force: true});}
   return file;
 }
 
-async function extract(source, archive, temporary, runtimeInventory) {
-  // Windows runners ship bsdtar, which supports both ZIP and tar.gz.
-  const tar = process.platform === 'win32' ? path.join(process.env.SystemRoot || 'C:\\Windows', 'System32/tar.exe') : 'tar';
-  const entries = cp.execFileSync(tar, ['-tf', archive], {encoding: 'utf8', maxBuffer: 16 * 1024 * 1024}).split(/\r?\n/).filter(Boolean);
-  if (entries.some(name => name.startsWith('/') || /^[A-Za-z]:/.test(name) || name.includes('\\') || name.split('/').includes('..'))) throw Error('Unsafe runtime archive entry');
+function inspectLinks(root, materialize = false) {
+  const canonical = fs.realpathSync(root);
+  function walk(directory) {
+    for (const item of fs.readdirSync(directory, {withFileTypes: true})) {
+      const file = path.join(directory, item.name);
+      if (item.isDirectory()) walk(file);
+      else if (item.isSymbolicLink()) {
+        const real = fs.realpathSync(file);
+        if (path.isAbsolute(fs.readlinkSync(file)) || !real.startsWith(canonical + path.sep) ||
+            !fs.statSync(real).isFile()) throw Error('Unsafe JDK symlink: ' + file);
+        if (materialize) {
+          fs.unlinkSync(file);
+          fs.copyFileSync(real, file, fs.constants.COPYFILE_EXCL);
+        }
+      } else if (!item.isFile()) throw Error('Unsupported JDK file type: ' + file);
+    }
+  }
+  walk(canonical);
+}
+
+function extractJdk(archive, temporary) {
+  const windows = process.platform === 'win32';
+  const tar = windows ? path.join(process.env.SystemRoot, 'System32/tar.exe') : 'tar';
+  const entries = cp.execFileSync(tar, ['-tf', archive], {encoding: 'utf8', maxBuffer: 16 * 1024 * 1024});
+  if (entries.split(/\r?\n/).some(name => name.startsWith('/') || name.includes('\\') ||
+      name.includes(':') || name.split('/').includes('..'))) throw Error('Unsafe JDK archive entry');
   cp.execFileSync(tar, ['-xf', archive, '-C', temporary]);
-  const roots = fs.readdirSync(temporary);
-  if (roots.length !== 1) throw Error('Unexpected runtime archive roots');
-  const home = path.join(temporary, roots[0], ...(source.os === 'mac' ? ['Contents', 'Home'] : []));
-  if (!fs.existsSync(path.join(home, source.java)) || !fs.existsSync(path.join(home, 'legal/java.base/LICENSE'))) throw Error('Runtime launcher or vendor license absent');
-  await runtimeInventory(home);
-  return home;
+  const roots = fs.readdirSync(temporary, {withFileTypes: true});
+  if (roots.length !== 1 || !roots[0].isDirectory()) throw Error('Unexpected JDK archive root');
+  inspectLinks(temporary);
+  const root = path.join(temporary, roots[0].name);
+  return process.platform === 'darwin' ? path.join(root, 'Contents/Home') : root;
 }
 
-// Inventory validates every link against the source root before any link is followed.
-async function materializeRuntime(source, destination, runtimeInventory) {
-  const entries = await runtimeInventory(source);
-  for (const entry of entries) {
-    const from = path.join(source, entry.path), to = path.join(destination, entry.path);
-    if (source === destination && !entry.link) continue;
-    const real = fs.realpathSync(from), mode = fs.statSync(real).mode;
-    fs.mkdirSync(path.dirname(to), {recursive: true});
-    const temporary = to + '.materializing-' + crypto.randomUUID();
-    fs.copyFileSync(real, temporary); fs.chmodSync(temporary, mode);
-    fs.renameSync(temporary, to);
-  }
-}
-
-async function stageRuntime({target, variant = 'full-jre', output = process.cwd(), input = process.cwd(), cache = path.resolve('build/runtime-downloads')}) {
-  const sources = json('release/runtime-sources.lock.json');
-  const source = variant === 'jlink' ? sources.targets[target]?.jdk : sources.targets[target];
-  if (!source || !['full-jre', 'jlink'].includes(variant)) throw Error('Unsupported runtime target or variant');
-  if (variant === 'jlink' && target !== process.platform + '-' + process.arch) throw Error('jlink requires a native target runner');
-  for (const dir of [output, input, cache]) if (!path.isAbsolute(dir)) throw Error('Runtime input/output/cache must be absolute');
-  fs.mkdirSync('build', {recursive: true});
-  require('esbuild').buildSync({entryPoints: ['src/host/runtime.ts'], outfile: 'build/runtime.cjs', bundle: true, platform: 'node', format: 'cjs'});
-  const {runtimeInventory} = require('../build/runtime.cjs');
-  const archive = await download(source, cache);
-  const temporary = fs.mkdtempSync(path.resolve('build/runtime-extract-'));
-  const destination = path.join(output, 'artifacts/runtime', target);
-  const serverLock = path.join(input, 'release/editor-artifacts.lock.json');
-  const server = json(serverLock);
-  const provenance = {schemaVersion: 1, target, variant, version: source.version, archiveSha256: source.archive.sha256, archiveUrl: source.archive.url,
-    coreCommit: server.coreCommit, serverLockSha256: hash(serverLock), serverFiles: server.files, modules: [], linkerOptions: []};
+async function stageRuntime(destination) {
+  const target = process.platform + '-' + process.arch;
+  const source = require('../release/jdk-sources.json')[target];
+  if (!source) throw Error('Unsupported native runtime target: ' + target);
+  const archive = await download(source, path.resolve('build/runtime-downloads'));
+  const temporary = fs.mkdtempSync(path.resolve('build/jdk-'));
   try {
-    const home = await extract(source, archive, temporary, runtimeInventory);
+    const home = extractJdk(archive, temporary);
+    const executable = path.join(home, 'bin', process.platform === 'win32' ? 'jlink.exe' : 'jlink');
+    // Includes SQL and logging for third-party modules and providers for HTTPS, encodings and locales.
+    const modules = ['java.compiler', 'java.net.http', 'java.sql', 'java.xml',
+      'jdk.charsets', 'jdk.crypto.ec', 'jdk.localedata', 'jdk.unsupported'];
     fs.mkdirSync(path.dirname(destination), {recursive: true});
-    fs.rmSync(destination, {recursive: true, force: true});
-    if (variant === 'full-jre') await materializeRuntime(home, destination, runtimeInventory);
-    else {
-      const suffix = process.platform === 'win32' ? '.exe' : '';
-      const run = (tool, args) => cp.execFileSync(path.join(home, 'bin', tool + suffix), args, {encoding: 'utf8', maxBuffer: 16 * 1024 * 1024});
-      run('java', ['-version']);
-      const jars = server.files.map(file => {
-        const jar = path.join(input, 'artifacts/server', file.path);
-        if (!/^lib\/[\w.-]+\.jar$/.test(file.path) || hash(jar) !== file.sha256) throw Error('Invalid locked server JAR: ' + file.path);
-        return jar;
-      });
-      const actual = fs.readdirSync(path.join(input, 'artifacts/server/lib')).sort();
-      if (JSON.stringify(actual) !== JSON.stringify(server.files.map(file => path.basename(file.path)).sort())) throw Error('Unexpected server libraries');
-      if(server.schemaVersion!==3||server.launch?.kind!=='module'||server.launch.moduleName!=='guru.interlis.lsp')throw Error('Modular server lock required for jlink analysis');
-      const analysis = run('jdeps', ['--multi-release', '25', '--print-module-deps', '--recursive', '--add-modules', 'java.logging,java.sql,com.google.errorprone.annotations', '--module-path', jars.join(path.delimiter), '--module', server.launch.moduleName]);
-      const lines = analysis.trim().split(/\r?\n/);
-      const detected = lines.at(-1);
-      if (!/^[a-zA-Z][\w.]*(?:,[a-zA-Z][\w.]*)*$/.test(detected)) throw Error('Invalid jdeps module result: ' + analysis);
-      const config = json('release/runtime-link.json');
-      const systemModules = new Set(run('java', ['--list-modules']).trim().split(/\r?\n/).map(line => line.split('@')[0]));
-      // Application/automatic modules remain unchanged external JARs, never jlink inputs.
-      const jdkDependencies = detected.split(',').filter(name => systemModules.has(name));
-      const descriptorJdkRoots = new Set();
-      const descriptorOutputs = {};
-      for (const module of Object.values(server.moduleInventory)) {
-        const description = run('java', ['--module-path', jars.join(path.delimiter), '--describe-module', module.name]);
-        descriptorOutputs[module.name] = description.replaceAll(input, '<common>');
-        for (const match of description.matchAll(/^requires ([\w.]+)/gm)) if (systemModules.has(match[1])) descriptorJdkRoots.add(match[1]);
-      }
-      const modules = [...new Set([...jdkDependencies, ...descriptorJdkRoots, 'java.logging', 'java.sql', ...config.additionalModules])].sort();
-      const args = ['--module-path', path.join(home, 'jmods'), '--add-modules', modules.join(','), ...config.options, '--output', destination];
-      run('jlink', args);
-      // Materialize legal-file links consistently with the full-JRE package.
-      await materializeRuntime(destination, destination, runtimeInventory);
-      if (hash(path.join(destination, 'lib/security/cacerts')) !== hash(path.join(home, 'lib/security/cacerts'))) throw Error('jlink changed vendor trust anchors');
-      Object.assign(provenance, {modules, descriptorOutputs, analysisRoots: ['java.logging', 'java.sql', 'com.google.errorprone.annotations'], externalModules: detected.split(',').filter(name => !systemModules.has(name)), moduleReasons: config.moduleReasons, linkerOptions: config.options, linkConfigurationSha256: hash('release/runtime-link.json'), jdepsOutput: analysis.replaceAll(input, '<common>'), linkedModules: runImage(destination, ['--list-modules'])});
-    }
-    const record = {version: source.version, archiveSha256: source.archive.sha256, java: source.java, files: await runtimeInventory(destination, target !== 'win32-x64')};
-    const lockFile = path.join(output, 'release/runtime-artifacts.lock.json');
-    const lock = fs.existsSync(lockFile) ? json(lockFile) : {schemaVersion: 1, targets: {}};
-    lock.targets[target] = record;
-    writeJSON(lockFile, lock);
-    writeJSON(path.join(output, 'release/runtime-build.json'), provenance);
-    fs.mkdirSync(path.join(output, 'licenses'), {recursive: true});
-    fs.writeFileSync(path.join(output, 'licenses/runtime-NOTICE.txt'), `Eclipse Adoptium Temurin Java 25 (${source.version}), ${target}.\n` +
-      (variant === 'jlink' ? 'Custom runtime generated from the vendor JDK using jlink; see release/runtime-build.json for modules and options.\n' : 'Vendor JRE binaries unmodified; legal-file links materialized for portable VSIX extraction.\n') +
-      `Vendor licenses and notices retained under artifacts/runtime/${target}/legal.\nOpenJDK is GPLv2 with the Classpath Exception, with component-specific notices.\nVendor source/build metadata: ${source.releaseUrl}\nSCM: ${source.scmRef}\nArchive: ${source.archive.url}\nSHA256: ${source.archive.sha256}\n`);
-    console.log(`Staged ${target} ${variant}: ${record.files.length} locked files`);
-    return provenance;
-  } finally {fs.rmSync(temporary, {recursive: true, force: true});}
-}
-function runImage(root, args) {
-  return cp.execFileSync(path.join(root, 'bin', process.platform === 'win32' ? 'java.exe' : 'java'), args, {encoding: 'utf8'});
-}
-if (require.main === module) {
-  const options = {};
-  for (let i = 2; i < process.argv.length; i += 2) {
-    if (!['--target', '--variant', '--output', '--input', '--cache'].includes(process.argv[i]) || !process.argv[i + 1]) throw Error('Usage: stage-runtime --target target|all [--variant full-jre|jlink] [--input absolute-root] [--output absolute-root] [--cache absolute-directory]');
-    options[process.argv[i].slice(2)] = process.argv[i + 1];
+    cp.execFileSync(executable, ['--add-modules', modules.join(','), '--strip-debug',
+      '--no-header-files', '--no-man-pages', '--output', destination], {stdio: 'inherit'});
+    inspectLinks(destination, true);
+  } finally {
+    fs.rmSync(temporary, {recursive: true, force: true});
   }
-  (async () => {
-    const targets = options.target === 'all' ? Object.keys(json('release/runtime-sources.lock.json').targets) : [options.target];
-    const records = {}, notices = [], output = options.output || process.cwd();
-    for (const target of targets) {
-      records[target] = await stageRuntime({...options, target});
-      notices.push(fs.readFileSync(path.join(output, 'licenses/runtime-NOTICE.txt'), 'utf8'));
-    }
-    if (targets.length > 1) {
-      writeJSON(path.join(output, 'release/runtime-build.json'), {schemaVersion: 1, targets: records});
-      fs.writeFileSync(path.join(output, 'licenses/runtime-NOTICE.txt'), notices.join('\n'));
-    }
-  })().catch(error => {console.error(error); process.exitCode = 1;});
 }
-module.exports = {stageRuntime, download};
+
+module.exports = {stageRuntime, extractJdk, inspectLinks};

@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import {LanguageClient, InitializeParams} from 'vscode-languageclient/node';
-import type {EditorAssistResult} from '../../artifacts/types/editor-protocol';
+import type {EditorAssistResult} from '../../build/lsp/types/editor-protocol';
 
 /** Negotiate one Java-owned Enter planning path; standard on-type formatting is disabled for this client. */
 export class InterlisLanguageClient extends LanguageClient {

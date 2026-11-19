@@ -1,3 +1,20 @@
-const fs=require('fs'),path=require('path'),cp=require('child_process'),crypto=require('crypto');
-const args=process.argv.slice(2);if(args.length!==2||args[0]!=='--java-home'||!path.isAbsolute(args[1]))throw Error('Usage: prepare-test-fixtures --java-home absolute-JDK25');
-const javaHome=args[1],root=path.resolve('build/test-fixtures/protocol-mismatch'),classes=path.join(root,'classes'),lock=JSON.parse(fs.readFileSync('release/editor-artifacts.lock.json'));fs.mkdirSync(classes,{recursive:true});const lsp=lock.files.find(f=>f.path.startsWith('lib/interlis-lsp-')),gson=lock.files.find(f=>f.path.startsWith('lib/gson-'));if(!lsp||!gson)throw Error('Required locked fixture dependencies absent');const suffix=process.platform==='win32'?'.exe':'';cp.execFileSync(path.join(javaHome,'bin/javac'+suffix),['--release','25','-cp',path.resolve('artifacts/server',gson.path),'-d',classes,'test/fixtures/protocol-mismatch/Main.java'],{stdio:'inherit'});const output=path.join(root,'interlis-lsp-incompatible.jar');fs.copyFileSync(path.join('artifacts/server',lsp.path),output);cp.execFileSync(path.join(javaHome,'bin/jar'+suffix),['--update','--file',output,'-C',classes,'guru/interlis/lsp/Main.class'],{stdio:'inherit'});const sha=crypto.createHash('sha256').update(fs.readFileSync(output)).digest('hex');const changed=structuredClone(lock);changed.files.find(f=>f.path===lsp.path).sha256=sha;changed.moduleInventory[lsp.path].sha256=sha;fs.writeFileSync(path.join(root,'editor-artifacts.lock.json'),JSON.stringify(changed,null,2));fs.writeFileSync(path.join(root,'manifest.json'),JSON.stringify({negativeFixture:true,coreSha:lock.coreCommit,baseLibrary:lsp.path,baseSha256:lsp.sha256,fixtureSha256:sha,protocolVersion:999,neverPackageAsProduct:true},null,2));console.log('Prepared isolated incompatible-protocol Java fixture '+sha);
+const fs = require('node:fs');
+const path = require('node:path');
+const {execFileSync} = require('node:child_process');
+
+const [flag, javaHome] = process.argv.slice(2);
+if (flag !== '--java-home' || !path.isAbsolute(javaHome || '')) throw Error('Use --java-home with an absolute Java 25 JDK');
+const lib = path.resolve('build/lsp/lib');
+const jars = fs.readdirSync(lib);
+const lsp = jars.find(name => /^interlis-lsp-.*\.jar$/.test(name));
+const gson = jars.find(name => /^gson-.*\.jar$/.test(name));
+if (!lsp || !gson) throw Error('Stage the LSP distribution first.');
+const root = path.resolve('build/test-fixtures/protocol-mismatch');
+const classes = path.join(root, 'classes');
+fs.mkdirSync(classes, {recursive: true});
+const tool = name => path.join(javaHome, 'bin', name + (process.platform === 'win32' ? '.exe' : ''));
+execFileSync(tool('javac'), ['--release', '25', '-cp', path.join(lib, gson),
+  '-d', classes, 'test/fixtures/protocol-mismatch/Main.java'], {stdio: 'inherit'});
+const fixture = path.join(root, 'interlis-lsp-incompatible.jar');
+fs.copyFileSync(path.join(lib, lsp), fixture);
+execFileSync(tool('jar'), ['--update', '--file', fixture, '-C', classes, 'guru/interlis/lsp/Main.class'], {stdio: 'inherit'});

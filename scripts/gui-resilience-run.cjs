@@ -1,6 +1,6 @@
 const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),cp=require('node:child_process'),http=require('node:http'),crypto=require('node:crypto');
 const options={};for(let i=2;i<process.argv.length;i+=2)options[process.argv[i]]=process.argv[i+1];
-for(const key of ['--core-dir','--cache','--java-home'])if(!path.isAbsolute(options[key]||''))throw Error('Supply absolute '+key);
+for(const key of ['--cache','--java-home'])if(!path.isAbsolute(options[key]||''))throw Error('Supply absolute '+key);
 if(process.platform!=='darwin')throw Error('macOS resource observer only');
 const root=path.resolve(__dirname,'..'),storage=fs.mkdtempSync(path.join(os.tmpdir(),'ili GUI ä-')),token=crypto.randomBytes(24).toString('hex');
 const output=path.resolve('build/reports/resource-observer',new Date().toISOString().replace(/[:.]/g,'-'));fs.mkdirSync(output,{recursive:true});

@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import {LanguageClient} from 'vscode-languageclient/node';
 import {randomUUID} from 'node:crypto';
 
-import type {ExportFormat as Format,ExportArtifact as Artifact} from '../../artifacts/types/editor-protocol';
+import type {ExportFormat as Format,ExportArtifact as Artifact} from '../../build/lsp/types/editor-protocol';
 const formats:Format[]=['MARKDOWN','HTML','DOCX','MERMAID','PLANTUML','GRAPHML'];
 const extensions:Record<Format,string>={MARKDOWN:'md',HTML:'html',DOCX:'docx',MERMAID:'mmd',PLANTUML:'puml',GRAPHML:'graphml'};
 

@@ -1,9 +1,10 @@
 node_modules/
 out/
 build/
-artifacts/
 .vscode-test/
 *.vsix
 
 /src/diagram/generated/
 /licenses/bundled-diagram-notices.txt
+
+.gradle/

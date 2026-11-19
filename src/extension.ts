@@ -88,13 +88,12 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       if (typeof value !== 'string') throw new Error('The machine setting ' + key + ' must be a path string.');
       return value;
     };
-    const bundleOverride = machineSetting('server.bundlePath');
-    const developmentJava = context.extensionMode === vscode.ExtensionMode.Development
-      ? process.env.INTERLIS_DEV_JAVA || '' : '';
-    const plan = await resolveLaunchPlan(context.extensionPath, machineSetting('server.javaPath') || developmentJava, bundleOverride);
+    const development = context.extensionMode === vscode.ExtensionMode.Development;
+    const developmentJava = development ? process.env.INTERLIS_DEV_JAVA || '' : '';
+    const plan = await resolveLaunchPlan(context.extensionPath, machineSetting('server.javaPath') || developmentJava, development);
     const next = new InterlisLanguageClient('interlisGuru', 'INTERLIS', () => {
       const child = spawn(plan.java, plan.args, {shell: false, stdio: 'pipe'});
-      output.appendLine(`Server start pid=${child.pid} core=${plan.coreCommit} bundle=${plan.bundleDigest} runtime=${plan.runtimeDigest || 'explicit'} ${plan.runtimeSource}${bundleOverride ? ' server override' : ' packaged distribution'}`);
+      output.appendLine(`Server start pid=${child.pid} ${plan.runtimeSource}${development ? ' development distribution' : ' packaged distribution'}`);
       child.once('exit', (code, signal) => {if (!deactivating) output.appendLine(`Server exit pid=${child.pid} code=${code} signal=${signal}`);});
       return Promise.resolve(child);
     }, {

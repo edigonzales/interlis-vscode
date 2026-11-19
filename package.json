@@ -143,12 +143,6 @@
           "scope": "machine",
           "description": "Optional explicit Java 25 executable for development. Empty uses the verified bundled runtime on the workspace host."
         },
-        "interlisGuru.server.bundlePath": {
-          "type": "string",
-          "default": "",
-          "scope": "machine",
-          "description": "Explicit development server distribution. Empty uses the packaged server; every file must match the artifact lock."
-        },
         "interlisGuru.trace.server": {
           "type": "string",
           "enum": [
@@ -614,8 +608,6 @@
   },
   "scripts": {
     "build": "node scripts/build.cjs",
-    "stage:core": "node scripts/stage-core.cjs",
-    "stage:runtime": "node scripts/stage-runtime.cjs",
     "test:unit": "node --test test/unit/*.test.cjs",
     "test:protocol": "node --test test/protocol.test.cjs",
     "test:gui": "node scripts/gui.cjs",
