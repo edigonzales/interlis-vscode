@@ -2,7 +2,7 @@ const yauzl = require('yauzl');
 
 /** Validate archive paths before handing the VSIX to the native installer. */
 function readVSIX(file) {
-  return new Promise((resolve, reject) => yauzl.open(file, {lazyEntries: true}, (error, zip) => {
+  return new Promise((resolve, reject) => yauzl.open(file, {lazyEntries: true, strictFileNames: true}, (error, zip) => {
     if (error) return reject(error);
     const paths = new Set();
     let manifest, xml, bytes = 0;
@@ -15,7 +15,8 @@ function readVSIX(file) {
         bytes += entry.uncompressedSize;
         const type = (entry.externalFileAttributes >>> 16) & 0o170000;
         if ((!name.startsWith('extension/') && !['[Content_Types].xml', 'extension.vsixmanifest'].includes(name)) ||
-            name.includes('\\') || name.includes(':') || name.split('/').includes('..') ||
+            name.includes('\\') || name.includes(':') ||
+            name.replace(/\/$/, '').split('/').some(part => ['', '.', '..'].includes(part)) ||
             paths.has(key) || paths.size >= 5000 || bytes > 600 * 1024 * 1024 ||
             ![0, 0o040000, 0o100000].includes(type)) throw Error('Unsafe or excessive VSIX entry: ' + name);
         paths.add(key);

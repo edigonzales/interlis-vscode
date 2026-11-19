@@ -114,15 +114,14 @@ cases fails. This differs from API integration tests.
 
 ```sh
 INTERLIS_TEST_CODE='/absolute/isolated/Visual Studio Code.app/Contents/MacOS/Code' \
-npm run test:extension-host
+INTERLIS_JAVA="$JAVA_HOME/bin/java" npm run test:extension-host
 ```
 
 This additional isolated Extension-Host run checks activation, the real definition
 provider and dirty-buffer restart through VSCode APIs. It is not GUI evidence.
 On macOS use the extension’s `scripts/without-python.cjs` wrapper for the
 review and qualification processes, setting the Extension CWD inside the guard.
-See the [execution plan](docs/implementation/vscode-extension/EXECUTION_PLAN.md)
-and [current status](docs/implementation/vscode-extension/STATUS.md).
+See [architecture and qualification](docs/development.md).
 
 Source resource origins and license hashes are in
 [provenance](docs/provenance/source-adoptions.md). Bundled Node notices are

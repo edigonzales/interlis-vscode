@@ -74,7 +74,7 @@ async function stageRuntime(destination) {
       'jdk.charsets', 'jdk.crypto.ec', 'jdk.localedata', 'jdk.unsupported'];
     fs.mkdirSync(path.dirname(destination), {recursive: true});
     cp.execFileSync(executable, ['--add-modules', modules.join(','), '--strip-debug',
-      '--no-header-files', '--no-man-pages', '--output', destination], {stdio: 'inherit'});
+      '--no-header-files', '--no-man-pages', '--compress', 'zip-6', '--output', destination], {stdio: 'inherit'});
     inspectLinks(destination, true);
   } finally {
     fs.rmSync(temporary, {recursive: true, force: true});

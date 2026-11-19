@@ -1,5 +1,8 @@
 # INTERLIS VS Code – aktueller Ausführungsstand
 
+> Historischer Projektstand. Der aktuelle Build und die Prüfwege stehen in der
+> [Entwicklungsanleitung](../../development.md).
+
 **V0–V5 PASS**, unabhängig und operativ validiert. Die kumulative V5-Abnahme
 umfasst **56/56 Kriterien** und die Einzelbewertung F01–F60 am Produktpaar
 Core `6983baf95c47a7e20dbb41a2e50500185f578c37` / Extension
@@ -56,7 +59,7 @@ Rest-Java-PIDs. Einzelheiten und Fehlversuche im [V1-Bericht](implementation/V1.
 
 Historischer V1-VSIX-Nachweis (der ursprüngliche Buildpfad wird je Phase neu erzeugt): `build/packages/interlis-vscode-darwin-arm64.vsix`, SHA-256
 `07071ebe6ebee9c803ce53bc367dd7b0fc51d095a028c01f7cef3fc8a30e7049`.
-Elf JARs im [Artefaktlock](../../../release/editor-artifacts.lock.json).
+Elf JARs im [damaligen Artefaktlock](https://github.com/edigonzales/interlis-vscode/blob/407229298741b3585a39f70cecd40aaa543e6fb1/release/editor-artifacts.lock.json).
 Primärplattform macOS arm64, VSCode1.140.0, ExTester8.28.1,
 ChromeDriver150.0.7871.250, externes Temurin25.0.3. ZIP-Zeitstempel können beim
 erneuten Packen den Containerhash ändern; Nutzdateien werden separat geprüft.

@@ -1,5 +1,7 @@
 import * as vscode from 'vscode';
 import {spawn} from 'node:child_process';
+import {existsSync} from 'node:fs';
+import path from 'node:path';
 import {LanguageClient, State, ErrorAction, CloseAction} from 'vscode-languageclient/node';
 import {resolveLaunchPlan} from './host/launch';
 import {DiagramEditors} from './diagram';
@@ -88,7 +90,8 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
       if (typeof value !== 'string') throw new Error('The machine setting ' + key + ' must be a path string.');
       return value;
     };
-    const development = context.extensionMode === vscode.ExtensionMode.Development;
+    const development = context.extensionMode !== vscode.ExtensionMode.Production
+      && existsSync(path.join(context.extensionPath, 'build/lsp'));
     const developmentJava = development ? process.env.INTERLIS_DEV_JAVA || '' : '';
     const plan = await resolveLaunchPlan(context.extensionPath, machineSetting('server.javaPath') || developmentJava, development);
     const next = new InterlisLanguageClient('interlisGuru', 'INTERLIS', () => {

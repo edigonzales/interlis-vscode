@@ -1,4 +1,4 @@
-const fs=require('node:fs');const path=require('node:path');const os=require('node:os');const cp=require('node:child_process');
+const fs=require('node:fs');const path=require('node:path');const os=require('node:os');
 (async()=>{
  if(!process.env.INTERLIS_TEST_CODE)throw new Error('Set INTERLIS_TEST_CODE (isolated downloaded VSCode executable)');
  const temporary=fs.mkdtempSync(path.join(os.tmpdir(),'ili-host-'));const user=path.join(temporary,'user');fs.mkdirSync(path.join(user,'User'),{recursive:true});
