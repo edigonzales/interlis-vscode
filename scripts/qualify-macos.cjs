@@ -40,14 +40,15 @@ try{
  job('dependencies',root,process.execPath,['scripts/verify-dependencies.cjs']);
  job('protocol-negative-fixture',root,process.execPath,['scripts/prepare-test-fixtures.cjs','--java-home',javaHome]);
  job('extension-host',root,process.execPath,['scripts/extension-host.cjs']);
- const classes=['EditorAssistanceTest','EditorCompletionTest','EditorTemplateContractTest','EditorPartialStateContractTest','QueryOwnershipTest','SnapshotOwnershipTest','P3CompletionScopeContractTest','RenameSafetyTest','FormatterContractTest','P3FormatterPolicyContractTest','LexicalRecoveryContractTest','VersionScopeTest','SyntaxContractTest','AssociationRulesContractTest','TopicDependencyContractTest','UnitTypeContractTest','ViewContractTest','DomainRestrictionContractTest'];
- const modules = ['interlis-compiler','interlis-documentation','interlis-lsp','interlis-wasm-bridge','interlis-projection','interlis-compiler-cli'];
+ const classes=['EditorAssistanceTest','EditorCompletionTest','EditorTemplateContractTest','EditorPartialStateContractTest','QueryOwnershipTest','SnapshotOwnershipTest','CompletionScopeContractTest','RenameSafetyTest','FormatterContractTest','FormatterPolicyContractTest','LexicalRecoveryContractTest','VersionScopeTest','SyntaxContractTest','AssociationRulesContractTest','TopicDependencyContractTest','UnitTypeContractTest','ViewContractTest','DomainRestrictionContractTest'];
+ const modules = ['interlis-compiler','interlis-lsp','interlis-wasm-bridge','interlis-projection','interlis-compiler-cli'];
  report.javaModules = {};
  for (const module of modules) {
-  const selection = module === 'interlis-compiler' ? 'guru.interlis.compiler.(' + classes.join('|') + ')' : module === 'interlis-compiler-cli' ? 'guru.interlis.cli.CliApplicationTest#diagramExportUsesCheckedSchema' : null;
-  job('java-' + module, core, path.join(javaHome,'bin/java'), [...(selection?['-Djenesis.test.filter='+selection]:[]),'build/jenesis/Make.java','+'+module]);
-  const dir=path.join(core,'target/jenesis-jvm/engine/build/maven/compose/module/build-testmodule-'+module,
-    'produce/assemble/observed/test/executed/output/reports/tests'),destination=path.join(output,'java-results',module);fs.mkdirSync(destination,{recursive:true});let tests=0;
+  const selection = module === 'interlis-compiler' ? classes.map(name => '*.' + name)
+    : module === 'interlis-compiler-cli' ? ['*.CliApplicationTest.diagramExportUsesCheckedSchema'] : [];
+  job('java-' + module, core, path.join(core,'gradlew'),
+    ['--no-daemon', ':'+module+':test', ...selection.flatMap(test => ['--tests', test])]);
+  const dir=path.join(core,module,'build/test-results/test'),destination=path.join(output,'java-results',module);fs.mkdirSync(destination,{recursive:true});let tests=0;
   for(const file of fs.readdirSync(dir).filter(n=>n.endsWith('.xml'))){const text=fs.readFileSync(path.join(dir,file),'utf8');const suite=text.match(/<testsuite\b[^>]*>/)?.[0];assert.ok(suite,'No JUnit suite');tests+=Number(suite.match(/\btests="(\d+)"/)[1]);assert.ok(!/\b(?:failures|errors|skipped)="[1-9]/.test(suite),'Failed or skipped JUnit cases');fs.copyFileSync(path.join(dir,file),path.join(destination,file));}assert.ok(tests>0);report.javaModules[module]=tests;
  }save();
  job('extension-diagram-ui',root,process.execPath,['--test','--test-concurrency=1',...fs.readdirSync(path.join(root,'test/renderer')).filter(n=>n.endsWith('.test.cjs')).sort().map(n=>'test/renderer/'+n)]);

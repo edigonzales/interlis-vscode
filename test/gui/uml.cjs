@@ -132,8 +132,11 @@ describe('Installed live Java diagram and native Sprotty editor',function(){
  });
  it('GUI-18 keeps explicit panels isolated and follows another ILI file only after explicit activation',async()=>{
   await enter();await fresh();assert.equal(await (await ui.driver.findElement(By.id('follow'))).getText(),'Pinned');const firstRoot=await (await ui.driver.findElement(By.id('root'))).getAttribute('textContent');assert.match(firstRoot,/Interactive\.ili$/);
-  await back();await openSource('Other.ili');await enter();assert.equal(await (await ui.driver.findElement(By.id('root'))).getAttribute('textContent'),firstRoot,'Pinned diagram silently followed the other editor');
-  await click('follow');await ui.waitFor(async()=>await (await ui.driver.findElement(By.id('follow'))).getText()==='Following','Follow was not enabled');await back();await openSource('Other.ili');await enter('Other.ili');await ui.waitFor(async()=>/Other\.ili$/.test(await (await ui.driver.findElement(By.id('root'))).getAttribute('textContent')),'Explicit follow did not switch source');assert.ok((await (await node('A')).getText()).includes('otherAttribute'));
+  await back();await openSource('Other.ili');await enter();await fresh();
+  assert.equal(await (await ui.driver.findElement(By.id('root'))).getAttribute('textContent'),firstRoot,'Pinned diagram silently followed the other editor');
+  // The Cancel button can move the toolbar targets while the opened file is analyzed.
+  await (await ui.driver.findElement(By.id('follow'))).sendKeys(Key.ENTER);
+  await ui.waitFor(async()=>await (await ui.driver.findElement(By.id('follow'))).getText()==='Following','Follow was not enabled');await back();await openSource('Other.ili');await enter('Other.ili');await ui.waitFor(async()=>/Other\.ili$/.test(await (await ui.driver.findElement(By.id('root'))).getAttribute('textContent')),'Explicit follow did not switch source');assert.ok((await (await node('A')).getText()).includes('otherAttribute'));
   await click('follow');await back();await openSource('Other.ili');await ui.palette('INTERLIS: Show Diagram for This File');await enter('Other.ili');const other=await node('A');await dragElement(await other.findElement(By.css('.interlis-title')),45,18);const otherPosition=await other.getAttribute('transform'),otherId=await other.getAttribute('data-element-id');
   const settingsDirectory=path.join(evidence,'Unicode Modelle/.vscode');
   fs.mkdirSync(settingsDirectory,{recursive:true});
