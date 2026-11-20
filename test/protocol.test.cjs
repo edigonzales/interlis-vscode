@@ -16,7 +16,7 @@ test('packaged Java distribution initializes, diagnoses real fixture and shuts d
  try{
   const result=await request('initialize',{processId:process.pid,rootUri:null,capabilities:{workspace:{workspaceEdit:{documentChanges:true}},experimental:{interlis:{editorAssist:true}}},initializationOptions:{repositories:[repository.base],cacheDirectory:path.join(temporary,'cache')}});assert.equal(result.capabilities.positionEncoding,'utf-16');assert.equal(result.serverInfo.name,'interlis-java');assert.equal(result.capabilities.experimental.interlis.protocolVersion,1);assert.equal(result.capabilities.experimental.interlis.sourceContent,true);assert.equal(result.capabilities.experimental.interlis.compile,true);send('initialized',{});
   const uri=pathToFileURL(path.resolve('test/fixtures/editor-basic/Example.ili')).href;send('textDocument/didOpen',{textDocument:{uri,languageId:'interlis',version:1,text:fs.readFileSync('test/fixtures/editor-basic/Example.ili','utf8')}});
-  const compiled=await request('workspace/executeCommand',{command:'interlis.compile',arguments:[]});assert.match(JSON.stringify(compiled),/succeeded/i);
+  const compiled=await request('interlis/compile',{mode:'workspace'});assert.equal(compiled.outcome,'succeeded');
   const definition=await request('textDocument/definition',{textDocument:{uri},position:{line:7,character:17}});assert.ok(JSON.stringify(definition).includes('"line":4'),JSON.stringify(definition));
   const current=await request('interlis/compile',{mode:'current',textDocument:{uri,version:1}});assert.equal(current.outcome,'succeeded');
   assert.equal(result.capabilities.experimental.interlis.diagramProtocolVersion,1);assert.equal(result.capabilities.experimental.interlis.diagramDocumentVersion,'1.0');
