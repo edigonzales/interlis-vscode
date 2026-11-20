@@ -27,44 +27,19 @@ jobs:
   common:
     runs-on: ubuntu-24.04
     timeout-minutes: 25
-    outputs:
-      core-sha: ${{ steps.core.outputs.sha }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
-        with:
-          path: extension
-      - id: core
-        run: node extension/scripts/ci/core-ref.cjs
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
-        with:
-          repository: edigonzales/interlis-java
-          ref: ${{ steps.core.outputs.sha }}
-          path: core
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
-        with:
-          node-version: 24.22.0
       - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
         with:
           distribution: temurin
           java-version: 25.0.5
-      - run: npm ci --ignore-scripts
-        working-directory: extension
-      - name: Check native process tracing
-        run: command -v strace || sudo apt-get install --yes --no-install-recommends strace
-      - name: Build the locked Core editor bundle
-        run: node scripts/ci/trace-linux.cjs node scripts/ci/build-smokes.cjs
-        working-directory: extension
+      - run: ./gradlew stageLsp --refresh-dependencies
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: common-bundle
+          name: lsp-distribution
+          path: build/lsp/
           if-no-files-found: error
           retention-days: 3
-          path: extension/build/common.tar.gz
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
-        if: always()
-        with:
-          name: common-process-audit
-          path: extension/build/ci/process-audit/
   native:
     needs: common
     strategy:
@@ -86,17 +61,11 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           path: extension
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
-        if: runner.os == 'macOS' || (runner.os == 'Linux' && (github.event_name == 'pull_request' || inputs.full_gui))
-        with:
-          repository: edigonzales/interlis-java
-          ref: ${{ needs.common.outputs.core-sha }}
-          path: core
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: 22.13.0
       # Test-only javac/keytool and macOS qualification. jlink itself uses the
-      # separate JDK archive verified against runtime-sources.lock.json.
+      # separate JDK archive verified against release/jdk-sources.json.
       - uses: actions/setup-java@cf277c60eb25467037889841efdb72551f06f6c3
         with:
           distribution: temurin
@@ -105,24 +74,18 @@ jobs:
         working-directory: extension
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
         with:
-          name: common-bundle
-          path: extension/build
-      - name: Extract common inputs
-        shell: bash
-        working-directory: extension
-        run: |
-          mkdir -p build/common
-          tar -xzf build/common.tar.gz -C build/common
+          name: lsp-distribution
+          path: extension/build/lsp
       - uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684
         with:
           path: extension/build/runtime-downloads
-          key: runtime-${{ matrix.target }}-${{ hashFiles('extension/release/runtime-sources.lock.json', 'extension/release/editor-artifacts.lock.json', 'extension/release/runtime-link.json', 'extension/scripts/stage-runtime.cjs') }}
+          key: runtime-${{ matrix.target }}-${{ hashFiles('extension/release/jdk-sources.json') }}
       - name: Check native process tracing
         if: runner.os == 'Linux'
         run: command -v strace || sudo apt-get install --yes --no-install-recommends strace
       - name: Build and test Linux VSIX
         if: runner.os == 'Linux'
-        run: node scripts/ci/trace-linux.cjs node scripts/ci/build-candidates.cjs
+        run: node scripts/ci/trace-linux.cjs node scripts/ci/build-package.cjs
         working-directory: extension
       - name: Build and test Windows VSIX with process audit
         if: runner.os == 'Windows'
@@ -131,8 +94,12 @@ jobs:
         working-directory: extension
       - name: Build and test macOS VSIX under interpreter guard
         if: runner.os == 'macOS'
-        run: node scripts/without-python.cjs /bin/sh -c 'cd "$1" && exec "$2" scripts/ci/build-candidates.cjs' native "$PWD" "$(command -v node)"
+        run: node scripts/without-python.cjs /bin/sh -c 'cd "$1" && exec "$2" scripts/ci/build-package.cjs' native "$PWD" "$(command -v node)"
         working-directory: extension
+      - name: Test extension units
+        if: runner.os == 'Linux'
+        working-directory: extension
+        run: npm run test:unit
       - name: Install Linux GUI dependencies
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install --yes xvfb xauth xsel openbox
@@ -179,13 +146,6 @@ jobs:
             extension/build/ci/process-audit/
             extension/build/reports/gui/
             extension/build/reports/
-            extension/build/runtimes/*/*/release/
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
-        if: ${{ always() && !inputs.prerelease }}
-        with:
-          name: comparison-${{ matrix.target }}
-          retention-days: 7
-          path: extension/build/comparison/
   packages:
     needs: native
     runs-on: ubuntu-24.04

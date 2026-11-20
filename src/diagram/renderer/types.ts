@@ -1,1 +1,1 @@
-export type * from '../../../artifacts/types/diagram-document';
+export type * from '../../../build/lsp/types/diagram-document';

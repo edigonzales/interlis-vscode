@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import {randomUUID} from 'node:crypto';
 import type {LanguageClient} from 'vscode-languageclient/node';
-import type {AnalysisReady,DiagramRequest,DiagramResponse,DiagramNavigation,DiagramNavigationParams,DiagramSelectionParams,DiagramSelectionResult} from '../artifacts/types/editor-protocol';
+import type {AnalysisReady,DiagramRequest,DiagramResponse,DiagramNavigation,DiagramNavigationParams,DiagramSelectionParams,DiagramSelectionResult} from '../build/lsp/types/editor-protocol';
 import {verifyDiagramAssets} from './host/diagram-assets';
 import {DiagramStateStore} from './host/diagram-state';
 import {decodeDiagramExport} from './host/diagram-export';

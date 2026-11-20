@@ -4,9 +4,25 @@ const {By,Key}=require('vscode-extension-tester');
 const ui=require('./workbench.cjs'),v=require('./v5-common.cjs');
 const fixture=JSON.parse(fs.readFileSync(path.join(v.evidence,'resilience-fixtures.json')));
 const workspace=path.join(v.evidence,'Unicode Modelle');
-async function button(text){return ui.driver.wait(async()=>{for(const e of await ui.driver.findElements(By.css('button,.monaco-button'))){if(await e.isDisplayed()&&(await e.getText()).trim()===text)return e;}return false;},15000,'Native button missing: '+text);}
+async function clickButton(text){
+ await ui.driver.wait(async()=>{
+  for(const entry of await ui.driver.findElements(By.css('button,.monaco-button'))){
+   try{
+    if(await entry.isDisplayed()&&(await entry.getText()).trim()===text){
+     await entry.click();
+     return true;
+    }
+   }catch(error){
+    if(error.name!=='StaleElementReferenceError')throw error;
+   }
+  }
+  return false;
+ },15000,'Could not click native button: '+text);
+}
 async function absolute(file){await v.back();await ui.palette(file,true);await ui.waitEditor(path.basename(file));await ui.focusEditor();}
 async function addFolder(expectTrust=false){
+ const previousPids=new Set(v.pids());
+ assert.ok(previousPids.size,'Expected a running language server before adding a folder');
  await v.back();await ui.palette('Workspaces: Add Folder to Workspace...',false,true);
  const input=await ui.driver.wait(async()=>{for(const e of await ui.driver.findElements(By.css('.quick-input-widget input')))if(await e.isDisplayed())return e;return false;},10000,'Native folder picker missing');
  await input.sendKeys(Key.chord(ui.primaryModifier,'a'),fixture.secondRoot+path.sep);
@@ -17,18 +33,22 @@ async function addFolder(expectTrust=false){
   for(const dialog of await ui.driver.findElements(By.css('.monaco-dialog-box'))){
    if(await dialog.isDisplayed()&&(await dialog.getText()).includes('Do you trust the authors of the files in this folder?')){
     assert.equal(expectTrust,true,'Unexpected trust prompt when re-adding a trusted folder');
-    await (await button('Yes')).click();trustConfirmed=true;return true;
+    await clickButton('Yes');trustConfirmed=true;return true;
    }
   }
   if(!await input.isDisplayed())return !expectTrust;
   const bars=await ui.driver.findElements(By.css('.quick-input-widget .monaco-progress-container'));
   const ready=(await input.getAttribute('value'))===fixture.secondRoot+path.sep&&bars.length>0&&(await bars[0].getAttribute('class')).split(' ').includes('done');
   stable=ready?stable+1:0;
-  if(stable>=2&&adds<2){await (await button('Add')).click();adds++;stable=0;}
+  if(stable>=2&&adds<2){await clickButton('Add');adds++;stable=0;}
   return false;
  },20000,'Native folder picker did not add the requested directory and confirm trust');
  if(expectTrust)assert.equal(trustConfirmed,true,'The real workspace trust prompt was not confirmed');
  await ui.waitFor(async()=>(await ui.driver.findElement(By.css('body')).getText()).includes(path.basename(fixture.secondRoot)),'Added workspace folder not visible');
+ // Adding a folder can reload the window after the picker closes. Wait for
+ // the new server before sending any keystrokes to the reopened editor.
+ await ui.waitFor(async()=>v.pids().some(pid=>!previousPids.has(pid))&&await ui.status('Ready'),
+  'Language server did not become ready after adding the workspace folder');
 }
 async function resources(){if(!process.env.INTERLIS_GUI_METRICS_URL)throw Error('Use scripts/gui-resilience-run.cjs for actual RSS observation outside the macOS ps/setuid restriction');const response=await fetch(process.env.INTERLIS_GUI_METRICS_URL,{headers:{Authorization:'Bearer '+process.env.INTERLIS_GUI_METRICS_TOKEN}});assert.equal(response.status,200);const javaStarted=v.pids(),javaAlive=javaStarted.filter(pid=>{try{process.kill(pid,0);return true;}catch{return false;}});assert.equal(javaAlive.length,1,'Expected exactly one own live Java server');return {...await response.json(),javaStarted,javaAlive};}
 async function targets(){const response=await ui.driver.sendAndGetDevToolsCommand('Target.getTargets',{});return response.targetInfos.map(t=>({id:t.targetId,type:t.type,url:t.url}));}
@@ -38,22 +58,22 @@ describe('Installed macOS trust and resilience',function(){
  it('GUI-37 uses genuine Restricted Mode and ignores executable workspace settings',async()=>{
   await ui.waitFor(async()=>(await ui.driver.findElement(By.css('body')).getText()).includes('Restricted Mode'),'Fresh shared-storage workspace did not start Restricted');
   await ui.openFile('Example.ili');await ui.waitFor(()=>ui.status('Trust required'),'Restricted workspace did not remain passive');assert.equal(v.pids().length,0);assert.equal(fs.existsSync(fixture.marker),false);const requests=()=>JSON.parse(fs.readFileSync(path.join(v.evidence,'repository-stats.json'))).requests;assert.equal(requests().length,0);await ui.capture('GUI-37-restricted');
-  await ui.palette('Workspaces: Manage Workspace Trust');await (await button('Trust')).click();await ui.waitFor(()=>ui.status('Ready'),'Explicit Trust did not start bundled Java');await ui.waitFor(async()=>(await ui.driver.findElement(By.css('body')).getText()).includes('Other INTERLIS extensions are enabled.'),'Passive competing language contribution did not produce the conflict warning');await ui.capture('GUI-37-trusted');assert.equal(fs.existsSync(fixture.marker),false);assert.match(v.serverLog(),/bundled packaged distribution/);await v.source('Example.ili');await ui.waitCurrentAnalysis();
+  await ui.palette('Workspaces: Manage Workspace Trust');await clickButton('Trust');await ui.waitFor(()=>ui.status('Ready'),'Explicit Trust did not start bundled Java');await ui.waitFor(async()=>(await ui.driver.findElement(By.css('body')).getText()).includes('Other INTERLIS extensions are enabled.'),'Passive competing language contribution did not produce the conflict warning');await ui.capture('GUI-37-trusted');assert.equal(fs.existsSync(fixture.marker),false);assert.match(v.serverLog(),/bundled packaged distribution/);await v.source('Example.ili');await ui.waitCurrentAnalysis();
   ui.record('GUI-37',['open real Restricted Mode workspace','native Manage Workspace Trust and Trust'],['Restricted Mode has zero Java processes and zero HTTP','workspace executable marker absent before/after Trust','bundled Java starts after explicit Trust']);
  });
  it('GUI-38 recovers from crash invalid Java and actual protocol mismatch without losing dirty text',async()=>{
   await v.source('Example.ili');const original=await ui.copyText(),dirty=original.replace('MODEL Example','!! dirty crash sentinel\nMODEL Example');await ui.replaceText(dirty);await ui.waitCurrentAnalysis();await ui.palette('INTERLIS: Show Diagram for This File');await v.enter();await v.fresh();const before=await (await ui.driver.findElement(By.id('canvas'))).getAttribute('data-snapshot-id');await v.back();
   const pid=v.pids().at(-1);assert.ok(pid);fs.writeFileSync(path.join(v.evidence,'intentional-server-exits.json'),JSON.stringify([{pid,signal:'SIGKILL',reason:'GUI-38 deliberate own Java crash'}]));process.kill(pid,'SIGKILL');await ui.waitFor(()=>ui.status('Stopped'),'Crash status did not stop');await v.enter();await ui.waitFor(async()=>await (await ui.driver.findElement(By.id('canvas'))).getAttribute('data-status')==='STALE','Crash left a falsely fresh diagram');await ui.capture('GUI-38-crashed');await v.back();await ui.focusEditor();await ui.palette('INTERLIS: Restart Language Server');await ui.waitFor(()=>ui.status('Ready'),'Crash restart failed');assert.notEqual(v.pids().at(-1),pid);await v.source('Example.ili');assert.equal(await ui.copyText(),dirty);assert.equal(await ui.editor.isDirty(),true);await ui.waitCurrentAnalysis();await ui.palette('INTERLIS: Show Diagram for This File');await v.enter();await v.fresh();assert.notEqual(await (await ui.driver.findElement(By.id('canvas'))).getAttribute('data-snapshot-id'),before);await ui.capture('GUI-38-restarted');await v.back();await ui.focusEditor();
   await v.userSettings({'interlisGuru.server.javaPath':path.join(v.evidence,'missing Java ä')});await ui.palette('INTERLIS: Restart Language Server');await ui.waitFor(()=>ui.status('Error'),'Invalid runtime did not produce visible Error');assert.match(v.serverLog(),/Cannot run Java 25 executable/);await ui.capture('GUI-38-runtime-error');await v.userSettings({'interlisGuru.server.javaPath':''});await ui.palette('INTERLIS: Restart Language Server');await ui.waitFor(()=>ui.status('Ready'),'Restored bundled runtime did not restart');await ui.palette('INTERLIS: Stop Language Server');await ui.waitFor(()=>ui.status('Stopped'),'Stop before isolated negative swap failed');
-  const installed=v.manifest().installed.path,locked=path.join(installed,'release/editor-artifacts.lock.json'),lockBytes=fs.readFileSync(locked),lock=JSON.parse(lockBytes),entry=lock.files.find(f=>/interlis-lsp.*\.jar$/.test(f.path)),jar=path.join(installed,'artifacts/server',entry.path),jarBytes=fs.readFileSync(jar),negative=path.resolve('build/test-fixtures/protocol-mismatch');
-  try{fs.copyFileSync(path.join(negative,'interlis-lsp-incompatible.jar'),jar);fs.copyFileSync(path.join(negative,'editor-artifacts.lock.json'),locked);fs.copyFileSync(path.join(negative,'manifest.json'),path.join(v.evidence,'GUI-38-negative-fixture.json'));await ui.palette('INTERLIS: Restart Language Server');await ui.waitFor(()=>ui.status('Error'),'Protocol999 was not visibly rejected');assert.match(v.serverLog(),/does not support editor protocol version 1/);await ui.capture('GUI-38-protocol-error');}
-  finally{fs.writeFileSync(jar,jarBytes);fs.writeFileSync(locked,lockBytes);assert.deepEqual(fs.readFileSync(jar),jarBytes);assert.deepEqual(fs.readFileSync(locked),lockBytes);}
+  const lib=path.join(v.manifest().installed.path,'lsp/lib'),name=fs.readdirSync(lib).find(name=>/^interlis-lsp-.*\.jar$/.test(name)),jar=path.join(lib,name),jarBytes=fs.readFileSync(jar),negative=path.resolve('build/test-fixtures/protocol-mismatch');
+  try{fs.copyFileSync(path.join(negative,'interlis-lsp-incompatible.jar'),jar);await ui.palette('INTERLIS: Restart Language Server');await ui.waitFor(()=>ui.status('Error'),'Protocol999 was not visibly rejected');assert.match(v.serverLog(),/does not support editor protocol version 1/);await ui.capture('GUI-38-protocol-error');}
+  finally{fs.writeFileSync(jar,jarBytes);assert.deepEqual(fs.readFileSync(jar),jarBytes);}
   await ui.palette('INTERLIS: Restart Language Server');await ui.waitFor(()=>ui.status('Ready'),'Restored stock server did not restart');await v.source('Example.ili');assert.equal(await ui.copyText(),dirty);assert.equal(await ui.editor.isDirty(),true);await ui.replaceText(original);await ui.palette('File: Save');await ui.waitCurrentAnalysis();
   ui.record('GUI-38',['SIGKILL only recorded own Java PID','native Restart','invalid user runtime setting','isolated protocol999 Java fixture then exact restore'],['Stopped and stale diagram','new PID/snapshot','dirty text retained','bounded actionable runtime/protocol Error','stock bytes restored and Ready']);
  });
  it('GUI-39 adds removes and re-adds a genuine local workspace folder',async()=>{
-  await v.back();await ui.palette('View: Close All Editors');await v.source('CrossRoot.ili');await addFolder(true);await absolute(path.join(workspace,'CrossRoot.ili'));await ui.waitCurrentAnalysis();const line=fs.readFileSync(path.join(workspace,'CrossRoot.ili'),'utf8').split('\n').findIndex(l=>l.includes('value:SharedTypes.Measure')),text=fs.readFileSync(path.join(workspace,'CrossRoot.ili'),'utf8').split('\n')[line];await ui.go(line+1,text.indexOf('Measure')+2);await ui.driver.actions().sendKeys(Key.F12).perform();await ui.waitEditor('SharedTypes.ili');assert.ok(decodeURIComponent(await ui.editor.getFileUri()).includes('Second root ä/SharedTypes.ili'));await ui.capture('GUI-39-second-root-definition');await ui.palette('View: Close Editor');
-  await ui.palette('Workspaces: Remove Folder from Workspace...',false,true);await v.quickInput(path.basename(fixture.secondRoot));await absolute(path.join(workspace,'CrossRoot.ili'));await ui.palette('INTERLIS: Restart Language Server');await ui.waitFor(()=>ui.status('Ready'),'Restart after remove failed');await ui.waitCurrentAnalysis();if(!await ui.driver.executeScript("return !!document.getElementById('workbench.panel.markers')?.offsetHeight"))await ui.palette('View: Toggle Problems');await ui.waitFor(async()=>{for(const row of await ui.driver.findElements(By.css('[aria-label^="Error:"][aria-label*="SharedTypes"]')))if(await row.isDisplayed())return true;return false;},'Missing-import diagnostic for removed root is not visible in Problems');await ui.capture('GUI-39-removed-root');await ui.palette('View: Toggle Problems');await addFolder();await absolute(path.join(workspace,'CrossRoot.ili'));await ui.waitCurrentAnalysis();await ui.go(line+1,text.indexOf('Measure')+2);await ui.driver.actions().sendKeys(Key.F12).perform();await ui.waitEditor('SharedTypes.ili');await ui.capture('GUI-39-added-again');
+  await v.back();await ui.palette('View: Close All Editors');await v.source('CrossRoot.ili');await addFolder(true);await v.source('CrossRoot.ili');assert.equal(await ui.editor.isDirty(),false);await ui.waitCurrentAnalysis();const line=fs.readFileSync(path.join(workspace,'CrossRoot.ili'),'utf8').split('\n').findIndex(l=>l.includes('value:SharedTypes.Measure')),text=fs.readFileSync(path.join(workspace,'CrossRoot.ili'),'utf8').split('\n')[line];await ui.go(line+1,text.indexOf('Measure')+2);await ui.driver.actions().sendKeys(Key.F12).perform();await ui.waitEditor('SharedTypes.ili');assert.ok(decodeURIComponent(await ui.editor.getFileUri()).includes('Second root ä/SharedTypes.ili'));await ui.capture('GUI-39-second-root-definition');await ui.palette('View: Close Editor');
+  await ui.palette('Workspaces: Remove Folder from Workspace...',false,true);await v.quickInput(path.basename(fixture.secondRoot));await v.source('CrossRoot.ili');await ui.palette('INTERLIS: Restart Language Server');await ui.waitFor(()=>ui.status('Ready'),'Restart after remove failed');await ui.waitCurrentAnalysis();if(!await ui.driver.executeScript("return !!document.getElementById('workbench.panel.markers')?.offsetHeight"))await ui.palette('View: Toggle Problems');await ui.waitFor(async()=>{for(const row of await ui.driver.findElements(By.css('[aria-label^="Error:"][aria-label*="SharedTypes"]')))if(await row.isDisplayed())return true;return false;},'Missing-import diagnostic for removed root is not visible in Problems');await ui.capture('GUI-39-removed-root');await ui.palette('View: Toggle Problems');await addFolder();await v.source('CrossRoot.ili');assert.equal(await ui.editor.isDirty(),false);await ui.waitCurrentAnalysis();await ui.go(line+1,text.indexOf('Measure')+2);await ui.driver.actions().sendKeys(Key.F12).perform();await ui.waitEditor('SharedTypes.ili');await ui.capture('GUI-39-added-again');
   ui.record('GUI-39',['native Add Folder','F12 into second root','native Remove Folder','native Add Folder and F12 again'],['actual local shared model space','target Unicode URI in second folder','removed root yields missing import','re-add restores resolution','Remote GUI excluded by user platform scope']);
  });
  it('GUI-40 accepts final rapid edit cancels real medium layout and recovers',async()=>{

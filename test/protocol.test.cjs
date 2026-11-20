@@ -1,7 +1,7 @@
 const {test}=require('node:test');const assert=require('node:assert/strict');const {spawn}=require('node:child_process');const fs=require('node:fs');const {pathToFileURL}=require('node:url');const path=require('node:path');
 const {resolveLaunchPlan}=require('../build/launch.cjs');
 test('packaged Java distribution initializes, diagnoses real fixture and shuts down over clean stdio', {timeout:30000},async()=>{
- const plan=await resolveLaunchPlan(process.env.INTERLIS_TEST_EXTENSION_ROOT||process.cwd(),process.env.INTERLIS_JAVA||'');
+ const plan=await resolveLaunchPlan(process.env.INTERLIS_TEST_EXTENSION_ROOT||process.cwd(),process.env.INTERLIS_JAVA||'',!process.env.INTERLIS_TEST_EXTENSION_ROOT);
  const temporary=fs.mkdtempSync(path.join(require('node:os').tmpdir(),'ili-wire-'));
  const tls=process.env.INTERLIS_TEST_HTTPS==='1'?{key:fs.readFileSync(path.resolve('test/fixtures/https/localhost-key.pem')),cert:fs.readFileSync(path.resolve('test/fixtures/https/localhost-cert.pem'))}:undefined;
  const repository=await require('../scripts/gui-repository.cjs').start(temporary,tls);
@@ -97,6 +97,6 @@ END DiagramTypes.`;
   const revision=new URL(handle).search.slice(1);const source=await request('interlis/source',{handle,expectedRevision:revision});
   const fixture=JSON.parse(fs.readFileSync(path.join(temporary,'repository-fixtures.json')));assert.equal(source.text,fixture.sources['RemoteMiddle.ili']);assert.equal(source.readonly,true);assert.equal(source.sourceRevision,revision);
   await assert.rejects(request('interlis/source',{handle:repository.base+'RemoteMiddle.ili',expectedRevision:revision}),/unknown readonly/);
-  await request('shutdown',null);send('exit',null);child.stdin.end();const code=await new Promise(resolve=>child.once('exit',resolve));assert.equal(code,0,stderr);if(protocolError)throw protocolError;assert.equal(buffer.length,0);assert.ok(notifications.some(n=>n.method==='textDocument/publishDiagnostics'));assert.ok(notifications.some(n=>n.method==='interlis/analysisReady'&&n.params.serverInstanceId===diagram.serverInstanceId));console.log(JSON.stringify({core:plan.coreCommit,bundle:plan.bundleDigest,pid:child.pid,exit:code}));
+  await request('shutdown',null);send('exit',null);child.stdin.end();const code=await new Promise(resolve=>child.once('exit',resolve));assert.equal(code,0,stderr);if(protocolError)throw protocolError;assert.equal(buffer.length,0);assert.ok(notifications.some(n=>n.method==='textDocument/publishDiagnostics'));assert.ok(notifications.some(n=>n.method==='interlis/analysisReady'&&n.params.serverInstanceId===diagram.serverInstanceId));console.log(JSON.stringify({pid:child.pid,exit:code}));
  }finally{if(child.exitCode===null)child.kill();await repository.close();fs.rmSync(temporary,{recursive:true,force:true});}
 });

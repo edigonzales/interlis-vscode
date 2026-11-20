@@ -1,0 +1,40 @@
+repositories {
+    maven {
+        url = uri(providers.gradleProperty('lspRepository')
+            .getOrElse('https://jars.interlis.guru/snapshots/'))
+        content { includeModule('guru.interlis', 'interlis-lsp-distribution') }
+    }
+}
+
+configurations {
+    lspDistribution {
+        canBeConsumed = false
+        transitive = false
+    }
+}
+
+dependencies {
+    lspDistribution "guru.interlis:interlis-lsp-distribution:${interlisLspVersion}@zip"
+}
+
+tasks.register('stageLsp', Sync) {
+    def archive = configurations.lspDistribution
+    from { zipTree(archive.singleFile) }
+    into layout.buildDirectory.dir('lsp')
+    includeEmptyDirs = false
+    duplicatesStrategy = DuplicatesStrategy.FAIL
+    doFirst {
+        new java.util.zip.ZipFile(archive.singleFile).withCloseable { zip ->
+            zip.entries().each { entry ->
+                def parts = entry.name.replaceFirst('/$', '').split('/', -1)
+                if (parts[0] != 'interlis-lsp' || parts.any { it in ['', '.', '..'] } ||
+                        entry.name.contains('\\') || entry.name.contains(':')) {
+                    throw new GradleException("Unsafe LSP archive entry: ${entry.name}")
+                }
+            }
+        }
+    }
+    eachFile {
+        relativePath = new RelativePath(true, *relativePath.segments.drop(1))
+    }
+}

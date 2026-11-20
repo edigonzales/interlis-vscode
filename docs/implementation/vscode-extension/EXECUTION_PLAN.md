@@ -1,5 +1,8 @@
 # INTERLIS VS Code – Architektur, Implementierung und unabhängige Abnahme
 
+> Historischer Projektstand. Der aktuelle Build und die Prüfwege stehen in der
+> [Entwicklungsanleitung](../../development.md).
+
 **Verbindlicher Folgeauftrag · Version 1.0 · 1. November 2026**  
 **Implementierung:** Codex, Agent A. **Prüfung:** separater OpenCode-2.x-Agent B mit **DeepSeek-V4.1-Flash-1017 über die direkte DeepSeek API**.  
 **Ziel:** eine produktiv brauchbare Desktop-Extension auf dem vorhandenen Java-INTERLIS-Stack, möglichst schnelle funktionale Parität der drei Referenzextensions, besonders beim tatsächlich interaktiven UML-Diagramm.

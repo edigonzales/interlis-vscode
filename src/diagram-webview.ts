@@ -1,5 +1,5 @@
 /** Local webview bootstrap. All semantic data comes from the Java protocol through the host. */
-import type {DiagramResponse} from '../artifacts/types/editor-protocol';
+import type {DiagramResponse} from '../build/lsp/types/editor-protocol';
 declare function acquireVsCodeApi():{postMessage(message:unknown):void;getState():unknown;setState(value:unknown):void};
 async function start():Promise<void> {
 const api=acquireVsCodeApi(),body=document.body,channel=body.dataset.channel!;
