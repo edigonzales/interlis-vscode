@@ -20,7 +20,8 @@ dependencies {
 tasks.register('stageLsp', Sync) {
     def archive = configurations.lspDistribution
     from { zipTree(archive.singleFile) }
-    into layout.buildDirectory.dir('lsp')
+    into layout.buildDirectory.dir(providers.gradleProperty('localDevelopmentLsp')
+        .map { 'dev-extension/build/lsp' }.orElse('lsp'))
     includeEmptyDirs = false
     duplicatesStrategy = DuplicatesStrategy.FAIL
     doFirst {

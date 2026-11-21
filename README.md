@@ -91,10 +91,25 @@ jlink runtime plus the LSP modules. The installed extension starts Java from
 the package. The build verifies the Temurin JDK archive against the vendor
 checksum in `release/jdk-sources.json`.
 
-For local debugging, install npm dependencies once, open this folder in VS Code
-or VSCodium and press F5. The pre-launch task stages the Maven ZIP and compiles
-the extension. The Development Host uses the Java 25 JDK from that task.
-Open `Example.ili` in the sample workspace and grant trust if prompted.
+### Debug with F5
+
+Install dependencies with `npm ci`. Open the extension repository in VS Code
+or VSCodium with Node 22 or later on `PATH` and `JAVA_HOME` set to a Java 25 JDK.
+In **Run and Debug**, select a profile and press F5.
+
+- **INTERLIS Editor: Build Local LSP and Extension** is the default for Java
+  development. It builds the LSP from the working tree in `../interlis-java`,
+  stages the ZIP through a temporary local Maven repository and builds the
+  development extension against that ZIP's types and schemas. Set
+  `INTERLIS_CORE_DIR` in the editor's environment to use another Java checkout.
+- **INTERLIS Editor: Stage LSP and Build Extension** uses the published Maven
+  snapshot configured in `gradle.properties`. Use it to debug the extension
+  against the published server.
+
+The profiles are in [`.vscode/launch.json`](.vscode/launch.json) and their
+pre-launch tasks are in [`.vscode/tasks.json`](.vscode/tasks.json). Both open a
+separate Extension Development Host with the sample workspace. Open
+`Example.ili` there and grant workspace trust if prompted.
 
 The GUI runner downloads VSCode1.140.0 and matching ChromeDriver into an isolated
 test directory, installs the VSIX and uses ExTester8.28.1/Selenium. Optional
